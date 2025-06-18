@@ -1,19 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import SubmitButton from "@/components/SubmitButton";
 import StatusIcon from "@/components/icons/Status";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import BackHeader from "@/components/BackHeader";
-import StyledInput from "@/components/StyledInput";
-import Modal from "@/components/Modal";
 import ArrowLeftIcon from "@/components/icons/ArrowLeft";
 import ArrowRightIcon from "@/components/icons/ArrowRight";
 import StyledDiv from "@/components/StyledDiv";
 import WarningIcon from "@/components/icons/Warning";
-import CheckedIcon from "@/components/icons/Checked";
-import MagicStar2Icon from "@/components/icons/MagicStar2";
-import CrossIcon from "@/components/icons/Cross";
+import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 import MagnifyingGlassIcon from "@/components/icons/MagnifyingGlass";
 import BulbIcon from "@/components/icons/Bulb";
 import ExclamationIcon from "@/components/icons/Exclamation";
@@ -58,7 +53,7 @@ function ContractCreateNewPage() {
         )}
       </div>
       <div className="flex items-center gap-4 px-4 flex-grow overflow-hidden">
-        <span className="w-[1.6rem] h-[1.6rem] flex justify-center items-center bg-main2 text-white rounded-[50px] text-[1rem] flex-shrink-0">
+        <span className="w-[1.6rem] h-[1.6rem] flex justify-center items-center bg-main text-white rounded-[50px] text-[1rem] flex-shrink-0">
           {index + 1}
         </span>
         <span className="truncate">{value}</span>
@@ -92,7 +87,7 @@ function ContractCreateNewPage() {
       <div className="h-20 w-full flex flex-col justify-center items-center">
         <StatusIcon className="mt-[1.4rem]" />
       </div>
-      <BackHeader to="login">임대차 계약서 작성</BackHeader>
+      <BackHeader to="/">임대차 계약서 작성</BackHeader>
       <main className="flex flex-col items-center mt-[3rem] gap-12 h-[calc(100%-11rem)]">
         <div className="px-8 py-12 w-full flex-1 bg-white rounded-t-[50px] backdrop-opacity-70 flex flex-col gap-12 items-center">
           <div className="w-full flex flex-col gap-4 items-start">
@@ -112,7 +107,7 @@ function ContractCreateNewPage() {
           </div>
           <div className="w-full flex flex-col gap-4 items-start">
             <span className="px-8 flex gap-4 items-center text-[1.8rem] text-[#0f0f0f] font-semibold">
-              <MagicStar2Icon width={1.6} height={1.6} color="#6000FF" />
+              <MagicTwoStarIcon width={1.6} height={1.6} color="#6000FF" />
               생성된 특약
             </span>
             <DivBox className="flex items-center px-10 py-6">
