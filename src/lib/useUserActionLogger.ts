@@ -102,7 +102,8 @@ export function useUserActionLogger({ userId }: UseUserActionLoggerProps) {
       const tagPath = getElementPath(target),
         tagName = target.tagName || null,
         tagId = target.id || null,
-        tagClass = target.className || null;
+        tagClass = target.className || null,
+        tagAttrName = target.getAttribute("name");
       let x = 0,
         y = 0,
         type = "click";
@@ -138,6 +139,7 @@ export function useUserActionLogger({ userId }: UseUserActionLoggerProps) {
           tagName,
           tagId,
           tagClass,
+          tagAttrName,
         },
       });
     }
@@ -156,12 +158,19 @@ export function useUserActionLogger({ userId }: UseUserActionLoggerProps) {
   // --- keyboard ---
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
+      if (e.key !== "Enter" && e.key !== " " && e.key !== "Tab") return; // Enter, Space만 로깅
+
       const target = e.target as HTMLElement;
-      if (target.tagName === "BUTTON" || target.closest("button")) {
+      if (
+        target.tagName === "BUTTON" ||
+        target.closest("button") ||
+        target.closest("submit")
+      ) {
         const tagPath = getElementPath(target),
           tagName = target.tagName || null,
           tagId = target.id || null,
-          tagClass = target.className || null;
+          tagClass = target.className || null,
+          tagAttrName = target.getAttribute("name");
 
         queueEvent({
           userId,
@@ -178,6 +187,7 @@ export function useUserActionLogger({ userId }: UseUserActionLoggerProps) {
             tagName,
             tagId,
             tagClass,
+            tagAttrName,
           },
         });
       }
@@ -229,6 +239,46 @@ export function useUserActionLogger({ userId }: UseUserActionLoggerProps) {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [page, userId]);
+
+  // --- zoom ---
+  const lastScale = useRef<number>(
+    window.visualViewport?.scale || window.devicePixelRatio || 1
+  );
+
+  useEffect(() => {
+    const handleZoom = () => {
+      const scale =
+        window.visualViewport?.scale || window.devicePixelRatio || 1;
+
+      // 변화량이 의미있을 때만 로깅
+      if (Math.abs(scale - lastScale.current) > 0.01) {
+        queueEvent({
+          userId,
+          userAgent,
+          deviceType,
+          width,
+          height,
+          page,
+          type: "zoom",
+          timestamp: new Date().toISOString(),
+          data: {
+            scale,
+            devicePixelRatio: window.devicePixelRatio,
+          },
+        });
+        lastScale.current = scale;
+      }
+    };
+
+    // 모바일 & 데스크탑 대응
+    window.visualViewport?.addEventListener("resize", handleZoom);
+    window.addEventListener("resize", handleZoom);
+
+    return () => {
+      window.visualViewport?.removeEventListener("resize", handleZoom);
+      window.removeEventListener("resize", handleZoom);
+    };
+  }, [queueEvent]);
 }
 
 // tag 고유 경로 생성
