@@ -22,7 +22,7 @@ export default function StyledInput({
         value={value}
         autoFocus={autoFocus}
         onChange={onChange}
-        className="bg-transparent border-none px-4 outline-none placeholder:text-gray-400"
+        className="border-none px-4 outline-none placeholder:text-gray-400"
         style={{
           width: typeof width === "number" ? `${width}rem` : width,
           fontWeight: fontWeight,
