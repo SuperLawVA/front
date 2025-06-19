@@ -29,12 +29,12 @@
   --font-sans: "Pretendard";
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 * {
   max-width: min(100svw, 100svh);
@@ -45,20 +45,19 @@ html {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* height: 100%; */
-  /* font-size: 62.5%; */
-  /* font-size: 2.5vw; */
-  font-size: clamp(10px, min(2.5vw, 1.15vh), 200%);
+  /* font-size: clamp(10px, min(2.5vw, 1.15vh), 200%); */
+  font-size: clamp(10px, min(2.54vw, 1.17vh), 200%);
   outline: none;
   margin: none;
   padding: none;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  /* background: var(--background);
+  color: var(--foreground); */
   height: 100%;
-  font-family: var(--font-pretendard), sans-serif, Arial, Helvetica;
+  /* font-family: var(--font-pretendard), sans-serif, Arial, Helvetica; */
+  font-family: var(--font-pretendard);
   background-color: #f7f9fb;
 }
 
