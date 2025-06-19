@@ -6,8 +6,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
 function StartPage() {
+  useEffect(() => {
+    sessionStorage.setItem("start", "true");
+  }, []);
   const router = useRouter();
-
   const [showFirst, setShowFirst] = useState(true);
   const [showSecond, setShowSecond] = useState(false);
   const handleClick = () => {
