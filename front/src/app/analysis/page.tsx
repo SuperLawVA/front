@@ -3,7 +3,7 @@
 
 import CheckedIcon from "@/components/icons/Checked";
 import DocumentIcon from "@/components/icons/Document";
-import MagicStar2Icon from "@/components/icons/MagicStar2";
+import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 import Modal from "@/components/Modal";
 import StyledDiv from "@/components/StyledDiv";
 import SubmitButton from "@/components/SubmitButton";
@@ -32,7 +32,7 @@ function AnalysisPage() {
           fontWeight={700}
           borderColor="none"
           className="px-10 flex justify-center items-center "
-          icon={<MagicStar2Icon width={1.4} height={1.4} color="#0A84FF" />}
+          icon={<MagicTwoStarIcon width={1.4} height={1.4} color="#0A84FF" />}
         >
           AI로 계약서 분석하기
         </StyledDiv>
@@ -62,9 +62,9 @@ function AnalysisPage() {
         </SubmitButton>
         <div
           onClick={() => router.back()}
-          className="mt-12 text-[#797979] text-[1.2rem] font-medium"
+          className="mt-8 text-[#797979] text-[1.4rem] font-medium"
         >
-          &lt;- 다음에 할래요
+          ← 다음에 할래요
         </div>
       </main>
       <Modal
@@ -110,7 +110,12 @@ function AnalysisPage() {
             >
               다시 업로드
             </SubmitButton>
-            <SubmitButton height={5} fontSize={1.6} fontWeight={500}>
+            <SubmitButton
+              height={5}
+              fontSize={1.6}
+              fontWeight={500}
+              onClick={() => router.push("analysis/result")}
+            >
               네, 맞아요
             </SubmitButton>
           </div>
