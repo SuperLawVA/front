@@ -42,3 +42,4 @@ next-env.d.ts
 
 # custom
 * copy.*
+logs.json
