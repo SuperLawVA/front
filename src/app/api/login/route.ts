@@ -42,7 +42,8 @@ export async function POST(req: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       path: "/",
-      maxAge: 60 * 60, // 1시간
+      // maxAge: 60 * 60, // 1시간
+      maxAge: 60 * 60 * 60, // 1시간
     });
 
     return NextResponse.json({ message: "Login success" }, { status: 200 });
