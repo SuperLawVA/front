@@ -153,7 +153,7 @@ function StartPage() {
                 fontWeight={500}
                 onClick={() => {
                   useCertificateStore.setState({ ContractId: contract._id });
-                  router.push("certificate/starting");
+                  router.push("certificate/step1");
                 }}
               >
                 네, 맞아요

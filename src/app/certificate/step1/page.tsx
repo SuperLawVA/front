@@ -10,6 +10,8 @@ import AnalyzeIcon from "@/components/icons/Analysis";
 import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 import InfoIcon from "@/components/icons/Info";
 import { useRouter } from "next/navigation";
+import { useCertificateStore } from "@/store/useStore";
+import axios from "axios";
 
 function StartPage() {
   const router = useRouter();
@@ -23,8 +25,21 @@ function StartPage() {
 
   const canSubmit = purpose.trim().length > 0 && story.trim().length > 0;
 
+  const certificateRequest = async (contractId: string) => {
+    try {
+      const response = await axios.post("/api/certificate", {
+        contractId,
+        userQuery: purpose + "\n" + story,
+      });
+    } catch (error) {
+      console.error("Failed to fetch contracts:", error);
+      return undefined;
+    }
+  };
   const handleClick = () => {
     if (!canSubmit) return;
+    const { ContractId } = useCertificateStore.getState();
+    certificateRequest(ContractId as string);
     router.push("step2");
   };
 
