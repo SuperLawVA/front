@@ -10,6 +10,8 @@ import AnalyzeIcon from "@/components/icons/Analysis";
 import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 import InfoIcon from "@/components/icons/Info";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { useCertificateStore } from "@/store/useStore";
 
 function StartPage() {
   const router = useRouter();
@@ -20,11 +22,22 @@ function StartPage() {
 
   const [purposeOpen, setPurposeOpen] = useState(false);
   const [storyOpen, setStoryOpen] = useState(false);
-
   const canSubmit = purpose.trim().length > 0 && story.trim().length > 0;
-
+  const certificateRequest = async (contractId: string) => {
+    try {
+      const response = await axios.post("/api/certificate", {
+        contractId,
+        userQuery: purpose + "\n" + story,
+      });
+    } catch (error) {
+      console.error("Failed to fetch contracts:", error);
+      return undefined;
+    }
+  };
   const handleClick = () => {
     if (!canSubmit) return;
+    const { ContractId } = useCertificateStore.getState();
+    certificateRequest(ContractId as string);
     router.push("loading");
   };
 
@@ -147,7 +160,7 @@ function StartPage() {
           </span>
           <div className="relative">
             <textarea
-              className="w-full h-30 rounded-[20px] border border-[#eeeeee] bg-[#fafafa]
+              className="w-full h-[25svh] rounded-[20px] border border-[#eeeeee] bg-[#fafafa]
                    p-6 text-[1.4rem] resize-none outline-none placeholder:text-gray-400"
               placeholder="ex) 보증금을 돌려받고 싶습니다."
               value={purpose}
@@ -188,7 +201,7 @@ function StartPage() {
           </span>
           <div className="relative">
             <textarea
-              className="w-full h-70 rounded-[20px] border border-[#eeeeee] bg-[#fafafa]
+              className="w-full h-[35svh] rounded-[20px] border border-[#eeeeee] bg-[#fafafa]
                   p-6 text-[1rem] resize-none outline-none placeholder:text-gray-400"
               placeholder="ex) 계약 종료일이 다가오는데 집주인이 보증금 반환에 대해 아무런 언급이 없습니다.
                   연락도 잘 되지 않아 불안한 상황입니다."
