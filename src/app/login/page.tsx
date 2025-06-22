@@ -11,6 +11,7 @@ import NaverIcon from "@/components/icons/sns/Naver";
 import AppleIcon from "@/components/icons/sns/Apple";
 import SubmitButton from "@/components/SubmitButton";
 import axios from "axios";
+import useAuthStore from "@/store/useAuthStore";
 
 function LoginPage() {
   const router = useRouter();
@@ -45,6 +46,17 @@ function LoginPage() {
 
     try {
       const res = await axios.post("/api/login", { email, password });
+      const { userName, notification, contract, recentChat } = res.data;
+      sessionStorage.setItem("userName", userName);
+      sessionStorage.setItem("notification", JSON.stringify(notification));
+      sessionStorage.setItem("contract", JSON.stringify(contract));
+      sessionStorage.setItem("recentChat", JSON.stringify(recentChat));
+
+      const auth = useAuthStore.getState();
+      auth.setUserName(userName);
+      auth.setNotification(notification);
+      auth.setContract(contract);
+      auth.setRecentChat(recentChat);
       router.push("/");
     } catch (error: any) {
       alert("로그인 실패: " + (error.response?.data?.message || error.message));
