@@ -17,10 +17,10 @@ export async function POST(req: NextRequest) {
   //     headers: { "Content-Type": "application/json" },
   //   });
 
-  //   const { jwt } = res.data; // Spring Boot가 반환한 JWT
+  //   const { token } = res.data; // Spring Boot가 반환한 JWT
 
   //   // Next.js의 서버 쿠키에 저장 (HttpOnly 권장)
-  //   (await cookies()).set("jwt", jwt, {
+  //   (await cookies()).set("jwt", token, {
   //     httpOnly: true,
   //     secure: process.env.NODE_ENV === "production",
   //     sameSite: "strict",
@@ -33,50 +33,32 @@ export async function POST(req: NextRequest) {
     //   headers: { "Content-Type": "application/json" },
     // });
     if (/\D+@\D+/.test(body.email) || !body.email) {
+      alert(`1@1.1 입력`);
       throw new Error(`1@1.1 입력`);
     }
-    const jwt = "jwtUser"; // Spring Boot가 반환한 JWT
-    // sessionStorage.setItem("userId", jwt);
+    const token = "jwtUser"; // Spring Boot가 반환한 JWT
+    // sessionStorage.setItem("userId", token);
 
     // Next.js의 서버 쿠키에 저장 (HttpOnly 권장)
-    (await cookies()).set("jwt", jwt, {
+    (await cookies()).set("jwt", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       path: "/",
       // maxAge: 60 * 60, // 1시간
+      maxAge: 60 * 60 * 60, // 1시간
     });
-
-    (await cookies()).set("userId", "", {
-      httpOnly: true,
+    // Next.js의 서버 쿠키에 저장 (HttpOnly 권장)
+    (await cookies()).set("userName", "아무개", {
+      httpOnly: false,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       path: "/",
       // maxAge: 60 * 60, // 1시간
+      maxAge: 60 * 60 * 60, // 1시간
     });
-    // Next.js의 서버 쿠키에 저장 (HttpOnly 권장)
-    return NextResponse.json(
-      {
-        token: "tokenValue",
-        userName: "아무개",
-        notification: [0, 1, 2],
-        contractArray: [
-          {
-            _id: "asdasd",
-            title: "월세 임대차 계약서",
-            state: "진행중",
-            address: "서울시 강남구 테헤란로 123",
-            createdAt: "2025.03.22",
-          },
-        ],
-        recentChat: [
-          { _id: "1", title: "집 주인이 보증금 안 돌려줘요." },
-          { _id: "2", title: "전입 신고 방법 알려줘" },
-          { _id: "3", title: "묵시적 갱신이 뭔가요" },
-        ],
-      },
-      { status: 200 }
-    );
+
+    return NextResponse.json({ message: "Login success" }, { status: 200 });
   } catch (error: any) {
     return NextResponse.json(
       { message: error.response?.data?.message || "Login failed" },

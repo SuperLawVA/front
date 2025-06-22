@@ -1,5 +1,6 @@
-import { MouseEventHandler } from "react";
+import { HTMLInputTypeAttribute, MouseEventHandler } from "react";
 
+// ✅ 공통 스타일 Props
 export default interface CustomStyledProps {
   width?: number | string;
   height?: number | string;
@@ -15,11 +16,17 @@ export default interface CustomStyledProps {
   className?: string;
   disabled?: boolean;
   subStyle?: boolean;
+}
+
+// ✅ 버튼 전용 Props
+export interface CustomButtonProps extends CustomStyledProps {
+  type?: "submit" | "reset" | "button";
   onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
+// ✅ Input 전용 Props
 export interface StyledInputProps extends CustomStyledProps {
-  type?: string;
+  type?: HTMLInputTypeAttribute;
   placeholder?: string;
   value?: number | string;
   lineHeight?: number | string;

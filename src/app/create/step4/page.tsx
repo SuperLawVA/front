@@ -14,25 +14,37 @@ import BulbIcon from "@/components/icons/Bulb";
 import ExclamationIcon from "@/components/icons/Exclamation";
 import ArrowDownIcon from "@/components/icons/ArrowDownIcon";
 import DivBox from "@/components/DivBox";
+import { useCreateStore } from "@/store/useStore";
 
 function ContractCreateNewPage() {
   const router = useRouter();
+  const contractData = useCreateStore.getState();
+  useEffect(() => {
+    // if (!sessionStorage.getItem("contractData")) {
+    //   router.replace("/create");
+    // } else if (!sessionStorage.getItem("articleAgree")) {
+    //   router.replace("step2");
+    // } else if (!sessionStorage.getItem("userQuery")) {
+    //   router.replace("step3");
+    // }
+    // sessionStorage.removeItem("createStore");
+  }, [router]);
   const [inputValue, setInputValue] = useState<string>("");
-  // const [valueArray, setValueArray] = useState<string[]>([]);
-  const [valueArray, setValueArray] = useState<string[]>([
-    "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
-    "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
-    "벽에 선반 달고 싶어요",
-    "집에서 담배 피고 싶어요",
-    "집에서 친구랑 동거하고 싶어요",
-    "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
-  ]);
+  const [userQuery, setUserQuery] = useState<string[]>(contractData.userQuery);
+  // const [userQuery, setUserQuery] = useState<string[]>([
+  //   "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
+  //   "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
+  //   "벽에 선반 달고 싶어요",
+  //   "집에서 담배 피고 싶어요",
+  //   "집에서 친구랑 동거하고 싶어요",
+  //   "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
+  // ]);
   const [modalOpen, setModalOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
-  const liArray = valueArray.map((value, index) => (
+  const liArray = userQuery.map((value, index) => (
     <li
       key={index}
       className="w-full h-20 px-10 py-6  flex items-center text-[1.4rem] text-[#3a3a40] font-medium border border-[#d7d7d7] rounded-[50px] bg-white"
@@ -59,7 +71,7 @@ function ContractCreateNewPage() {
         <span className="truncate">{value}</span>
       </div>
       <div className="w-8 flex justify-center items-center flex-shrink-0">
-        {activeIndex === valueArray.length - 1 ? (
+        {activeIndex === userQuery.length - 1 ? (
           <ArrowRightIcon
             color="white"
             className="cursor-not-allowed pointer-events-none"
@@ -80,7 +92,7 @@ function ContractCreateNewPage() {
     if (modalOpen && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [modalOpen, valueArray]);
+  }, [modalOpen, userQuery]);
 
   return (
     <>

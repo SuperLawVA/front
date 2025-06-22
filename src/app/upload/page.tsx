@@ -58,6 +58,12 @@ function StartPage() {
         >
           업로드 하기
         </SubmitButton>
+        <button
+          onClick={() => router.back()}
+          className="mt-8 text-[#797979] !text-[1.4rem] font-medium"
+        >
+          ← 다음에 할래요
+        </button>
       </main>
 
       {/* 1번 모달 */}
