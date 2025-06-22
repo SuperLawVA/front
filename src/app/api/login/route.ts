@@ -1,3 +1,4 @@
+// app/api/login/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
 import { cookies } from "next/headers";
@@ -16,10 +17,10 @@ export async function POST(req: NextRequest) {
   //     headers: { "Content-Type": "application/json" },
   //   });
 
-  //   const { token } = res.data; // Spring Boot가 반환한 JWT
+  //   const { jwt } = res.data; // Spring Boot가 반환한 JWT
 
   //   // Next.js의 서버 쿠키에 저장 (HttpOnly 권장)
-  //   (await cookies()).set("jwt", token, {
+  //   (await cookies()).set("jwt", jwt, {
   //     httpOnly: true,
   //     secure: process.env.NODE_ENV === "production",
   //     sameSite: "strict",
@@ -32,12 +33,13 @@ export async function POST(req: NextRequest) {
     //   headers: { "Content-Type": "application/json" },
     // });
     if (/\D+@\D+/.test(body.email) || !body.email) {
-      throw new Error(`1@1 입력`);
+      throw new Error(`1@1.1 입력`);
     }
-    const token = "temptoken"; // Spring Boot가 반환한 JWT
+    const jwt = "jwtUser"; // Spring Boot가 반환한 JWT
+    // sessionStorage.setItem("userId", jwt);
 
     // Next.js의 서버 쿠키에 저장 (HttpOnly 권장)
-    (await cookies()).set("jwt", token, {
+    (await cookies()).set("jwt", jwt, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
@@ -45,8 +47,26 @@ export async function POST(req: NextRequest) {
       // maxAge: 60 * 60, // 1시간
       maxAge: 60 * 60 * 60, // 1시간
     });
-
-    return NextResponse.json({ message: "Login success" }, { status: 200 });
+    // Next.js의 서버 쿠키에 저장 (HttpOnly 권장)
+    return NextResponse.json(
+      {
+        message: "Login success",
+        userName: "아무개",
+        notification: [0, 1, 2],
+        contract: {
+          title: "월세 임대차 계약서",
+          state: "진행중",
+          address: "서울시 강남구 테헤란로 123",
+          createdAt: "2025.03.22",
+        },
+        recentChat: [
+          { _id: "1", title: "집 주인이 보증금 안 돌려줘요." },
+          { _id: "2", title: "전입 신고 방법 알려줘" },
+          { _id: "3", title: "묵시적 갱신이 뭔가요" },
+        ],
+      },
+      { status: 200 }
+    );
   } catch (error: any) {
     return NextResponse.json(
       { message: error.response?.data?.message || "Login failed" },
