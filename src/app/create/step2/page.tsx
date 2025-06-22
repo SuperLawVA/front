@@ -1,9 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton";
 import StatusIcon from "@/components/icons/Status";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BackHeader from "@/components/BackHeader";
 import StyledInput from "@/components/StyledInput";
 import Modal from "@/components/Modal";
@@ -14,7 +14,20 @@ import WarningIcon from "@/components/icons/Warning";
 import CheckedIcon from "@/components/icons/Checked";
 
 function ContractCreateNewPage() {
+  const searchParams = useSearchParams();
+  const contractTypeQuery = searchParams.get("rent");
+
   const router = useRouter();
+  useEffect(() => {
+    const contractType = sessionStorage.getItem("contractType");
+
+    if (!sessionStorage.getItem("contractData")) {
+      router.replace("/create");
+    } else if (sessionStorage.getItem("contractType") !== contractTypeQuery) {
+      router.replace(`step2/?rent=${contractType}`);
+    }
+  }, [router]);
+
   const [disable, setDisable] = useState(true);
 
   return (
@@ -128,28 +141,33 @@ function ContractCreateNewPage() {
             </div>
           </div>
         </div>
-        <span
-          className={`flex self-center justify-self-center gap-4${
-            disable ? " text-[rgba(128,128,128,0.55)]" : " text-main"
-          }`}
-          onClick={() => setDisable(!disable)}
-        >
-          <CheckedIcon
-            color={disable ? "rgba(128, 128, 128, 0.55)" : "#6000ff"}
-          />
-          모든 내용을 확인했습니다
-        </span>
-        <SubmitButton
-          width="100%"
-          height={5.5}
-          fontSize={1.8}
-          fontWeight={500}
-          disabled={disable}
-          className="mb-12"
-          onClick={() => router.push("step3")}
-        >
-          다음
-        </SubmitButton>
+        <div className="w-full px-12 flex flex-col gap-8">
+          <span
+            className={`flex self-center justify-self-center gap-4${
+              disable ? " text-[rgba(128,128,128,0.55)]" : " text-main"
+            }`}
+            onClick={() => setDisable(!disable)}
+          >
+            <CheckedIcon
+              color={disable ? "rgba(128, 128, 128, 0.55)" : "#6000ff"}
+            />
+            모든 내용을 확인했습니다
+          </span>
+          <SubmitButton
+            width="100%"
+            height={5.5}
+            fontSize={1.8}
+            fontWeight={500}
+            disabled={disable}
+            className="mb-12"
+            onClick={() => {
+              sessionStorage.setItem("articleAgree", "true");
+              router.push("step3");
+            }}
+          >
+            다음
+          </SubmitButton>
+        </div>
       </main>
     </>
   );

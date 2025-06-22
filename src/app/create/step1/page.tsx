@@ -1,9 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton";
 import StatusIcon from "@/components/icons/Status";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import BackHeader from "@/components/BackHeader";
 import StyledInput from "@/components/StyledInput";
 import Modal from "@/components/Modal";
@@ -13,50 +13,120 @@ import ArrowRightIcon from "@/components/icons/ArrowRight";
 function ContractCreateNewPage() {
   const router = useRouter();
 
-  useEffect(() => {
-    // 클라이언트 환경에서만 실행됨
-    if (sessionStorage.getItem("start") !== "true") {
-      router.replace("/");
-    }
-  }, [router]);
+  const searchParams = useSearchParams();
+  const contractTypeQuery = searchParams.get("rent") === "true";
 
   const [modalOpen, setModalOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [address, setAddress] = useState<string>("");
   const [detailAddress, setDetailAddress] = useState<string>("");
-  const [area, setArea] = useState<number | "">("");
-  const [structure, setStructure] = useState<string>("");
-  const [purpose, setPurpose] = useState<string>("");
+  const [buildingArea, setBuildingArea] = useState<number | "">("");
+  const [buildingConstructure, setBuildingConstructure] = useState<string>("");
+  const [buildingType, setBuildingType] = useState<string>("");
   const [deposit, setDeposit] = useState<number | "">("");
-  const [downPayment, setDownPayment] = useState<number | "">("");
-  const [balance, setBalance] = useState<number | "">("");
-  const [rent, setRent] = useState<number | "">("");
+  const [payment, setPayment] = useState<number | "">("");
+  const [intermediatePayment, setIntermediatePayment] = useState<number | "">(
+    ""
+  );
+  const [monthlyRent, setMonthlyRent] = useState<number | "">("");
   const [contractDate, setContractDate] = useState<Date | "">("");
+
+  useEffect(() => {
+    const stored = sessionStorage.getItem("contractData");
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+
+        // 안전하게 값 세팅 (optional chaining 사용)
+        setAddress(parsed?.property?.address ?? "");
+        setDetailAddress(parsed?.property?.detailAddress ?? "");
+        setBuildingArea(parsed?.property?.building?.buildingArea ?? "");
+        setBuildingConstructure(
+          parsed?.property?.building?.buildingConstructure ?? ""
+        );
+        setBuildingType(parsed?.property?.building?.buildingType ?? "");
+        setDeposit(parsed?.property?.payment?.deposit ?? "");
+        setPayment(parsed?.property?.payment?.payment ?? "");
+        setIntermediatePayment(
+          parsed?.property?.building?.intermediatePayment ?? ""
+        );
+        setMonthlyRent(parsed?.property?.payment?.monthlyRent ?? "");
+
+        if (parsed?.dates?.contractDate) {
+          setContractDate(new Date(parsed.dates.contractDate));
+        }
+      } catch (err) {
+        console.error("Failed to parse contractData:", err);
+      }
+    }
+  }, []);
 
   const tabsVariable = [
     address,
     detailAddress,
-    area,
-    structure,
-    purpose,
+    buildingArea,
+    buildingConstructure,
+    buildingType,
     deposit,
-    downPayment,
-    balance,
-    rent,
+    payment,
+    intermediatePayment,
+    monthlyRent,
     contractDate,
   ];
   const tabsSetFunction = [
     setAddress,
     setDetailAddress,
-    setArea,
-    setStructure,
-    setPurpose,
+    setBuildingArea,
+    setBuildingConstructure,
+    setBuildingType,
     setDeposit,
-    setDownPayment,
-    setBalance,
-    setRent,
+    setPayment,
+    setIntermediatePayment,
+    setMonthlyRent,
     setContractDate,
   ];
+
+  const isValidAll = useMemo(() => {
+    return tabsVariable.every((v, idx) => {
+      if (typeof v === "number" && v >= 0) {
+        if (idx === 2) {
+          return v > 0; // area: 양수만 허용
+        } else {
+          return v >= 0; // deposit, payment, intermediatePayment, rent: 0 이상 가능
+        }
+      }
+      if (v instanceof Date) {
+        return !isNaN(v.getTime());
+      }
+      return v !== "";
+    });
+  }, [tabsVariable]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const contractData = {
+      contractType: contractTypeQuery ? "월세" : "전세",
+      dates: { contractDate },
+      property: {
+        address,
+        detailAddress,
+        building: {
+          buildingConstructure,
+          buildingType,
+          buildingArea,
+          intermediatePayment,
+        },
+        payment: { deposit, payment, monthlyRent },
+      },
+    };
+
+    // ✔️ sessionStorage에 JSON으로 직렬화하여 저장
+    sessionStorage.setItem("contractData", JSON.stringify(contractData));
+    sessionStorage.setItem("contractTypeQuery", `${contractTypeQuery}`);
+
+    // ✔️ step2로 이동
+    router.push(`step2/?rent=${contractTypeQuery}`);
+  };
 
   const tabTitles = [
     "주소를",
@@ -70,6 +140,15 @@ function ContractCreateNewPage() {
     "월세를",
     "계약일자를",
   ];
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (modalOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [activeIndex, modalOpen]);
+
   const tabContents = [
     <input
       type="text"
@@ -78,6 +157,7 @@ function ContractCreateNewPage() {
       placeholder="계약하려는 건물의 주소를 입력해주세요."
       onChange={(e) => setAddress(e.target.value)}
       value={address}
+      ref={inputRef}
       className="w-full h-full px-12 text-[1.2rem] font-medium placeholder:text-subText"
     />,
     <input
@@ -87,14 +167,16 @@ function ContractCreateNewPage() {
       placeholder="계약하려는 건물의 상세 주소를 입력해주세요."
       onChange={(e) => setDetailAddress(e.target.value)}
       value={detailAddress}
+      ref={inputRef}
       className="w-full h-full px-12 text-[1.2rem] font-medium placeholder:text-subText"
     />,
     <input
       type="number"
       name=""
       id=""
-      onChange={(e) => setArea(Number(e.target.value))}
-      value={area ?? ""}
+      onChange={(e) => setBuildingArea(Number(e.target.value))}
+      value={buildingArea ?? ""}
+      ref={inputRef}
       className="w-full h-full px-12 text-[1.2rem] font-medium placeholder:text-subText"
     />,
     <input
@@ -102,8 +184,9 @@ function ContractCreateNewPage() {
       name=""
       id=""
       placeholder="ex) 철근콘크리트"
-      onChange={(e) => setStructure(e.target.value)}
-      value={structure}
+      onChange={(e) => setBuildingConstructure(e.target.value)}
+      value={buildingConstructure}
+      ref={inputRef}
       className="w-full h-full px-12 text-[1.2rem] font-medium placeholder:text-subText"
     />,
     <input
@@ -111,8 +194,9 @@ function ContractCreateNewPage() {
       name=""
       id=""
       placeholder="ex) 오피스텔, 아파트, 상가시설"
-      onChange={(e) => setPurpose(e.target.value)}
-      value={purpose}
+      onChange={(e) => setBuildingType(e.target.value)}
+      value={buildingType}
+      ref={inputRef}
       className="w-full h-full px-12 text-[1.2rem] font-medium placeholder:text-subText"
     />,
     <input
@@ -121,30 +205,34 @@ function ContractCreateNewPage() {
       id=""
       onChange={(e) => setDeposit(Number(e.target.value))}
       value={deposit ?? ""}
+      ref={inputRef}
       className="w-full h-full px-12 text-[1.2rem] font-medium placeholder:text-subText"
     />,
     <input
       type="number"
       name=""
       id=""
-      onChange={(e) => setDownPayment(Number(e.target.value))}
-      value={downPayment ?? ""}
+      onChange={(e) => setPayment(Number(e.target.value))}
+      value={payment ?? ""}
+      ref={inputRef}
       className="w-full h-full px-12 text-[1.2rem] font-medium placeholder:text-subText"
     />,
     <input
       type="number"
       name=""
       id=""
-      onChange={(e) => setBalance(Number(e.target.value))}
-      value={balance ?? ""}
+      onChange={(e) => setIntermediatePayment(Number(e.target.value))}
+      value={intermediatePayment ?? ""}
+      ref={inputRef}
       className="w-full h-full px-12 text-[1.2rem] font-medium placeholder:text-subText"
     />,
     <input
       type="number"
       name=""
       id=""
-      onChange={(e) => setRent(Number(e.target.value))}
-      value={rent ?? ""}
+      onChange={(e) => setMonthlyRent(Number(e.target.value))}
+      value={monthlyRent ?? ""}
+      ref={inputRef}
       className="w-full h-full px-12 text-[1.2rem] font-medium placeholder:text-subText"
     />,
     <input
@@ -155,6 +243,7 @@ function ContractCreateNewPage() {
       value={
         contractDate === "" ? "" : contractDate.toISOString().split("T")[0]
       }
+      ref={inputRef}
       className="w-full h-full px-12 text-[1.2rem] font-medium placeholder:text-subText"
     />,
   ];
@@ -166,7 +255,11 @@ function ContractCreateNewPage() {
       </div>
       <BackHeader>임대차 계약서 작성</BackHeader>
       <main className="flex flex-col items-center mt-[3rem] gap-12 mx-10 h-auto">
-        <div key="1" className="flex flex-col w-full gap-12">
+        <form
+          key="1"
+          onSubmit={handleSubmit}
+          className="flex flex-col w-full gap-12"
+        >
           <div className="flex flex-col gap-4">
             <span className="text-[1.6rem] font-bold pl-8">1. 부동산 표시</span>
             <div className="flex flex-col gap-8 w-full rounded-[30px] p-12 bg-white font-bold text-[1.6rem]">
@@ -217,8 +310,8 @@ function ContractCreateNewPage() {
                   fontSize={1.2}
                   lineHeight="100%"
                   placeholder="면적을 입력해주세요 (㎡)"
-                  onChange={(e) => setArea(Number(e.target.value))}
-                  value={area ?? ""}
+                  onChange={(e) => setBuildingArea(Number(e.target.value))}
+                  value={buildingArea ?? ""}
                 ></StyledInput>
               </div>
               <div
@@ -234,8 +327,8 @@ function ContractCreateNewPage() {
                   fontSize={1.2}
                   lineHeight="100%"
                   placeholder="ex) 철근콘크리트"
-                  onChange={(e) => setStructure(e.target.value)}
-                  value={structure}
+                  onChange={(e) => setBuildingConstructure(e.target.value)}
+                  value={buildingConstructure}
                 ></StyledInput>
               </div>
               <div
@@ -251,8 +344,8 @@ function ContractCreateNewPage() {
                   fontSize={1.2}
                   lineHeight="100%"
                   placeholder="ex) 오피스텔, 아파트"
-                  onChange={(e) => setPurpose(e.target.value)}
-                  value={purpose}
+                  onChange={(e) => setBuildingType(e.target.value)}
+                  value={buildingType}
                 ></StyledInput>
               </div>
             </div>
@@ -290,8 +383,8 @@ function ContractCreateNewPage() {
                   fontSize={1.2}
                   lineHeight="100%"
                   placeholder="계약금 금액을 입력해주세요"
-                  onChange={(e) => setDownPayment(Number(e.target.value))}
-                  value={downPayment ?? ""}
+                  onChange={(e) => setPayment(Number(e.target.value))}
+                  value={payment ?? ""}
                 ></StyledInput>
               </div>
               <div
@@ -307,8 +400,10 @@ function ContractCreateNewPage() {
                   fontSize={1.2}
                   lineHeight="100%"
                   placeholder="잔금 금액을 입력해주세요"
-                  onChange={(e) => setBalance(Number(e.target.value))}
-                  value={balance ?? ""}
+                  onChange={(e) =>
+                    setIntermediatePayment(Number(e.target.value))
+                  }
+                  value={intermediatePayment ?? ""}
                 ></StyledInput>
               </div>
               <div
@@ -324,8 +419,8 @@ function ContractCreateNewPage() {
                   fontSize={1.2}
                   lineHeight="100%"
                   placeholder="웰세 금액을 입력해주세요"
-                  onChange={(e) => setRent(Number(e.target.value))}
-                  value={rent ?? ""}
+                  onChange={(e) => setMonthlyRent(Number(e.target.value))}
+                  value={monthlyRent ?? ""}
                 ></StyledInput>
               </div>
               <div
@@ -351,19 +446,19 @@ function ContractCreateNewPage() {
               </div>
             </div>
           </div>
-        </div>
-        <div className="flex flex-col gap-4 mb-12 items-center text-[1.2rem] text-[#6000ff] font-medium">
-          <SubmitButton
-            width={30}
-            height={5}
-            fontSize={1.8}
-            fontWeight={500}
-            disabled={true}
-          >
-            다음
-          </SubmitButton>
-          <span onClick={() => router.push("step2")}>skip→</span>
-        </div>
+          <div className="flex flex-col gap-4 mb-12 items-center text-[1.2rem] text-[#6000ff] font-medium">
+            <SubmitButton
+              width={30}
+              height={5}
+              fontSize={1.8}
+              fontWeight={500}
+              disabled={!isValidAll}
+            >
+              다음
+            </SubmitButton>
+            <button>skip →</button>
+          </div>
+        </form>
       </main>
       <Modal
         isOpen={modalOpen}
@@ -412,6 +507,7 @@ function ContractCreateNewPage() {
               {tabContents[activeIndex]}
             </div>
             <button
+              type="button"
               onClick={() => {
                 tabsSetFunction[activeIndex]("");
                 activeIndex % 5 === 4
@@ -420,16 +516,18 @@ function ContractCreateNewPage() {
               }}
               className="text-main"
             >
-              skip→
+              skip →
             </button>
           </div>
         </div>
         <SubmitButton
+          type="button"
           className="justify-self-end"
           width="100%"
           height={6}
           fontSize={1.8}
           fontWeight={500}
+          // 면적 제외 숫자는 0도 true로 변경
           disabled={!Boolean(tabsVariable[activeIndex])}
           borderRadius="none"
           onClick={() =>

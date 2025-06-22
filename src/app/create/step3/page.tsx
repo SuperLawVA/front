@@ -14,19 +14,61 @@ import WarningIcon from "@/components/icons/Warning";
 import CheckedIcon from "@/components/icons/Checked";
 import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 import CrossIcon from "@/components/icons/Cross";
+import axios from "axios";
 
 function ContractCreateNewPage() {
   const router = useRouter();
+
   const [inputValue, setInputValue] = useState<string>("");
-  const [valueArray, setValueArray] = useState<string[]>([]);
+  const [userQuery, setUserQuery] = useState<string[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (!sessionStorage.getItem("contractData")) {
+      router.replace("/create");
+    } else if (!sessionStorage.getItem("articleAgree")) {
+      router.replace("step2");
+    }
+    const stored = sessionStorage.getItem("userQuery");
+    if (stored) {
+      try {
+        setUserQuery(JSON.parse(stored));
+      } catch (err) {
+        console.error("Failed to parse contractData:", err);
+      }
+    }
+  }, [router]);
+
+  const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const contractData = sessionStorage.getItem("contractData");
+
+    if (!contractData) return;
+    const parsed = JSON.parse(contractData);
+    parsed.userQuery = userQuery;
+
+    try {
+      const response = await axios.post("/api/create/generate", parsed);
+      console.log("Generated:", response.data);
+      ["contractData", "articleAgree", "contractTypeQuery"].forEach((v) =>
+        sessionStorage.removeItem(v)
+      );
+      router.push("/create/step4");
+    } catch (error) {
+      console.error("Generate error:", error);
+    }
+  };
+
+  useEffect(() => {
+    sessionStorage.setItem("userQuery", JSON.stringify(userQuery));
+  }, [userQuery]);
 
   useEffect(() => {
     if (modalOpen && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [modalOpen, valueArray]);
+  }, [modalOpen, userQuery]);
 
   return (
     <>
@@ -35,7 +77,7 @@ function ContractCreateNewPage() {
       </div>
       <BackHeader>임대차 계약서 작성</BackHeader>
       <main className="flex flex-col items-center mt-[3rem] gap-12 h-[calc(100%-11rem)]">
-        <div>
+        <div className="text-center">
           <div className="flex justify-center items-center">
             <span className="w-full text-[2.4rem] font-bold">
               말로만 한 약속은 없던 일이 돼요.
@@ -50,7 +92,10 @@ function ContractCreateNewPage() {
             특약: 기본 계약서에 없는 추가 약속
           </span>
         </div>
-        <div className="h-full flex flex-col items-center w-full gap-4 text-[1.6rem] font-bold ">
+        <form
+          onSubmit={handleGenerate}
+          className="h-full flex flex-col items-center w-full gap-4 text-[1.6rem] font-bold "
+        >
           4. 특약 사항
           <div className="px-10 py-12 w-full flex-1 bg-white rounded-t-[50px] backdrop-opacity-70 flex flex-col gap-12 items-center text-[1.8rem] font-semibold">
             <div className="w-full flex flex-col justify-center items-center gap-4">
@@ -73,8 +118,8 @@ function ContractCreateNewPage() {
             </div>
             <ul className="w-full flex flex-col justify-center items-center gap-4">
               당신의 니즈를 잊지 않도록
-              {valueArray.length
-                ? valueArray.map((value, index) => (
+              {userQuery.length
+                ? userQuery.map((value, index) => (
                     <li
                       key={index}
                       className="w-full h-20 px-12 flex justify-between items-center text-[1.4rem] text-[#3a3a40] font-medium border border-[#d7d7d7] rounded-[50px] bg-white"
@@ -87,7 +132,7 @@ function ContractCreateNewPage() {
                       </div>
                       <div
                         onClick={() =>
-                          setValueArray(valueArray.filter((v, i) => i != index))
+                          setUserQuery(userQuery.filter((v, i) => i != index))
                         }
                       >
                         <CrossIcon />
@@ -96,6 +141,7 @@ function ContractCreateNewPage() {
                   ))
                 : ""}
               <SubmitButton
+                type="button"
                 width="100%"
                 height={5}
                 background="white"
@@ -112,7 +158,7 @@ function ContractCreateNewPage() {
                   ex&#41; 고양이 키우고 싶어요, 주차 공간이 필요해요
                 </span>
               </SubmitButton>
-              {valueArray.length === 0 ? (
+              {userQuery.length === 0 ? (
                 <span className="text-[10px] font-normal bg-gradient-to-br from-[rgba(96,0,255,0.7)] to-[rgba(225,0,255,0.7)] bg-clip-text text-transparent">
                   위 버튼을 눌러 요구사항을 입력해 보세요!
                 </span>
@@ -125,15 +171,15 @@ function ContractCreateNewPage() {
               height={5.5}
               fontSize={1.8}
               fontWeight={500}
-              disabled={valueArray.length === 0}
+              disabled={userQuery.length === 0}
               className="flex justify-center items-center mb-12 mt-auto"
-              icon={<MagicTwoStarIcon />}
-              onClick={() => router.push("step4")}
+              icon={<MagicTwoStarIcon color="white" />}
+              // onClick={() => router.push("step4")}
             >
               생성하기
             </SubmitButton>
           </div>
-        </div>
+        </form>
       </main>
       <Modal
         isOpen={modalOpen}
@@ -143,8 +189,8 @@ function ContractCreateNewPage() {
           <ul
             className={`absolute bottom-[29rem] w-full flex flex-col justify-center items-center gap-4`}
           >
-            {valueArray.length
-              ? valueArray.map((value, index) => (
+            {userQuery.length
+              ? userQuery.map((value, index) => (
                   <li
                     key={index}
                     className="w-[calc(100%-5rem)] h-20 px-12 flex justify-between items-center text-[1.4rem] text-[#3a3a40] font-medium border border-[#d7d7d7] rounded-[50px] bg-white"
@@ -157,7 +203,7 @@ function ContractCreateNewPage() {
                     </div>
                     <div
                       onClick={() =>
-                        setValueArray(valueArray.filter((v, i) => i != index))
+                        setUserQuery(userQuery.filter((v, i) => i != index))
                       }
                     >
                       <CrossIcon />
@@ -191,7 +237,7 @@ function ContractCreateNewPage() {
           </div>
           <button
             className={`flex items-center justify-center gap-4 text-[1.4rem] font-medium${
-              valueArray.length === 0
+              userQuery.length === 0
                 ? " text-[rgba(128,128,128,0.55)] cursor-not-allowed pointer-events-none"
                 : " text-main"
             }`}
@@ -201,7 +247,7 @@ function ContractCreateNewPage() {
               width={1.6}
               height={1.6}
               color={
-                valueArray.length === 0 ? "rgba(128,128,128,0.55)" : "#6000ff"
+                userQuery.length === 0 ? "rgba(128,128,128,0.55)" : "#6000ff"
               }
             />
             완료
@@ -216,7 +262,7 @@ function ContractCreateNewPage() {
           disabled={inputValue === ""}
           borderRadius="none"
           onClick={() => {
-            setValueArray([...valueArray, inputValue]);
+            setUserQuery([...userQuery, inputValue]);
             setInputValue("");
           }}
         >

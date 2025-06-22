@@ -9,7 +9,7 @@ import SubmitButton from "@/components/SubmitButton";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-function StartPage() {
+function CreatePage() {
   const router = useRouter();
   const [modalOpen, setModalOpen] = useState(false);
   const [selected, setSelected] = useState<number | null>(null);
@@ -79,7 +79,7 @@ function StartPage() {
                 <li
                   key={index}
                   onClick={() => {
-                    sessionStorage.setItem("start", "true");
+                    sessionStorage.setItem("contract", "true");
                     router.push(`create/step1/?rent=${Boolean(index)}`);
                   }}
                   className="flex gap-4 items-center justify-between text-[#4e4e4e]"
@@ -96,4 +96,4 @@ function StartPage() {
   );
 }
 
-export default StartPage;
+export default CreatePage;
