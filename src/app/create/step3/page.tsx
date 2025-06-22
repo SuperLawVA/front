@@ -5,16 +5,13 @@ import SubmitButton from "@/components/SubmitButton";
 import StatusIcon from "@/components/icons/Status";
 import { useEffect, useRef, useState } from "react";
 import BackHeader from "@/components/BackHeader";
-import StyledInput from "@/components/StyledInput";
 import Modal from "@/components/Modal";
-import ArrowLeftIcon from "@/components/icons/ArrowLeft";
-import ArrowRightIcon from "@/components/icons/ArrowRight";
 import StyledDiv from "@/components/StyledDiv";
-import WarningIcon from "@/components/icons/Warning";
 import CheckedIcon from "@/components/icons/Checked";
 import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 import CrossIcon from "@/components/icons/Cross";
 import axios from "axios";
+import { useCreateStore } from "@/store/useStore";
 
 function ContractCreateNewPage() {
   const router = useRouter();
@@ -24,16 +21,17 @@ function ContractCreateNewPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
+  const contractData = useCreateStore.getState();
   useEffect(() => {
-    if (!sessionStorage.getItem("contractData")) {
+    if (!contractData.contractType) {
       router.replace("/create");
-    } else if (!sessionStorage.getItem("articleAgree")) {
+    } else if (!contractData.articleAgree) {
       router.replace("step2");
     }
-    const stored = sessionStorage.getItem("userQuery");
+    const stored = contractData.userQuery;
     if (stored) {
       try {
-        setUserQuery(JSON.parse(stored));
+        setUserQuery(stored);
       } catch (err) {
         console.error("Failed to parse contractData:", err);
       }
@@ -42,18 +40,14 @@ function ContractCreateNewPage() {
 
   const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const contractData = sessionStorage.getItem("contractData");
-
     if (!contractData) return;
-    const parsed = JSON.parse(contractData);
-    parsed.userQuery = userQuery;
+    useCreateStore.setState({ userQuery });
 
     try {
-      const response = await axios.post("/api/create/generate", parsed);
-      console.log("Generated:", response.data);
-      ["contractData", "articleAgree", "contractTypeQuery"].forEach((v) =>
-        sessionStorage.removeItem(v)
-      );
+      const response = await axios.post("/api/create/generate", {
+        contractData,
+      });
+      // sessionStorage.removeItem("createStore");
       router.push("/create/step4");
     } catch (error) {
       console.error("Generate error:", error);
@@ -61,7 +55,7 @@ function ContractCreateNewPage() {
   };
 
   useEffect(() => {
-    sessionStorage.setItem("userQuery", JSON.stringify(userQuery));
+    useCreateStore.setState({ userQuery });
   }, [userQuery]);
 
   useEffect(() => {

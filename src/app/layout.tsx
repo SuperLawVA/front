@@ -37,10 +37,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // if (typeof window !== "undefined") {
-  //   // useUserActionLogger({ userId: userId });
-  //   initTokenAutoRefresh();
-  // }
   return (
     <html
       lang="ko"
@@ -50,7 +46,6 @@ export default function RootLayout({
         // className={`${pretendard.variable} ${geistSans.variable} ${geistMono.variable} antialiased w-full`}
         className="subpixel-antialiased w-full"
       >
-        <AuthInitializerClient />
         <UserActionLoggerClient userId={userId as string} />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full">
           {children}

@@ -9,6 +9,7 @@ import StyledInput from "@/components/StyledInput";
 import Modal from "@/components/Modal";
 import ArrowLeftIcon from "@/components/icons/ArrowLeft";
 import ArrowRightIcon from "@/components/icons/ArrowRight";
+import { useCreateStore } from "@/store/useStore";
 
 function ContractCreateNewPage() {
   const router = useRouter();
@@ -24,7 +25,7 @@ function ContractCreateNewPage() {
   const [buildingConstructure, setBuildingConstructure] = useState<string>("");
   const [buildingType, setBuildingType] = useState<string>("");
   const [deposit, setDeposit] = useState<number | "">("");
-  const [payment, setPayment] = useState<number | "">("");
+  const [downPayment, setDownPayment] = useState<number | "">("");
   const [intermediatePayment, setIntermediatePayment] = useState<number | "">(
     ""
   );
@@ -32,28 +33,26 @@ function ContractCreateNewPage() {
   const [contractDate, setContractDate] = useState<Date | "">("");
 
   useEffect(() => {
-    const stored = sessionStorage.getItem("contractData");
-    if (stored) {
+    if (!searchParams.get("rent")) {
+      router.replace("/create");
+    }
+    const { contractType, dates, property, payment } =
+      useCreateStore.getState();
+    if (contractType) {
       try {
-        const parsed = JSON.parse(stored);
-
         // 안전하게 값 세팅 (optional chaining 사용)
-        setAddress(parsed?.property?.address ?? "");
-        setDetailAddress(parsed?.property?.detailAddress ?? "");
-        setBuildingArea(parsed?.property?.building?.buildingArea ?? "");
-        setBuildingConstructure(
-          parsed?.property?.building?.buildingConstructure ?? ""
-        );
-        setBuildingType(parsed?.property?.building?.buildingType ?? "");
-        setDeposit(parsed?.property?.payment?.deposit ?? "");
-        setPayment(parsed?.property?.payment?.payment ?? "");
-        setIntermediatePayment(
-          parsed?.property?.building?.intermediatePayment ?? ""
-        );
-        setMonthlyRent(parsed?.property?.payment?.monthlyRent ?? "");
+        setAddress(property?.address ?? "");
+        setDetailAddress(property?.detailAddress ?? "");
+        setBuildingArea(property?.building?.buildingArea ?? "");
+        setBuildingConstructure(property?.building?.buildingConstructure ?? "");
+        setBuildingType(property?.building?.buildingType ?? "");
+        setDeposit(payment?.deposit ?? "");
+        setDownPayment(payment?.downPayment ?? "");
+        setIntermediatePayment(payment?.intermediatePayment ?? "");
+        setMonthlyRent(payment?.monthlyRent ?? "");
 
-        if (parsed?.dates?.contractDate) {
-          setContractDate(new Date(parsed.dates.contractDate));
+        if (dates?.contractDate) {
+          setContractDate(new Date(dates.contractDate));
         }
       } catch (err) {
         console.error("Failed to parse contractData:", err);
@@ -68,7 +67,7 @@ function ContractCreateNewPage() {
     buildingConstructure,
     buildingType,
     deposit,
-    payment,
+    downPayment,
     intermediatePayment,
     monthlyRent,
     contractDate,
@@ -80,7 +79,7 @@ function ContractCreateNewPage() {
     setBuildingConstructure,
     setBuildingType,
     setDeposit,
-    setPayment,
+    setDownPayment,
     setIntermediatePayment,
     setMonthlyRent,
     setContractDate,
@@ -104,27 +103,23 @@ function ContractCreateNewPage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const contractData = {
-      contractType: contractTypeQuery ? "월세" : "전세",
-      dates: { contractDate },
-      property: {
+    const contractType = contractTypeQuery ? "월세" : "전세",
+      dates = { contractDate },
+      property = {
         address,
         detailAddress,
         building: {
           buildingConstructure,
           buildingType,
           buildingArea,
-          intermediatePayment,
         },
-        payment: { deposit, payment, monthlyRent },
       },
-    };
+      payment = { deposit, downPayment, intermediatePayment, monthlyRent };
 
-    // ✔️ sessionStorage에 JSON으로 직렬화하여 저장
-    sessionStorage.setItem("contractData", JSON.stringify(contractData));
-    sessionStorage.setItem("contractTypeQuery", `${contractTypeQuery}`);
+    // sessionStorage에 JSON으로 직렬화하여 저장
+    useCreateStore.setState({ contractType, dates, property, payment });
 
-    // ✔️ step2로 이동
+    // step2로 이동
     router.push(`step2/?rent=${contractTypeQuery}`);
   };
 
@@ -212,8 +207,8 @@ function ContractCreateNewPage() {
       type="number"
       name=""
       id=""
-      onChange={(e) => setPayment(Number(e.target.value))}
-      value={payment ?? ""}
+      onChange={(e) => setDownPayment(Number(e.target.value))}
+      value={downPayment ?? ""}
       ref={inputRef}
       className="w-full h-full px-12 text-[1.2rem] font-medium placeholder:text-subText"
     />,
@@ -383,8 +378,8 @@ function ContractCreateNewPage() {
                   fontSize={1.2}
                   lineHeight="100%"
                   placeholder="계약금 금액을 입력해주세요"
-                  onChange={(e) => setPayment(Number(e.target.value))}
-                  value={payment ?? ""}
+                  onChange={(e) => setDownPayment(Number(e.target.value))}
+                  value={downPayment ?? ""}
                 ></StyledInput>
               </div>
               <div

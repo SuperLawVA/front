@@ -3,6 +3,7 @@ import axios from "axios";
 import { logEvent } from "./logger";
 import { getDeviceType } from "./useUserActionLogger";
 import { usePathname } from "next/navigation";
+import { cookies } from "next/headers";
 
 const api = axios.create({
   baseURL: "/api",
@@ -16,7 +17,7 @@ api.interceptors.request.use((config) => {
 });
 
 // 응답 인터셉터
-const userId = sessionStorage.getItem("userId") || "none";
+const userId = String((await cookies()).get("userId")) || "none";
 const userAgent = navigator.userAgent;
 const deviceType = getDeviceType();
 const width = window.innerWidth;

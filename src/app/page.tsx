@@ -15,6 +15,9 @@ import { Contract, RecentChat } from "./types/Main";
 import ChatIcon from "@/components/icons/Chat";
 import ArrowRightIcon from "@/components/icons/ArrowRight";
 import { logout } from "@/lib/logout";
+import { useAuthStore } from "@/store/useStore";
+import axios from "axios";
+import { persist } from "zustand/middleware";
 
 interface QuickButtonProps {
   bgc: string;
@@ -54,40 +57,42 @@ function QuickButton({
 function MainPage() {
   const [userName, setUserName] = useState<string | null>(null);
   const [notification, setNotification] = useState<number[]>([]);
-  const [contract, setContract] = useState<Contract | null>(null);
+  const [contractArray, setContractArray] = useState<Contract[]>([]);
   const [recentChat, setRecentChat] = useState<RecentChat[]>([]);
 
   // 임시 로그아웃
   const handleLogout = async () => {
-    await logout();
-    router.push("/login"); // 로그아웃 후 로그인 페이지로 이동
+    useAuthStore.persist.clearStorage();
+    sessionStorage.clear();
+    await axios.post("/api/logout");
+    sessionStorage.setItem("start", "true");
+    router.replace("/login"); // 로그아웃 후 로그인 페이지로 이동
+  };
+  const getUserData = async () => {
+    const response = await axios.post("/api/user");
+
+    if (response) {
+      const { userName, notification, contractArray, recentChat } =
+        response.data;
+      useAuthStore.setState({ ...response.data });
+      setUserName(userName);
+      setNotification(notification);
+      setContractArray(contractArray);
+      setRecentChat(recentChat);
+    }
   };
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      setUserName(sessionStorage.getItem("userName"));
+    const { userName, notification, contractArray, recentChat } =
+      useAuthStore.getState();
 
-      // JSON.parse는 실패할 수 있으니 try-catch 사용 권장
-      try {
-        const notiStr = sessionStorage.getItem("notification");
-        setNotification(notiStr ? JSON.parse(notiStr) : []);
-      } catch {
-        setNotification([]);
-      }
-
-      try {
-        const contractStr = sessionStorage.getItem("contract");
-        setContract(contractStr ? JSON.parse(contractStr) : null);
-      } catch {
-        setContract(null);
-      }
-
-      try {
-        const recentChatStr = sessionStorage.getItem("recentChat");
-        setRecentChat(recentChatStr ? JSON.parse(recentChatStr) : []);
-      } catch {
-        setRecentChat([]);
-      }
+    if (userName) {
+      setUserName(userName);
+      setNotification(notification);
+      setContractArray(contractArray);
+      setRecentChat(recentChat);
+    } else {
+      getUserData();
     }
   }, []);
 
@@ -187,7 +192,7 @@ function MainPage() {
           <div className="self-start w-full font-semibold text-[1.8rem] px-8 flex flex-col gap-4">
             내 계약서
             <div className="flex flex-col justify-center items-center gap-4">
-              {!contract ? (
+              {contractArray?.length === 0 ? (
                 <>
                   <div
                     onClick={() => router.push("upload")}
@@ -201,7 +206,7 @@ function MainPage() {
                   </span>
                 </>
               ) : (
-                <div
+                <ul
                   onClick={() => router.push("contract")}
                   className="flex items-center gap-4 py-4 px-8 w-full border-[1.5px] border-[#c6c6c8] rounded-[20px] text-[1.2rem] font-medium"
                 >
@@ -209,41 +214,51 @@ function MainPage() {
                     bgc="rgba(96, 0, 255, 0.5)"
                     icon={<DocumentIcon />}
                   />
-                  <div className="flex justify-between w-full">
-                    <div className="flex flex-col gap-[0.2rem] text-[#737373] text-[0.8rem] font-medium">
-                      <span className="text-[1.2rem] text-black">
-                        {contract.title}
-                      </span>
-                      <span className="text-[1rem]">{contract.address}</span>
-                      <span>{contract.createdAt} 등록</span>
-                    </div>
-                    <SubmitButton
-                      width={4}
-                      height={2}
-                      fontSize={0.8}
-                      fontWeight={500}
-                      fontColor="#3c82f6"
-                      borderRadius={"50px"}
-                      background="#eff6ff"
-                      borderColor="#3c82f6"
-                    >
-                      {contract.state}
-                    </SubmitButton>
-                  </div>
-                  {/* <SubmitButton
-                    width={10}
-                    height={3}
-                    fontSize={1}
-                    fontWeight={500}
-                    fontColor="#6000FF"
-                    borderRadius={"50px"}
-                    background="#ffffff"
-                    borderColor="#6000FF"
-                  >
-                    추가하기
-                  </SubmitButton> */}
-                </div>
+                  {contractArray.map((contract) => {
+                    return (
+                      <li
+                        key={contract._id}
+                        className="flex justify-between w-full"
+                      >
+                        <div className="flex flex-col gap-[0.2rem] text-[#737373] text-[0.8rem] font-medium">
+                          <span className="text-[1.2rem] text-black">
+                            {contract.title}
+                          </span>
+                          <span className="text-[1rem]">
+                            {contract.address}
+                          </span>
+                          <span>{contract.createdAt} 등록</span>
+                        </div>
+                        <SubmitButton
+                          width={4}
+                          height={2}
+                          fontSize={0.8}
+                          fontWeight={500}
+                          fontColor="#3c82f6"
+                          borderRadius={"50px"}
+                          background="#eff6ff"
+                          borderColor="#3c82f6"
+                        >
+                          {contract.state}
+                        </SubmitButton>
+                      </li>
+                    );
+                  })}
+                </ul>
               )}
+              <SubmitButton
+                width={10}
+                height={3}
+                fontSize={1}
+                fontWeight={500}
+                fontColor="#6000FF"
+                borderRadius={"50px"}
+                background="#ffffff"
+                borderColor="#6000FF"
+                onClick={() => router.push("upload")}
+              >
+                추가하기
+              </SubmitButton>
             </div>
           </div>
           <div className="self-start w-full font-semibold text-[1.8rem] px-8 flex flex-col gap-4">

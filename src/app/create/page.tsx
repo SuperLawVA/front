@@ -79,7 +79,6 @@ function CreatePage() {
                 <li
                   key={index}
                   onClick={() => {
-                    sessionStorage.setItem("contract", "true");
                     router.push(`create/step1/?rent=${Boolean(index)}`);
                   }}
                   className="flex gap-4 items-center justify-between text-[#4e4e4e]"

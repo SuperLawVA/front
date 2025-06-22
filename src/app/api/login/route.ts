@@ -50,15 +50,18 @@ export async function POST(req: NextRequest) {
     // Next.js의 서버 쿠키에 저장 (HttpOnly 권장)
     return NextResponse.json(
       {
-        message: "Login success",
+        token: "tokenValue",
         userName: "아무개",
         notification: [0, 1, 2],
-        contract: {
-          title: "월세 임대차 계약서",
-          state: "진행중",
-          address: "서울시 강남구 테헤란로 123",
-          createdAt: "2025.03.22",
-        },
+        contractArray: [
+          {
+            _id: "asdasd",
+            title: "월세 임대차 계약서",
+            state: "진행중",
+            address: "서울시 강남구 테헤란로 123",
+            createdAt: "2025.03.22",
+          },
+        ],
         recentChat: [
           { _id: "1", title: "집 주인이 보증금 안 돌려줘요." },
           { _id: "2", title: "전입 신고 방법 알려줘" },

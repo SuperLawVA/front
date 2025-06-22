@@ -5,13 +5,10 @@ import SubmitButton from "@/components/SubmitButton";
 import StatusIcon from "@/components/icons/Status";
 import { useEffect, useState } from "react";
 import BackHeader from "@/components/BackHeader";
-import StyledInput from "@/components/StyledInput";
-import Modal from "@/components/Modal";
-import ArrowLeftIcon from "@/components/icons/ArrowLeft";
-import ArrowRightIcon from "@/components/icons/ArrowRight";
 import StyledDiv from "@/components/StyledDiv";
 import WarningIcon from "@/components/icons/Warning";
 import CheckedIcon from "@/components/icons/Checked";
+import { useCreateStore } from "@/store/useStore";
 
 function ContractCreateNewPage() {
   const searchParams = useSearchParams();
@@ -19,12 +16,11 @@ function ContractCreateNewPage() {
 
   const router = useRouter();
   useEffect(() => {
-    const contractType = sessionStorage.getItem("contractType");
-
-    if (!sessionStorage.getItem("contractData")) {
+    const contractType = useCreateStore.getState().contractType;
+    if (!contractType) {
       router.replace("/create");
-    } else if (sessionStorage.getItem("contractType") !== contractTypeQuery) {
-      router.replace(`step2/?rent=${contractType}`);
+    } else if (contractType !== contractTypeQuery) {
+      router.replace(`step2/?rent=${contractTypeQuery}`);
     }
   }, [router]);
 
@@ -161,7 +157,8 @@ function ContractCreateNewPage() {
             disabled={disable}
             className="mb-12"
             onClick={() => {
-              sessionStorage.setItem("articleAgree", "true");
+              // sessionStorage.setItem("articleAgree", "true");
+              useCreateStore.setState({ articleAgree: "true" });
               router.push("step3");
             }}
           >
