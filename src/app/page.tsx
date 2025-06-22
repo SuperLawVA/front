@@ -14,10 +14,8 @@ import MagnifyingGlassIcon from "@/components/icons/MagnifyingGlass";
 import { Contract, RecentChat } from "./types/Main";
 import ChatIcon from "@/components/icons/Chat";
 import ArrowRightIcon from "@/components/icons/ArrowRight";
-import { logout } from "@/lib/logout";
 import { useAuthStore } from "@/store/useStore";
 import axios from "axios";
-import { persist } from "zustand/middleware";
 
 interface QuickButtonProps {
   bgc: string;
