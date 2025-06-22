@@ -424,13 +424,14 @@ function AnalysisResultPage() {
       ) : (
         <div
           key={index}
-          className={`inline-block w-[90%] h-full py-8 mx-2${
+          className={`inline-block w-[90%] h-full py-8 ${
             index === articleFalseArray[0]
-              ? " ml-[6.5rem]"
+              ? "ml-[6.5rem] mr-2"
               : index === articleFalseArray.at(-1)
-              ? " mr-[6.5rem]"
-              : ""
-          } rounded-[40px] snap-center align-top bg-white overflow-y-auto max-h-full`}
+              ? "ml-2 mr-[6.5rem]"
+              : "mx-2"
+          } rounded-[40px] snap-center align-top bg-white overflow-y-auto max-h-full
+        `}
         >
           <div className="flex flex-col justify-center items-center px-8">
             <div className="w-full flex items-center text-[1.4rem] font-medium text-[#FF9500]">
