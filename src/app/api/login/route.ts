@@ -45,7 +45,14 @@ export async function POST(req: NextRequest) {
       sameSite: "strict",
       path: "/",
       // maxAge: 60 * 60, // 1시간
-      maxAge: 60 * 60 * 60, // 1시간
+    });
+
+    (await cookies()).set("userId", "", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      path: "/",
+      // maxAge: 60 * 60, // 1시간
     });
     // Next.js의 서버 쿠키에 저장 (HttpOnly 권장)
     return NextResponse.json(
