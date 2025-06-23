@@ -6,16 +6,18 @@ import DocumentIcon from "@/components/icons/Document";
 import Modal from "@/components/Modal";
 import StyledDiv from "@/components/StyledDiv";
 import SubmitButton from "@/components/SubmitButton";
+import { useCreateStore } from "@/store/useStore";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 function CreatePage() {
   const router = useRouter();
   const [modalOpen, setModalOpen] = useState(false);
-  const [selected, setSelected] = useState<number | null>(null);
-  const handleSelect = (index: number) => {
-    setSelected((prev) => (prev === index ? null : index));
-  };
+  // const [selected, setSelected] = useState<number | null>(null);
+  // const handleSelect = (index: number) => {
+  //   setSelected((prev) => (prev === index ? null : index));
+  // };
 
   return (
     <>
@@ -38,7 +40,9 @@ function CreatePage() {
           <br />
           도와드릴게요!
         </div>
-        <img
+        <Image
+          width={99999}
+          height={99999}
           src="/createStart.png"
           alt="Main Icon"
           className="w-[26.5rem] h-[26.5rem] mt-16"
@@ -79,7 +83,10 @@ function CreatePage() {
                 <li
                   key={index}
                   onClick={() => {
-                    router.push(`create/step1/?rent=${Boolean(index)}`);
+                    useCreateStore.setState({
+                      contractType: Boolean(index) ? "월세" : "전세",
+                    });
+                    router.push("create/step1");
                   }}
                   className="flex gap-4 items-center justify-between text-[#4e4e4e]"
                 >

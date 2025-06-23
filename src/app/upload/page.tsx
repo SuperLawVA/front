@@ -9,6 +9,7 @@ import PictureIcon from "@/components/icons/Picture";
 import Modal from "@/components/Modal";
 import StyledDiv from "@/components/StyledDiv";
 import SubmitButton from "@/components/SubmitButton";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -17,9 +18,6 @@ function StartPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [step, setStep] = useState<number>(0);
 
-  const handleClick = () => {
-    router.push("/login");
-  };
   return (
     <>
       <main className="flex flex-col items-center h-full bg-white">
@@ -39,7 +37,9 @@ function StartPage() {
           <br />
           소중하니까
         </div>
-        <img
+        <Image
+          width={99999}
+          height={99999}
           src="/uploadPage.png"
           alt="Main Icon"
           className="w-[26.5rem] h-[26.5rem] mt-16"

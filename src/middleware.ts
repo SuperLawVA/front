@@ -1,7 +1,7 @@
 // src/middleware.ts
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import jwt from "jsonwebtoken"; // (옵션) JWT 디코딩용 - 예시
+// import jwt from "jsonwebtoken"; // (옵션) JWT 디코딩용 - 예시
 
 export function middleware(request: NextRequest) {
   // 1️⃣ 현재 요청 URL 경로 추출

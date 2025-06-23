@@ -16,6 +16,7 @@ import ChatIcon from "@/components/icons/Chat";
 import ArrowRightIcon from "@/components/icons/ArrowRight";
 import { useAuthStore } from "@/store/useStore";
 import axios from "axios";
+import Image from "next/image";
 
 interface QuickButtonProps {
   bgc: string;
@@ -54,7 +55,7 @@ function QuickButton({
 
 function MainPage() {
   const [userName, setUserName] = useState<string | null>(null);
-  const [notification, setNotification] = useState<number[]>([]);
+  // const [notification, setNotification] = useState<number[]>([]);
   const [contractArray, setContractArray] = useState<Contract[]>([]);
   const [recentChat, setRecentChat] = useState<RecentChat[]>([]);
 
@@ -70,23 +71,23 @@ function MainPage() {
     const response = await axios.post("/api/user");
 
     if (response) {
-      const { userName, notification, contractArray, recentChat } =
-        response.data;
+      // const { userName, notification, contractArray, recentChat } =
+      const { userName, contractArray, recentChat } = response.data;
       useAuthStore.setState({ ...response.data });
       setUserName(userName);
-      setNotification(notification);
+      // setNotification(notification);
       setContractArray(contractArray);
       setRecentChat(recentChat);
     }
   };
 
   useEffect(() => {
-    const { userName, notification, contractArray, recentChat } =
-      useAuthStore.getState();
+    // const { userName, notification, contractArray, recentChat } =
+    const { userName, contractArray, recentChat } = useAuthStore.getState();
 
     if (userName) {
       setUserName(userName);
-      setNotification(notification);
+      // setNotification(notification);
       setContractArray(contractArray);
       setRecentChat(recentChat);
     } else {
@@ -105,7 +106,13 @@ function MainPage() {
       <header className="w-full flex justify-center items-center h-24">
         <div className="w-full bg-white border border-inputBox rounded-[50px] flex justify-between items-center p-8 mx-6 gap-4">
           <span className="flex gap-3">
-            <img src="logo.svg" className="w-12" alt="" />
+            <Image
+              width={1}
+              height={1}
+              src="logo.svg"
+              className="w-12"
+              alt=""
+            />
             {/* <span className="font-pretendard font-semibold text-[2rem] leading-[120%] tracking-[-0.04em] bg-gradient-to-r from-[#6000FF] to-[#E100FF] bg-clip-text text-transparent"> */}
             {/* 임시 로그 아웃 구현 */}
             <span
@@ -125,7 +132,10 @@ function MainPage() {
       <main className="w-full flex flex-col items-center h-auto">
         <div className="self-start mx-16 my-20 text-[2rem] font-bold">
           {userName} 님의 고민
-          <br />'<span className="text-main">로바</span>'에서 도와드릴게요!
+          <br />
+          {"'"}
+          <span className="text-main">로바</span>
+          {"'"}에서 도와드릴게요!
         </div>
         <div className="w-full px-8 py-10 gap-12 rounded-t-[50px] bg-white flex flex-col items-center">
           <form className="w-full h-full pl-6 pr-4 flex items-center justify-between gap-4 bg-inputBox rounded-[50px]">

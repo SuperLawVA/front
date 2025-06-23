@@ -1,3 +1,4 @@
+// lib/tokenRefreshManager.ts
 import axios from "axios";
 
 // 토큰 갱신을 주기적으로 실행하는 setInterval ID를 저장할 변수
@@ -32,7 +33,7 @@ function startAutoRefresh() {
       } catch {
         // 갱신 실패 시 (예: Refresh Token 만료) 로그아웃 처리
         console.warn("[AutoRefresh] Refresh failed. Logging out.");
-        window.location.href = "/login"; // 로그인 페이지로 이동
+        document.location.href = "/login"; // 로그인 페이지로 이동
       }
     } else {
       // 유저가 5분 이상 비활성 상태면 갱신을 건너뜀 (비활성 시간 로그)
@@ -44,8 +45,8 @@ function startAutoRefresh() {
 // 외부에서 호출할 초기화 함수:
 // 유저 활동 이벤트 리스너 등록 + 자동 갱신 주기 시작
 export function initTokenAutoRefresh() {
-  window.addEventListener("mousemove", updateActivity); // 마우스 이동
-  window.addEventListener("keydown", updateActivity); // 키보드 입력
-  window.addEventListener("scroll", updateActivity); // 스크롤
+  document.addEventListener("mousemove", updateActivity); // 마우스 이동
+  document.addEventListener("keydown", updateActivity); // 키보드 입력
+  document.addEventListener("scroll", updateActivity); // 스크롤
   startAutoRefresh(); // 자동 갱신 타이머 시작
 }

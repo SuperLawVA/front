@@ -5,6 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const userId = (await cookies()).get("userId");
+    console.log(userId);
+    console.log(req);
 
     // try {
     //   // Spring Boot의 로그인 API 호출

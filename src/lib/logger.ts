@@ -10,7 +10,7 @@ export interface LogEntry {
   height: number;
   page: string;
   type: string;
-  data: Record<string, any>;
+  data: Record<string, unknown>; // ✅
   timestamp: string;
 }
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton";
 import StatusIcon from "@/components/icons/Status";
 import { useState } from "react";
@@ -11,9 +10,9 @@ import MapIcon from "@/components/icons/Map";
 import CalendarIcon from "@/components/icons/Calendar";
 import PaymentIcon from "@/components/icons/Payment";
 import AssetIcon from "@/components/icons/Asset";
+import Image from "next/image";
 
 function StartPage() {
-  const router = useRouter();
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const tabs = ["계약 요약", "계약서 정보", "계약 조건", "특약"];
@@ -155,45 +154,39 @@ function StartPage() {
       <div className="flex flex-col gap-2 w-full rounded-[30px] p-12 bg-white font-bold text-[1.2rem]">
         제1조: (목적)
         <span className="font-normal">
-          위의 부동산의 임대차에 한하여 임대인과 임차인은 합의에 의하여
-          임차보증금 및 차임을 아래와 같이 지불하기로 한다.
+          {
+            "위의 부동산의 임대차에 한하여 임대인과 임차인은 합의에 의하여 임차보증금 및 차임을 아래와 같이 지불하기로 한다."
+          }
         </span>
         제1조: (목적)
         <span className="font-normal">
-          위의 부동산의 임대차에 한하여 임대인과 임차인은 합의에 의하여
-          임차보증금 및 차임을 아래와 같이 지불하기로 한다.
+          {
+            "위의 부동산의 임대차에 한하여 임대인과 임차인은 합의에 의하여 임차보증금 및 차임을 아래와 같이 지불하기로 한다."
+          }
         </span>
         제 2조 (존속기간)
         <span className="font-normal">
-          임대인은 위 부동산을 임대차 목적대로 사용․수익할 수 있는 상태로
-          '전입일'까지 임차인에게 인도하며, 임대차 기간은 '계약종료일'까지로
-          한다.
+          {
+            "임대인은 위 부동산을 임대차 목적대로 사용․수익할 수 있는 상태로 '전입일'까지 임차인에게 인도하며, 임대차 기간은 '계약종료일'까지로 한다."
+          }
         </span>
         제 3조 (용도변경 및 전대 등)
         <span className="font-normal">
-          임차인은 임대인의 동의없이 위 부동산의 용도나 구조를 변경하거나
-          전대․임차권 양도 또는 담보제공을 하지 못하며 임대차 목적 이외의 용도로
-          사용할 수 없다.
+          {
+            "임차인은 임대인의 동의없이 위 부동산의 용도나 구조를 변경하거나 전대․임차권 양도 또는 담보제공을 하지 못하며 임대차 목적 이외의 용도로 사용할 수 없다."
+          }
         </span>
         제 4조 (계약의 해지)
         <span className="font-normal">
-          임차인의 차임연체액이 2기의 차임액에 달하거나 제3조를 위반하였을 때
-          임대인은 즉시 본 계약을 해지 할 수 있다.
+          {
+            "임차인의 차임연체액이 2기의 차임액에 달하거나 제3조를 위반하였을 때 임대인은 즉시 본 계약을 해지 할 수 있다."
+          }
         </span>
         제 5조 (계약의 종료)
         <span className="font-normal">
-          임대차계약이 종료된 경우에 임차인은 위 부동산을 원상으로 회복하여
-          임대인에게 계약종료 즉시 반환한다. 이러한 경우 임대인은 보증금을
-          임차인에게 즉시 반환하고, 연체 임대료 또는 손해배상금이 있을 때는
-          이들과 그 이자를 제하고 그 잔액을 반환한다. 임대인은 부동산이 원상으로
-          회복되지 않은 경우 손해배상금을 산정할 때까지 보증금의 반환을 연기할
-          수 있으며 임차인이 손해배상금에 합의한 즉시 그 잔액을 반환한다.
-          임차인은 정당한 사유 없이 임대인의 정당한 부동산의 상태 조사 및
-          손해배상금 산정에 저항할 수 없으며 임대인이 정당한 사유 없이 부동산의
-          상태 조사 및 손해배상금 산정을 하지 않는 경우 자체적으로 부동산의 상태
-          조사 및 손해배상금 산정을 할 수 있으며 임대인이 정당한 사유 없이
-          계약종료일까지 상태 조사 및 손해배상금 산정을 실시하지 않은 경우
-          임차인의 상태 조사 및 손해배상금에 따르도록 한다.
+          {
+            "임대차계약이 종료된 경우에 임차인은 위 부동산을 원상으로 회복하여 임대인에게 계약종료 즉시 반환한다. 이러한 경우 임대인은 보증금을 임차인에게 즉시 반환하고, 연체 임대료 또는 손해배상금이 있을 때는 이들과 그 이자를 제하고 그 잔액을 반환한다. 임대인은 부동산이 원상으로 회복되지 않은 경우 손해배상금을 산정할 때까지 보증금의 반환을 연기할 수 있으며 임차인이 손해배상금에 합의한 즉시 그 잔액을 반환한다. 임차인은 정당한 사유 없이 임대인의 정당한 부동산의 상태 조사 및 손해배상금 산정에 저항할 수 없으며 임대인이 정당한 사유 없이 부동산의 상태 조사 및 손해배상금 산정을 하지 않는 경우 자체적으로 부동산의 상태 조사 및 손해배상금 산정을 할 수 있으며 임대인이 정당한 사유 없이 계약종료일까지 상태 조사 및 손해배상금 산정을 실시하지 않은 경우 임차인의 상태 조사 및 손해배상금에 따르도록 한다."
+          }
         </span>
         제 6조 (계약의 해제)
         <span className="font-normal">
@@ -286,7 +279,13 @@ function StartPage() {
           원본 보기
         </SubmitButton>
         <div className="w-full h-[4.5rem] gap-2 flex justify-center items-center text-white text-[1.6rem] font-semibold bg-gradient-to-br from-[#6000FF] via-[#8a00ff] to-[#E100FF] rounded-[50px] mb-12">
-          <img src="/bot.png" alt="" className="w-12 h-12" />
+          <Image
+            width={1}
+            height={1}
+            src="/bot.png"
+            alt=""
+            className="w-12 h-12"
+          />
           궁금한 점이 있으면 챗봇을 이용해 보세요!
         </div>
       </main>

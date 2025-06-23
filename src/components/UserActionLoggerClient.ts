@@ -1,13 +1,11 @@
 "use client"; // 클라이언트 전용
 
-import { initTokenAutoRefresh } from "@/lib/tokenRefreshManager";
+// import { initTokenAutoRefresh } from "@/lib/tokenRefreshManager";
 import { useUserActionLogger } from "@/lib/useUserActionLogger";
 
-export function UserActionLoggerClient({ userId }: { userId: string }) {
-  if (typeof window !== "undefined") {
-    useUserActionLogger({ userId });
-    // initTokenAutoRefresh();
-  }
+export function UserActionLoggerClient() {
+  useUserActionLogger();
+  // initTokenAutoRefresh();
   // useUserActionLogger({ userId });
   return null; // 화면에 렌더링 X
 }

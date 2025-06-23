@@ -4,7 +4,6 @@ const PictureIcon = ({
   width = 2,
   height = 2,
   color = "#6000FF",
-  className,
 }: IconOptions) => (
   <svg
     width={typeof width == "number" ? width + "rem" : width}

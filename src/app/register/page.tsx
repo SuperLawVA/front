@@ -21,14 +21,17 @@ function RegisterPage() {
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [userName, setUserName] = useState("");
-  const [terms, setTerms] = useState<Boolean[]>([false, false, false]);
+  const [terms, setTerms] = useState<[boolean, boolean, boolean]>([
+    false,
+    false,
+    false,
+  ]);
 
   const handleRequest = async () => {
     try {
       document.getElementsByTagName("input")[1].focus();
       const result = await requestEmailVerification(email);
       setEmailConfirm([email, result.verifyCode]);
-      result.message;
     } catch (err) {
       console.error(err);
       document.getElementsByTagName("input")[0].focus();
@@ -62,11 +65,9 @@ function RegisterPage() {
 
         alert(result.message || "회원가입 성공!");
         router.replace("/login");
-      } catch (err: any) {
-        console.error(err);
-        alert(
-          err.response?.data?.message || "회원가입 실패! 다시 시도해주세요."
-        );
+      } catch (err) {
+        // console.error(err);
+        alert((err as Error).message || "회원가입 실패! 다시 시도해주세요.");
       }
     }
     return;

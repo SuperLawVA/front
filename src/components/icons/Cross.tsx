@@ -4,9 +4,8 @@ const CrossIcon = ({
   width = 2,
   height = 2,
   color = "#6000FF",
-  // color = "#5E5E5E",
-  className,
-}: IconOptions) => (
+}: // color = "#5E5E5E",
+IconOptions) => (
   <svg
     width={typeof width == "number" ? width + "rem" : width}
     height={typeof height == "number" ? height + "rem" : height}

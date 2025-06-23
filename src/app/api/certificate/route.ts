@@ -6,6 +6,7 @@ export async function POST(req: NextRequest) {
   try {
     const { contractId, userQuery } = await req.json();
     const userId = (await cookies()).get("userId");
+    console.log({ contractId, userQuery, userId });
 
     // try {
     //   // Spring Boot의 로그인 API 호출

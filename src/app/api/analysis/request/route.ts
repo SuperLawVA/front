@@ -1,11 +1,11 @@
 // app/api/analysis/route.ts
-import { cookies } from "next/headers";
+// import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    // const { contractId } = await req.json();
-    const userId = (await cookies()).get("userId");
+    const { contractId } = await req.json();
+    // const userId = (await cookies()).get("userId");
 
     // try {
     //   // Spring Boot의 로그인 API 호출
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     //   });
 
     // return NextResponse.json({ success: true, contracts }, { status: 200 });
-    return NextResponse.json({ success: true }, { status: 200 });
+    return NextResponse.json({ success: true, contractId }, { status: 200 });
   } catch (error) {
     console.error("API Error:", error);
     return NextResponse.json(

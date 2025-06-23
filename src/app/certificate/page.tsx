@@ -27,7 +27,8 @@ function StartPage() {
   const getContract = async () => {
     try {
       const response = await axios.post("/api/analysis");
-      return response.data.contract as AnalysisTarget[];
+      setContractArray(response.data.contract as AnalysisTarget[]);
+      // return response.data.contract as AnalysisTarget[];
       // return JSON.parse(response.data.contract) as AnalysisTarget[];
     } catch (error) {
       console.error("Failed to fetch contracts:", error);
@@ -37,8 +38,7 @@ function StartPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const contractArray = await getContract();
-      setContractArray(contractArray);
+      await getContract();
 
       // const target = undefined;
       if (contractArray) {
@@ -47,9 +47,10 @@ function StartPage() {
         setContract(undefined);
         setModalOpen(true);
       }
+      console.log(contractArray);
     };
     fetchData();
-  }, []);
+  }, [contractArray]);
 
   return (
     <>

@@ -1,32 +1,32 @@
 export default interface Article {
-  title: String;
-  result: Boolean;
-  content: String;
-  reason: String;
-  suggestedRevision: String;
-  negotiationPoints: String;
+  title: string;
+  result: boolean;
+  content: string;
+  reason: string;
+  suggestedRevision: string;
+  negotiationPoints: string;
   legalBasis: {
-    lawId: String | Number;
-    law: String;
+    lawId: string | number;
+    law: string;
   };
   caseBasis: {
-    caseId: String | Number;
-    case: String;
+    caseId: string | number;
+    case: string;
   }[];
 }
 
 export interface Agreement {
-  result: Boolean;
-  content: String;
-  reason: String;
-  suggestedRevision: String;
-  negotiationPoints: String;
+  result: boolean;
+  content: string;
+  reason: string;
+  suggestedRevision: string;
+  negotiationPoints: string;
   legalBasis: {
-    lawId: String | Number;
-    law: String;
+    lawId: string | number;
+    law: string;
   };
   caseBasis: {
-    caseId: String | Number;
-    case: String;
+    caseId: string | number;
+    case: string;
   }[];
 }

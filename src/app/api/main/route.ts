@@ -7,6 +7,8 @@ export async function POST(req: Request) {
   try {
     // 👉login과 합칠 예정
     // 예: await db.insertUser({ email, passwordHash, name });
+    console.log(userId);
+
     return NextResponse.json({
       success: true,
       userName: true,

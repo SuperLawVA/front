@@ -36,7 +36,7 @@ function ContractCreateNewPage() {
         console.error("Failed to parse contractData:", err);
       }
     }
-  }, [router]);
+  }, [router, contractData]);
 
   const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,7 +44,8 @@ function ContractCreateNewPage() {
     useCreateStore.setState({ userQuery });
 
     try {
-      const response = await axios.post("/api/create/generate", {
+      // const response = await axios.post("/api/create/generate", {
+      await axios.post("/api/create/generate", {
         contractData,
       });
       // sessionStorage.removeItem("createStore");

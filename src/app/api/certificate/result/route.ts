@@ -1,6 +1,6 @@
 // app/api/certificate/result/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import axios from "axios";
+// import axios from "axios";
 import { cookies } from "next/headers";
 
 export async function POST(req: NextRequest) {
@@ -156,10 +156,10 @@ export async function POST(req: NextRequest) {
     // return NextResponse.json(springResponse.data, {
     //   status: springResponse.status,
     // });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Certificate API Error:", error);
     return NextResponse.json(
-      { message: error.message || "Internal Server Error" },
+      { message: (error as Error).message || "Internal Server Error" },
       { status: 500 }
     );
   }
