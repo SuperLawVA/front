@@ -29,14 +29,14 @@ function ContractCreateNewPage() {
       router.replace("step2");
     }
     const stored = contractData.userQuery;
-    if (stored) {
+    if (stored && userQuery.length === 0) {
       try {
         setUserQuery(stored);
       } catch (err) {
         console.error("Failed to parse contractData:", err);
       }
     }
-  }, [router, contractData]);
+  }, [router]);
 
   const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -250,6 +250,7 @@ function ContractCreateNewPage() {
         </div>
         <SubmitButton
           className="justify-self-end"
+          type="button"
           width="100%"
           height={6}
           fontSize={1.8}
