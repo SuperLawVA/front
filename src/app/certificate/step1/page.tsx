@@ -27,7 +27,8 @@ function StartPage() {
 
   const certificateRequest = async (contractId: string) => {
     try {
-      const response = await axios.post("/api/certificate", {
+      // const response = await axios.post("/api/certificate", {
+      await axios.post("/api/certificate", {
         contractId,
         userQuery: purpose + "\n" + story,
       });

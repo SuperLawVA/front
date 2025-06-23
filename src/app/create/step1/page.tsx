@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton";
 import StatusIcon from "@/components/icons/Status";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -13,10 +13,9 @@ import { useCreateStore } from "@/store/useStore";
 
 function ContractCreateNewPage() {
   const router = useRouter();
-
-  const searchParams = useSearchParams();
-  const contractTypeQuery = searchParams.get("rent") === "true";
-
+  const [contractType, setContractType] = useState<"월세" | "전세" | null>(
+    null
+  );
   const [modalOpen, setModalOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [address, setAddress] = useState<string>("");
@@ -33,14 +32,14 @@ function ContractCreateNewPage() {
   const [contractDate, setContractDate] = useState<Date | "">("");
 
   useEffect(() => {
-    if (!searchParams.get("rent")) {
-      router.replace("/create");
-    }
     const { contractType, dates, property, payment } =
       useCreateStore.getState();
-    if (contractType) {
+    if (!contractType) {
+      router.replace("/create");
+    } else {
       try {
         // 안전하게 값 세팅 (optional chaining 사용)
+        setContractType(contractType);
         setAddress(property?.address ?? "");
         setDetailAddress(property?.detailAddress ?? "");
         setBuildingArea(property?.building?.buildingArea ?? "");
@@ -58,32 +57,59 @@ function ContractCreateNewPage() {
         console.error("Failed to parse contractData:", err);
       }
     }
-  }, []);
-
-  const tabsVariable = [
-    address,
-    detailAddress,
-    buildingArea,
-    buildingConstructure,
-    buildingType,
-    deposit,
-    downPayment,
-    intermediatePayment,
-    monthlyRent,
-    contractDate,
-  ];
-  const tabsSetFunction = [
-    setAddress,
-    setDetailAddress,
-    setBuildingArea,
-    setBuildingConstructure,
-    setBuildingType,
-    setDeposit,
-    setDownPayment,
-    setIntermediatePayment,
-    setMonthlyRent,
-    setContractDate,
-  ];
+  }, [router]);
+  const tabsVariable = useMemo(
+    () => [
+      address,
+      detailAddress,
+      buildingArea,
+      buildingConstructure,
+      buildingType,
+      deposit,
+      downPayment,
+      intermediatePayment,
+      monthlyRent,
+      contractDate,
+    ],
+    [
+      address,
+      detailAddress,
+      buildingArea,
+      buildingConstructure,
+      buildingType,
+      deposit,
+      downPayment,
+      intermediatePayment,
+      monthlyRent,
+      contractDate,
+    ]
+  );
+  // const tabsSetFunction = useMemo(
+  //   () => [
+  //     setAddress,
+  //     setDetailAddress,
+  //     setBuildingArea,
+  //     setBuildingConstructure,
+  //     setBuildingType,
+  //     setDeposit,
+  //     setDownPayment,
+  //     setIntermediatePayment,
+  //     setMonthlyRent,
+  //     setContractDate,
+  //   ],
+  //   [
+  //     setAddress,
+  //     setDetailAddress,
+  //     setBuildingArea,
+  //     setBuildingConstructure,
+  //     setBuildingType,
+  //     setDeposit,
+  //     setDownPayment,
+  //     setIntermediatePayment,
+  //     setMonthlyRent,
+  //     setContractDate,
+  //   ]
+  // );
 
   const isValidAll = useMemo(() => {
     return tabsVariable.every((v, idx) => {
@@ -103,8 +129,7 @@ function ContractCreateNewPage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const contractType = contractTypeQuery ? "월세" : "전세",
-      dates = { contractDate },
+    const dates = { contractDate },
       property = {
         address,
         detailAddress,
@@ -120,7 +145,7 @@ function ContractCreateNewPage() {
     useCreateStore.setState({ contractType, dates, property, payment });
 
     // step2로 이동
-    router.push(`step2/?rent=${contractTypeQuery}`);
+    router.push("step2");
   };
 
   const tabTitles = [
@@ -147,8 +172,7 @@ function ContractCreateNewPage() {
   const tabContents = [
     <input
       type="text"
-      name=""
-      id=""
+      key={0}
       placeholder="계약하려는 건물의 주소를 입력해주세요."
       onChange={(e) => setAddress(e.target.value)}
       value={address}
@@ -157,8 +181,7 @@ function ContractCreateNewPage() {
     />,
     <input
       type="text"
-      name=""
-      id=""
+      key={1}
       placeholder="계약하려는 건물의 상세 주소를 입력해주세요."
       onChange={(e) => setDetailAddress(e.target.value)}
       value={detailAddress}
@@ -167,8 +190,7 @@ function ContractCreateNewPage() {
     />,
     <input
       type="number"
-      name=""
-      id=""
+      key={2}
       onChange={(e) => setBuildingArea(Number(e.target.value))}
       value={buildingArea ?? ""}
       ref={inputRef}
@@ -176,8 +198,7 @@ function ContractCreateNewPage() {
     />,
     <input
       type="text"
-      name=""
-      id=""
+      key={3}
       placeholder="ex) 철근콘크리트"
       onChange={(e) => setBuildingConstructure(e.target.value)}
       value={buildingConstructure}
@@ -186,8 +207,7 @@ function ContractCreateNewPage() {
     />,
     <input
       type="text"
-      name=""
-      id=""
+      key={4}
       placeholder="ex) 오피스텔, 아파트, 상가시설"
       onChange={(e) => setBuildingType(e.target.value)}
       value={buildingType}
@@ -196,8 +216,7 @@ function ContractCreateNewPage() {
     />,
     <input
       type="number"
-      name=""
-      id=""
+      key={5}
       onChange={(e) => setDeposit(Number(e.target.value))}
       value={deposit ?? ""}
       ref={inputRef}
@@ -205,8 +224,7 @@ function ContractCreateNewPage() {
     />,
     <input
       type="number"
-      name=""
-      id=""
+      key={6}
       onChange={(e) => setDownPayment(Number(e.target.value))}
       value={downPayment ?? ""}
       ref={inputRef}
@@ -214,8 +232,7 @@ function ContractCreateNewPage() {
     />,
     <input
       type="number"
-      name=""
-      id=""
+      key={7}
       onChange={(e) => setIntermediatePayment(Number(e.target.value))}
       value={intermediatePayment ?? ""}
       ref={inputRef}
@@ -223,8 +240,7 @@ function ContractCreateNewPage() {
     />,
     <input
       type="number"
-      name=""
-      id=""
+      key={8}
       onChange={(e) => setMonthlyRent(Number(e.target.value))}
       value={monthlyRent ?? ""}
       ref={inputRef}
@@ -232,8 +248,7 @@ function ContractCreateNewPage() {
     />,
     <input
       type="date"
-      name=""
-      id=""
+      key={9}
       onChange={(e) => setContractDate(new Date(e.target.value))}
       value={
         contractDate === "" ? "" : contractDate.toISOString().split("T")[0]
@@ -503,12 +518,12 @@ function ContractCreateNewPage() {
             </div>
             <button
               type="button"
-              onClick={() => {
-                tabsSetFunction[activeIndex]("");
+              onClick={() =>
+                // tabsSetFunction[activeIndex]("");
                 activeIndex % 5 === 4
                   ? setModalOpen(!modalOpen)
-                  : setActiveIndex(activeIndex + 1);
-              }}
+                  : setActiveIndex(activeIndex + 1)
+              }
               className="text-main"
             >
               skip →

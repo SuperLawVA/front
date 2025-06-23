@@ -5,7 +5,6 @@ const AlarmIcon = ({
   height = 2,
   color = "#6000FF",
   fill = "white",
-  className,
 }: IconOptions) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"

@@ -24,6 +24,9 @@ export async function GET() {
 
     return NextResponse.json({ message: "Token refreshed" });
   } catch (error) {
-    return NextResponse.json({ message: "Refresh failed" }, { status: 401 });
+    return NextResponse.json(
+      { message: (error as Error).message || "Refresh failed" },
+      { status: 401 }
+    );
   }
 }

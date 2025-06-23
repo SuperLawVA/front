@@ -1,44 +1,58 @@
 // lib/axios.ts
-import axios from "axios";
+import axios, { InternalAxiosRequestConfig } from "axios";
 import { logEvent } from "./logger";
 import { getDeviceType } from "./useUserActionLogger";
-import { usePathname } from "next/navigation";
-import { cookies } from "next/headers";
 
+// Axios 인스턴스 생성
 const api = axios.create({
   baseURL: "/api",
-  withCredentials: true, // 쿠키 자동 포함 (JWT가 쿠키에 저장됐을 때 필요)
+  withCredentials: true,
 });
 
 // 요청 인터셉터: 요청 시작 시간 기록
-api.interceptors.request.use((config) => {
-  (config as any).metadata = { startTime: new Date().getTime() };
-  return config;
-});
+api.interceptors.request.use(
+  (
+    config: InternalAxiosRequestConfig & { metadata?: { startTime: number } }
+  ) => {
+    config.metadata = { startTime: Date.now() };
+    return config;
+  }
+);
+
+// 공통 변수 (쿠키는 서버에서만)
+const userId = "none";
+// try {
+//   const cookieStore = await cookies();
+//   userId = String(cookieStore.get("userId")?.value ?? "none");
+// } catch {
+//   // 서버 실행 안되는 경우 무시
+// }
+
+// client 전용
+const userAgent = typeof navigator !== "undefined" ? navigator.userAgent : "";
+const deviceType = getDeviceType();
+const width = typeof window !== "undefined" ? window.innerWidth : 0;
+const height = typeof window !== "undefined" ? window.innerHeight : 0;
 
 // 응답 인터셉터
-const userId = String((await cookies()).get("userId")) || "none";
-const userAgent = navigator.userAgent;
-const deviceType = getDeviceType();
-const width = window.innerWidth;
-const height = window.innerHeight;
-const page = usePathname();
-
 api.interceptors.response.use(
   async (response) => {
-    // 응답 성공 시 응답시간 측정
-    const endTime = new Date().getTime();
-    const metadata = (response.config as any).metadata;
-    const duration = endTime - metadata.startTime;
+    const endTime = Date.now();
+    const metadata = (
+      response.config as InternalAxiosRequestConfig & {
+        metadata?: { startTime: number };
+      }
+    ).metadata;
+    const duration = metadata ? endTime - metadata.startTime : 0;
 
-    // 로그 전송 (성공)
+    // 📌 page 정보는 호출 시 전달하도록 변경!
     await logEvent({
       userId,
       userAgent,
       deviceType,
       width,
       height,
-      page,
+      page: response.config.headers?.["x-page"] || "unknown",
       type: "api_response",
       data: {
         method: response.config.method,
@@ -53,35 +67,27 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
-    const config = error.config;
+    const config = error.config as InternalAxiosRequestConfig & {
+      metadata?: { startTime: number };
+      _retry?: boolean;
+    };
 
-    // 실패 응답 응답시간 측정
-    const metadata = (config as any)?.metadata;
-    const endTime = new Date().getTime();
-    const duration = metadata ? endTime - metadata.startTime : null;
+    const endTime = Date.now();
+    const duration = config.metadata ? endTime - config.metadata.startTime : 0;
 
-    // 401 Unauthorized 에러 & 재시도 안한 경우
     if (error.response?.status === 401 && !config._retry) {
       config._retry = true;
-      try {
-        // 리프레시 토큰으로 새 토큰 발급 요청
-        await axios.post("/api/refresh", {}, { withCredentials: true });
-        // 성공 시 원래 요청 재시도
-        return api(config);
-      } catch (refreshError) {
-        // 리프레시 실패 시 로그인 페이지 이동
-        window.location.href = "/login";
-      }
+      await axios.post("/api/refresh", {}, { withCredentials: true });
+      return api(config);
     }
 
-    // 로그 전송 (실패)
     await logEvent({
       userId,
       userAgent,
       deviceType,
       width,
       height,
-      page,
+      page: config.headers?.["x-page"] || "unknown",
       type: "api_response",
       data: {
         method: config?.method,

@@ -34,6 +34,7 @@ interface UserState {
 export const useAuthStore = createStore<UserState>()(
   persist(
     // (set, get) => ({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (set) => ({
       userName: null,
       notification: [],
@@ -86,6 +87,7 @@ interface CreateState {
 export const useCreateStore = createStore<CreateState>()(
   persist(
     // (set, get) => ({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (set) => ({
       articleAgree: null,
       contractType: null,
@@ -110,6 +112,7 @@ interface CertificateState {
 export const useCertificateStore = createStore<CertificateState>()(
   persist(
     // (set, get) => ({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (set) => ({
       ContractId: null,
       userQuery: [],

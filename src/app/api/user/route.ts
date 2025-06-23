@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const userId = (await cookies()).get("userId");
+    console.log({ req, userId });
 
     // try {
     //   // Spring Boot의 로그인 API 호출
@@ -38,10 +39,11 @@ export async function POST(req: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { message: error.response?.data?.message || "get user data failed" },
-      { status: error.response?.status || 500 }
+      { message: (error as Error).message || "get user data failed" }
+      // { message: error.response?.data?.message || "get user data failed" },
+      // { status: error.response?.status || 500 }
     );
   }
 }

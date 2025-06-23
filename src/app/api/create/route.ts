@@ -1,6 +1,6 @@
 // app/api/login/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import axios from "axios";
+// import axios from "axios";
 import { cookies } from "next/headers";
 
 /**
@@ -59,10 +59,9 @@ export async function POST(req: NextRequest) {
     });
 
     return NextResponse.json({ message: "Login success" }, { status: 200 });
-  } catch (error: any) {
-    return NextResponse.json(
-      { message: error.response?.data?.message || "Login failed" },
-      { status: error.response?.status || 500 }
-    );
+  } catch (error) {
+    return NextResponse.json({
+      message: (error as Error).message || "Login failed",
+    });
   }
 }

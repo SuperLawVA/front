@@ -1,7 +1,6 @@
 // page.tsx
 "use client";
 
-import CheckedIcon from "@/components/icons/Checked";
 import DocumentIcon from "@/components/icons/Document";
 import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 import Modal from "@/components/Modal";
@@ -11,6 +10,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnalysisTarget } from "../types/Main";
+import Image from "next/image";
 
 function AnalysisPage() {
   const router = useRouter();
@@ -25,9 +25,12 @@ function AnalysisPage() {
   // 분석 요청 정보
   const analysisRequest = async (contractId: string) => {
     try {
-      const response = await axios.post("/api/analysis/request", {
+      await axios.post("/api/analysis/request", {
         contractId,
       });
+      // const response = await axios.post("/api/analysis/request", {
+      //   contractId,
+      // });
       // router.push("analysis/result");
     } catch (error) {
       console.error("Failed to fetch contracts:", error);
@@ -39,7 +42,8 @@ function AnalysisPage() {
   const getContract = async () => {
     try {
       const response = await axios.post("/api/analysis");
-      return response.data.contract as AnalysisTarget[];
+      setContractArray(response.data.contract as AnalysisTarget[]);
+      // return response.data.contract as AnalysisTarget[];
       // return JSON.parse(response.data.contract) as AnalysisTarget[];
     } catch (error) {
       console.error("Failed to fetch contracts:", error);
@@ -49,12 +53,7 @@ function AnalysisPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const contractArray = await getContract();
-      setContractArray(contractArray);
-      contractArray?.map((v) => {
-        console.log(typeof v);
-        console.log(v);
-      });
+      await getContract();
 
       // const target = undefined;
       if (contractArray) {
@@ -63,9 +62,10 @@ function AnalysisPage() {
         setContract(undefined);
         setModalOpen(true);
       }
+      console.log(contractArray);
     };
     fetchData();
-  }, []);
+  }, [contractArray]);
 
   return (
     <>
@@ -89,7 +89,9 @@ function AnalysisPage() {
           <br />
           분쟁을 미리 예방하세요
         </div>
-        <img
+        <Image
+          width={99999}
+          height={99999}
           src="/analysisStart.png"
           alt="Main Icon"
           className="w-[26.5rem] h-[26.5rem] mt-16"

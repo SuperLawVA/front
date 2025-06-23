@@ -12,6 +12,7 @@ import AppleIcon from "@/components/icons/sns/Apple";
 import SubmitButton from "@/components/SubmitButton";
 import axios from "axios";
 import { useAuthStore } from "@/store/useStore";
+import Image from "next/image";
 
 function LoginPage() {
   const router = useRouter();
@@ -23,8 +24,8 @@ function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [remember, setRemember] = useState(false);
-  const [autoLogin, setAutoLogin] = useState(false);
+  // const [remember, setRemember] = useState(false);
+  // const [autoLogin, setAutoLogin] = useState(false);
 
   useEffect(() => {
     const rememberEmail = localStorage.getItem("remember");
@@ -35,14 +36,14 @@ function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // 페이지 리로드 막음
-    if (remember) {
-      localStorage.setItem("savedId", email);
-      if (autoLogin) {
-        localStorage.setItem("autoLogin", password);
-      }
-    } else {
-      localStorage.removeItem("savedId");
-    }
+    // if (remember) {
+    //   localStorage.setItem("savedId", email);
+    //   if (autoLogin) {
+    //     localStorage.setItem("autoLogin", password);
+    //   }
+    // } else {
+    //   localStorage.removeItem("savedId");
+    // }
 
     try {
       const res = await axios.post("/api/login", { email, password });
@@ -66,8 +67,9 @@ function LoginPage() {
       //   recentChat,
       // });
       router.push("/");
-    } catch (error: any) {
-      alert("로그인 실패: " + (error.response?.data?.message || error.message));
+    } catch (error) {
+      // alert("로그인 실패: " + (error.response?.data?.message || error.message));
+      alert("로그인 실패: " + (error as Error).message);
     }
   };
 
@@ -78,7 +80,13 @@ function LoginPage() {
       </div>
       <main className="flex flex-col items-center mt-[3rem] gap-12 mx-10 h-auto">
         <div className="mt-20 w-full gap-4 flex flex-col justify-center items-center">
-          <img src="/logo.svg" alt="logo" className="h-16" />
+          <Image
+            width={1}
+            height={1}
+            src="/logo.svg"
+            alt="logo"
+            className="h-16"
+          />
           <span className="h-20 font-semibold text-[4rem] tracking-[-0.04em] bg-gradient-to-r from-[#6000FF] to-[#E100FF] bg-clip-text text-transparent">
             Super LawVA
           </span>
