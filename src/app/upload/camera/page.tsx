@@ -5,11 +5,13 @@ import React, { useRef, useEffect, useState } from "react";
 export default function CameraPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  // stream 저장용 useRef (컴포넌트 라이프사이클 동안 유지)
   const streamRef = useRef<MediaStream | null>(null);
 
   const [onCamera, setOnCamera] = useState(false);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const [facingMode, setFacingMode] = useState<"user" | "environment">(
+    "environment"
+  ); // ✅ 기본 후면 카메라
 
   useEffect(() => {
     const startCamera = async () => {
@@ -19,10 +21,10 @@ export default function CameraPage() {
           typeof navigator.mediaDevices.getUserMedia === "function"
         ) {
           const stream = await navigator.mediaDevices.getUserMedia({
-            video: { facingMode: "user" },
+            video: { facingMode: facingMode }, // ✅ 현재 카메라 방향 사용
             audio: false,
           });
-          streamRef.current = stream; // useRef에 저장
+          streamRef.current = stream;
 
           if (videoRef.current) {
             videoRef.current.srcObject = stream;
@@ -43,17 +45,15 @@ export default function CameraPage() {
     }
 
     return () => {
-      // 컴포넌트 언마운트 또는 onCamera false 시 카메라 정리
       if (streamRef.current) {
         streamRef.current.getTracks().forEach((track) => track.stop());
         streamRef.current = null;
       }
-      // video srcObject 해제
       if (videoRef.current) {
         videoRef.current.srcObject = null;
       }
     };
-  }, [onCamera]);
+  }, [onCamera, facingMode]); // ✅ facingMode 변경 시도 재시작
 
   const takePhoto = () => {
     const video = videoRef.current;
@@ -68,6 +68,11 @@ export default function CameraPage() {
         setCapturedImage(imageData);
       }
     }
+  };
+
+  // ✅ 카메라 전환 버튼 핸들러
+  const toggleCameraFacing = () => {
+    setFacingMode((prev) => (prev === "user" ? "environment" : "user"));
   };
 
   return (
@@ -106,6 +111,7 @@ export default function CameraPage() {
             className="w-full h-full object-contain"
           />
 
+          {/* 사진 촬영 */}
           <button
             onClick={takePhoto}
             className="absolute bottom-10 left-1/2 transform -translate-x-1/2 px-6 py-3 bg-white/70 text-black rounded-full"
@@ -113,6 +119,15 @@ export default function CameraPage() {
             📸 사진 촬영
           </button>
 
+          {/* 전/후면 카메라 전환 */}
+          <button
+            onClick={toggleCameraFacing}
+            className="absolute top-5 left-5 px-4 py-2 bg-yellow-500 text-black rounded"
+          >
+            🔄 전/후면 전환
+          </button>
+
+          {/* 카메라 끄기 */}
           <button
             onClick={() => setOnCamera(false)}
             className="absolute top-5 right-5 px-4 py-2 bg-red-600 text-white rounded"
