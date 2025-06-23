@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import ProgressRing from "@/components/ProgressRing";
 import SubmitButton from "@/components/SubmitButton";
 import Image from "next/image";
-import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 
 function LoadingPage() {
   const router = useRouter();
@@ -54,21 +53,9 @@ function LoadingPage() {
           doneLabel="완료"
         />
       </div>
-
-      <div className="mt-45">
-        {progress >= 100 && (
-          <SubmitButton
-            width={30}
-            height={5.5}
-            fontSize={1.7}
-            onClick={goNext}
-            icon={<MagicTwoStarIcon width={2.4} height={2.4} color="#FFFFFF" />}
-          >
-            보러가기
-          </SubmitButton>
-        )}
-      </div>
-      <div className="fixed bottom-1 mb-20 w-[90%] font-bold h-20 bg-[#fefce8] rounded-[20px] pl-5 pt-3 gap-2 text-sm flex items-start">
+      <div className="fixed bottom-1 mb-20 w-[90%] left-1/2 -translate-x-1/2">
+        {progress < 100 ? (
+          <div className="font-bold h-20 bg-[#fefce8] rounded-[20px] pl-5 pt-3 gap-2 text-sm flex items-start">
         <Image
           src="/warning.png"
           alt="warningIcon"
@@ -84,6 +71,18 @@ function LoadingPage() {
           </span>
         </div>
       </div>
+    ) : (
+      <SubmitButton
+          width={30}
+          height={5.5}
+          fontSize={1.7}
+          className=""
+          onClick={goNext}
+      >
+        결과보기
+      </SubmitButton>
+    )}
+    </div>
     </main>
   );
 }

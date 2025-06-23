@@ -125,7 +125,7 @@ function StartPage() {
               fontWeight={500}
               onClick={() => {
                 setModalOpen(false);
-                router.push("certificate/starting");
+                router.push("certificate/step1");
               }}
             >
               네, 맞아요

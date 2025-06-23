@@ -17,6 +17,15 @@ function LoginPage() {
   const router = useRouter();
   const [emailValue, setemailValue] = useState("");
 
+  const [registerActive, setRegisterActive] = useState(false);
+
+  const onRegisterClick = () => {
+    setRegisterActive(true);
+
+    setTimeout(() => {
+      router.push("/register");
+    }, 200);
+  };
   return (
     <>
       <div className="h-20 w-full flex flex-col justify-center items-center">
@@ -89,7 +98,15 @@ function LoginPage() {
           </SubmitButton>
           <div className="flex justify-center gap-4 text-l font-medium">
             <span>아이디 찾기</span>|<span>비밀번호 찾기</span>|
-            <span>회원가입</span>
+            <button
+              onClick={onRegisterClick}
+              className={`
+                transition-colors duration-200
+                ${registerActive ? "text-[#6000FF]" : "text-gray-800"}
+              `}
+            >
+              회원가입
+            </button>
           </div>
         </div>
         <div className="w-full flex flex-col justify-center items-center gap-8">
