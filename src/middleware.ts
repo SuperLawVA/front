@@ -23,6 +23,12 @@ export function middleware(request: NextRequest) {
     }
   }
 
+  if (["/login"].includes(pathname)) {
+    if (!token) {
+      return NextResponse.next();
+    }
+  }
+
   // 5️⃣ 로그인 안 되어 있으면 → 공개 경로 외 접근은 막는다 → 로그인 페이지로 이동
   if (!publicPaths.includes(pathname)) {
     if (!token) {
