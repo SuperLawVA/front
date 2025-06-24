@@ -2,7 +2,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import StatusIcon from "@/components/icons/Status";
 import KakaoIcon from "@/components/icons/sns/Kakao";
 import StyledInput from "@/components/StyledInput";
 import { useEffect, useState } from "react";
@@ -75,9 +74,7 @@ function LoginPage() {
 
   return (
     <>
-      <div className="h-20 w-full flex flex-col justify-center items-center">
-        <StatusIcon className="mt-[1.4rem]" />
-      </div>
+      <div className="h-20 w-full flex flex-col justify-center items-center" />
       <main className="flex flex-col items-center mt-[3rem] gap-12 mx-10 h-auto">
         <div className="mt-20 w-full gap-4 flex flex-col justify-center items-center">
           <Image

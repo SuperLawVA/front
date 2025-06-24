@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton";
-import StatusIcon from "@/components/icons/Status";
 import { useEffect, useState } from "react";
 import AlarmIcon from "@/components/icons/Alarm";
 import BottomNav from "@/components/BottomNav";
@@ -100,9 +99,7 @@ function MainPage() {
 
   return (
     <>
-      <div className="h-20 w-full flex flex-col justify-center items-center">
-        <StatusIcon className="w-full mt-[1.4rem]" />
-      </div>
+      <div className="h-20 w-full flex flex-col justify-center items-center" />
       <header className="w-full flex justify-center items-center h-24">
         <div className="w-full bg-white border border-inputBox rounded-[50px] flex justify-between items-center p-8 mx-6 gap-4">
           <span className="flex gap-3">

@@ -1,7 +1,6 @@
 "use client";
 
 import SubmitButton from "@/components/SubmitButton";
-import StatusIcon from "@/components/icons/Status";
 import { useState } from "react";
 import BackHeader from "@/components/BackHeader";
 import ClockIcon from "@/components/icons/Clock";
@@ -247,9 +246,7 @@ function StartPage() {
 
   return (
     <>
-      <div className="h-20 w-full flex flex-col justify-center items-center">
-        <StatusIcon className="mt-[1.4rem]" />
-      </div>
+      <div className="h-20 w-full flex flex-col justify-center items-center" />
       <BackHeader to="/">월세 임대차 계약서</BackHeader>
       <main className="flex flex-col items-center mt-[3rem] gap-12 mx-10 h-auto">
         <ul className="flex justify-around items-center w-full h-16 font-medium text-subText text-[1.2rem] bg-white border border-[#cdcdcd] rounded-[50px]">

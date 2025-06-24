@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton";
-import StatusIcon from "@/components/icons/Status";
 import StyledInput from "@/components/StyledInput";
 import { useEffect, useState } from "react";
 import BackHeader from "@/components/BackHeader";
@@ -75,9 +74,7 @@ function RegisterPage() {
 
   return (
     <>
-      <div className="h-20 w-full flex flex-col justify-center items-center">
-        <StatusIcon className="mt-[1.4rem]" />
-      </div>
+      <div className="h-20 w-full flex flex-col justify-center items-center" />
       <BackHeader to="login">회원가입</BackHeader>
       <form
         onSubmit={handleSubmit}

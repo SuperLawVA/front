@@ -2,7 +2,6 @@
 "use client";
 
 import SubmitButton from "@/components/SubmitButton";
-import StatusIcon from "@/components/icons/Status";
 import { useState } from "react";
 import Modal from "@/components/Modal";
 import BackHeader from "@/components/BackHeader";
@@ -46,9 +45,7 @@ function StartPage() {
 
   return (
     <>
-      <div className="h-20 w-full flex flex-col justify-center items-center">
-        <StatusIcon className="mt-[1.4rem]" />
-      </div>
+      <div className="h-20 w-full flex flex-col justify-center items-center" />
       <BackHeader>내용증명서</BackHeader>
       <main className="flex flex-col mt-[3.6rem] w-full">
         <div className="flex flex-col text-center font-sans">
