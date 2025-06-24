@@ -203,5 +203,365 @@
         "loadTime": 0
       }
     }
+  ],
+  [
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/",
+      "type": "page_load",
+      "timestamp": "2025-06-24T05:03:17.148Z",
+      "data": {
+        "loadTime": 0
+      }
+    },
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/",
+      "type": "click",
+      "timestamp": "2025-06-24T05:03:18.432Z",
+      "data": {
+        "x": 411,
+        "y": 439,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.w-full.flex.flex-col.items-center.h-auto > div.w-full.px-8.gap-12.rounded-t-[50px].bg-white.flex.flex-col.items-center > div.self-start.w-full.font-semibold.text-[1.8rem].px-8.flex.flex-col.gap-4 > div.flex.w-full.justify-around.text-[1.2rem] > div.flex.flex-col.items-center.text-center > button.flex.justify-center.items-center.w-20.h-20.rounded-[20px].mb-2 > span > svg",
+        "tagName": "svg",
+        "tagId": null,
+        "tagClass": {}
+      }
+    },
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/",
+      "type": "page_stay",
+      "timestamp": "2025-06-24T05:03:18.979Z",
+      "data": {
+        "durationMs": 1845
+      }
+    },
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate",
+      "type": "page_load",
+      "timestamp": "2025-06-24T05:03:18.979Z",
+      "data": {
+        "loadTime": 0
+      }
+    },
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate",
+      "type": "click",
+      "timestamp": "2025-06-24T05:03:20.071Z",
+      "data": {
+        "x": 279,
+        "y": 682,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.h-full.bg-white > button.mt-16.flex.items-center.justify-center.gap-x-2.whitespace-nowarp",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "mt-16 flex items-center justify-center gap-x-2 whitespace-nowarp"
+      }
+    }
+  ],
+  [
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate",
+      "type": "page_stay",
+      "timestamp": "2025-06-24T05:03:21.554Z",
+      "data": {
+        "durationMs": 4420
+      }
+    },
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T05:03:21.554Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate/step1",
+      "type": "click",
+      "timestamp": "2025-06-24T05:03:22.523Z",
+      "data": {
+        "x": 237,
+        "y": 356,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.mt-[3.6rem].w-full > div.flex.flex-col.text-center.font-sans > div.w-full.h-243.bg-white.rounded-t-[40px].mt-15 > div.mx-10.mt-15.flex.flex-col.gap-4.text-[1.7rem] > div.relative > textarea.w-full.h-30.rounded-[20px].border.border-[#eeeeee].bg-[#fafafa].p-6.text-[1.4rem].resize-none.outline-none.placeholder:text-gray-400",
+        "tagName": "TEXTAREA",
+        "tagId": null,
+        "tagClass": "w-full h-30 rounded-[20px] border border-[#eeeeee] bg-[#fafafa] p-6 text-[1.4rem] resize-none outline-none placeholder:text-gray-400"
+      }
+    }
+  ],
+  [
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate/step1",
+      "type": "click",
+      "timestamp": "2025-06-24T05:03:24.207Z",
+      "data": {
+        "x": 245,
+        "y": 533,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.mt-[3.6rem].w-full > div.flex.flex-col.text-center.font-sans > div.w-full.h-243.bg-white.rounded-t-[40px].mt-15 > div.mx-10.mt-15.flex.flex-col.gap-4.text-[1.7rem] > div.relative > textarea.w-full.h-85.rounded-[20px].border.border-[#eeeeee].bg-[#fafafa].p-6.text-[1rem].resize-none.outline-none.placeholder:text-gray-400",
+        "tagName": "TEXTAREA",
+        "tagId": null,
+        "tagClass": "w-full h-85 rounded-[20px] border border-[#eeeeee] bg-[#fafafa] p-6 text-[1rem] resize-none outline-none placeholder:text-gray-400"
+      }
+    }
+  ],
+  [
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate/step1",
+      "type": "click",
+      "timestamp": "2025-06-24T05:03:27.434Z",
+      "data": {
+        "x": 213,
+        "y": 772,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.mt-[3.6rem].w-full > div.flex.flex-col.text-center.font-sans > div.w-full.h-243.bg-white.rounded-t-[40px].mt-15 > div.flex.justify-center > button.mt-3.flex.items-center.justify-center.gap-x-2.whitespace-nowrap.",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "mt-3 flex items-center justify-center gap-x-2 whitespace-nowrap "
+      }
+    },
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate/step1",
+      "type": "page_stay",
+      "timestamp": "2025-06-24T05:03:27.686Z",
+      "data": {
+        "durationMs": 10552
+      }
+    },
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate/step2",
+      "type": "page_load",
+      "timestamp": "2025-06-24T05:03:27.686Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate/step2",
+      "type": "click",
+      "timestamp": "2025-06-24T05:03:34.700Z",
+      "data": {
+        "x": 266,
+        "y": 772,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.min-h-screen.flex.flex-col.items-center.px-6.text-center > div.fixed.bottom-1.mb-20.w-[90%].left-1/2.-translate-x-1/2 > button",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": null
+      }
+    },
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate/step2",
+      "type": "page_stay",
+      "timestamp": "2025-06-24T05:03:34.992Z",
+      "data": {
+        "durationMs": 17858
+      }
+    },
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate/step3",
+      "type": "page_load",
+      "timestamp": "2025-06-24T05:03:34.992Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate/step3",
+      "type": "scroll",
+      "timestamp": "2025-06-24T05:03:36.823Z",
+      "data": {
+        "scrollTop": 252.5,
+        "scrollDelta": 252.5,
+        "durationMs": 939
+      }
+    },
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate/step3",
+      "type": "click",
+      "timestamp": "2025-06-24T05:03:37.977Z",
+      "data": {
+        "x": 266,
+        "y": 676,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > div.flex.flex-col.min-h-screen.bg-[#F4F4F6] > main.flex-1.flex.flex-col.items-center.mt-6.pb-8 > div.bg-white.rounded-t-[40px].pb-16 > section.mt-10.px-8.space-y-6 > div > div.mt-10 > div.flex.items-center.border.text-[1.8rem].border-[#6000FF].rounded-[30px].w-full.px-4.py-3.pl-25.pb-5.pt-5.space-x-3. > button.flex-1.text-[#6000FF].text-left",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "flex-1 text-[#6000FF] text-left"
+      }
+    }
+  ],
+  [
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate/step3",
+      "type": "click",
+      "timestamp": "2025-06-24T05:03:39.859Z",
+      "data": {
+        "x": 266,
+        "y": 601,
+        "tagPath": "div.\n........fixed.inset-0.z-30.flex.justify-center.\n........items-end.\n...... > div.absolute.inset-0.bg-black.opacity-50",
+        "tagName": "DIV",
+        "tagId": null,
+        "tagClass": "absolute inset-0 bg-black opacity-50"
+      }
+    }
+  ],
+  [
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate/step3",
+      "type": "click",
+      "timestamp": "2025-06-24T05:03:40.421Z",
+      "data": {
+        "x": 262,
+        "y": 603,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > div.flex.flex-col.min-h-screen.bg-[#F4F4F6] > main.flex-1.flex.flex-col.items-center.mt-6.pb-8 > div.bg-white.rounded-t-[40px].pb-16 > section.mt-10.px-8.space-y-6 > div > div.ml-3 > button.flex.justify-center.items-center",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "flex justify-center items-center"
+      }
+    }
+  ],
+  [
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate/step3",
+      "type": "click",
+      "timestamp": "2025-06-24T05:03:43.596Z",
+      "data": {
+        "x": 269,
+        "y": 682,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > div.flex.flex-col.min-h-screen.bg-[#F4F4F6] > main.flex-1.flex.flex-col.items-center.mt-6.pb-8 > div.bg-white.rounded-t-[40px].pb-16 > section.mt-10.px-8.space-y-6 > div > div.mt-10 > div.flex.items-center.border.text-[1.8rem].border-[#6000FF].rounded-[30px].w-full.px-4.py-3.pl-25.pb-5.pt-5.space-x-3. > button.flex-1.text-[#6000FF].text-left",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "flex-1 text-[#6000FF] text-left"
+      }
+    }
+  ],
+  [
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/certificate/step3",
+      "type": "page_stay",
+      "timestamp": "2025-06-24T05:03:50.555Z",
+      "data": {
+        "durationMs": 33421
+      }
+    },
+    {
+      "userId": "tester",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/",
+      "type": "page_load",
+      "timestamp": "2025-06-24T05:03:50.556Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
   ]
 ]
