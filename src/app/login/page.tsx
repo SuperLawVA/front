@@ -23,8 +23,6 @@ function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const [remember, setRemember] = useState(false);
-  // const [autoLogin, setAutoLogin] = useState(false);
 
   useEffect(() => {
     const rememberEmail = localStorage.getItem("remember");
@@ -35,39 +33,18 @@ function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // 페이지 리로드 막음
-    // if (remember) {
-    //   localStorage.setItem("savedId", email);
-    //   if (autoLogin) {
-    //     localStorage.setItem("autoLogin", password);
-    //   }
-    // } else {
-    //   localStorage.removeItem("savedId");
-    // }
 
     try {
       const res = await axios.post("/api/login", { email, password });
       const { userName, notification, contractArray, recentChat } = res.data;
-      // useAuthStore.getState().setUser({
-      //   userName,
-      //   notification,
-      //   contract,
-      //   recentChat,
-      // });
       useAuthStore.setState({
         userName,
         notification,
         contractArray,
         recentChat,
       });
-      // useAuthStore.getState().setUser({
-      //   userName,
-      //   notification,
-      //   contract,
-      //   recentChat,
-      // });
       router.push("/");
     } catch (error) {
-      // alert("로그인 실패: " + (error.response?.data?.message || error.message));
       alert("로그인 실패: " + (error as Error).message);
     }
   };
