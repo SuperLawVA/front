@@ -277,8 +277,8 @@ function StartPage() {
         </SubmitButton>
         <div className="w-full h-[4.5rem] gap-2 flex justify-center items-center text-white text-[1.6rem] font-semibold bg-gradient-to-br from-[#6000FF] via-[#8a00ff] to-[#E100FF] rounded-[50px] mb-12">
           <Image
-            width={1}
-            height={1}
+            width={9999}
+            height={9999}
             src="/bot.png"
             alt=""
             className="w-12 h-12"
