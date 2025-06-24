@@ -9,19 +9,12 @@ export default function StyledInput({
   type = "text",
   lineHeight = 2,
   className,
-  placeholder,
-  value,
-  autoFocus = false,
-  onChange,
+  ...rest
 }: StyledInputProps) {
   return (
     <div className={`flex flex-col justify-start ${className}`}>
       <input
         type={type}
-        placeholder={placeholder}
-        value={value}
-        autoFocus={autoFocus}
-        onChange={onChange}
         className="border-none px-4 outline-none placeholder:text-gray-400"
         style={{
           width: typeof width === "number" ? `${width}rem` : width,
@@ -30,6 +23,7 @@ export default function StyledInput({
           lineHeight:
             typeof lineHeight === "number" ? `${lineHeight}rem` : lineHeight,
         }}
+        {...rest}
       />
       <div
         className="mt-[0.6rem] border-[0.15rem] border-[#bbb6]"
