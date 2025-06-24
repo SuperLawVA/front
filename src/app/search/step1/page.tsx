@@ -5,7 +5,7 @@ import { useState } from "react";
 import Image from "next/image";
 import BackHeader from "@/components/BackHeader";
 
-export default function TermHome() {
+function StepPage() {
   const router = useRouter();
 
   const [query, setQuery] = useState("");
@@ -84,40 +84,47 @@ export default function TermHome() {
           {/* 용어 설명 */}
         <div className="flex flex-col items-center mt-10">
           <div className="flex items-center gap-2">
-            <Image src="/book.svg" alt="닫힌 책" width={15} height={15} />
+            <Image src="/book.svg" alt="닫힌 책" width={13} height={13} />
             <span className="text-[1.7rem] font-bold">용어 설명</span>
           </div>
-          <div className="w-full mt-6 px-4 space-y-5">
+          <div className="w-full mt-8 px-6 space-y-10">
             {terms.map((item) => (
               <div
                 key={item.title}
-                className="border border-gray-300 rounded-[25px] px-6 py-5 bg-white"
+                className="relative mt-5"
               >
-                <p className="text-[1.3rem] font-bold mb-2">{item.title}</p>
-                <p className="text-[1.2rem] whitespace-pre-line text-gray-700">{item.desc}</p>
+                <div className="flex items-center absolute -top-6 left-8 bg-white z-10 pr-2">
+                  <span className="text-[1.7rem] mt-1 ml-2">{item.title}</span>
+                </div>
+                <div className="border border-gray-200 rounded-[25px] pt-6 pb-6 px-7 bg-white">
+                  <p className="text-[1.2rem] whitespace-pre-line text-gray-700 text-center">{item.desc}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
 
-          {/* 인기 검색어 */}
-        <div className="flex flex-col items-center mt-12">
-          <div className="flex items-end gap-2 mb-3">
-            <span className="text-[1.3rem] text-[#8b2cff] font-extrabold">#</span>
-            <span className="text-[1.5rem] font-bold">인기 검색어</span>
+            {/* 인기 검색어 */}
+        <div className="w-full mt-12 mb-8 px-6 flex flex-col items-center">
+              {/* 타이틀과 선 */}
+          <div className="flex items-center w-full justify-center mb-[-1.5rem]">
+            <div className="mx-6 flex items-end bg-white px-2">
+              <span className="text-[1.7rem] text-[#8b2cff] font-bold mr-1">#</span>
+              <span className="text-[1.7rem] font-bold">인기 검색어</span>
+            </div>
           </div>
-          <div className="flex flex-wrap justify-center gap-3 w-[90%] mx-auto px-4 py-5 bg-white rounded-[30px]">
+            {/* 박스 */}
+          <div className="border border-gray-200 rounded-[30px] bg-white w-full px-4 py-10 flex flex-wrap justify-center gap-4 mt-4">
             {popularKeywords.map((tag) => (
               <span
                 key={tag}
-                className="px-4 py-2 bg-[#f3f3f3] rounded-full text-gray-900 text-[1.1rem] font-medium"
+                className="px-6 py-2 bg-[#f3f3f3] rounded-full text-gray-900 text-[1.1rem] font-medium"
               >
                 {tag}
               </span>
             ))}
           </div>
         </div>
-
             {/* 하단 네비게이션 */}
         <div className="
             fixed border border-gray-300 
@@ -141,3 +148,5 @@ export default function TermHome() {
     </div>
   );
 }
+
+export default StepPage
