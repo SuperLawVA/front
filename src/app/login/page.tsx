@@ -177,7 +177,12 @@ function LoginPage() {
           <div className="flex flex-row gap-12">
             <KakaoIcon />
             <GoogleIcon />
-            <NaverIcon />
+            <button
+              onClick={handleNaverClick}
+              className="w-19 h-20 rounded-full flex items-center justify-center"
+            >
+              <NaverIcon/>
+            </button>
             <AppleIcon />
           </div>
         </div>
