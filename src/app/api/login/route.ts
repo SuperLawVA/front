@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
     //   headers: { "Content-Type": "application/json" },
     // });
     if (/\D+@\D+/.test(body.email) || !body.email) {
-      throw new Error(`1@1 입력`);
+      throw new Error(1@1 입력);
     }
     const token = "temptoken"; // Spring Boot가 반환한 JWT
 

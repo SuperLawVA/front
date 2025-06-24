@@ -26,6 +26,26 @@ function LoginPage() {
       router.push("/register");
     }, 200);
   };
+
+  const handleNaverClick = () => {
+    const base = process.env.NEXT_PUBLIC_BACKEND_URL!;
+    window.location.href = `${base}/auth/oauth2/authorization/naver`;
+  };
+  const handleLogin = async () => {
+  try {
+    const res = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    if (!res.ok) throw new Error((await res.json()).message);
+    alert("로그인 성공!");
+    router.push("/");
+  } catch (e: any) {
+    alert("로그인 실패: " + e.message);
+  }
+};
+
   return (
     <>
       <div className="h-20 w-full flex flex-col justify-center items-center">
@@ -121,7 +141,12 @@ function LoginPage() {
           <div className="flex flex-row gap-12">
             <KakaoIcon />
             <GoogleIcon />
-            <NaverIcon />
+            <button
+              onClick={handleNaverClick}
+              className="w-19 h-20 rounded-full flex items-center justify-center"
+            >
+              <NaverIcon/>
+            </button>
             <AppleIcon />
           </div>
         </div>
