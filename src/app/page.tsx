@@ -104,8 +104,8 @@ function MainPage() {
         <div className="w-full bg-white border border-inputBox rounded-[50px] flex justify-between items-center p-8 mx-6 gap-4">
           <span className="flex gap-3">
             <Image
-              width={1}
-              height={1}
+              width={9999}
+              height={9999}
               src="logo.svg"
               className="w-12"
               alt=""
