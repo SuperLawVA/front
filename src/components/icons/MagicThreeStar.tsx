@@ -1,5 +1,4 @@
 import IconOptions from "@/app/types/IconOptions";
-import { color } from "framer-motion";
 
 const MagicThreeStarIcon = ({
   width = 2,

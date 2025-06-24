@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import BottomNav from "@/components/BottomNav";
 import DocumentIcon from "@/components/icons/Document";
 import InfoIcon from "@/components/icons/Info";

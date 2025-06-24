@@ -179,64 +179,7 @@ function StartPage() {
               </SubmitButton>
             </div>
           </div>
-<<<<<<< HEAD
-          <div className="flex font-bold px-8">
-            <span className="flex-1 text-[1.6rem] text-[#2b2b2b]">
-              계약 유형
-            </span>
-            <span className="flex-1 text-[1.4rem] text-[#5c5c5c]">
-              부동산(전세) 계약서
-            </span>
-          </div>
-          <div className="flex font-bold px-8">
-            <span className="flex-1 text-[1.6rem] text-[#2b2b2b]">
-              계약 일자
-            </span>
-            <span className="flex-1 text-[1.4rem] text-[#5c5c5c]">
-              2018.08.28.
-            </span>
-          </div>
-          <div className="flex font-bold px-8">
-            <span className="flex-1 text-[1.6rem] text-[#2b2b2b]">
-              건물 유형
-            </span>
-            <span className="flex-1 text-[1.4rem] text-[#5c5c5c]">
-              오피스텔
-            </span>
-          </div>
-          <div className="flex w-full gap-8 justify-between">
-            <SubmitButton
-              width={16}
-              height={5}
-              fontSize={1.6}
-              fontWeight={500}
-              fontColor="#1e1e1e"
-              background="white"
-              borderColor="#5c5c5c"
-              onClick={() => {
-                setModalOpen(false);
-                router.push("/main/certificate");
-              }}
-            >
-              다시 업로드
-            </SubmitButton>
-            <SubmitButton
-              width={16}
-              height={5}
-              fontSize={1.6}
-              fontWeight={500}
-              onClick={() => {
-                setModalOpen(false);
-                router.push("certificate/step1");
-              }}
-            >
-              네, 맞아요
-            </SubmitButton>
-          </div>
-        </div>
-=======
         )}
->>>>>>> d5377f8555f1f72f3baf2791a77d0fea769311d2
       </Modal>
     </>
   );

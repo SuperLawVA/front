@@ -5,22 +5,26 @@ interface Props {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
   isCenter?: boolean;
+  isFull?: boolean;
   height?: number | string;
   children: React.ReactNode;
   upperChildren?: React.ReactNode;
   clickOutsideClose?: boolean;
-  ref?: React.RefObject<HTMLDivElement | null>; // ✅ 추가!
+  onClickOutside?: () => void;
+  ref?: React.RefObject<HTMLDivElement | null>;
 }
 
 const Modal = ({
   isOpen,
   setIsOpen,
   isCenter = false,
+  isFull = false,
   height,
   children,
   upperChildren,
   clickOutsideClose = true,
-  ref, // ✅ 추가!
+  onClickOutside,
+  ref,
 }: Props) => {
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
@@ -41,7 +45,16 @@ const Modal = ({
       {/* 배경 */}
       <div
         className="absolute inset-0 bg-black opacity-50"
-        onClick={() => clickOutsideClose && setIsOpen(false)}
+        onClick={() => {
+          if (clickOutsideClose) {
+            if (onClickOutside) {
+              setIsOpen(false);
+              onClickOutside();
+            } else {
+              setIsOpen(false);
+            }
+          }
+        }}
       />
 
       {/* 상단 children */}
@@ -61,7 +74,7 @@ const Modal = ({
           ref={ref} // ✅ 여기 추가!
           onClick={(e) => e.stopPropagation()}
           className={`
-            relative z-40 bg-transparent w-full h-4/5
+            relative z-40 bg-transparent w-full h-${isFull ? "full" : "4/5"}
             overflow-x-auto scroll-none snap-x snap-mandatory
             whitespace-nowrap
           `}
@@ -79,7 +92,9 @@ const Modal = ({
           className={`
             relative z-40 bg-white transition-transform duration-300 ease-in-out 
             transform animate-slide-up w-full 
-            rounded-t-[50px] max-h-[80%] shadow-[0_-2px_10px_rgba(0,0,0,0.2)] 
+            rounded-t-[50px] max-h-[${
+              isFull ? 100 : 80
+            }%] shadow-[0_-2px_10px_rgba(0,0,0,0.2)] 
             flex flex-col items-center
           `}
           style={{ height }}

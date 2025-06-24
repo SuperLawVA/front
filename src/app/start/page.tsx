@@ -4,10 +4,13 @@ import SubmitButton from "@/components/SubmitButton";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 function StartPage() {
+  useEffect(() => {
+    sessionStorage.setItem("start", "true");
+  }, []);
   const router = useRouter();
-
   const [showFirst, setShowFirst] = useState(true);
   const [showSecond, setShowSecond] = useState(false);
   const handleClick = () => {
@@ -65,7 +68,13 @@ function StartPage() {
             transition={{ duration: 2 }} // 나타나는 데 3초
           >
             <span className="min-w-28 max-h-24 mx-72 mt-52">
-              <img src="/logo.svg" className="w-full h-full my-px" alt="" />
+              <Image
+                width={1}
+                height={1}
+                src="/logo.svg"
+                className="w-full h-full my-px"
+                alt=""
+              />
             </span>
             <div className="w-full flex flex-col items-center justify-center">
               <span className="font-semibold text-[4rem] tracking-[-0.04em]">

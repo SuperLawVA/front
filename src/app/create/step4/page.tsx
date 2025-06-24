@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import StatusIcon from "@/components/icons/Status";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import BackHeader from "@/components/BackHeader";
 import ArrowLeftIcon from "@/components/icons/ArrowLeft";
 import ArrowRightIcon from "@/components/icons/ArrowRight";
@@ -14,25 +14,36 @@ import BulbIcon from "@/components/icons/Bulb";
 import ExclamationIcon from "@/components/icons/Exclamation";
 import ArrowDownIcon from "@/components/icons/ArrowDownIcon";
 import DivBox from "@/components/DivBox";
+import { useCreateStore } from "@/store/useStore";
 
 function ContractCreateNewPage() {
   const router = useRouter();
-  const [inputValue, setInputValue] = useState<string>("");
-  // const [valueArray, setValueArray] = useState<string[]>([]);
-  const [valueArray, setValueArray] = useState<string[]>([
-    "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
-    "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
-    "벽에 선반 달고 싶어요",
-    "집에서 담배 피고 싶어요",
-    "집에서 친구랑 동거하고 싶어요",
-    "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
-  ]);
-  const [modalOpen, setModalOpen] = useState(false);
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  // const [inputValue, setInputValue] = useState<string>("");
+  const [userQuery, setUserQuery] = useState<string[]>();
+  // const [userQuery, setUserQuery] = useState<string[]>([
+  //   "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
+  //   "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
+  //   "벽에 선반 달고 싶어요",
+  //   "집에서 담배 피고 싶어요",
+  //   "집에서 친구랑 동거하고 싶어요",
+  //   "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
+  // ]);
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  useEffect(() => {
+    //   if (!sessionStorage.getItem("contractData")) {
+    //     router.replace("/create");
+    //   } else if (!sessionStorage.getItem("articleAgree")) {
+    //     router.replace("step2");
+    //   } else if (!sessionStorage.getItem("userQuery")) {
+    //     router.replace("step3");
+    //   }
+    //   sessionStorage.removeItem("createStore");
+    const contractData = useCreateStore.getState();
+    setUserQuery(contractData.userQuery);
+  }, [router]);
 
-  const liArray = valueArray.map((value, index) => (
+  const liArray = userQuery?.map((value, index) => (
     <li
       key={index}
       className="w-full h-20 px-10 py-6  flex items-center text-[1.4rem] text-[#3a3a40] font-medium border border-[#d7d7d7] rounded-[50px] bg-white"
@@ -59,7 +70,7 @@ function ContractCreateNewPage() {
         <span className="truncate">{value}</span>
       </div>
       <div className="w-8 flex justify-center items-center flex-shrink-0">
-        {activeIndex === valueArray.length - 1 ? (
+        {activeIndex === userQuery.length - 1 ? (
           <ArrowRightIcon
             color="white"
             className="cursor-not-allowed pointer-events-none"
@@ -75,12 +86,6 @@ function ContractCreateNewPage() {
       </div>
     </li>
   ));
-
-  useEffect(() => {
-    if (modalOpen && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [modalOpen, valueArray]);
 
   return (
     <>
@@ -122,7 +127,7 @@ function ContractCreateNewPage() {
             </span>
             <DivBox className="flex items-center gap-2 px-10 py-6 w-full">
               <span className="font-semibold">협상 포인트:</span>
-              "생활하려면 최소한 시계나 액자는 걸어야죠"
+              {`"생활하려면 최소한 시계나 액자는 걸어야죠"`}
             </DivBox>
             <DivBox className="flex items-center gap-2 px-10 py-6 w-full">
               <span className="font-semibold">주의사항:</span>
@@ -187,7 +192,7 @@ function ContractCreateNewPage() {
         </div>
         <DivBox className="mb-6 w-full flex flex-col gap-12">
           <div className="flex w-full justify-between items-center">
-            {liArray[activeIndex]}
+            {liArray && liArray[activeIndex]}
           </div>
         </DivBox>
       </main>

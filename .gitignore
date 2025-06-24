@@ -120,3 +120,5 @@ next-env.d.ts
 # custom
 * copy.*
 >>>>>>> ed15a439bf4eff81e826d515ffa547199b8102fb
+
+logs.json

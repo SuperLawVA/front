@@ -1,6 +1,6 @@
 "use client";
 
-import CustomStyledProps from "@/app/types/CustomStyledProps";
+import { CustomButtonProps } from "@/app/types/CustomStyledProps";
 
 export default function SubmitButton({
   width = "100%",
@@ -11,6 +11,7 @@ export default function SubmitButton({
   gap = 0.8,
   background = "#6000ff",
   borderRadius = 50,
+  type = "submit",
   disabled = false,
   children,
   icon,
@@ -18,7 +19,7 @@ export default function SubmitButton({
   borderColor,
   onClick,
   subStyle = false,
-}: CustomStyledProps) {
+}: CustomButtonProps) {
   const buttonBg = disabled
     ? "rgba(128, 128, 128, 0.55)"
     : subStyle
@@ -40,6 +41,7 @@ export default function SubmitButton({
   return (
     <button
       className={className}
+      type={type}
       disabled={disabled}
       onClick={onClick}
       style={{

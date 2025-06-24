@@ -3,23 +3,23 @@
 
 import CameraIcon from "@/components/icons/Camera";
 import CheckedIcon from "@/components/icons/Checked";
-import DocumentIcon from "@/components/icons/Document";
 import MagicThreeStarIcon from "@/components/icons/MagicThreeStar";
 import PictureIcon from "@/components/icons/Picture";
 import Modal from "@/components/Modal";
 import StyledDiv from "@/components/StyledDiv";
 import SubmitButton from "@/components/SubmitButton";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import CameraPage from "./Camera";
+import UploadPage from "./UploadImages";
 
 function StartPage() {
   const router = useRouter();
   const [modalOpen, setModalOpen] = useState(false);
+  const [isCenter, setIsCenter] = useState(false);
   const [step, setStep] = useState<number>(0);
 
-  const handleClick = () => {
-    router.push("/login");
-  };
   return (
     <>
       <main className="flex flex-col items-center h-full bg-white">
@@ -39,7 +39,9 @@ function StartPage() {
           <br />
           소중하니까
         </div>
-        <img
+        <Image
+          width={99999}
+          height={99999}
           src="/uploadPage.png"
           alt="Main Icon"
           className="w-[26.5rem] h-[26.5rem] mt-16"
@@ -58,39 +60,87 @@ function StartPage() {
         >
           업로드 하기
         </SubmitButton>
+        <button
+          onClick={() => router.back()}
+          className="mt-8 text-[#797979] !text-[1.4rem] font-medium"
+        >
+          ← 다음에 할래요
+        </button>
       </main>
 
       {/* 1번 모달 */}
       <Modal
         isOpen={modalOpen}
         setIsOpen={setModalOpen}
+        isCenter={isCenter}
+        isFull={isCenter}
         clickOutsideClose={true}
+        onClickOutside={() => {
+          if (step > 10) {
+            setModalOpen(true);
+            setIsCenter(false);
+            setStep(0);
+          } else {
+            setModalOpen(false);
+          }
+        }}
       >
         {step === 0 && (
           <div className="my-16 flex flex-col gap-12">
             <div className="text-[2rem] font-bold text-center">
               어떤 방식으로 업로드하시겠어요?
             </div>
-            <ul
-              onClick={() => setStep(1)}
-              className="flex flex-col gap-6 px-4 text-[1.8rem] text-[#4e4e4e] font-medium justar"
-            >
-              <li className="flex gap-4 items-center">
+            <ul className="flex flex-col gap-6 px-4 text-[1.8rem] text-[#4e4e4e] font-medium justar">
+              {/* <li className="flex gap-4 items-center">
                 <DocumentIcon color="#6000ff" />
                 <span>파일로 업로드</span>
-              </li>
-              <li className="flex gap-4 items-center">
+              </li> */}
+              <li
+                className="flex gap-4 items-center"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setStep(11);
+                }}
+              >
                 <PictureIcon />
                 <span>사진으로 업로드</span>
               </li>
-              <li className="flex gap-4 items-center">
+              <li
+                className="flex gap-4 items-center"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsCenter(true);
+                  setStep(12);
+                }}
+              >
                 <CameraIcon />
                 <span>카메라로 업로드</span>
               </li>
             </ul>
           </div>
         )}
-        {step === 1 && (
+        {step === 11 && (
+          <UploadPage
+            setPageOpen={() => {
+              setStep(2);
+            }}
+          />
+        )}
+        {step === 12 && (
+          <CameraPage
+            goBack={() => {
+              setModalOpen(true);
+              setIsCenter(false);
+              setStep(0);
+            }}
+            goNext={() => {
+              setStep(2);
+              setModalOpen(true);
+              setIsCenter(false);
+            }}
+          />
+        )}
+        {/* {step === 1 && (
           <div className="w-full p-16 flex flex-col gap-12">
             <div className="text-[2rem] font-bold text-center">
               업로드하는 파일이 맞으신가요?
@@ -148,7 +198,7 @@ function StartPage() {
               </SubmitButton>
             </div>
           </div>
-        )}
+        )} */}
         {step === 2 && (
           <div className="w-full p-16 flex flex-col gap-12">
             <div className="text-[2rem] font-bold text-center">
@@ -166,6 +216,7 @@ function StartPage() {
                 fontColor="#1e1e1e"
                 background="white"
                 borderColor="#5c5c5c"
+                onClick={() => router.push("/")}
               >
                 홈 화면으로
               </SubmitButton>

@@ -1,14 +1,24 @@
-// lib/useUserActionLogger.ts
-
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { logEvent } from "./logger";
 
-interface UseUserActionLoggerProps {
+export interface LogEntry {
   userId: string;
+  userAgent: string;
+  deviceType: "pc" | "mobile" | "tablet";
+  width: number;
+  height: number;
+  page: string;
+  type: string;
+  data: Record<string, unknown>;
+  timestamp: string;
 }
+
+// interface UseUserActionLoggerProps {
+//   userId: string;
+// }
 
 // 디바이스 타입 판별
 export function getDeviceType(): "pc" | "mobile" | "tablet" {
@@ -19,38 +29,35 @@ export function getDeviceType(): "pc" | "mobile" | "tablet" {
   return "pc";
 }
 
-export function useUserActionLogger({ userId }: UseUserActionLoggerProps) {
+// export function useUserActionLogger({ userId }: UseUserActionLoggerProps) {
+export function useUserActionLogger() {
+  const userId = "none";
   const page = usePathname();
   const userAgent = navigator.userAgent;
   const deviceType = getDeviceType();
-  const width = window.innerWidth;
-  const height = window.innerHeight;
+  const width = typeof window !== "undefined" ? window.innerWidth : 0;
+  const height = typeof window !== "undefined" ? window.innerHeight : 0;
 
-  // 🔑 👉 로컬 큐: 여러 이벤트를 모아뒀다가 한번에 전송
-  const eventQueue = useRef<any[]>([]);
+  const eventQueue = useRef<LogEntry[]>([]);
   const flushTimer = useRef<NodeJS.Timeout | null>(null);
 
-  // 🔑 👉 flush 함수: 큐를 서버로 전송 후 비움
-  const flushQueue = () => {
+  const flushQueue = useCallback(() => {
     if (eventQueue.current.length === 0) return;
     const batch = [...eventQueue.current];
     eventQueue.current = [];
-    // 원래 logEvent를 바로 호출했다면, 이제는 batch로 전송하도록 logger에서 지원 필요
     batch.forEach((e) => logEvent(e));
-  };
+  }, []);
 
-  // 🔑 👉 일정 주기로 자동 flush (1초마다)
   useEffect(() => {
     flushTimer.current = setInterval(flushQueue, 1000);
     return () => {
       if (flushTimer.current) clearInterval(flushTimer.current);
     };
-  }, []);
+  }, [flushQueue]);
 
-  // --- 기록 대신 큐에 추가 ---
-  const queueEvent = (event: any) => {
+  const queueEvent = useCallback((event: LogEntry) => {
     eventQueue.current.push(event);
-  };
+  }, []);
 
   // --- page load ---
   useEffect(() => {
@@ -76,11 +83,14 @@ export function useUserActionLogger({ userId }: UseUserActionLoggerProps) {
       timestamp: new Date().toISOString(),
       data: { loadTime },
     });
-  }, [page, userId]);
+  }, [page, userId, userAgent, deviceType, width, height, queueEvent]);
+
+  const pageEnterTime = useRef<number>(Date.now());
 
   useEffect(() => {
+    const enterTime = pageEnterTime.current;
     return () => {
-      const duration = Date.now() - pageEnterTime.current;
+      const duration = Date.now() - enterTime;
       queueEvent({
         userId,
         userAgent,
@@ -93,7 +103,7 @@ export function useUserActionLogger({ userId }: UseUserActionLoggerProps) {
         data: { durationMs: duration },
       });
     };
-  }, [page, userId]);
+  }, [page, userId, userAgent, deviceType, width, height, queueEvent]);
 
   // --- click & touch ---
   useEffect(() => {
@@ -102,7 +112,8 @@ export function useUserActionLogger({ userId }: UseUserActionLoggerProps) {
       const tagPath = getElementPath(target),
         tagName = target.tagName || null,
         tagId = target.id || null,
-        tagClass = target.className || null;
+        tagClass = target.className || null,
+        tagAttrName = target.getAttribute("name");
       let x = 0,
         y = 0,
         type = "click";
@@ -138,6 +149,7 @@ export function useUserActionLogger({ userId }: UseUserActionLoggerProps) {
           tagName,
           tagId,
           tagClass,
+          tagAttrName,
         },
       });
     }
@@ -151,17 +163,24 @@ export function useUserActionLogger({ userId }: UseUserActionLoggerProps) {
       document.removeEventListener("touchstart", handlePointerEvent);
       document.removeEventListener("touchend", handlePointerEvent);
     };
-  }, [page, userId]);
+  }, [page, userId, userAgent, deviceType, width, height, queueEvent]);
 
   // --- keyboard ---
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
+      if (e.key !== "Enter" && e.key !== " " && e.key !== "Tab") return;
+
       const target = e.target as HTMLElement;
-      if (target.tagName === "BUTTON" || target.closest("button")) {
+      if (
+        target.tagName === "BUTTON" ||
+        target.closest("button") ||
+        target.closest("submit")
+      ) {
         const tagPath = getElementPath(target),
           tagName = target.tagName || null,
           tagId = target.id || null,
-          tagClass = target.className || null;
+          tagClass = target.className || null,
+          tagAttrName = target.getAttribute("name");
 
         queueEvent({
           userId,
@@ -178,6 +197,7 @@ export function useUserActionLogger({ userId }: UseUserActionLoggerProps) {
             tagName,
             tagId,
             tagClass,
+            tagAttrName,
           },
         });
       }
@@ -187,13 +207,12 @@ export function useUserActionLogger({ userId }: UseUserActionLoggerProps) {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [page, userId]);
+  }, [page, userId, userAgent, deviceType, width, height, queueEvent]);
 
   // --- scroll ---
   const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
   const lastScrollTop = useRef<number>(0);
   const scrollStartTime = useRef<number | null>(null);
-  const pageEnterTime = useRef<number>(Date.now());
 
   useEffect(() => {
     function handleScroll() {
@@ -203,7 +222,11 @@ export function useUserActionLogger({ userId }: UseUserActionLoggerProps) {
         const now = Date.now();
         const duration = now - (scrollStartTime.current ?? now);
         scrollStartTime.current = null;
-        const scrollTop = window.scrollY || window.pageYOffset;
+        const scrollTop =
+          typeof window !== "undefined"
+            ? window.scrollY || window.pageYOffset
+            : 0;
+
         queueEvent({
           userId,
           userAgent,
@@ -223,12 +246,53 @@ export function useUserActionLogger({ userId }: UseUserActionLoggerProps) {
       }, 500);
     }
 
-    window.addEventListener("scroll", handleScroll);
+    document.addEventListener("scroll", handleScroll);
     return () => {
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
-      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("scroll", handleScroll);
     };
-  }, [page, userId]);
+  }, [page, userId, userAgent, deviceType, width, height, queueEvent]);
+
+  // --- zoom ---
+  const lastScale = useRef<number>(
+    typeof window !== "undefined"
+      ? window.visualViewport?.scale || window.devicePixelRatio
+      : 1
+  );
+
+  useEffect(() => {
+    const handleZoom = () => {
+      const scale =
+        typeof window !== "undefined"
+          ? window.visualViewport?.scale || window.devicePixelRatio
+          : 1;
+      if (Math.abs(scale - lastScale.current) > 0.01) {
+        queueEvent({
+          userId,
+          userAgent,
+          deviceType,
+          width,
+          height,
+          page,
+          type: "zoom",
+          timestamp: new Date().toISOString(),
+          data: {
+            scale,
+            devicePixelRatio: window.devicePixelRatio,
+          },
+        });
+        lastScale.current = scale;
+      }
+    };
+
+    window.visualViewport?.addEventListener("resize", handleZoom);
+    document.addEventListener("resize", handleZoom);
+
+    return () => {
+      window.visualViewport?.removeEventListener("resize", handleZoom);
+      document.removeEventListener("resize", handleZoom);
+    };
+  }, [page, userId, userAgent, deviceType, width, height, queueEvent]);
 }
 
 // tag 고유 경로 생성

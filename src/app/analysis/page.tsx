@@ -1,23 +1,71 @@
 // page.tsx
 "use client";
 
-import CheckedIcon from "@/components/icons/Checked";
 import DocumentIcon from "@/components/icons/Document";
 import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 import Modal from "@/components/Modal";
 import StyledDiv from "@/components/StyledDiv";
 import SubmitButton from "@/components/SubmitButton";
+import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { AnalysisTarget } from "../types/Main";
+import Image from "next/image";
 
 function AnalysisPage() {
   const router = useRouter();
+  const [contractArray, setContractArray] = useState<
+    AnalysisTarget[] | undefined | null
+  >(undefined);
+  const [contract, setContract] = useState<AnalysisTarget | undefined | null>(
+    undefined
+  );
   const [modalOpen, setModalOpen] = useState(false);
 
-  const [selected, setSelected] = useState<number | null>(null);
-  const handleSelect = (index: number) => {
-    setSelected((prev) => (prev === index ? null : index));
+  // 분석 요청 정보
+  const analysisRequest = async (contractId: string) => {
+    try {
+      await axios.post("/api/analysis/request", {
+        contractId,
+      });
+      // const response = await axios.post("/api/analysis/request", {
+      //   contractId,
+      // });
+      // router.push("analysis/result");
+    } catch (error) {
+      console.error("Failed to fetch contracts:", error);
+      return undefined;
+    }
   };
+
+  // 진입 시 계약서 정보
+  const getContract = async () => {
+    try {
+      const response = await axios.post("/api/analysis");
+      setContractArray(response.data.contract as AnalysisTarget[]);
+      // return response.data.contract as AnalysisTarget[];
+      // return JSON.parse(response.data.contract) as AnalysisTarget[];
+    } catch (error) {
+      console.error("Failed to fetch contracts:", error);
+      return;
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getContract();
+
+      // const target = undefined;
+      if (contractArray) {
+        setContract(contractArray[0]);
+      } else {
+        setContract(undefined);
+        setModalOpen(true);
+      }
+      console.log(contractArray);
+    };
+    fetchData();
+  }, [contractArray]);
 
   return (
     <>
@@ -41,7 +89,9 @@ function AnalysisPage() {
           <br />
           분쟁을 미리 예방하세요
         </div>
-        <img
+        <Image
+          width={99999}
+          height={99999}
           src="/analysisStart.png"
           alt="Main Icon"
           className="w-[26.5rem] h-[26.5rem] mt-16"
@@ -69,57 +119,83 @@ function AnalysisPage() {
       </main>
       <Modal
         isOpen={modalOpen}
+        isCenter={!Boolean(contract)}
         setIsOpen={setModalOpen}
         clickOutsideClose={true}
       >
-        <div className="w-full p-16 flex flex-col gap-12">
-          <div className="text-[2rem] font-bold text-center">
-            분석할 계약서를 확인해주세요
-          </div>
-          <div className="flex flex-col gap-8 p-8 justify-center items-center w-full border-[1.5px] border-[#c6c6c8] rounded-[20px]">
-            <DocumentIcon color="#6000ff" />
-            <span className="text-[1.6rem] font-medium">
-              부동산임대차 계약서.pdf
-            </span>
-          </div>
-          <ul className="w-full px-8 flex flex-col gap-12 items-center text-[#2b2b2b] text-[1.6rem] font-bold">
-            {[
-              ["계약 유형", "부동산(전세)계약서"],
-              ["계약 일자", "2018.08.28."],
-              ["건물 유형", "오피스텔"],
-            ].map(([value, detail], index) => (
-              <li
-                key={index}
-                className="w-full flex justify-between items-center"
+        {contract ? (
+          <div className="w-full p-16 flex flex-col gap-12">
+            <div className="text-[2rem] font-bold text-center">
+              분석할 계약서를 확인해주세요
+            </div>
+            <div className="flex flex-col gap-8 p-8 justify-center items-center w-full border-[1.5px] border-[#c6c6c8] rounded-[20px]">
+              <DocumentIcon color="#6000ff" />
+              <span className="text-[1.6rem] font-medium">
+                {contract?.title}
+              </span>
+            </div>
+            <ul className="w-full px-8 flex flex-col gap-12 items-center text-[#2b2b2b] text-[1.6rem] font-bold">
+              {[
+                ["계약 유형", contract?.contractType],
+                ["계약 일자", contract?.contractDate],
+                ["건물 유형", contract?.buildingType],
+              ].map(([value, detail], index) => (
+                <li
+                  key={index}
+                  className="w-full flex justify-between items-center"
+                >
+                  <span className="flex-1">{value?.toString()}</span>
+                  <span className="flex-1 text-[1.4rem] text-[#5c5c5c]">
+                    {typeof detail === "string" ? detail.split("T")[0] : "미정"}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <div className="flex w-full gap-8">
+              <SubmitButton
+                type="button"
+                height={5}
+                fontSize={1.6}
+                fontWeight={500}
+                fontColor="#1e1e1e"
+                background="white"
+                borderColor="#5c5c5c"
+                onClick={() => router.push("upload")}
               >
-                <span className="flex-1">{value}</span>
-                <span className="flex-1 text-[1.4rem] text-[#5c5c5c]">
-                  {detail}
-                </span>
-              </li>
-            ))}
-          </ul>
-          <div className="flex w-full gap-8">
-            <SubmitButton
-              height={5}
-              fontSize={1.6}
-              fontWeight={500}
-              fontColor="#1e1e1e"
-              background="white"
-              borderColor="#5c5c5c"
-            >
-              다시 업로드
-            </SubmitButton>
-            <SubmitButton
-              height={5}
-              fontSize={1.6}
-              fontWeight={500}
-              onClick={() => router.push("analysis/result")}
-            >
-              네, 맞아요
-            </SubmitButton>
+                다시 업로드
+              </SubmitButton>
+              <SubmitButton
+                height={5}
+                fontSize={1.6}
+                fontWeight={500}
+                onClick={() => {
+                  analysisRequest(contract._id);
+                  router.push("analysis/result");
+                }}
+              >
+                네, 맞아요
+              </SubmitButton>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="absolute top-1/2 left-1/2 -translate-1/2 p-12 w-[90%] bg-white rounded-[50px]">
+            <div className="w-full gap-12 flex flex-col justify-center items-center bg-white rounded-[50px]">
+              업로드 된 계약서가 없습니다. 계약서 업로드로 이동합니다.
+              <SubmitButton
+                type="button"
+                height={5}
+                fontSize={1.6}
+                fontWeight={500}
+                // fontColor="#1e1e1e"
+                // background="white"
+                // borderColor="#5c5c5c"
+                onClick={() => router.replace("upload")}
+              >
+                계약서 업로드로 이동
+              </SubmitButton>
+            </div>
+          </div>
+        )}
       </Modal>
     </>
   );

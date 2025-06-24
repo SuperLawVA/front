@@ -10,6 +10,7 @@ export default function BackHeader({
   height = 1.5,
   color = "#000000",
   to,
+  className = "col-start-1 row-start-1 justify-self-start ml-12",
   children,
 }: BackLinkProps) {
   return (
@@ -19,7 +20,7 @@ export default function BackHeader({
         height={height}
         color={color}
         to={to}
-        className="col-start-1 row-start-1 justify-self-start ml-12"
+        className={className}
       />
       {children && (
         <span className="col-start-1 row-start-1 leading-[2.9rem] font-semibold text-[2.4rem]">

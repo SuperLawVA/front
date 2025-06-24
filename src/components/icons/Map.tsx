@@ -1,11 +1,6 @@
 import IconOptions from "@/app/types/IconOptions";
 
-const MapIcon = ({
-  width = 2,
-  height = 2,
-  color = "#6000FF",
-  className,
-}: IconOptions) => (
+const MapIcon = ({ width = 2, height = 2, color = "#6000FF" }: IconOptions) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 14 14"
