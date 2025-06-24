@@ -36,7 +36,7 @@ function ContractCreateNewPage() {
         console.error("Failed to parse contractData:", err);
       }
     }
-  }, [router]);
+  }, []);
 
   const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
