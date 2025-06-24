@@ -6,7 +6,6 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton";
 import BackHeader from "@/components/BackHeader";
-import StatusIcon from "@/components/icons/Status";
 import InfoIcon from "@/components/icons/Info";
 import AnalysisIcon from "@/components/icons/Analysis";
 import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
@@ -84,10 +83,8 @@ export default function CertificateResult() {
     <>
       <div className="flex flex-col min-h-screen bg-[#F4F4F6]">
         {/* ── 헤더 ── */}
-        <div className="flex flex-col items-center pt-5">
-          <StatusIcon className="mb-1" />
-          <BackHeader to="/">내용증명서 생성</BackHeader>
-        </div>
+        <div className="h-20 w-full flex flex-col justify-center items-center" />
+        <BackHeader to="/">내용증명서 생성</BackHeader>
 
         {/* ── 본문 ── */}
         {certificate && (

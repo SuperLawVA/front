@@ -1,7 +1,6 @@
 "use client";
 
 // import { useRouter } from "next/navigation";
-import StatusIcon from "@/components/icons/Status";
 import { useEffect, useRef, useState } from "react";
 import BackHeader from "@/components/BackHeader";
 import InfoIcon from "@/components/icons/Info";
@@ -698,9 +697,7 @@ function AnalysisResultPage() {
 
   return (
     <>
-      <div className="h-20 w-full flex flex-col justify-center items-center">
-        <StatusIcon className="mt-[1.4rem]" />
-      </div>
+      <div className="h-20 w-full flex flex-col justify-center items-center" />
       <BackHeader to="/">월세 임대차 계약서</BackHeader>
       <main className="flex flex-col items-center mt-[3rem] gap-12 h-auto">
         <div className="w-full my-12 flex flex-col gap-4 justify-center items-center">

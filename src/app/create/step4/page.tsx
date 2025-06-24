@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import StatusIcon from "@/components/icons/Status";
 import { useEffect, useState } from "react";
 import BackHeader from "@/components/BackHeader";
 import ArrowLeftIcon from "@/components/icons/ArrowLeft";
@@ -89,9 +88,7 @@ function ContractCreateNewPage() {
 
   return (
     <>
-      <div className="h-20 w-full flex flex-col justify-center items-center">
-        <StatusIcon className="mt-[1.4rem]" />
-      </div>
+      <div className="h-20 w-full flex flex-col justify-center items-center" />
       <BackHeader to="/">임대차 계약서 작성</BackHeader>
       <main className="flex flex-col items-center mt-[3rem] gap-12 h-[calc(100%-11rem)]">
         <div className="px-8 py-12 w-full flex-1 bg-white rounded-t-[50px] backdrop-opacity-70 flex flex-col gap-12 items-center">

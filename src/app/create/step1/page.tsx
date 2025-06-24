@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton";
-import StatusIcon from "@/components/icons/Status";
 import { useEffect, useMemo, useRef, useState } from "react";
 import BackHeader from "@/components/BackHeader";
 import StyledInput from "@/components/StyledInput";
@@ -260,9 +259,7 @@ function ContractCreateNewPage() {
 
   return (
     <>
-      <div className="h-20 w-full flex flex-col justify-center items-center">
-        <StatusIcon className="mt-[1.4rem]" />
-      </div>
+      <div className="h-20 w-full flex flex-col justify-center items-center" />
       <BackHeader>임대차 계약서 작성</BackHeader>
       <main className="flex flex-col items-center mt-[3rem] gap-12 mx-10 h-auto">
         <form

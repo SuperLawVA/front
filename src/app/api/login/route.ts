@@ -1,45 +1,38 @@
 // app/api/login/route.ts
+
 import { NextRequest, NextResponse } from "next/server";
-// import axios from "axios";
+import axios from "axios";
 import { cookies } from "next/headers";
 
 /**
- * POST 함수:
- * 클라이언트가 /api/login으로 POST 요청 보내면 실행됨.
- * Spring Boot로 로그인 요청 보내고 JWT를 받아서 서버 쿠키에 저장한다.
+ * /api/login POST
+ *
+ * - 클라이언트 로그인 요청 처리
+ * - Spring Boot로 전달 → JWT 응답 → 쿠키 저장 (HttpOnly)
+ * - 에러 상황 처리 (400, 404, 기타)
  */
 export async function POST(req: NextRequest) {
-  const body = await req.json();
-
-  // try {
-  //   // Spring Boot의 로그인 API 호출
-  //   const res = await axios.post("http://localhost:8080/api/login", body, {
-  //     headers: { "Content-Type": "application/json" },
-  //   });
-
-  //   const { jwt } = res.data; // Spring Boot가 반환한 JWT
-
-  //   // Next.js의 서버 쿠키에 저장 (HttpOnly 권장)
-  //   (await cookies()).set("jwt", jwt, {
-  //     httpOnly: true,
-  //     secure: process.env.NODE_ENV === "production",
-  //     sameSite: "strict",
-  //     path: "/",
-  //     maxAge: 60 * 60, // 1시간
-  //   });
   try {
-    // Spring Boot의 로그인 API 호출
-    // const res = await axios.post("http://localhost:8080/api/login", body, {
-    //   headers: { "Content-Type": "application/json" },
-    // });
-    if (/\D+@\D+/.test(body.email) || !body.email) {
-      throw new Error(`1@1.1 입력`);
+    // 1️⃣ 요청 Body 파싱
+    const body = await req.json();
+
+    // 2️⃣ Spring Boot로 로그인 요청 (백엔드 주소는 .env에서 관리)
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    if (!backendUrl) {
+      throw new Error("백엔드 URL이 설정되어 있지 않습니다 (.env 확인).");
     }
-    const jwt = "jwtUser"; // Spring Boot가 반환한 JWT
-    // sessionStorage.setItem("userId", jwt);
 
-    // Next.js의 서버 쿠키에 저장 (HttpOnly 권장)
-    (await cookies()).set("jwt", jwt, {
+    const response = await axios.post(`${backendUrl}auth/login`, body, {
+      headers: { "Content-Type": "application/json" },
+    });
+
+    // 3️⃣ Spring Boot 응답에서 JWT와 사용자 정보 추출
+    const { token: jwt, user } = response.data.result;
+
+    // 4️⃣ JWT와 userId를 HttpOnly 쿠키로 설정
+    const cookieStore = await cookies();
+
+    cookieStore.set("jwt", jwt, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
@@ -47,41 +40,46 @@ export async function POST(req: NextRequest) {
       // maxAge: 60 * 60, // 1시간
     });
 
-    (await cookies()).set("userId", "", {
+    cookieStore.set("userId", String(user.id), {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       path: "/",
       // maxAge: 60 * 60, // 1시간
     });
-    // Next.js의 서버 쿠키에 저장 (HttpOnly 권장)
-    return NextResponse.json(
-      {
-        token: "tokenValue",
-        userName: "아무개",
-        notification: [0, 1, 2],
-        contractArray: [
-          {
-            _id: "asdasd",
-            title: "월세 임대차 계약서",
-            state: "진행중",
-            address: "서울시 강남구 테헤란로 123",
-            createdAt: "2025.03.22",
-          },
-        ],
-        recentChat: [
-          { _id: "1", title: "집 주인이 보증금 안 돌려줘요." },
-          { _id: "2", title: "전입 신고 방법 알려줘" },
-          { _id: "3", title: "묵시적 갱신이 뭔가요" },
-        ],
-      },
-      { status: 200 }
-    );
+    user.id == null;
+    // 5️⃣ 클라이언트로 로그인 성공 응답
+    return NextResponse.json({ success: true, ...user }, { status: 200 });
   } catch (error) {
+    console.error("[API LOGIN] Error:", error);
+    // 6️⃣ Axios 에러 구체 처리
+    if (axios.isAxiosError(error) && error.response) {
+      const { status, data } = error.response;
+      if (data.code === "MEMBER4001") {
+        return NextResponse.json(
+          {
+            success: false,
+            // message: "가입되지 않은 이메일입니다.",
+            message: data?.message,
+          },
+          { status }
+        );
+      } else if (data.code === "USER400") {
+        return NextResponse.json(
+          {
+            success: false,
+            message:
+              "비밀번호가 일치하지 않습니다.\n비밀번호는 8자 이상이며, 영문 대문자, 소문자, 숫자, 특수문자를 모두 포함해야 합니다.",
+          },
+          { status }
+        );
+      }
+    }
+
+    // 7️⃣ 그 외 예기치 못한 오류
     return NextResponse.json(
-      { message: (error as Error).message || "Login failed" }
-      // { message: error.response?.data?.message || "Login failed" },
-      // { status: error.response?.status || 500 }
+      { success: false, message: "서버 내부 오류가 발생했습니다." },
+      { status: 500 }
     );
   }
 }

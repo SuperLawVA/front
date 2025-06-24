@@ -19,17 +19,19 @@ export default interface CustomStyledProps {
 }
 
 // ✅ 버튼 전용 Props
-export interface CustomButtonProps extends CustomStyledProps {
-  type?: "submit" | "reset" | "button";
-  onClick?: MouseEventHandler<HTMLButtonElement>;
-}
+export interface CustomButtonProps
+  extends CustomStyledProps,
+    React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 // ✅ Input 전용 Props
-export interface StyledInputProps extends CustomStyledProps {
+export interface StyledInputProps
+  extends React.InputHTMLAttributes<HTMLInputElement>,
+    CustomStyledProps {
   type?: HTMLInputTypeAttribute;
   placeholder?: string;
   value?: number | string;
   lineHeight?: number | string;
   autoFocus?: boolean;
+  InputclassName?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
