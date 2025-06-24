@@ -174,7 +174,7 @@ function LoginPage() {
           <div className="flex flex-row gap-12">
             <KakaoIcon />
             <GoogleIcon />
-            <NaverIcon />
+            <NaverIcon/>
             <AppleIcon />
           </div>
         </div>

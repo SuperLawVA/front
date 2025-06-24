@@ -3,6 +3,7 @@
 
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton";
 import BackHeader from "@/components/BackHeader";
 import InfoIcon from "@/components/icons/Info";
@@ -52,6 +53,14 @@ export interface Certificate {
 export default function CertificateResult() {
   const [openOriginal, setOpenOriginal] = useState(false);
   const [certificate, setCertificate] = useState<Certificate>();
+  const [openSend, setOpenSend] = useState(false);
+  const [sendStep, setSendStep] = useState<1 | 2>(1); 
+  const [email, setEmail] = useState('');
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const router = useRouter();
+  
+  
   useEffect(() => {
     const getCertificate = async (
       contractId: string,
@@ -282,6 +291,184 @@ export default function CertificateResult() {
             </li>
           ))}
         </ul>
+      </Modal>
+       <Modal
+        isOpen={openSend}
+        setIsOpen={setOpenSend}
+        clickOutsideClose
+        isCenter={false}
+      >
+        <div className="bg-white w-[90vw] max-w-md rounded-t-[40px] mx-auto">
+          {/* -------------- STEP 1 : 이메일 입력 -------------- */}
+          {sendStep === 1 && (
+            <>
+              {/* 드래그 핸들(디자인용) */}
+              <div className="mx-auto mt-3 mb-4 w-16 h-1.5 rounded-full bg-gray-300" />
+
+              <h3 className="px-6 text-center text-[1.9rem] font-bold mt-8">
+                전송할 이메일 주소를 입력해주세요
+              </h3>
+              <p className="text-center text-[1.2rem] text-[#6000FF] font-medium">
+                완성된 내용증명서를 전송해 드릴게요
+              </p>
+              <div className="px-6 mt-10">
+                <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="이메일 주소를 입력 해주세요"
+                  className="
+                    border border-gray-300 bg-white pl-10
+                    w-full h-20 rounded-[40px] px-4
+                    text-[1.3rem] 
+                  "
+                />
+              </div>
+
+              {/* 다음 버튼 */}
+              <div className="px-6 mt-6 ml-4 mb-15 ">
+                  <SubmitButton
+                    width={30}
+                    height={5}
+                    disabled={!emailValid}
+                    onClick={() => setSendStep(2)}
+                  >
+                    다음
+                  </SubmitButton>
+              </div>
+            </>
+          )}
+
+          {/* -------------- STEP 2 : 전송 확인 -------------- */}
+          {sendStep === 2 && (
+            <>
+              {/* 헤더 */}
+              <div className="flex items-center px-6 py-5 justify-center">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-[1.9rem] font-bold mt-8">내용증명서 발송이 완료되었습니다</h3>
+                </div>
+              </div>
+              <div className="flex items-center justify-center">
+                <Image
+                  src="/greenlogo.svg"
+                  alt="닫기"
+                  width={65}
+                  height={65}
+                  className="items-center mt-6 mb-15"
+                  onClick={() => setOpenSend(false)}
+                />
+              </div>
+
+              {/* 버튼 */}
+              <div className="grid grid-cols-2 gap-8 px-6 pb-8 text-[1.6rem]">
+                <button className="
+                    w-[160px] h-[50px] border border-gray-600
+                    rounded-[40px] -ml-4"
+                  onClick={() => setOpenSend(false)}
+                >
+                  다시 전송하기
+                </button>
+                <button className="
+                    w-[160px] h-[50px] border-none bg-[#6000FF]
+                    rounded-[40px] text-white"               
+                    onClick={() => {
+                      router.push("/")
+                    }}
+                >
+                  홈 화면으로
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      </Modal>
+       <Modal
+        isOpen={openSend}
+        setIsOpen={setOpenSend}
+        clickOutsideClose
+        isCenter={false}
+      >
+        <div className="bg-white w-[90vw] max-w-md rounded-t-[40px] mx-auto">
+          {/* -------------- STEP 1 : 이메일 입력 -------------- */}
+          {sendStep === 1 && (
+            <>
+              {/* 드래그 핸들(디자인용) */}
+              <div className="mx-auto mt-3 mb-4 w-16 h-1.5 rounded-full bg-gray-300" />
+
+              <h3 className="px-6 text-center text-[1.9rem] font-bold mt-8">
+                전송할 이메일 주소를 입력해주세요
+              </h3>
+              <p className="text-center text-[1.2rem] text-[#6000FF] font-medium">
+                완성된 내용증명서를 전송해 드릴게요
+              </p>
+              <div className="px-6 mt-10">
+                <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="이메일 주소를 입력 해주세요"
+                  className="
+                    border border-gray-300 bg-white pl-10
+                    w-full h-20 rounded-[40px] px-4
+                    text-[1.3rem] 
+                  "
+                />
+              </div>
+
+              {/* 다음 버튼 */}
+              <div className="px-6 mt-6 ml-4 mb-15 ">
+                  <SubmitButton
+                    width={30}
+                    height={5}
+                    disabled={!emailValid}
+                    onClick={() => setSendStep(2)}
+                  >
+                    다음
+                  </SubmitButton>
+              </div>
+            </>
+          )}
+
+          {/* -------------- STEP 2 : 전송 확인 -------------- */}
+          {sendStep === 2 && (
+            <>
+              {/* 헤더 */}
+              <div className="flex items-center px-6 py-5 justify-center">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-[1.9rem] font-bold mt-8">내용증명서 발송이 완료되었습니다</h3>
+                </div>
+              </div>
+              <div className="flex items-center justify-center">
+                <Image
+                  src="/greenlogo.svg"
+                  alt="닫기"
+                  width={65}
+                  height={65}
+                  className="items-center mt-6 mb-15"
+                  onClick={() => setOpenSend(false)}
+                />
+              </div>
+
+              {/* 버튼 */}
+              <div className="grid grid-cols-2 gap-8 px-6 pb-8 text-[1.6rem]">
+                <button className="
+                    w-[160px] h-[50px] border border-gray-600
+                    rounded-[40px] -ml-4"
+                  onClick={() => setOpenSend(false)}
+                >
+                  다시 전송하기
+                </button>
+                <button className="
+                    w-[160px] h-[50px] border-none bg-[#6000FF]
+                    rounded-[40px] text-white"               
+                    onClick={() => {
+                      router.push("/")
+                    }}
+                >
+                  홈 화면으로
+                </button>
+              </div>
+            </>
+          )}
+        </div>
       </Modal>
     </>
   );
