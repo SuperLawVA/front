@@ -32,20 +32,34 @@ function LoginPage() {
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // 페이지 리로드 막음
+    e.preventDefault();
 
     try {
       const res = await axios.post("/api/login", { email, password });
-      const { userName, notification, contractArray, recentChat } = res.data;
-      useAuthStore.setState({
-        userName,
-        notification,
-        contractArray,
-        recentChat,
-      });
-      router.push("/");
+      console.log("[LOGIN SUCCESS RESPONSE]", res);
+      if (res.data.success) {
+        const { userName, notification, contractArray, recentChat } = res.data;
+        useAuthStore.setState({
+          userName,
+          notification,
+          contractArray,
+          recentChat,
+        });
+        router.push("/");
+      } else {
+        alert(res.data.message || "로그인 실패 (응답: success: false)");
+      }
     } catch (error) {
-      alert("로그인 실패: " + (error as Error).message);
+      console.error("[LOGIN ERROR]", error);
+
+      // ✅ Axios error라면 response에 서버 메시지 있음
+      if (axios.isAxiosError(error) && error.response) {
+        console.log("[AXIOS ERROR RESPONSE]", error.response);
+        alert(error.response.data?.message || "로그인 실패 (서버 응답 있음)");
+      } else {
+        // 네트워크 등 기타
+        alert("로그인 요청 중 알 수 없는 오류가 발생했습니다.");
+      }
     }
   };
 
@@ -55,8 +69,8 @@ function LoginPage() {
       <main className="flex flex-col items-center mt-[3rem] gap-12 mx-10 h-auto">
         <div className="mt-20 w-full gap-4 flex flex-col justify-center items-center">
           <Image
-            width={1}
-            height={1}
+            width={9999}
+            height={9999}
             src="/logo.svg"
             alt="logo"
             className="h-16"
@@ -74,6 +88,9 @@ function LoginPage() {
             <StyledInput
               type="email"
               placeholder="super@lvw.com"
+              pattern="\w+@\w+\.\w+"
+              title="올바른 이메일 형식(예: example@domain.com)을 입력하세요."
+              required
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
@@ -82,12 +99,15 @@ function LoginPage() {
             <StyledInput
               type="password"
               placeholder="대소문자, 숫자, 특수문자 포함하여 8글자 이상"
+              // pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$"
+              // title="비밀번호는 8자 이상이며, 영문 대문자, 소문자, 숫자, 특수문자를 모두 포함해야 합니다."
+              // required
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="flex items-center gap-10">
             <div className="flex gap-4">
-              <input type="checkbox" name="" id="" className="w-6 h-6" />
+              <input type="checkbox" className="w-6 h-6" />
               <label htmlFor="" className="text-[1.2rem]">
                 아이디 저장
               </label>
@@ -114,7 +134,7 @@ function LoginPage() {
             </div> */}
 
             <div className="flex gap-4">
-              <input type="checkbox" name="" id="" className="w-6 h-6" />
+              <input type="checkbox" className="w-6 h-6" />
               <label htmlFor="" className="text-[1.2rem]">
                 자동 로그인
               </label>
@@ -151,7 +171,7 @@ function LoginPage() {
           <div className="flex flex-row gap-12">
             <KakaoIcon />
             <GoogleIcon />
-            <NaverIcon/>
+            <NaverIcon />
             <AppleIcon />
           </div>
         </div>

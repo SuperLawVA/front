@@ -10,10 +10,12 @@ import axios from "axios";
 
 function RegisterPage() {
   const router = useRouter();
+  const [waitVerify, setWaitVerify] = useState(false);
   useEffect(() => {
     if (sessionStorage.getItem("start") !== "true") {
       router.replace("start");
     }
+    setWaitVerify(false);
   }, [router]);
   const [email, setEmail] = useState("");
   const [verification, setVerification] = useState("");
@@ -28,6 +30,7 @@ function RegisterPage() {
   ]);
 
   const handleVerifyRequest = async () => {
+    setWaitVerify(true);
     try {
       const response = await axios.post(
         process.env.NEXT_PUBLIC_BACKEND_URL + "api/email/send",
@@ -59,6 +62,8 @@ function RegisterPage() {
           (err as Error).message || "인증 코드 요청 실패! 다시 시도해주세요."
         );
       }
+    } finally {
+      setWaitVerify(false);
     }
   };
 
@@ -135,12 +140,13 @@ function RegisterPage() {
           console.error(
             "인증 코드가 일치하지 않거나 5분이 지나 만료되었습니다."
           );
-          alert("인증 코드 수신 이메일이 아닙니다.");
+          alert("인증 코드가 일치하지 않거나 5분이 지나 만료되었습니다.");
         } else if (axiosError.response.status === 404) {
           console.error("인증 코드 수신 이메일이 아닙니다.");
           alert("인증 코드 수신 이메일이 아닙니다.");
+        } else {
+          alert((err as Error).message || "회원가입 실패! 다시 시도해주세요.");
         }
-        alert((err as Error).message || "회원가입 실패! 다시 시도해주세요.");
       }
     }
     return;
@@ -171,7 +177,9 @@ function RegisterPage() {
               height={3}
               fontSize={1.2}
               fontWeight={600}
-              disabled={email.length === 0 || !emailPattern.test(email)}
+              disabled={
+                email.length === 0 || !emailPattern.test(email) || waitVerify
+              }
               onClick={handleVerifyRequest}
             >
               인증하기
@@ -183,7 +191,7 @@ function RegisterPage() {
             fontSize={1.6}
             placeholder="인증 코드 입력"
             maxLength={6}
-            // pattern="\d{6}"
+            pattern="\d{6}"
             inputMode="numeric"
             onChange={(e) => setVerification(e.target.value)}
             value={verification}
