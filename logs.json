@@ -563,5 +563,1867 @@
         "loadTime": 0
       }
     }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/start",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:14:46.317Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/start",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:16:24.161Z",
+      "data": {
+        "loadTime": 0
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/start",
+      "type": "click",
+      "timestamp": "2025-06-24T06:16:26.525Z",
+      "data": {
+        "x": 260,
+        "y": 722,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.absolute.top-0.w-full.mt-72.h-[calc(100%-36rem)].flex.flex-col.justify-center.items-center.gap-8 > div.w-full.px-14.mt-96.flex.self-end > button.flex.justify-center.items-center",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "flex justify-center items-center",
+        "tagAttrName": null
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "click",
+      "timestamp": "2025-06-24T06:17:26.103Z",
+      "data": {
+        "x": 303,
+        "y": 731,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > div.w-full.flex.flex-col.justify-center.items-center.gap-8 > div.flex.flex-row.gap-12 > svg > rect",
+        "tagName": "rect",
+        "tagId": null,
+        "tagClass": {},
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "click",
+      "timestamp": "2025-06-24T06:17:26.896Z",
+      "data": {
+        "x": 223,
+        "y": 741,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > div.w-full.flex.flex-col.justify-center.items-center.gap-8 > div.flex.flex-row.gap-12 > svg > rect",
+        "tagName": "rect",
+        "tagId": null,
+        "tagClass": {},
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "click",
+      "timestamp": "2025-06-24T06:17:27.456Z",
+      "data": {
+        "x": 150,
+        "y": 738,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > div.w-full.flex.flex-col.justify-center.items-center.gap-8 > div.flex.flex-row.gap-12 > svg > rect",
+        "tagName": "rect",
+        "tagId": null,
+        "tagClass": {},
+        "tagAttrName": null
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "click",
+      "timestamp": "2025-06-24T06:17:28.087Z",
+      "data": {
+        "x": 377,
+        "y": 745,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > div.w-full.flex.flex-col.justify-center.items-center.gap-8 > div.flex.flex-row.gap-12 > svg > rect",
+        "tagName": "rect",
+        "tagId": null,
+        "tagClass": {},
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "click",
+      "timestamp": "2025-06-24T06:17:28.991Z",
+      "data": {
+        "x": 189,
+        "y": 335,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8 > div.flex.flex-col.gap-4.text-[1.8rem] > div.flex.flex-col.justify-start.undefined > input.border-none.px-4.outline-none.placeholder:text-gray-400",
+        "tagName": "INPUT",
+        "tagId": null,
+        "tagClass": "border-none px-4 outline-none placeholder:text-gray-400",
+        "tagAttrName": null
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:18:54.622Z",
+      "data": {
+        "x": 208.22483825683594,
+        "y": 550.4166870117188,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8",
+        "tagName": "FORM",
+        "tagId": null,
+        "tagClass": "mt-12 w-full flex flex-col gap-8",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:18:54.705Z",
+      "data": {
+        "x": 208.22483825683594,
+        "y": 550.4166870117188,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8",
+        "tagName": "FORM",
+        "tagId": null,
+        "tagClass": "mt-12 w-full flex flex-col gap-8",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "click",
+      "timestamp": "2025-06-24T06:18:54.926Z",
+      "data": {
+        "x": 208,
+        "y": 550,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8",
+        "tagName": "FORM",
+        "tagId": null,
+        "tagClass": "mt-12 w-full flex flex-col gap-8",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:18:55.455Z",
+      "data": {
+        "x": 203.67189025878906,
+        "y": 548.8541870117188,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8",
+        "tagName": "FORM",
+        "tagId": null,
+        "tagClass": "mt-12 w-full flex flex-col gap-8",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:18:55.605Z",
+      "data": {
+        "x": 203.67189025878906,
+        "y": 548.8541870117188,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8",
+        "tagName": "FORM",
+        "tagId": null,
+        "tagClass": "mt-12 w-full flex flex-col gap-8",
+        "tagAttrName": null
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "click",
+      "timestamp": "2025-06-24T06:18:55.756Z",
+      "data": {
+        "x": 203,
+        "y": 549,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8",
+        "tagName": "FORM",
+        "tagId": null,
+        "tagClass": "mt-12 w-full flex flex-col gap-8",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:18:55.789Z",
+      "data": {
+        "x": 203.67189025878906,
+        "y": 548.8541870117188,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8",
+        "tagName": "FORM",
+        "tagId": null,
+        "tagClass": "mt-12 w-full flex flex-col gap-8",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:18:55.838Z",
+      "data": {
+        "x": 203.67189025878906,
+        "y": 548.8541870117188,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8",
+        "tagName": "FORM",
+        "tagId": null,
+        "tagClass": "mt-12 w-full flex flex-col gap-8",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "click",
+      "timestamp": "2025-06-24T06:18:56.090Z",
+      "data": {
+        "x": 203,
+        "y": 549,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8",
+        "tagName": "FORM",
+        "tagId": null,
+        "tagClass": "mt-12 w-full flex flex-col gap-8",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:18:56.738Z",
+      "data": {
+        "x": 137.51303100585938,
+        "y": 339.56597900390625,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8 > div.flex.flex-col.gap-4.text-[1.8rem] > div.flex.flex-col.justify-start.undefined > input.border-none.px-4.outline-none.placeholder:text-gray-400",
+        "tagName": "INPUT",
+        "tagId": null,
+        "tagClass": "border-none px-4 outline-none placeholder:text-gray-400",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:18:56.787Z",
+      "data": {
+        "x": 137.51303100585938,
+        "y": 339.56597900390625,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8 > div.flex.flex-col.gap-4.text-[1.8rem] > div.flex.flex-col.justify-start.undefined > input.border-none.px-4.outline-none.placeholder:text-gray-400",
+        "tagName": "INPUT",
+        "tagId": null,
+        "tagClass": "border-none px-4 outline-none placeholder:text-gray-400",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "click",
+      "timestamp": "2025-06-24T06:18:57.041Z",
+      "data": {
+        "x": 137,
+        "y": 339,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8 > div.flex.flex-col.gap-4.text-[1.8rem] > div.flex.flex-col.justify-start.undefined > input.border-none.px-4.outline-none.placeholder:text-gray-400",
+        "tagName": "INPUT",
+        "tagId": null,
+        "tagClass": "border-none px-4 outline-none placeholder:text-gray-400",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:18:57.305Z",
+      "data": {
+        "x": 112.62153625488281,
+        "y": 337.6996765136719,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8 > div.flex.flex-col.gap-4.text-[1.8rem] > div.flex.flex-col.justify-start.undefined > input.border-none.px-4.outline-none.placeholder:text-gray-400",
+        "tagName": "INPUT",
+        "tagId": null,
+        "tagClass": "border-none px-4 outline-none placeholder:text-gray-400",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:18:57.371Z",
+      "data": {
+        "x": 112.62153625488281,
+        "y": 337.6996765136719,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8 > div.flex.flex-col.gap-4.text-[1.8rem] > div.flex.flex-col.justify-start.undefined > input.border-none.px-4.outline-none.placeholder:text-gray-400",
+        "tagName": "INPUT",
+        "tagId": null,
+        "tagClass": "border-none px-4 outline-none placeholder:text-gray-400",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "click",
+      "timestamp": "2025-06-24T06:18:57.607Z",
+      "data": {
+        "x": 112,
+        "y": 337,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8 > div.flex.flex-col.gap-4.text-[1.8rem] > div.flex.flex-col.justify-start.undefined > input.border-none.px-4.outline-none.placeholder:text-gray-400",
+        "tagName": "INPUT",
+        "tagId": null,
+        "tagClass": "border-none px-4 outline-none placeholder:text-gray-400",
+        "tagAttrName": null
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:19:00.622Z",
+      "data": {
+        "x": 264.4053955078125,
+        "y": 607.0790405273438,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8 > div.flex.justify-center.gap-4.text-l.font-medium > button",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": null,
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:19:00.688Z",
+      "data": {
+        "x": 264.4053955078125,
+        "y": 607.0790405273438,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8 > div.flex.justify-center.gap-4.text-l.font-medium > button",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": null,
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "click",
+      "timestamp": "2025-06-24T06:19:00.957Z",
+      "data": {
+        "x": 264,
+        "y": 607,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8 > div.flex.justify-center.gap-4.text-l.font-medium > button",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": null,
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 532,
+      "height": 859,
+      "page": "/login",
+      "type": "page_stay",
+      "timestamp": "2025-06-24T06:19:01.425Z",
+      "data": {
+        "durationMs": 108780
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/register",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:19:01.425Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/register",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:19:14.023Z",
+      "data": {
+        "x": 328.0555725097656,
+        "y": 186.12847900390625,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > form.flex.flex-col.items-center.mt-[5rem].mx-8.h-auto > div.mt-12.flex.flex-col.gap-8 > div.flex.gap-4 > button.flex.justify-center.items-center",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "flex justify-center items-center",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/register",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:19:14.104Z",
+      "data": {
+        "x": 328.0555725097656,
+        "y": 186.12847900390625,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > form.flex.flex-col.items-center.mt-[5rem].mx-8.h-auto > div.mt-12.flex.flex-col.gap-8 > div.flex.gap-4 > button.flex.justify-center.items-center",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "flex justify-center items-center",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/register",
+      "type": "click",
+      "timestamp": "2025-06-24T06:19:14.329Z",
+      "data": {
+        "x": 328,
+        "y": 186,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > form.flex.flex-col.items-center.mt-[5rem].mx-8.h-auto > div.mt-12.flex.flex-col.gap-8 > div.flex.gap-4 > button.flex.justify-center.items-center",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "flex justify-center items-center",
+        "tagAttrName": null
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/register",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:19:35.116Z",
+      "data": {
+        "x": 225.30816650390625,
+        "y": 171.28472900390625,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > form.flex.flex-col.items-center.mt-[5rem].mx-8.h-auto > div.mt-12.flex.flex-col.gap-8 > div.flex.gap-4 > div.flex.flex-col.justify-start.undefined > input.border-none.px-4.outline-none.placeholder:text-gray-400",
+        "tagName": "INPUT",
+        "tagId": null,
+        "tagClass": "border-none px-4 outline-none placeholder:text-gray-400",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/register",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:19:35.179Z",
+      "data": {
+        "x": 225.30816650390625,
+        "y": 171.28472900390625,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > form.flex.flex-col.items-center.mt-[5rem].mx-8.h-auto > div.mt-12.flex.flex-col.gap-8 > div.flex.gap-4 > div.flex.flex-col.justify-start.undefined > input.border-none.px-4.outline-none.placeholder:text-gray-400",
+        "tagName": "INPUT",
+        "tagId": null,
+        "tagClass": "border-none px-4 outline-none placeholder:text-gray-400",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/register",
+      "type": "click",
+      "timestamp": "2025-06-24T06:19:35.420Z",
+      "data": {
+        "x": 225,
+        "y": 171,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > form.flex.flex-col.items-center.mt-[5rem].mx-8.h-auto > div.mt-12.flex.flex-col.gap-8 > div.flex.gap-4 > div.flex.flex-col.justify-start.undefined > input.border-none.px-4.outline-none.placeholder:text-gray-400",
+        "tagName": "INPUT",
+        "tagId": null,
+        "tagClass": "border-none px-4 outline-none placeholder:text-gray-400",
+        "tagAttrName": null
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/register",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:19:40.299Z",
+      "data": {
+        "x": 205.72048950195312,
+        "y": 216.7230987548828,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > form.flex.flex-col.items-center.mt-[5rem].mx-8.h-auto > div.mt-12.flex.flex-col.gap-8 > div.flex.flex-col.justify-start.undefined > input.border-none.px-4.outline-none.placeholder:text-gray-400",
+        "tagName": "INPUT",
+        "tagId": null,
+        "tagClass": "border-none px-4 outline-none placeholder:text-gray-400",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/register",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:19:40.381Z",
+      "data": {
+        "x": 205.72048950195312,
+        "y": 216.7230987548828,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > form.flex.flex-col.items-center.mt-[5rem].mx-8.h-auto > div.mt-12.flex.flex-col.gap-8 > div.flex.flex-col.justify-start.undefined > input.border-none.px-4.outline-none.placeholder:text-gray-400",
+        "tagName": "INPUT",
+        "tagId": null,
+        "tagClass": "border-none px-4 outline-none placeholder:text-gray-400",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/register",
+      "type": "click",
+      "timestamp": "2025-06-24T06:19:40.601Z",
+      "data": {
+        "x": 205,
+        "y": 216,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > form.flex.flex-col.items-center.mt-[5rem].mx-8.h-auto > div.mt-12.flex.flex-col.gap-8 > div.flex.flex-col.justify-start.undefined > input.border-none.px-4.outline-none.placeholder:text-gray-400",
+        "tagName": "INPUT",
+        "tagId": null,
+        "tagClass": "border-none px-4 outline-none placeholder:text-gray-400",
+        "tagAttrName": null
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/register",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:19:44.987Z",
+      "data": {
+        "x": 48.923614501953125,
+        "y": 474.9696350097656,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > form.flex.flex-col.items-center.mt-[5rem].mx-8.h-auto > div.bg-mainL.mt-16.p-12.w-[36rem].justify-center.rounded-[50px].flex.flex-col.gap-4 > div.flex.mb-4.gap-4.items-center > input#terms-total.w-6.h-6",
+        "tagName": "INPUT",
+        "tagId": "terms-total",
+        "tagClass": "w-6 h-6",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/register",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:19:45.081Z",
+      "data": {
+        "x": 48.923614501953125,
+        "y": 474.9696350097656,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > form.flex.flex-col.items-center.mt-[5rem].mx-8.h-auto > div.bg-mainL.mt-16.p-12.w-[36rem].justify-center.rounded-[50px].flex.flex-col.gap-4 > div.flex.mb-4.gap-4.items-center > input#terms-total.w-6.h-6",
+        "tagName": "INPUT",
+        "tagId": "terms-total",
+        "tagClass": "w-6 h-6",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/register",
+      "type": "click",
+      "timestamp": "2025-06-24T06:19:45.300Z",
+      "data": {
+        "x": 49,
+        "y": 475,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > form.flex.flex-col.items-center.mt-[5rem].mx-8.h-auto > div.bg-mainL.mt-16.p-12.w-[36rem].justify-center.rounded-[50px].flex.flex-col.gap-4 > div.flex.mb-4.gap-4.items-center > input#terms-total.w-6.h-6",
+        "tagName": "INPUT",
+        "tagId": "terms-total",
+        "tagClass": "w-6 h-6",
+        "tagAttrName": null
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/register",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:19:46.151Z",
+      "data": {
+        "x": 101.24566650390625,
+        "y": 713.6284790039062,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > form.flex.flex-col.items-center.mt-[5rem].mx-8.h-auto > div.w-[30rem].flex.flex-1.items-end.mt-28.mb-8",
+        "tagName": "DIV",
+        "tagId": null,
+        "tagClass": "w-[30rem] flex flex-1 items-end mt-28 mb-8",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/register",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:19:46.249Z",
+      "data": {
+        "x": 101.24566650390625,
+        "y": 713.7673950195312,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > form.flex.flex-col.items-center.mt-[5rem].mx-8.h-auto > div.w-[30rem].flex.flex-1.items-end.mt-28.mb-8",
+        "tagName": "DIV",
+        "tagId": null,
+        "tagClass": "w-[30rem] flex flex-1 items-end mt-28 mb-8",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/register",
+      "type": "click",
+      "timestamp": "2025-06-24T06:19:46.452Z",
+      "data": {
+        "x": 101,
+        "y": 713,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > form.flex.flex-col.items-center.mt-[5rem].mx-8.h-auto > div.w-[30rem].flex.flex-1.items-end.mt-28.mb-8",
+        "tagName": "DIV",
+        "tagId": null,
+        "tagClass": "w-[30rem] flex flex-1 items-end mt-28 mb-8",
+        "tagAttrName": null
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/start",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:19:54.490Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/start",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:20:01.788Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/start",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:20:11.049Z",
+      "data": {
+        "loadTime": 0
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/start",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:20:13.657Z",
+      "data": {
+        "x": 211.69705200195312,
+        "y": 701.4583740234375,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.absolute.top-0.w-full.mt-72.h-[calc(100%-36rem)].flex.flex-col.justify-center.items-center.gap-8 > div.w-full.px-14.mt-96.flex.self-end > button.flex.justify-center.items-center",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "flex justify-center items-center",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/start",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:20:13.659Z",
+      "data": {
+        "x": 211.69705200195312,
+        "y": 701.4583740234375,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.absolute.top-0.w-full.mt-72.h-[calc(100%-36rem)].flex.flex-col.justify-center.items-center.gap-8 > div.w-full.px-14.mt-96.flex.self-end > button.flex.justify-center.items-center",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "flex justify-center items-center",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/start",
+      "type": "click",
+      "timestamp": "2025-06-24T06:20:13.990Z",
+      "data": {
+        "x": 211,
+        "y": 701,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.absolute.top-0.w-full.mt-72.h-[calc(100%-36rem)].flex.flex-col.justify-center.items-center.gap-8 > div.w-full.px-14.mt-96.flex.self-end > button.flex.justify-center.items-center",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "flex justify-center items-center",
+        "tagAttrName": null
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/start",
+      "type": "page_stay",
+      "timestamp": "2025-06-24T06:20:14.077Z",
+      "data": {
+        "durationMs": 3041
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/login",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:20:14.077Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/start",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:20:48.388Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/start",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:20:51.953Z",
+      "data": {
+        "x": 207.65626525878906,
+        "y": 697.7474365234375,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.absolute.top-0.w-full.mt-72.h-[calc(100%-36rem)].flex.flex-col.justify-center.items-center.gap-8 > div.w-full.px-14.mt-96.flex.self-end > button.flex.justify-center.items-center",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "flex justify-center items-center",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/start",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:20:52.018Z",
+      "data": {
+        "x": 207.65626525878906,
+        "y": 697.7474365234375,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.absolute.top-0.w-full.mt-72.h-[calc(100%-36rem)].flex.flex-col.justify-center.items-center.gap-8 > div.w-full.px-14.mt-96.flex.self-end > button.flex.justify-center.items-center",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "flex justify-center items-center",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/start",
+      "type": "click",
+      "timestamp": "2025-06-24T06:20:52.280Z",
+      "data": {
+        "x": 207,
+        "y": 698,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.absolute.top-0.w-full.mt-72.h-[calc(100%-36rem)].flex.flex-col.justify-center.items-center.gap-8 > div.w-full.px-14.mt-96.flex.self-end > button.flex.justify-center.items-center",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "flex justify-center items-center",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/start",
+      "type": "page_stay",
+      "timestamp": "2025-06-24T06:20:52.390Z",
+      "data": {
+        "durationMs": 4015
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/login",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:20:52.390Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/login",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:21:00.622Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/login",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:21:03.657Z",
+      "data": {
+        "x": 105.50347900390625,
+        "y": 332.7083435058594,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8 > div.flex.flex-col.gap-4.text-[1.8rem] > div.flex.flex-col.justify-start.undefined > input.border-none.px-4.outline-none.placeholder:text-gray-400",
+        "tagName": "INPUT",
+        "tagId": null,
+        "tagClass": "border-none px-4 outline-none placeholder:text-gray-400",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/login",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:21:03.787Z",
+      "data": {
+        "x": 105.50347900390625,
+        "y": 332.7083435058594,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8 > div.flex.flex-col.gap-4.text-[1.8rem] > div.flex.flex-col.justify-start.undefined > input.border-none.px-4.outline-none.placeholder:text-gray-400",
+        "tagName": "INPUT",
+        "tagId": null,
+        "tagClass": "border-none px-4 outline-none placeholder:text-gray-400",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/login",
+      "type": "click",
+      "timestamp": "2025-06-24T06:21:03.960Z",
+      "data": {
+        "x": 105,
+        "y": 332,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8 > div.flex.flex-col.gap-4.text-[1.8rem] > div.flex.flex-col.justify-start.undefined > input.border-none.px-4.outline-none.placeholder:text-gray-400",
+        "tagName": "INPUT",
+        "tagId": null,
+        "tagClass": "border-none px-4 outline-none placeholder:text-gray-400",
+        "tagAttrName": null
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/login",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:23:08.839Z",
+      "data": {
+        "x": 186.13282775878906,
+        "y": 544.6875,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8 > button.mt-8.flex.justify-center.items-center",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "mt-8 flex justify-center items-center",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/login",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:23:08.987Z",
+      "data": {
+        "x": 186.13282775878906,
+        "y": 544.6875,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8 > button.mt-8.flex.justify-center.items-center",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "mt-8 flex justify-center items-center",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/login",
+      "type": "click",
+      "timestamp": "2025-06-24T06:23:09.141Z",
+      "data": {
+        "x": 186,
+        "y": 544,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.flex.flex-col.items-center.mt-[3rem].gap-12.mx-10.h-auto > form.mt-12.w-full.flex.flex-col.gap-8 > button.mt-8.flex.justify-center.items-center",
+        "tagName": "BUTTON",
+        "tagId": null,
+        "tagClass": "mt-8 flex justify-center items-center",
+        "tagAttrName": null
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/login",
+      "type": "page_stay",
+      "timestamp": "2025-06-24T06:23:10.029Z",
+      "data": {
+        "durationMs": 129423
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:23:10.029Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:23:11.706Z",
+      "data": {
+        "x": 307.7778015136719,
+        "y": 444.94793701171875,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.w-full.flex.flex-col.items-center.h-auto > div.w-full.px-8.py-10.gap-12.rounded-t-[50px].bg-white.flex.flex-col.items-center > div.self-start.w-full.font-semibold.text-[1.8rem].px-8.flex.flex-col.gap-4 > div.flex.w-full.justify-around > div.flex.flex-col.items-center.text-center > button.flex.justify-center.items-center.w-20.h-20.rounded-[20px].mb-2 > span > svg",
+        "tagName": "svg",
+        "tagId": null,
+        "tagClass": {},
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:23:11.803Z",
+      "data": {
+        "x": 307.7778015136719,
+        "y": 444.94793701171875,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.w-full.flex.flex-col.items-center.h-auto > div.w-full.px-8.py-10.gap-12.rounded-t-[50px].bg-white.flex.flex-col.items-center > div.self-start.w-full.font-semibold.text-[1.8rem].px-8.flex.flex-col.gap-4 > div.flex.w-full.justify-around > div.flex.flex-col.items-center.text-center > button.flex.justify-center.items-center.w-20.h-20.rounded-[20px].mb-2 > span > svg",
+        "tagName": "svg",
+        "tagId": null,
+        "tagClass": {},
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/",
+      "type": "click",
+      "timestamp": "2025-06-24T06:23:12.032Z",
+      "data": {
+        "x": 308,
+        "y": 445,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > main.w-full.flex.flex-col.items-center.h-auto > div.w-full.px-8.py-10.gap-12.rounded-t-[50px].bg-white.flex.flex-col.items-center > div.self-start.w-full.font-semibold.text-[1.8rem].px-8.flex.flex-col.gap-4 > div.flex.w-full.justify-around > div.flex.flex-col.items-center.text-center > button.flex.justify-center.items-center.w-20.h-20.rounded-[20px].mb-2 > span > svg",
+        "tagName": "svg",
+        "tagId": null,
+        "tagClass": {},
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/",
+      "type": "page_stay",
+      "timestamp": "2025-06-24T06:23:12.426Z",
+      "data": {
+        "durationMs": 131820
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/certificate",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:23:12.427Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/certificate",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:23:14.419Z",
+      "data": {
+        "x": 155.7855987548828,
+        "y": 197.4479217529297,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.\n........fixed.inset-0.z-30.flex.justify-center.\n........items-end.\n...... > div.absolute.inset-0.bg-black.opacity-50",
+        "tagName": "DIV",
+        "tagId": null,
+        "tagClass": "absolute inset-0 bg-black opacity-50",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/certificate",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:23:14.501Z",
+      "data": {
+        "x": 155.7855987548828,
+        "y": 197.58682250976562,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.\n........fixed.inset-0.z-30.flex.justify-center.\n........items-end.\n...... > div.absolute.inset-0.bg-black.opacity-50",
+        "tagName": "DIV",
+        "tagId": null,
+        "tagClass": "absolute inset-0 bg-black opacity-50",
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/certificate",
+      "type": "click",
+      "timestamp": "2025-06-24T06:23:14.720Z",
+      "data": {
+        "x": 156,
+        "y": 197,
+        "tagPath": "div.\n........fixed.inset-0.z-30.flex.justify-center.\n........items-end.\n...... > div.absolute.inset-0.bg-black.opacity-50",
+        "tagName": "DIV",
+        "tagId": null,
+        "tagClass": "absolute inset-0 bg-black opacity-50",
+        "tagAttrName": null
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/certificate",
+      "type": "page_stay",
+      "timestamp": "2025-06-24T06:23:15.775Z",
+      "data": {
+        "durationMs": 135169
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:23:15.775Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:23:26.223Z",
+      "data": {
+        "x": 194.22743225097656,
+        "y": 811.7838745117188,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > nav.sticky.bottom-0.w-full.h-28 > div.h-full.border-t.border-[#c6c6c8].pt-4.z-10.rounded-t-[50px] > div.flex.justify-around.items-center.h-full > a.flex.flex-col.items-center.gap-1 > svg",
+        "tagName": "svg",
+        "tagId": null,
+        "tagClass": {},
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:23:26.404Z",
+      "data": {
+        "x": 194.22743225097656,
+        "y": 811.7838745117188,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > nav.sticky.bottom-0.w-full.h-28 > div.h-full.border-t.border-[#c6c6c8].pt-4.z-10.rounded-t-[50px] > div.flex.justify-around.items-center.h-full > a.flex.flex-col.items-center.gap-1 > svg",
+        "tagName": "svg",
+        "tagId": null,
+        "tagClass": {},
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/",
+      "type": "click",
+      "timestamp": "2025-06-24T06:23:26.552Z",
+      "data": {
+        "x": 194,
+        "y": 812,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > nav.sticky.bottom-0.w-full.h-28 > div.h-full.border-t.border-[#c6c6c8].pt-4.z-10.rounded-t-[50px] > div.flex.justify-around.items-center.h-full > a.flex.flex-col.items-center.gap-1 > svg",
+        "tagName": "svg",
+        "tagId": null,
+        "tagClass": {},
+        "tagAttrName": null
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/",
+      "type": "touchStart",
+      "timestamp": "2025-06-24T06:23:39.323Z",
+      "data": {
+        "x": 192.95140075683594,
+        "y": 812.2352905273438,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > nav.sticky.bottom-0.w-full.h-28 > div.h-full.border-t.border-[#c6c6c8].pt-4.z-10.rounded-t-[50px] > div.flex.justify-around.items-center.h-full > a.flex.flex-col.items-center.gap-1 > svg",
+        "tagName": "svg",
+        "tagId": null,
+        "tagClass": {},
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/",
+      "type": "touchEnd",
+      "timestamp": "2025-06-24T06:23:39.437Z",
+      "data": {
+        "x": 192.95140075683594,
+        "y": 812.3741455078125,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > nav.sticky.bottom-0.w-full.h-28 > div.h-full.border-t.border-[#c6c6c8].pt-4.z-10.rounded-t-[50px] > div.flex.justify-around.items-center.h-full > a.flex.flex-col.items-center.gap-1 > svg",
+        "tagName": "svg",
+        "tagId": null,
+        "tagClass": {},
+        "tagAttrName": null
+      }
+    },
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/",
+      "type": "click",
+      "timestamp": "2025-06-24T06:23:39.656Z",
+      "data": {
+        "x": 193,
+        "y": 812,
+        "tagPath": "html.__variable_c3fd43.__variable_5cfdac.__variable_9a8899.antialiased.w-full > body.subpixel-antialiased.w-full > div.absolute.top-0.left-1/2.-translate-x-1/2.w-full.h-full > nav.sticky.bottom-0.w-full.h-28 > div.h-full.border-t.border-[#c6c6c8].pt-4.z-10.rounded-t-[50px] > div.flex.justify-around.items-center.h-full > a.flex.flex-col.items-center.gap-1 > svg",
+        "tagName": "svg",
+        "tagId": null,
+        "tagClass": {},
+        "tagAttrName": null
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/",
+      "type": "scroll",
+      "timestamp": "2025-06-24T06:24:43.906Z",
+      "data": {
+        "scrollTop": 0,
+        "scrollDelta": 0,
+        "durationMs": 1152
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/",
+      "type": "scroll",
+      "timestamp": "2025-06-24T06:24:53.773Z",
+      "data": {
+        "scrollTop": 182,
+        "scrollDelta": 182,
+        "durationMs": 703
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:26:26.752Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:26:37.733Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:26:43.435Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:27:59.309Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:51:41.135Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:55:10.158Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T06:59:52.806Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T07:06:21.436Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T07:07:11.139Z",
+      "data": {
+        "loadTime": 0.10000002384185791
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T07:07:52.459Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T07:08:16.248Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T07:08:31.500Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T07:21:01.432Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T07:22:03.174Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T07:24:28.880Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T07:24:46.640Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T07:27:43.789Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T07:28:36.067Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T07:33:13.207Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T07:33:50.488Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T07:47:05.201Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
+  ],
+  [
+    {
+      "userId": "none",
+      "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+      "deviceType": "pc",
+      "width": 393,
+      "height": 852,
+      "page": "/search/step1",
+      "type": "page_load",
+      "timestamp": "2025-06-24T07:47:38.672Z",
+      "data": {
+        "loadTime": 0
+      }
+    }
   ]
 ]

@@ -33,11 +33,7 @@ export async function POST(req: NextRequest) {
     //   headers: { "Content-Type": "application/json" },
     // });
     if (/\D+@\D+/.test(body.email) || !body.email) {
-<<<<<<< HEAD
-      throw new Error(1@1 입력);
-=======
       throw new Error(`1@1.1 입력`);
->>>>>>> d5377f8555f1f72f3baf2791a77d0fea769311d2
     }
     const jwt = "jwtUser"; // Spring Boot가 반환한 JWT
     // sessionStorage.setItem("userId", jwt);
