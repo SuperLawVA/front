@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { UserActionLoggerClient } from "@/components/UserActionLoggerClient";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,6 +44,7 @@ export default function RootLayout({
         <UserActionLoggerClient />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full">
           {children}
+          <Analytics />
         </div>
       </body>
     </html>
