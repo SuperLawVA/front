@@ -54,7 +54,7 @@ function LoginPage() {
 
       // ✅ Axios error라면 response에 서버 메시지 있음
       if (axios.isAxiosError(error) && error.response) {
-        console.log("[AXIOS ERROR RESPONSE]", error.response);
+        console.log("[AXIOS ERROR RESPONSE]", error);
         alert(error.response.data?.message || "로그인 실패 (서버 응답 있음)");
       } else {
         // 네트워크 등 기타
