@@ -77,9 +77,12 @@ export async function POST(req: NextRequest) {
     }
 
     // 7️⃣ 그 외 예기치 못한 오류
-    return NextResponse.json(
-      { success: false, message: "서버 내부 오류가 발생했습니다." },
-      { status: 500 }
-    );
+    if (axios.isAxiosError(error) && error.response) {
+      return NextResponse.json({ ...error }, { status: 500 });
+    }
+    // return NextResponse.json(
+    //   { success: false, message: "서버 내부 오류가 발생했습니다." },
+    //   { status: 500 }
+    // );
   }
 }
