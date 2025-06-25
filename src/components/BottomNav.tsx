@@ -49,7 +49,7 @@ const BottomNav: React.FC<BottomNavProps> = ({
       <div className="h-full border-t border-[#c6c6c8] pt-4 z-10 rounded-t-[50px]">
         <div className="flex justify-around items-center h-full">
           <NavBtn to="/" icon={HomeIcon} label="홈" />
-          <NavBtn to="/register" icon={ChatIcon} label="채팅" />
+          <NavBtn to="/chatbot" icon={ChatIcon} label="채팅" />
           <NavBtn to="/more" icon={EllipsisIcon} label="내 정보" />
         </div>
       </div>
