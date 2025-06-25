@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # =====================
 # Python 관련
 # =====================
@@ -74,7 +73,7 @@ build/
 # =====================
 logs/
 .DS_Store
-=======
+
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
@@ -119,6 +118,5 @@ next-env.d.ts
 
 # custom
 * copy.*
->>>>>>> ed15a439bf4eff81e826d515ffa547199b8102fb
 
 logs.json

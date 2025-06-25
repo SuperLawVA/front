@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
 
     // 2️⃣ Spring Boot로 로그인 요청 (백엔드 주소는 .env에서 관리)
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const backendUrl = process.env.BACKEND_URL;
     if (!backendUrl) {
       throw new Error("백엔드 URL이 설정되어 있지 않습니다 (.env 확인).");
     }
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     });
 
     // 3️⃣ Spring Boot 응답에서 JWT와 사용자 정보 추출
-    const { token: jwt, user } = response.data.result;
+    const { token: jwt, user, status } = response.data.result;
 
     // 4️⃣ JWT와 userId를 HttpOnly 쿠키로 설정
     const cookieStore = await cookies();
@@ -49,22 +49,22 @@ export async function POST(req: NextRequest) {
     });
     delete user.id;
     // 5️⃣ 클라이언트로 로그인 성공 응답
-    return NextResponse.json({ success: true, ...user }, { status: 200 });
+    return NextResponse.json({ success: true, ...user }, { status });
   } catch (error) {
     console.error("[API LOGIN] Error:", error);
     // 6️⃣ Axios 에러 구체 처리
     if (axios.isAxiosError(error) && error.response) {
       const { status, data } = error.response;
-      if (data.code === "MEMBER4001") {
+      if (status === 404) {
         return NextResponse.json(
           {
             success: false,
-            // message: "가입되지 않은 이메일입니다.",
-            message: data?.message,
+            message: "가입되지 않은 이메일입니다.",
+            // message: data?.message,
           },
           { status }
         );
-      } else if (data.code === "USER400") {
+      } else if (status === 401) {
         return NextResponse.json(
           {
             success: false,
@@ -77,12 +77,9 @@ export async function POST(req: NextRequest) {
     }
 
     // 7️⃣ 그 외 예기치 못한 오류
-    if (axios.isAxiosError(error) && error.response) {
-      return NextResponse.json({ ...error }, { status: 500 });
-    }
-    // return NextResponse.json(
-    //   { success: false, message: "서버 내부 오류가 발생했습니다." },
-    //   { status: 500 }
-    // );
+    return NextResponse.json(
+      { success: false, message: "서버 내부 오류가 발생했습니다.", error },
+      { status: 500 }
+    );
   }
 }
