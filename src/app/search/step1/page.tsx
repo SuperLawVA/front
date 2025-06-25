@@ -9,10 +9,10 @@ function StepPage() {
   const router = useRouter();
 
   const [query, setQuery] = useState("");
-  const [recent, setRecent] = useState<string[]>([]);
-  const removeRecent = (kw: string) => {
-    setRecent((prev) => prev.filter((k) => k !== kw));
-  };
+  // const [recent, setRecent] = useState<string[]>([]);
+  // const removeRecent = (kw: string) => {
+  //   setRecent((prev) => prev.filter((k) => k !== kw));
+  // };
 
   const doSearch = () => {
     if (!query.trim()) return;
@@ -45,15 +45,15 @@ function StepPage() {
 
   return (
     <div className="bg-[#f2f1f6] min-h-screen pt-2">
-             {/* 헤더 */}
-        <div className="flex items-center mt-35">
-          <button onClick={() => router.back()}>
-            <BackHeader />
-          </button>
-          <span className="ml-4 text-[1.6rem] font-bold">메인 화면</span>
-        </div>
+      {/* 헤더 */}
+      <div className="flex items-center mt-35">
+        <button onClick={() => router.back()}>
+          <BackHeader />
+        </button>
+        <span className="ml-4 text-[1.6rem] font-bold">메인 화면</span>
+      </div>
       <div className="flex flex-col fixed mt-10 rounded-t-[40px] h-auto bg-[#FFFFFF]">
-            {/* 검색창 */}
+        {/* 검색창 */}
         <div className="px-6 pt-6 ml-8 mt-5">
           <div className="relative text-[1.4rem]">
             <input
@@ -81,7 +81,7 @@ function StepPage() {
             </button>
           </div>
         </div>
-          {/* 용어 설명 */}
+        {/* 용어 설명 */}
         <div className="flex flex-col items-center mt-10">
           <div className="flex items-center gap-2">
             <Image src="/book.svg" alt="닫힌 책" width={13} height={13} />
@@ -89,31 +89,32 @@ function StepPage() {
           </div>
           <div className="w-full mt-8 px-6 space-y-10">
             {terms.map((item) => (
-              <div
-                key={item.title}
-                className="relative mt-5"
-              >
+              <div key={item.title} className="relative mt-5">
                 <div className="flex items-center absolute -top-6 left-8 bg-white z-10 pr-2">
                   <span className="text-[1.7rem] mt-1 ml-2">{item.title}</span>
                 </div>
                 <div className="border border-gray-200 rounded-[25px] pt-6 pb-6 px-7 bg-white">
-                  <p className="text-[1.2rem] whitespace-pre-line text-gray-700 text-center">{item.desc}</p>
+                  <p className="text-[1.2rem] whitespace-pre-line text-gray-700 text-center">
+                    {item.desc}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-            {/* 인기 검색어 */}
+        {/* 인기 검색어 */}
         <div className="w-full mt-12 mb-8 px-6 flex flex-col items-center">
-              {/* 타이틀과 선 */}
+          {/* 타이틀과 선 */}
           <div className="flex items-center w-full justify-center mb-[-1.5rem]">
             <div className="mx-6 flex items-end bg-white px-2">
-              <span className="text-[1.7rem] text-[#8b2cff] font-bold mr-1">#</span>
+              <span className="text-[1.7rem] text-[#8b2cff] font-bold mr-1">
+                #
+              </span>
               <span className="text-[1.7rem] font-bold">인기 검색어</span>
             </div>
           </div>
-            {/* 박스 */}
+          {/* 박스 */}
           <div className="border border-gray-200 rounded-[30px] bg-white w-full px-4 py-10 flex flex-wrap justify-center gap-4 mt-4">
             {popularKeywords.map((tag) => (
               <span
@@ -125,8 +126,9 @@ function StepPage() {
             ))}
           </div>
         </div>
-            {/* 하단 네비게이션 */}
-        <div className="
+        {/* 하단 네비게이션 */}
+        <div
+          className="
             fixed border border-gray-300 
             text-[1.3rem] gap-8 bg-white 
             flex justify-center items-center 
@@ -137,7 +139,7 @@ function StepPage() {
             <button
               key={tab}
               className={`px-10 py-4 rounded-full font-bold ${
-              i === 0 ? "bg-[#6000ff] text-white" : "text-gray-500"
+                i === 0 ? "bg-[#6000ff] text-white" : "text-gray-500"
               }`}
             >
               {tab}
@@ -149,4 +151,4 @@ function StepPage() {
   );
 }
 
-export default StepPage
+export default StepPage;

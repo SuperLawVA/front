@@ -5,8 +5,7 @@ import SubmitButton from "@/components/SubmitButton";
 import StyledInput from "@/components/StyledInput";
 import { useEffect, useState } from "react";
 import BackHeader from "@/components/BackHeader";
-import { requestEmailVerification, requestRegister } from "@/lib/register";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 function RegisterPage() {
   const router = useRouter();
@@ -48,7 +47,7 @@ function RegisterPage() {
         document.getElementsByTagName("input")[1].focus();
       }
     } catch (err) {
-      const axiosError = err as any;
+      const axiosError = err as AxiosError;
       console.log(axiosError);
 
       if (axiosError?.response) {
@@ -110,17 +109,19 @@ function RegisterPage() {
           alert(response.data?.result);
           router.push("login");
         } catch (err) {
-          const axiosError = err as any;
+          const axiosError = err as AxiosError;
+          console.log("axiosError");
           console.log(axiosError);
 
           if (axiosError?.response) {
             const status = axiosError.response.status;
-            const message = axiosError.response.data?.message;
 
             if (status === 400) {
+              const message = "잘못된 요청 데이터입니다.";
               console.error(message);
               alert(message);
             } else if (status === 409) {
+              const message = "이미 가입된 이메일입니다.";
               console.error(message);
               alert(message);
             } else {
@@ -133,15 +134,15 @@ function RegisterPage() {
           }
         }
       } catch (err) {
-        const axiosError = err as any;
+        const axiosError = err as AxiosError;
         console.log(axiosError);
 
-        if (axiosError.response.status === 400) {
+        if (axiosError.response?.status === 400) {
           console.error(
             "인증 코드가 일치하지 않거나 5분이 지나 만료되었습니다."
           );
           alert("인증 코드가 일치하지 않거나 5분이 지나 만료되었습니다.");
-        } else if (axiosError.response.status === 404) {
+        } else if (axiosError.response?.status === 404) {
           console.error("인증 코드 수신 이메일이 아닙니다.");
           alert("인증 코드 수신 이메일이 아닙니다.");
         } else {

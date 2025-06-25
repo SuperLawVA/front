@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
       path: "/",
       // maxAge: 60 * 60, // 1시간
     });
-    user.id == null;
+    delete user.id;
     // 5️⃣ 클라이언트로 로그인 성공 응답
     return NextResponse.json({ success: true, ...user }, { status: 200 });
   } catch (error) {
