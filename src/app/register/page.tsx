@@ -5,7 +5,7 @@ import SubmitButton from "@/components/SubmitButton";
 import StyledInput from "@/components/StyledInput";
 import { useEffect, useState } from "react";
 import BackHeader from "@/components/BackHeader";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 function RegisterPage() {
   const router = useRouter();
