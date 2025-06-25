@@ -21,7 +21,7 @@ function getAssistantAnswer(q: string): AnswerFormat {
   };
 }
 
-export default function ChatbotPage() {
+function ChatbotPage() {
   const [messages, setMessages] = useState<Msg[]>([
     {
       role: 'assistant',
@@ -95,7 +95,7 @@ export default function ChatbotPage() {
                 className="ml-2 flex-shrink-0"
               />
               {/* 카드 답변 */}
-              <div className="bg-violet-100/70 p-8 mt-12 ml-[-14px] rounded-tr-[30px] rounded-br-[30px] rounded-bl-[30px] rounded-tl-none max-w-[85%] space-y-3 text-[1.1rem]">
+              <div className="bg-violet-100/70 p-8 mt-12 ml-[-1.3rem] rounded-tr-[30px] rounded-br-[30px] rounded-bl-[30px] rounded-tl-none space-y-3 text-[1.1rem]">
                 <div>
                   <span className="font-bold text-[1.15rem]">🙇‍♂️ 상황 정리</span>
                   <div>{(m.text as AnswerFormat).summary}</div>
@@ -185,3 +185,5 @@ export default function ChatbotPage() {
     </div>
   );
 }
+
+export default ChatbotPage;

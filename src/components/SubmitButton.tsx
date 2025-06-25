@@ -11,14 +11,13 @@ export default function SubmitButton({
   gap = 0.8,
   background = "#6000ff",
   borderRadius = 50,
-  type = "submit",
   disabled = false,
   children,
   icon,
   className = "flex justify-center items-center",
   borderColor,
-  onClick,
   subStyle = false,
+  ...rest
 }: CustomButtonProps) {
   const buttonBg = disabled
     ? "rgba(128, 128, 128, 0.55)"
@@ -41,9 +40,7 @@ export default function SubmitButton({
   return (
     <button
       className={className}
-      type={type}
       disabled={disabled}
-      onClick={onClick}
       style={{
         width: typeof width === "number" ? `${width}rem` : width,
         height: typeof height === "number" ? `${height}rem` : height,
@@ -59,6 +56,7 @@ export default function SubmitButton({
         pointerEvents: disabled ? "none" : "auto",
         opacity: disabled ? 0.6 : 1,
       }}
+      {...rest}
     >
       {icon && <span>{icon}</span>}
       {children}

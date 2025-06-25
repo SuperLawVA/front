@@ -2,22 +2,23 @@
 
 import { useRouter } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton";
-import StatusIcon from "@/components/icons/Status";
 import StyledInput from "@/components/StyledInput";
 import { useEffect, useState } from "react";
 import BackHeader from "@/components/BackHeader";
-import { requestEmailVerification, requestRegister } from "@/lib/register";
+import axios, { AxiosError } from "axios";
 
 function RegisterPage() {
   const router = useRouter();
+  const [waitVerify, setWaitVerify] = useState(false);
   useEffect(() => {
     if (sessionStorage.getItem("start") !== "true") {
       router.replace("start");
     }
+    setWaitVerify(false);
   }, [router]);
   const [email, setEmail] = useState("");
   const [verification, setVerification] = useState("");
-  const [emailConfirm, setEmailConfirm] = useState<string[]>(["", ""]);
+  // const [emailConfirm, setEmailConfirm] = useState<string[]>(["", ""]);
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [userName, setUserName] = useState("");
@@ -27,14 +28,41 @@ function RegisterPage() {
     false,
   ]);
 
-  const handleRequest = async () => {
+  const handleVerifyRequest = async () => {
+    setWaitVerify(true);
     try {
-      document.getElementsByTagName("input")[1].focus();
-      const result = await requestEmailVerification(email);
-      setEmailConfirm([email, result.verifyCode]);
+      const response = await axios.post(
+        process.env.NEXT_PUBLIC_BACKEND_URL + "api/email/send",
+        { email },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      alert(`${email} 주소로 인증 코드가 발송되었습니다.`);
+      if (response.data?.isSuccess) {
+        // 성공 시 로직
+        document.getElementsByTagName("input")[1].focus();
+      }
     } catch (err) {
-      console.error(err);
-      document.getElementsByTagName("input")[0].focus();
+      const axiosError = err as AxiosError;
+      console.log(axiosError);
+
+      if (axiosError?.response) {
+        const status = axiosError.response.status;
+        if (status === 409) {
+          console.error(`이미 가입된 이메일입니다: ${email}`);
+          alert(`이미 가입된 이메일입니다: ${email}`);
+        }
+      } else {
+        alert(
+          (err as Error).message || "인증 코드 요청 실패! 다시 시도해주세요."
+        );
+      }
+    } finally {
+      setWaitVerify(false);
     }
   };
 
@@ -45,11 +73,12 @@ function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (email !== emailConfirm[0]) {
-      alert("인증 받은 이메일이 아닙니다.");
-    } else if (verification !== emailConfirm[1]) {
-      alert("인증 코드가 일치하지 않습니다.");
-    } else if (!passwordPattern.test(password)) {
+    // if (email !== emailConfirm[0]) {
+    //   alert("인증 받은 이메일이 아닙니다.");
+    // } else if (verification !== emailConfirm[1]) {
+    //   alert("인증 코드가 일치하지 않습니다.");
+    // } else if (!passwordPattern.test(password)) {
+    if (!passwordPattern.test(password)) {
       alert(
         "비밀번호는 영어 대문자, 소문자, 숫자, 특수문자를 포함하여 8자 이상, 14자 이하로 설정해주셔야 합니다."
       );
@@ -57,17 +86,68 @@ function RegisterPage() {
       alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
     } else {
       try {
-        const result = await requestRegister({
-          email,
-          password,
-          name: userName,
-        });
+        await axios.post(
+          process.env.NEXT_PUBLIC_BACKEND_URL + "api/email/verify",
+          { email, verification },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-        alert(result.message || "회원가입 성공!");
-        router.replace("/login");
+        try {
+          const response = await axios.post(
+            process.env.NEXT_PUBLIC_BACKEND_URL + "auth/signup",
+            { nickname: userName, email, password },
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          alert(response.data?.result);
+          router.push("login");
+        } catch (err) {
+          const axiosError = err as AxiosError;
+          console.log("axiosError");
+          console.log(axiosError);
+
+          if (axiosError?.response) {
+            const status = axiosError.response.status;
+
+            if (status === 400) {
+              const message = "잘못된 요청 데이터입니다.";
+              console.error(message);
+              alert(message);
+            } else if (status === 409) {
+              const message = "이미 가입된 이메일입니다.";
+              console.error(message);
+              alert(message);
+            } else {
+              alert(`예상치 못한 상태코드: ${status}`);
+            }
+          } else {
+            alert(
+              (err as Error).message || "회원가입 실패! 다시 시도해주세요."
+            );
+          }
+        }
       } catch (err) {
-        // console.error(err);
-        alert((err as Error).message || "회원가입 실패! 다시 시도해주세요.");
+        const axiosError = err as AxiosError;
+        console.log(axiosError);
+
+        if (axiosError.response?.status === 400) {
+          console.error(
+            "인증 코드가 일치하지 않거나 5분이 지나 만료되었습니다."
+          );
+          alert("인증 코드가 일치하지 않거나 5분이 지나 만료되었습니다.");
+        } else if (axiosError.response?.status === 404) {
+          console.error("인증 코드 수신 이메일이 아닙니다.");
+          alert("인증 코드 수신 이메일이 아닙니다.");
+        } else {
+          alert((err as Error).message || "회원가입 실패! 다시 시도해주세요.");
+        }
       }
     }
     return;
@@ -75,9 +155,7 @@ function RegisterPage() {
 
   return (
     <>
-      <div className="h-20 w-full flex flex-col justify-center items-center">
-        <StatusIcon className="mt-[1.4rem]" />
-      </div>
+      <div className="h-20 w-full flex flex-col justify-center items-center" />
       <BackHeader to="login">회원가입</BackHeader>
       <form
         onSubmit={handleSubmit}
@@ -100,17 +178,22 @@ function RegisterPage() {
               height={3}
               fontSize={1.2}
               fontWeight={600}
-              disabled={email.length === 0 || !emailPattern.test(email)}
-              onClick={handleRequest}
+              disabled={
+                email.length === 0 || !emailPattern.test(email) || waitVerify
+              }
+              onClick={handleVerifyRequest}
             >
               인증하기
             </SubmitButton>
           </div>
           <StyledInput
-            type="text"
+            type="tel"
             width="34rem"
             fontSize={1.6}
             placeholder="인증 코드 입력"
+            maxLength={6}
+            pattern="\d{6}"
+            inputMode="numeric"
             onChange={(e) => setVerification(e.target.value)}
             value={verification}
           />

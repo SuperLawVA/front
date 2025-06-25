@@ -69,8 +69,8 @@ function StartPage() {
           >
             <span className="min-w-28 max-h-24 mx-72 mt-52">
               <Image
-                width={1}
-                height={1}
+                width={9999}
+                height={9999}
                 src="/logo.svg"
                 className="w-full h-full my-px"
                 alt=""
