@@ -47,10 +47,9 @@ function StartPage() {
         setContract(undefined);
         setModalOpen(true);
       }
-      console.log(contractArray);
     };
     fetchData();
-  }, [contractArray]);
+  }, [contract]);
 
   return (
     <>
@@ -162,9 +161,11 @@ function StartPage() {
             </div>
           </div>
         ) : (
-          <div className="absolute top-1/2 left-1/2 -translate-1/2 p-12 w-[90%] bg-white rounded-[50px]">
-            <div className="w-full gap-12 flex flex-col justify-center items-center bg-white rounded-[50px]">
-              업로드 된 계약서가 없습니다. 계약서 업로드로 이동합니다.
+          <div className="flex self-center justify-self-center p-12 w-[90%] bg-white rounded-[50px]">
+            <div className="w-full gap-12 flex flex-col justify-center items-center text-center text-[1.8rem] font-semibold bg-white rounded-[50px]">
+              업로드 된 계약서가 없습니다.
+              <br />
+              계약서 업로드로 이동합니다.
               <SubmitButton
                 type="button"
                 height={5}

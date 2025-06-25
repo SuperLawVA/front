@@ -1,19 +1,19 @@
 // app/chatbot/step1/page.tsx
-'use client';
+"use client";
 
-import { FormEvent, useRef, useState } from 'react';
-import Image from 'next/image';
-import axios from 'axios';
+import { FormEvent, useRef, useState } from "react";
+import Image from "next/image";
+import axios from "axios";
 
-type Msg = { role: 'user' | 'assistant'; text: string };
+type Msg = { role: "user" | "assistant"; text: string };
 
 function ChatbotPage() {
   const [messages, setMessages] = useState<Msg[]>([
     {
-      role: 'assistant',
+      role: "assistant",
       text:
-        '안녕하세요! 일상에서 마주치는 법률 고민,\n혼자 해결하기 어려우셨죠?\n\n' +
-        '**부동산 관련 고민**을\n실제 판례와 법령을 바탕으로 친절하게 해결해 드릴게요!',
+        "안녕하세요! 일상에서 마주치는 법률 고민,\n혼자 해결하기 어려우셨죠?\n\n" +
+        "**부동산 관련 고민**을\n실제 판례와 법령을 바탕으로 친절하게 해결해 드릴게요!",
     },
   ]);
   const [loading, setLoading] = useState(false);
@@ -21,25 +21,25 @@ function ChatbotPage() {
 
   async function sendMessage(text: string) {
     // ① 사용자 말풍선 즉시 출력
-    setMessages((m) => [...m, { role: 'user', text }]);
+    setMessages((m) => [...m, { role: "user", text }]);
     setLoading(true);
 
     try {
-      const { default: api } = await import('@/lib/axios');
+      const { default: api } = await import("@/lib/axios");
       const { data } = await api.post(
-        '/api/chat',
+        "/api/chat",
         { question: text },
-        { withCredentials: true },
+        { withCredentials: true }
       );
 
       // ② 챗봇 답변
-      setMessages((m) => [...m, { role: 'assistant', text: data.answer }]);
+      setMessages((m) => [...m, { role: "assistant", text: data.answer }]);
     } catch {
       setMessages((m) => [
         ...m,
         {
-          role: 'assistant',
-          text: '답변 중 오류가 발생하였습니다. 잠시 후 다시 시도해 주세요',
+          role: "assistant",
+          text: "답변 중 오류가 발생하였습니다. 잠시 후 다시 시도해 주세요",
         },
       ]);
     } finally {
@@ -51,15 +51,15 @@ function ChatbotPage() {
     e.preventDefault();
     const q = inputRef.current?.value.trim();
     if (!q) return;
-    inputRef.current!.value = '';
+    inputRef.current!.value = "";
     await sendMessage(q);
   }
 
   const quick = [
-    '임대차 보증금 반환에 관한 법률은 무엇인가요?',
-    '이와 유사한 사례나 판례를 알고 싶어요',
-    '집주인이 보증금을 안 돌려줘요',
-    '집에 물이 떨어지는데 어떻게 하죠',
+    "임대차 보증금 반환에 관한 법률은 무엇인가요?",
+    "이와 유사한 사례나 판례를 알고 싶어요",
+    "집주인이 보증금을 안 돌려줘요",
+    "집에 물이 떨어지는데 어떻게 하죠",
   ];
 
   function onQuick(q: string) {
@@ -75,7 +75,7 @@ function ChatbotPage() {
           새 채팅
         </div>
       </header>
-      
+
       <div className="pointer-events-none absolute inset-0 flex justify-center items-center">
         <Image
           src="/logo.svg"
@@ -88,7 +88,7 @@ function ChatbotPage() {
 
       <main className="flex-1 overflow-y-auto px-4 pt-6 space-y-6">
         {messages.map((m, i) =>
-          m.role === 'assistant' ? (
+          m.role === "assistant" ? (
             <div key={i} className="flex items-start justify-start gap-1">
               <Image
                 src="/chatchat.svg"
@@ -121,12 +121,10 @@ function ChatbotPage() {
                   {m.text}
                 </div>
                 {/* 오른쪽 위 보라 원 */}
-                <span
-                  className="absolute -top-2 -right-2 w-[2rem] h-[2rem] bg-violet-400 rounded-full"
-                />
+                <span className="absolute -top-2 -right-2 w-[2rem] h-[2rem] bg-violet-400 rounded-full" />
               </div>
             </div>
-          ),
+          )
         )}
 
         {loading && (
@@ -139,15 +137,15 @@ function ChatbotPage() {
 
       <footer className="sticky bottom-10 w-full bg-[#F2F1F6] pt-4">
         <section className="px-4 mb-3">
-          <span className="inline-block text-[1.05rem] ml-4 font-medium">
+          <span className="inline-block !text-[1.05rem] ml-4 font-medium">
             추천 질문
           </span>
-          <div className="mt-2 flex gap-2 overflow-x-auto whitespace-nowrap">
-            {quick.map((q) => (
+          <div className="max-h-[15svh] mt-2 flex gap-2 flex-wrap items-center overflow-y-auto whitespace-nowrap">
+            {quick.map((q, i) => (
               <button
-                key={q}
+                key={i}
                 onClick={() => onQuick(q)}
-                className="shrink-0 text-sm px-4 py-[6px] rounded-full border border-[#E0E0E0] bg-white hover:bg-gray-50"
+                className="shrink-0 !text-sm px-4 py-[0.6rem] rounded-full border border-[#E0E0E0] bg-white hover:bg-gray-50"
               >
                 {q}
               </button>

@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const userId = (await cookies()).get("userId");
+    // build용 변수 사용
     console.log(userId);
     console.log(req);
 
