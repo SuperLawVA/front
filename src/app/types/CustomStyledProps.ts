@@ -1,4 +1,4 @@
-import { HTMLInputTypeAttribute, MouseEventHandler } from "react";
+import { HTMLInputTypeAttribute } from "react";
 
 // ✅ 공통 스타일 Props
 export default interface CustomStyledProps {

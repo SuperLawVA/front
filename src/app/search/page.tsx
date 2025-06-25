@@ -2,16 +2,16 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState }   from "react";
-import Image          from "next/image";
+import { useState } from "react";
+import Image from "next/image";
 
 function SearchPage() {
   const router = useRouter();
   const [query, setQuery] = useState("");
-  const [recent, setRecent] = useState<string[]>([]);
-  const removeRecent = (kw: string) => {
-    setRecent((prev) => prev.filter((k) => k !== kw));
-  };
+  // const [recent, setRecent] = useState<string[]>([]);
+  // const removeRecent = (kw: string) => {
+  //   setRecent((prev) => prev.filter((k) => k !== kw));
+  // };
 
   // 최근 검색어 (초깃값)
   const [recentKeywords, setRecentKeywords] = useState<string[]>([
@@ -70,28 +70,29 @@ function SearchPage() {
         <section className="mt-8 px-6">
           <h3 className="text-[1.2rem] font-mideum mb-2 ml-4">인기 검색어</h3>
           <div className="flex space-x-2 overflow-x-auto pb-2 text-[1.2rem] ml-10 mt-8 gap-4">
-            {["월세", "소액심판 청구", "임대차", "전세보증금 반환 소송"].map((kw) => (
-              <button
-                key={kw}
-                className="flex-shrink-0 pl-4 pr-4 px-3 py-1 bg-[#f3f3f3] text-gray-900 rounded-full"
-                onClick={() => {
-                  setQuery(kw);
-                  doSearch();
-                }}
-              >
-                {kw}
-              </button>
-            ))}
+            {["월세", "소액심판 청구", "임대차", "전세보증금 반환 소송"].map(
+              (kw) => (
+                <button
+                  key={kw}
+                  className="flex-shrink-0 pl-4 pr-4 px-3 py-1 bg-[#f3f3f3] text-gray-900 rounded-full"
+                  onClick={() => {
+                    setQuery(kw);
+                    doSearch();
+                  }}
+                >
+                  {kw}
+                </button>
+              )
+            )}
           </div>
         </section>
         <section className="mt-4 px-6">
-          <h3 className="text-[1.2rem] font-medium mb-2 mt-8 ml-4">최근 검색어</h3>
+          <h3 className="text-[1.2rem] font-medium mb-2 mt-8 ml-4">
+            최근 검색어
+          </h3>
           <ul className="space-y-3 text-[1.4rem] mt-4 ml-2">
             {recentKeywords.map((kw) => (
-              <li
-                key={kw}
-                className="flex justify-between items-center"
-              >
+              <li key={kw} className="flex justify-between items-center">
                 <button
                   className="text-gray-500 text-left flex-1"
                   onClick={() => goToSearchResult(kw)}
@@ -108,7 +109,9 @@ function SearchPage() {
               </li>
             ))}
             {recentKeywords.length === 0 && (
-              <li className="text-[1.3rem] ml-45 text-gray-400">최근 검색 내역이 없습니다</li>
+              <li className="text-[1.3rem] ml-45 text-gray-400">
+                최근 검색 내역이 없습니다
+              </li>
             )}
           </ul>
         </section>

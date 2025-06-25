@@ -3,7 +3,6 @@
 
 import { FormEvent, useRef, useState } from "react";
 import Image from "next/image";
-import axios from "axios";
 
 type Msg = { role: "user" | "assistant"; text: string };
 
