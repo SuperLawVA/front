@@ -38,7 +38,7 @@ const Modal = ({
   return createPortal(
     <div
       className={`
-        fixed inset-0 z-30 flex justify-center 
+        fixed top-0 left-1/2 -translate-x-1/2 inset-0 z-30 w-full flex justify-center 
         ${isCenter ? "items-center" : "items-end"} 
       `}
     >
