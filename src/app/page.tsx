@@ -17,7 +17,8 @@ import { useAuthStore } from "@/store/useStore";
 import axios from "axios";
 import Image from "next/image";
 
-interface QuickButtonProps {
+interface QuickButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   bgc: string;
   icon: React.ReactNode;
   title?: string;
@@ -33,12 +34,14 @@ function QuickButton({
   icon,
   title,
   description,
+  ...rest
 }: QuickButtonProps) {
   return (
     <div className="flex flex-col items-center text-center">
       <button
         className="flex justify-center items-center w-20 h-20 rounded-[20px] mb-2"
         style={{ backgroundColor: bgc }}
+        {...rest}
       >
         {icon && <span>{icon}</span>}
       </button>
@@ -60,9 +63,9 @@ function MainPage() {
 
   // 임시 로그아웃
   const handleLogout = async () => {
+    await axios.post("/api/logout");
     useAuthStore.persist.clearStorage();
     sessionStorage.clear();
-    await axios.post("/api/logout");
     sessionStorage.setItem("start", "true");
     router.replace("/login"); // 로그아웃 후 로그인 페이지로 이동
   };
@@ -161,34 +164,22 @@ function MainPage() {
             <div className="flex w-full justify-around">
               <QuickButton
                 bgc="#32d74b"
-                icon={
-                  <DocumentIcon
-                    color="white"
-                    onClick={() => router.push("create")}
-                  />
-                }
+                onClick={() => router.push("create")}
+                icon={<DocumentIcon color="white" />}
                 title="계약서 작성"
                 description="안전한 계약을 원해요"
               />
               <QuickButton
                 bgc="#0a84ff"
-                icon={
-                  <AnalysisIcon
-                    color="white"
-                    onClick={() => router.push("analysis")}
-                  />
-                }
+                onClick={() => router.push("analysis")}
+                icon={<AnalysisIcon color="white" />}
                 title="계약서 분석"
                 description="계약을 검토하고 싶어요"
               />
               <QuickButton
                 bgc="#ff453a"
-                icon={
-                  <InfoIcon
-                    color="white"
-                    onClick={() => router.push("certificate")}
-                  />
-                }
+                onClick={() => router.push("certificate")}
+                icon={<InfoIcon color="white" />}
                 title="내용증명"
                 description="문제가 발생했어요"
               />
