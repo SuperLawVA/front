@@ -48,8 +48,6 @@ function LoginPage() {
         router.push("/");
       } else {
         alert(res.data.message || "로그인 실패 (응답: success: false)");
-        console.log(res.data.success);
-        console.log(res.data);
       }
     } catch (error) {
       console.error("[LOGIN ERROR]", error);
