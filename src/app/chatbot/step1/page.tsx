@@ -122,7 +122,7 @@ function ChatbotPage() {
               <div
                 className="-ml-5 max-w-[80%] whitespace-pre-line bg-violet-200/30 text-black px-8 py-3 text-[1.3rem] mt-18 rounded-tr-[30px] rounded-br-[30px] rounded-bl-[30px] rounded-tl-none"
               >
-                {m.text}
+                {m.text as string}
               </div>
             </div>
           ) : (
@@ -131,7 +131,7 @@ function ChatbotPage() {
                 <div
                   className="whitespace-pre-line bg-white text-black px-8 py-3 text-[1.3rem] mt-8 mr-2 rounded-tl-[30px] rounded-bl-[30px] rounded-br-[30px] rounded-tr-none"
                 >
-                  {m.text}
+                  {m.text as string}
                 </div>
                 <span className="absolute -top-2 -right-2 w-[2rem] h-[2rem] bg-violet-400 rounded-full" />
               </div>
@@ -154,9 +154,9 @@ function ChatbotPage() {
             추천 질문
           </span>
           <div className="mt-2 flex gap-2 overflow-x-auto whitespace-nowrap">
-            {quick.map((q) => (
+            {quick.map((q, i) => (
               <button
-                key={q}
+                key={i}
                 onClick={() => onQuick(q)}
                 className="shrink-0 text-sm px-4 py-[6px] rounded-full border border-[#E0E0E0] bg-white hover:bg-gray-50"
               >

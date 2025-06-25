@@ -85,6 +85,8 @@ function StartPage() {
           }
         }}
       >
+        <div className="mx-auto mt-6 mb-4 w-20 h-1.5 rounded-full bg-gray-300" />
+
         {step === 0 && (
           <div className="my-16 flex flex-col gap-12">
             <div className="text-[2rem] font-bold text-center">

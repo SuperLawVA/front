@@ -5,10 +5,10 @@ import SearchHeader from "@/app/search/step1/sections/SearchHeader";
 import TermSection from "@/app/search/step1/sections/TermSection";
 import LawSection from "@/app/search/step1/sections/LawSection";
 import CaseSection from "@/app/search/step1/sections/CaseSection";
-import QnaSection from "@/app/search/step1/sections/QnaSection";
+import FaqSection from "@/app/search/step1/sections/FaqSection";
 import BackHeader from "@/components/BackHeader";
 
-const tabList = ["용어집", "법령", "판례", "Q&A"];
+const tabList = ["용어집", "법령", "판례", "FAQ"];
 
 function SearchResultPage() {
   const [query, setQuery] = useState("전세보증금 미반환");
@@ -37,7 +37,7 @@ function SearchResultPage() {
         {activeTab === 0 && <TermSection query={query} />}
         {activeTab === 1 && <LawSection query={query} />}
         {activeTab === 2 && <CaseSection query={query} />}
-        {activeTab === 3 && <QnaSection query={query} />}
+        {activeTab === 3 && <FaqSection query={query} />}
       </div>
 
       {/* 하단 네비 */}

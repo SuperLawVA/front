@@ -16,7 +16,7 @@ const dummyQnas = [
   },
 ];
 
-export default function QnaSection({ query }: { query: string }) {
+export default function FaqSection({ query }: { query: string }) {
   // query로 필터링(예시)
   const filtered = query.trim().length === 0
     ? []
@@ -25,7 +25,7 @@ export default function QnaSection({ query }: { query: string }) {
   return (
     <div>
       <div className="flex items-center gap-2 justify-center mb-8 mt-8">
-        <span className="text-[1.5rem] font-medium text-[#6000ff]">Q&A</span>
+        <span className="text-[1.5rem] font-medium text-[#6000ff]">FAQ</span>
       </div>
       <div className="w-full px-2 space-y-8">
         {filtered.length === 0 ? (

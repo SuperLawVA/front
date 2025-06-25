@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
 
     // 2️⃣ Spring Boot로 로그인 요청 (백엔드 주소는 .env에서 관리)
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const backendUrl = process.env.BACKEND_URL;
     if (!backendUrl) {
       throw new Error("백엔드 URL이 설정되어 있지 않습니다 (.env 확인).");
     }
