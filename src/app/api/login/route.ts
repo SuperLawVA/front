@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
     console.error("[API LOGIN] Error:", error);
     // 6️⃣ Axios 에러 구체 처리
     if (axios.isAxiosError(error) && error.response) {
-      const { status, data } = error.response;
+      const { status } = error.response;
       if (status === 404) {
         return NextResponse.json(
           {
