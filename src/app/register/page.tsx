@@ -18,7 +18,6 @@ function RegisterPage() {
   }, [router]);
   const [email, setEmail] = useState("");
   const [verification, setVerification] = useState("");
-  // const [emailConfirm, setEmailConfirm] = useState<string[]>(["", ""]);
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [userName, setUserName] = useState("");
@@ -31,40 +30,51 @@ function RegisterPage() {
   const handleVerifyRequest = async () => {
     setWaitVerify(true);
     try {
-      const response = await axios.post(
-        process.env.NEXT_PUBLIC_BACKEND_URL + "api/email/send",
-        { email },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
+      const response = await axios.post("/api/register/emailVerify", {
+        email,
+      });
       alert(`${email} 주소로 인증 코드가 발송되었습니다.`);
+
       if (response.data?.isSuccess) {
         // 성공 시 로직
         document.getElementsByTagName("input")[1].focus();
       }
-    } catch (err) {
-      const axiosError = err as AxiosError;
-      console.log(axiosError);
+    } catch (error) {
+      console.error("[VERIFY CODE REQUEST ERROR]", error);
 
-      if (axiosError?.response) {
-        const status = axiosError.response.status;
-        if (status === 409) {
-          console.error(`이미 가입된 이메일입니다: ${email}`);
-          alert(`이미 가입된 이메일입니다: ${email}`);
-        }
-      } else {
+      // ✅ Axios error라면 response에 서버 메시지 있음
+      if (axios.isAxiosError(error) && error.response) {
+        console.log("[AXIOS ERROR RESPONSE]", error.response);
         alert(
-          (err as Error).message || "인증 코드 요청 실패! 다시 시도해주세요."
+          error.response.data?.message || "인증 코드 요청 실패 (서버 응답 있음)"
         );
+      } else {
+        // 네트워크 등 기타
+        alert("인증 코드 요청 중 알 수 없는 오류가 발생했습니다.");
       }
     } finally {
       setWaitVerify(false);
     }
   };
+  //   } catch (err) {
+  //     const axiosError = err as AxiosError;
+  //     console.log(axiosError);
+
+  //     if (axiosError?.response) {
+  //       const status = axiosError.response.status;
+  //       if (status === 409) {
+  //         console.error(`${axiosError?.data?.message}: ${email}`);
+  //         alert(`이미 가입된 이메일입니다: ${email}`);
+  //       }
+  //     } else {
+  //       alert(
+  //         (err as Error).message || "인증 코드 요청 실패! 다시 시도해주세요."
+  //       );
+  //     }
+  //   } finally {
+  //     setWaitVerify(false);
+  //   }
+  // };
 
   const emailPattern = /\w+@\w+\.+\w+/;
   const passwordPattern =
@@ -73,11 +83,6 @@ function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // if (email !== emailConfirm[0]) {
-    //   alert("인증 받은 이메일이 아닙니다.");
-    // } else if (verification !== emailConfirm[1]) {
-    //   alert("인증 코드가 일치하지 않습니다.");
-    // } else if (!passwordPattern.test(password)) {
     if (!passwordPattern.test(password)) {
       alert(
         "비밀번호는 영어 대문자, 소문자, 숫자, 특수문자를 포함하여 8자 이상, 14자 이하로 설정해주셔야 합니다."
@@ -86,71 +91,36 @@ function RegisterPage() {
       alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
     } else {
       try {
-        await axios.post(
-          process.env.NEXT_PUBLIC_BACKEND_URL + "api/email/verify",
-          { email, verification },
+        const response = await axios.post(
+          "/api/register",
+          { nickname: userName, email, password, verification },
           {
             headers: {
               "Content-Type": "application/json",
             },
           }
         );
-
-        try {
-          const response = await axios.post(
-            process.env.NEXT_PUBLIC_BACKEND_URL + "auth/signup",
-            { nickname: userName, email, password },
-            {
-              headers: {
-                "Content-Type": "application/json",
-              },
-            }
-          );
-          alert(response.data?.result);
+        if (response.status === 200) {
           router.push("login");
-        } catch (err) {
-          const axiosError = err as AxiosError;
-          console.log("axiosError");
-          console.log(axiosError);
-
-          if (axiosError?.response) {
-            const status = axiosError.response.status;
-
-            if (status === 400) {
-              const message = "잘못된 요청 데이터입니다.";
-              console.error(message);
-              alert(message);
-            } else if (status === 409) {
-              const message = "이미 가입된 이메일입니다.";
-              console.error(message);
-              alert(message);
-            } else {
-              alert(`예상치 못한 상태코드: ${status}`);
-            }
-          } else {
-            alert(
-              (err as Error).message || "회원가입 실패! 다시 시도해주세요."
-            );
-          }
         }
-      } catch (err) {
-        const axiosError = err as AxiosError;
-        console.log(axiosError);
+      } catch (error) {
+        console.error("[REGISTER ERROR]", error);
 
-        if (axiosError.response?.status === 400) {
-          console.error(
-            "인증 코드가 일치하지 않거나 5분이 지나 만료되었습니다."
+        // ✅ Axios error라면 response에 서버 메시지 있음
+        if (axios.isAxiosError(error) && error.response) {
+          console.log("[AXIOS ERROR RESPONSE]", error.response);
+          alert(
+            error.response.data?.message ||
+              "인증 코드 요청 실패 (서버 응답 있음)"
           );
-          alert("인증 코드가 일치하지 않거나 5분이 지나 만료되었습니다.");
-        } else if (axiosError.response?.status === 404) {
-          console.error("인증 코드 수신 이메일이 아닙니다.");
-          alert("인증 코드 수신 이메일이 아닙니다.");
         } else {
-          alert((err as Error).message || "회원가입 실패! 다시 시도해주세요.");
+          // 네트워크 등 기타
+          alert("회원 가입 중 알 수 없는 오류가 발생했습니다.");
         }
+      } finally {
+        setWaitVerify(false);
       }
     }
-    return;
   };
 
   return (
