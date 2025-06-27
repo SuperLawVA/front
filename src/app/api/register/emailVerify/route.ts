@@ -2,6 +2,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import axios from "axios";
+import backendApi from "@/lib/axios.server";
 
 /**
  * /api/email/send POST
@@ -12,17 +13,10 @@ import axios from "axios";
 export async function POST(req: NextRequest) {
   const { email } = await req.json();
   try {
-    // 1️⃣ 요청 Body 파싱
-
-    // 2️⃣ 백엔드 주소 확인
-    const backendUrl = process.env.BACKEND_URL;
-    if (!backendUrl) {
-      throw new Error("백엔드 URL이 .env에 설정되어 있지 않습니다.");
-    }
-
     // 3️⃣ 백엔드로 요청 전달
-    const response = await axios.post(
-      `${backendUrl}email/send`,
+
+    const response = await backendApi.post(
+      "/auth/sendEmail",
       { email },
       {
         headers: {

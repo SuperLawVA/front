@@ -6,11 +6,12 @@ import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 import Modal from "@/components/Modal";
 import StyledDiv from "@/components/StyledDiv";
 import SubmitButton from "@/components/SubmitButton";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnalysisTarget } from "../types/Main";
 import Image from "next/image";
+import { useAuthStore } from "@/store/useStore";
+import clientApi from "@/lib/axios.client";
 
 function AnalysisPage() {
   const router = useRouter();
@@ -21,51 +22,63 @@ function AnalysisPage() {
     undefined
   );
   const [modalOpen, setModalOpen] = useState(false);
+  const [select, setSelect] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  function formatISOToDateTime(isoString: string): string {
+    const date = new Date(isoString);
+    return date.toLocaleString("sv-SE", { timeZone: "UTC" }).replace("T", " ");
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { contractArray } = useAuthStore.getState();
+      if (contractArray) {
+        contractArray.sort((a, b) => {
+          return (
+            new Date(b.modifiedDate).getTime() -
+            new Date(a.modifiedDate).getTime()
+          );
+        });
+        setContractArray(contractArray);
+        setContract(contractArray[activeIndex]);
+      } else {
+        setContract(undefined);
+        setModalOpen(true);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (contractArray?.length && activeIndex !== 0) {
+      const activeItem = contractArray[activeIndex];
+      const newArray = [
+        activeItem,
+        ...contractArray.slice(0, activeIndex),
+        ...contractArray.slice(activeIndex + 1),
+      ];
+      setContractArray(newArray);
+      setActiveIndex(0);
+    }
+    if (!modalOpen) setSelect(false);
+  }, [activeIndex]);
 
   // 분석 요청 정보
   const analysisRequest = async (contractId: string) => {
     try {
-      await axios.post("/api/analysis/request", {
+      const response = await clientApi.post("/analysis/request", {
         contractId,
       });
-      // const response = await axios.post("/api/analysis/request", {
-      //   contractId,
-      // });
+      console.log("analysis response");
+      console.log(response);
+
       // router.push("analysis/result");
     } catch (error) {
       console.error("Failed to fetch contracts:", error);
       return undefined;
     }
   };
-
-  // 진입 시 계약서 정보
-  const getContract = async () => {
-    try {
-      const response = await axios.post("/api/analysis");
-      setContractArray(response.data.contract as AnalysisTarget[]);
-      // return response.data.contract as AnalysisTarget[];
-      // return JSON.parse(response.data.contract) as AnalysisTarget[];
-    } catch (error) {
-      console.error("Failed to fetch contracts:", error);
-      return;
-    }
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await getContract();
-
-      // const target = undefined;
-      if (contractArray) {
-        setContract(contractArray[0]);
-      } else {
-        setContract(undefined);
-        setModalOpen(true);
-      }
-      console.log(contractArray);
-    };
-    fetchData();
-  }, [contract]);
 
   return (
     <>
@@ -123,15 +136,20 @@ function AnalysisPage() {
         setIsOpen={setModalOpen}
         clickOutsideClose={true}
       >
-        {contract ? (
+        {contract && !select && (
           <div className="w-full p-16 flex flex-col gap-12">
             <div className="text-[2rem] font-bold text-center">
               분석할 계약서를 확인해주세요
             </div>
-            <div className="flex flex-col gap-8 p-8 justify-center items-center w-full border-[1.5px] border-[#c6c6c8] rounded-[20px]">
+            <div
+              onClick={() => {
+                setSelect(true);
+              }}
+              className="flex flex-col gap-8 p-8 justify-center items-center w-full border-[1.5px] border-[#c6c6c8] rounded-[20px]"
+            >
               <DocumentIcon color="#6000ff" />
               <span className="text-[1.6rem] font-medium">
-                {contract?.title}
+                {contract.contractType}&nbsp;임대차 계약서
               </span>
             </div>
             <ul className="w-full px-8 flex flex-col gap-12 items-center text-[#2b2b2b] text-[1.6rem] font-bold">
@@ -170,14 +188,51 @@ function AnalysisPage() {
                 fontWeight={500}
                 onClick={() => {
                   analysisRequest(contract._id);
-                  router.push("analysis/result");
                 }}
               >
                 네, 맞아요
               </SubmitButton>
             </div>
           </div>
-        ) : (
+        )}
+        {contract && select && (
+          <div className="w-full p-16 flex flex-col gap-12">
+            <div className="text-[2rem] font-bold text-center">
+              분석할 계약서를 선택해주세요
+            </div>
+            <ul className="w-full px-8 flex flex-col gap-12 items-center text-[#2b2b2b] text-[1.6rem] font-bold max-h-[50vh] overflow-y-auto">
+              {contractArray?.map((contract, index) => (
+                <SubmitButton
+                  key={index}
+                  className="flex flex-col justify-center items-start py-2 px-10"
+                  gap={0}
+                  height={"auto"}
+                  background="#eeeeee"
+                  borderColor="black"
+                  fontSize={1.2}
+                  fontColor={`${activeIndex === index ? "#6000ff" : "black"}`}
+                  onClick={() => {
+                    setActiveIndex(index);
+                    setSelect(false);
+                  }}
+                >
+                  <span className="font-bold">
+                    계약 유형:&nbsp;
+                    <span className="">{contract?.contractType}</span>
+                  </span>
+                  <span className="text-[1.2rem]">
+                    최종 수정 일자:{" "}
+                    {formatISOToDateTime(contract?.modifiedDate as string)}
+                  </span>
+                  <span className="text-[1.2rem]">
+                    건물 유형: {contract?.buildingType ?? "미기재"}
+                  </span>
+                </SubmitButton>
+              ))}
+            </ul>
+          </div>
+        )}
+        {!contract && (
           <div className="flex self-center justify-self-center p-12 w-[90%] bg-white rounded-[50px]">
             <div className="w-full gap-12 flex flex-col justify-center items-center text-center text-[1.8rem] font-semibold bg-white rounded-[50px]">
               업로드 된 계약서가 없습니다.

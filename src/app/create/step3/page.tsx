@@ -9,8 +9,9 @@ import StyledDiv from "@/components/StyledDiv";
 import CheckedIcon from "@/components/icons/Checked";
 import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 import CrossIcon from "@/components/icons/Cross";
-import axios from "axios";
 import { useCreateStore } from "@/store/useStore";
+import clientApi from "@/lib/axios.client";
+import LoadingPage from "./Loading";
 
 function ContractCreateNewPage() {
   const router = useRouter();
@@ -19,6 +20,7 @@ function ContractCreateNewPage() {
   const [userQuery, setUserQuery] = useState<string[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const [isloading, setIsloading] = useState(false);
 
   const contractData = useCreateStore.getState();
   useEffect(() => {
@@ -43,14 +45,51 @@ function ContractCreateNewPage() {
     useCreateStore.setState({ userQuery });
 
     try {
-      // const response = await axios.post("/api/create/generate", {
-      await axios.post("/api/create/generate", {
-        contractData,
-      });
-      // sessionStorage.removeItem("createStore");
-      router.push("/create/step4");
+      const { userQuery, contractType, property, payment, dates } =
+        useCreateStore.getState();
+
+      // 안전하게 null 체크 후 변수에 할당
+      const propertyAddress = property?.address ?? null;
+      const deposit = payment?.deposit ?? null;
+      const monthlyRent = payment?.monthlyRent ?? null;
+      const contractPeriodStart = dates?.contractDate ?? null;
+      const contractPeriodEnd = dates?.contractDate ?? null;
+      setUserQuery([]);
+
+      alert("제출되었습니다. 잠시 기다려 주세요.");
+      setModalOpen(true);
+      setIsloading(true);
+      const response = await clientApi.post(
+        "/create/generate",
+        {
+          contractData: useCreateStore.getState(),
+          aggrementRequest: {
+            contractType,
+            propertyAddress,
+            deposit,
+            monthlyRent,
+            contractPeriodStart,
+            contractPeriodEnd,
+            userQuery,
+          },
+        },
+        {
+          headers: {
+            "Content-Type": "application/json", // JSON 데이터 전송
+          },
+        }
+      );
+      if (response && response.status === 200) {
+        setIsloading(false);
+        router.push("/contract/" + response.data.id);
+      } else {
+        alert("응답이 실패했습니다. 다시 시도해 주세요.");
+      }
     } catch (error) {
       console.error("Generate error:", error);
+    } finally {
+      setModalOpen(false);
+      setIsloading(false);
     }
   };
 
@@ -177,90 +216,104 @@ function ContractCreateNewPage() {
         isOpen={modalOpen}
         setIsOpen={setModalOpen}
         clickOutsideClose={true}
+        isCenter={isloading}
         upperChildren={
-          <ul
-            className={`absolute bottom-[29rem] w-full flex flex-col justify-center items-center gap-4`}
-          >
-            {userQuery.length
-              ? userQuery.map((value, index) => (
-                  <li
-                    key={index}
-                    className="w-[calc(100%-5rem)] h-20 px-12 flex justify-between items-center text-[1.4rem] text-[#3a3a40] font-medium border border-[#d7d7d7] rounded-[50px] bg-white"
-                  >
-                    <div className="flex gap-4">
-                      <span className="w-[1.6rem] h-[1.6rem] flex justify-center items-center bg-main text-white rounded-[50px] text-[1rem]">
-                        {index + 1}
-                      </span>
-                      {value}
-                    </div>
-                    <div
-                      onClick={() =>
-                        setUserQuery(userQuery.filter((v, i) => i != index))
-                      }
+          !isloading && (
+            <ul
+              className={`absolute bottom-[29rem] w-full flex flex-col justify-center items-center gap-4`}
+            >
+              {userQuery.length
+                ? userQuery.map((value, index) => (
+                    <li
+                      key={index}
+                      className="w-[calc(100%-5rem)] h-20 px-12 flex justify-between items-center text-[1.4rem] text-[#3a3a40] font-medium border border-[#d7d7d7] rounded-[50px] bg-white"
                     >
-                      <CrossIcon />
-                    </div>
-                  </li>
-                ))
-              : ""}
-          </ul>
+                      <div className="flex gap-4">
+                        <span className="w-[1.6rem] h-[1.6rem] flex justify-center items-center bg-main text-white rounded-[50px] text-[1rem]">
+                          {index + 1}
+                        </span>
+                        {value}
+                      </div>
+                      <div
+                        onClick={() =>
+                          setUserQuery(userQuery.filter((v, i) => i != index))
+                        }
+                      >
+                        <CrossIcon />
+                      </div>
+                    </li>
+                  ))
+                : ""}
+            </ul>
+          )
         }
       >
-        <div className="mt-16 mb-4 px-8 w-full flex flex-col gap-4">
-          <div className="flex flex-col items-center gap-4 mb-8">
-            <span className="text-[2rem] font-bold text-center">
-              당신의 요구사항을 입력하세요
-            </span>
-            <span className="text-main text-[1.2rem] font-semibold">
-              특약 추가하기
-            </span>
+        {!isloading ? (
+          <>
+            <div className="mt-16 mb-4 px-8 w-full flex flex-col gap-4">
+              <div className="flex flex-col items-center gap-4 mb-8">
+                <span className="text-[2rem] font-bold text-center">
+                  당신의 요구사항을 입력하세요
+                </span>
+                <span className="text-main text-[1.2rem] font-semibold">
+                  특약 추가하기
+                </span>
+              </div>
+              <div className="w-full h-20 bg-white border border-[#d7d7d7] rounded-[50px]">
+                <input
+                  type="text"
+                  name=""
+                  id=""
+                  ref={inputRef}
+                  placeholder="ex) 고양이 키우고 싶어오, 주차 공간이 필요해요"
+                  onChange={(e) => setInputValue(e.target.value)}
+                  value={inputValue}
+                  className="w-full h-full px-12 text-[1.2rem] font-medium placeholder:text-subText"
+                />
+              </div>
+              <button
+                className={`flex items-center justify-center gap-4 text-[1.4rem] font-medium${
+                  userQuery.length === 0
+                    ? " text-[rgba(128,128,128,0.55)] cursor-not-allowed pointer-events-none"
+                    : " text-main"
+                }`}
+                onClick={() => setModalOpen(false)}
+              >
+                <CheckedIcon
+                  width={1.6}
+                  height={1.6}
+                  color={
+                    userQuery.length === 0
+                      ? "rgba(128,128,128,0.55)"
+                      : "#6000ff"
+                  }
+                />
+                완료
+              </button>
+            </div>
+            <SubmitButton
+              className="justify-self-end"
+              type="button"
+              width="100%"
+              height={6}
+              fontSize={1.8}
+              fontWeight={500}
+              disabled={inputValue === ""}
+              borderRadius="none"
+              onClick={() => {
+                setUserQuery([...userQuery, inputValue]);
+                setInputValue("");
+              }}
+            >
+              + 추가하기
+            </SubmitButton>
+          </>
+        ) : (
+          <div className="flex justify-center items-center w-[100%] h-full p-8 rounded-[40px] bg-white text-[2rem] text-center">
+            {/* 로딩 중입니다. 잠시 기다려주시기 바랍니다. */}
+            <LoadingPage />
           </div>
-          <div className="w-full h-20 bg-white border border-[#d7d7d7] rounded-[50px]">
-            <input
-              type="text"
-              name=""
-              id=""
-              ref={inputRef}
-              placeholder="ex) 고양이 키우고 싶어오, 주차 공간이 필요해요"
-              onChange={(e) => setInputValue(e.target.value)}
-              value={inputValue}
-              className="w-full h-full px-12 text-[1.2rem] font-medium placeholder:text-subText"
-            />
-          </div>
-          <button
-            className={`flex items-center justify-center gap-4 text-[1.4rem] font-medium${
-              userQuery.length === 0
-                ? " text-[rgba(128,128,128,0.55)] cursor-not-allowed pointer-events-none"
-                : " text-main"
-            }`}
-            onClick={() => setModalOpen(false)}
-          >
-            <CheckedIcon
-              width={1.6}
-              height={1.6}
-              color={
-                userQuery.length === 0 ? "rgba(128,128,128,0.55)" : "#6000ff"
-              }
-            />
-            완료
-          </button>
-        </div>
-        <SubmitButton
-          className="justify-self-end"
-          type="button"
-          width="100%"
-          height={6}
-          fontSize={1.8}
-          fontWeight={500}
-          disabled={inputValue === ""}
-          borderRadius="none"
-          onClick={() => {
-            setUserQuery([...userQuery, inputValue]);
-            setInputValue("");
-          }}
-        >
-          + 추가하기
-        </SubmitButton>
+        )}
       </Modal>
     </>
   );

@@ -155,7 +155,7 @@ function ContractCreateNewPage() {
     "건물 용도를",
     "보증금을",
     "계약금을",
-    "잔금을",
+    "중도금을",
     "월세를",
     "계약일자를",
   ];
@@ -401,12 +401,12 @@ function ContractCreateNewPage() {
                   setActiveIndex(7);
                 }}
               >
-                잔금
+                중도금
                 <StyledInput
                   width="100%"
                   fontSize={1.2}
                   lineHeight="100%"
-                  placeholder="잔금 금액을 입력해주세요"
+                  placeholder="중도금 금액을 입력해주세요"
                   onChange={(e) =>
                     setIntermediatePayment(Number(e.target.value))
                   }

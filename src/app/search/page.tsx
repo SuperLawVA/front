@@ -2,12 +2,16 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import clientApi from "@/lib/axios.client";
+import axios from "axios";
 
 function SearchPage() {
   const router = useRouter();
   const [query, setQuery] = useState("");
+  const [pageParam, setPageParam] = useState(1);
+  const [resultValue, setResultValue] = useState();
   // const [recent, setRecent] = useState<string[]>([]);
   // const removeRecent = (kw: string) => {
   //   setRecent((prev) => prev.filter((k) => k !== kw));
@@ -36,6 +40,38 @@ function SearchPage() {
     console.log("search for:", q);
   };
 
+  const handleSubmit = async (sendQuery: string) => {
+    try {
+      const response = await clientApi.post("/search", {
+        sendQuery,
+        pageParam,
+      });
+      console.log("[SEARCH SUCCESS RESPONSE]", response);
+      if (response.data.success) {
+        console.log(response);
+      }
+      console.log("response");
+      console.log(response);
+      console.log("response");
+      setResultValue(response.data);
+    } catch (error) {
+      console.error("[SEARCH ERROR]", error);
+
+      // ✅ Axios error라면 response에 서버 메시지 있음
+      if (axios.isAxiosError(error) && error.response) {
+        console.log("[AXIOS ERROR RESPONSE]", error);
+        // alert(error.response.data?.message || "로그인 실패 (서버 응답 있음)");
+      } else {
+        // 네트워크 등 기타
+        ("");
+        // alert("로그인 요청 중 알 수 없는 오류가 발생했습니다.");
+      }
+    }
+  };
+  useEffect(() => {
+    handleSubmit(query);
+  }, [query]);
+
   return (
     <div className="relative min-h-screen">
       <div className="absolute top-0 left-0 right-0 h-20 bg-white z-10" />
@@ -45,7 +81,11 @@ function SearchPage() {
             <input
               type="text"
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => {
+                // sessionStorage.setItem("searchQuery", e.target.value);
+                // handleSubmit(e.target.value);
+                setQuery(e.target.value);
+              }}
               onKeyDown={(e) => e.key === "Enter" && doSearch()}
               placeholder="무엇을 도와드릴까요?"
               className="

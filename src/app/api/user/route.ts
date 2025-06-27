@@ -1,12 +1,15 @@
 // app/api/user/route.ts
-import { cookies } from "next/headers";
+import backendApi from "@/lib/axios.server";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const userId = (await cookies()).get("userId");
-    console.log({ req, userId });
+    // 👉login과 합칠 예정
+    // 예: await db.insertUser({ email, passwordHash, name });
+    // build용 변수 사용
+    const contracts = await backendApi.get("/contract");
 
+    // return NextResponse.json(contracts.data, { status: 200 });
     // try {
     //   // Spring Boot의 로그인 API 호출
     //   const res = await axios.post("http://localhost:8080/api/analysis", userId, {
@@ -19,18 +22,9 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       {
-        token: "tokenValue",
-        userName: "아무개",
+        userName: contracts.data.userName,
         notification: [0, 1, 2],
-        contractArray: [
-          {
-            _id: "asdasd",
-            title: "월세 임대차 계약서",
-            state: "진행중",
-            address: "서울시 강남구 테헤란로 123",
-            createdAt: "2025.03.22",
-          },
-        ],
+        contractArray: contracts.data.contracts,
         recentChat: [
           { _id: "1", title: "집 주인이 보증금 안 돌려줘요." },
           { _id: "2", title: "전입 신고 방법 알려줘" },
@@ -40,10 +34,13 @@ export async function POST(req: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    return NextResponse.json(
-      { message: (error as Error).message || "get user data failed" }
-      // { message: error.response?.data?.message || "get user data failed" },
-      // { status: error.response?.status || 500 }
-    );
+    return NextResponse.json({ success: false }, { status: 500 });
+
+    // return NextResponse.json(
+    //   { message: (error as Error).message || "get user data failed" }
+    //   // { message: error.response?.data?.message || "get user data failed" },
+    //   // { status: error.response?.status || 500 }
+
+    // );
   }
 }

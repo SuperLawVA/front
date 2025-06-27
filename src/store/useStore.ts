@@ -13,7 +13,8 @@ interface UserState {
         title: string;
         state: string;
         address: string;
-        createdAt: string;
+        contractDate: string;
+        modifiedDate: string;
       }[];
   recentChat: { _id: string; title: string }[];
 
@@ -81,6 +82,7 @@ interface CreateState {
     intermediatePayment: number | null | "";
     monthlyRent: number | null | "";
   } | null;
+  articles: string[];
   userQuery: string[];
 }
 
@@ -95,6 +97,7 @@ export const useCreateStore = createStore<CreateState>()(
       property: null,
       payment: null,
       userQuery: [],
+      articles: [],
     }),
     {
       name: "createStore",
