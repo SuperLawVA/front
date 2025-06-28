@@ -10,14 +10,31 @@ import { useCreateStore } from "@/store/useStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useSwipeable } from "react-swipeable";
 
 function CreatePage() {
   const router = useRouter();
   const [modalOpen, setModalOpen] = useState(false);
-  // const [selected, setSelected] = useState<number | null>(null);
+  const [selected, setSelected] = useState<number | null>(null);
   // const handleSelect = (index: number) => {
   //   setSelected((prev) => (prev === index ? null : index));
   // };
+
+  const handleBarSwipe = useSwipeable({
+    onSwipedDown: () => setModalOpen(false),
+    preventScrollOnSwipe: true,
+    trackMouse: true,
+  });
+
+    const handleSelect = (index: number) => {
+    setSelected(index);
+    useCreateStore.setState({
+      contractType: Boolean(index) ? "월세" : "전세",
+    });
+    setTimeout(() => {
+      router.push("create/step1");
+    }, 300);
+  };
 
   return (
     <>
@@ -73,7 +90,9 @@ function CreatePage() {
         setIsOpen={setModalOpen}
         clickOutsideClose={true}
       >
-        <div className="my-16 flex flex-col gap-12">
+        <div {...handleBarSwipe} 
+              className="mx-auto mt-6 w-20 h-1.5 rounded-full bg-gray-300" />
+        <div className="my-10 flex flex-col gap-12">
           <div className="text-[2rem] font-bold text-center">
             추가할 부동산은 무엇인가요?
           </div>
@@ -81,17 +100,22 @@ function CreatePage() {
             {["전세", "반전세, 월세"].map((option, index) => {
               return (
                 <li
-                  key={index}
+                  /* key={index}
                   onClick={() => {
                     useCreateStore.setState({
                       contractType: Boolean(index) ? "월세" : "전세",
                     });
                     router.push("create/step1");
-                  }}
+                  }} */
+                  key={index}
+                  onClick={() => handleSelect(index)}
                   className="flex gap-4 items-center justify-between text-[#4e4e4e]"
                 >
-                  <span>{option}</span>
-                  <CheckedIcon width={1.4} height={1.4} color="#c4c4c5" />
+                  <span className={selected === index ? "text-[#6000FF]" : "text-[#4e4e4e]"}
+                    style={{ transition: "color 0.3s" }}>
+                    {option}
+                  </span>
+                  <CheckedIcon width={1.4} height={1.4} color={selected === index ? "#6000FF" : "#c4c4c5"} />
                 </li>
               );
             })}

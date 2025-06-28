@@ -5,11 +5,11 @@ import SubmitButton from "@/components/SubmitButton";
 import { useEffect, useRef, useState } from "react";
 import BackHeader from "@/components/BackHeader";
 import Modal from "@/components/Modal";
-import StyledDiv from "@/components/StyledDiv";
 import CheckedIcon from "@/components/icons/Checked";
 import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 import CrossIcon from "@/components/icons/Cross";
 import axios from "axios";
+import Image from "next/image";
 import { useCreateStore } from "@/store/useStore";
 
 function ContractCreateNewPage() {
@@ -19,6 +19,67 @@ function ContractCreateNewPage() {
   const [userQuery, setUserQuery] = useState<string[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const basicTerms = [
+  {
+    id: 1,
+    title: "특약 1 (중개수수료 분담)",
+    content: "임대인과 임차인은 중개수수료를 50%씩 부담한다.",
+  },
+  {
+    id: 2,
+    title: "특약 2 (임대료 인상 제한)",
+    content: "임대인의 동의 없이 임대료를 일방적으로 인상할 수 없으며, 계약 갱신 시 임대료 인상률은 5% 이내로 제한한다.",
+  },
+  {
+    id: 3,
+    title: "특약 3 (보증금 반환)",
+    content: "보증금은 임차인 퇴거 후 원상복구 확인 후 7일 이내에 은행이자를 가산하여 반환한다.",
+  },
+  {
+    id: 4,
+    title: "특약 4 (시설 수리비 부담)",
+    content: "에어컨, 보일러, 온수기 등 기본 시설의 고장 및 수리비는 임대인이 부담한다.",
+  },
+  {
+    id: 5,
+    title: "특약 5 (입주 전 정비)",
+    content: "입주 전 도배, 장판 교체 및 기본 청소는 임대인이 부담한다.",
+  },
+  {
+    id: 6,
+    title: "특약 6 (관리비 부담)",
+    content: "관리비 중 공용전기료, 엘리베이터 유지비, 경비비는 별도 부담하며, 수도, 전기, 가스 요금은 임차인이 직접 납부한다.",
+  },
+  {
+    id: 7,
+    title: "특약 7 (계약 해지 통지)",
+    content: "중도 해지 시 상대방에게 2개월 전 서면으로 통지한다.",
+  },
+  {
+    id: 8,
+    title: "특약 8 (원상복구 의무)",
+    content: "임차인의 고의 또는 과실로 인한 손상을 제외하고는 자연적 손모는 원상복구 의무를 면제한다.",
+  },
+  {
+    id: 9,
+    title: "특약 9 (화재보험 가입)",
+    content: "화재보험 가입 및 보험료는 임대인이 부담한다.",
+  },
+  {
+    id: 10,
+    title: "특약 10 (행정절차 협조)",
+    content: "전입신고 및 확정일자 취득에 필요한 서류 제공 등 임대인이 적극 협조한다.",
+  },
+  {
+    id: 11,
+    title: "특약 11 (법령 준수)",
+    content: "본 계약서에 명시되지 않은 사항은 주택임대차보호법 등 관련 법령에 따른다.",
+  },      
+];
+  const [basicTermModal, setBasicTermModal] = useState(false);
+  // const [basicTerms, setBasicTerms] = useState<Term[]>([]);
+  const [opened, setOpened] = useState<number[]>([]);
 
   const contractData = useCreateStore.getState();
   useEffect(() => {
@@ -64,19 +125,25 @@ function ContractCreateNewPage() {
     }
   }, [modalOpen, userQuery]);
 
+  useEffect(() => {
+  if (basicTermModal) {
+    setOpened([]); // 모달 열릴 때마다 초기화
+  }
+  }, [basicTermModal]);
+  
   return (
     <>
-      <div className="h-20 w-full flex flex-col justify-center items-center" />
+      <div className="h-20 mt-15 w-full flex flex-col justify-center items-center" />
       <BackHeader>임대차 계약서 작성</BackHeader>
       <main className="flex flex-col items-center mt-[3rem] gap-12 h-[calc(100%-11rem)]">
         <div className="text-center">
           <div className="flex justify-center items-center">
-            <span className="w-full text-[2.4rem] font-bold">
+            <span className="w-full text-[2.4rem] font-medium">
               말로만 한 약속은 없던 일이 돼요.
               <br />
-              <span className="text-[rgba(96,0,255,0.7)]">특약</span>
+              <span className="text-[rgba(96,0,255,0.7)] font-semibold text-[2.5rem]">특약</span>
               으로 확실하게&nbsp;
-              <span className="text-[rgba(225,0,255,0.7)]">보장</span>
+              <span className="text-[rgba(225,0,255,0.7)] font-semibold text-[2.5rem]">보장</span>
               받으세요.
             </span>
           </div>
@@ -86,14 +153,16 @@ function ContractCreateNewPage() {
         </div>
         <form
           onSubmit={handleGenerate}
-          className="h-full flex flex-col items-center w-full gap-4 text-[1.6rem] font-bold "
+          className="h-full flex flex-col items-center w-full gap-4 text-[1.6rem] font-semibold"
         >
           4. 특약 사항
-          <div className="px-10 py-12 w-full flex-1 bg-white rounded-t-[50px] backdrop-opacity-70 flex flex-col gap-12 items-center text-[1.8rem] font-semibold">
+          <div className=" px-10 py-12 w-full flex-1 bg-white rounded-t-[40px] backdrop-opacity-70 flex flex-col gap-12 items-center text-[1.8rem] font-semibold">
             <div className="w-full flex flex-col justify-center items-center gap-4">
               당신의 계약은 안전해야 하니까
-              <StyledDiv
+              <SubmitButton
+                type="button"
                 width="100%"
+                height={6}
                 background="white"
                 borderColor="#f3f4f6"
                 fontSize={1.4}
@@ -101,12 +170,13 @@ function ContractCreateNewPage() {
                 fontColor="black"
                 gap={0.5}
                 className="flex flex-col justify-center py-6 px-12 h-24"
+                onClick={() => setBasicTermModal(true)}
               >
                 기본 특약
                 <span className="text-[1rem] font-normal opacity-60">
                   기본적으로 계약서에 들어가는 특약입니다.
                 </span>
-              </StyledDiv>
+              </SubmitButton>
             </div>
             <ul className="w-full flex flex-col justify-center items-center gap-4">
               당신의 니즈를 잊지 않도록
@@ -135,7 +205,7 @@ function ContractCreateNewPage() {
               <SubmitButton
                 type="button"
                 width="100%"
-                height={5}
+                height={6}
                 background="white"
                 borderColor="#5046E5"
                 fontSize={1.4}
@@ -158,13 +228,14 @@ function ContractCreateNewPage() {
                 ""
               )}
             </ul>
+            <div className="flex-1" />
             <SubmitButton
-              width="100%"
+              width={30}
               height={5.5}
-              fontSize={1.8}
+              fontSize={1.7}
               fontWeight={500}
               disabled={userQuery.length === 0}
-              className="flex justify-center items-center mb-12 mt-auto"
+              className="flex w-full justify-center items-center mb-8 mt-auto"
               icon={<MagicTwoStarIcon color="white" />}
               // onClick={() => router.push("step4")}
             >
@@ -173,6 +244,52 @@ function ContractCreateNewPage() {
           </div>
         </form>
       </main>
+      <Modal
+        isOpen={basicTermModal}
+        setIsOpen={setBasicTermModal}
+        clickOutsideClose={true}
+      >
+        <div className="mx-auto mt-6 mb-4 w-20 h-1.5 rounded-full bg-gray-300" />
+        <div className="flex flex-col items-center py-2 px-10 w-full">
+            <span className="text-[2rem] font-medium text-center mb-8">
+              기본 특약 사항
+            </span>
+            <div className="w-full max-h-[55rem] overflow-y-auto">
+            <ul className="w-full flex flex-col gap-4">
+              {basicTerms.map((term, idx) => (
+                <li
+                  key={term.id}
+                  className="bg-white rounded-[20px] border border-[#ededed] mb-2 transition-all"
+                >
+                  <button
+                    type="button"
+                    className="flex justify-between items-center w-full px-5 py-5 !text-[1.2rem] font-medium focus:outline-none"
+                    onClick={() => setOpened((prev) =>
+                    prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
+                  )
+                    }
+                  >
+                    <span className="text-left text-[#444]">{term.title}</span>
+                    <Image
+                      src="/add.svg"
+                      alt="펼치기"
+                      width={24}
+                      height={24}
+                      className={`w-6 h-6 transition-transform duration-200 ${opened.includes(idx) ? "rotate-90" : ""}`}
+                    />
+                  </button>
+                  {/* 펼쳐졌을 때만 내용 표시 */}
+                  {opened.includes(idx) && (
+                    <div className="px-6 py-6 bg-[#fafafd] rounded-b-[20px] text-[1.2rem] text-gray-700 border-t border-[#ededed] animate-fadein">
+                      {term.content}
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Modal>
       <Modal
         isOpen={modalOpen}
         setIsOpen={setModalOpen}
@@ -206,7 +323,8 @@ function ContractCreateNewPage() {
           </ul>
         }
       >
-        <div className="mt-16 mb-4 px-8 w-full flex flex-col gap-4">
+        <div className="mx-auto mt-6 mb-4 w-20 h-1.5 rounded-full bg-gray-300" />
+        <div className="mt-10 mb-4 px-8 w-full flex flex-col gap-4">
           <div className="flex flex-col items-center gap-4 mb-8">
             <span className="text-[2rem] font-bold text-center">
               당신의 요구사항을 입력하세요
@@ -224,7 +342,7 @@ function ContractCreateNewPage() {
               placeholder="ex) 고양이 키우고 싶어오, 주차 공간이 필요해요"
               onChange={(e) => setInputValue(e.target.value)}
               value={inputValue}
-              className="w-full h-full px-12 text-[1.2rem] font-medium placeholder:text-subText"
+              className="w-full h-full px-12 !text-[1.2rem] font-medium placeholder:text-subText"
             />
           </div>
           <button

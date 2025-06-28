@@ -162,10 +162,12 @@ function MainPage() {
               <QuickButton
                 bgc="#32d74b"
                 icon={
-                  <DocumentIcon
-                    color="white"
-                    onClick={() => router.push("create")}
-                  />
+                  <div className="ml-1">
+                    <DocumentIcon
+                      color="white"
+                      onClick={() => router.push("create")}
+                    />
+                  </div>
                 }
                 title="계약서 작성"
                 description="안전한 계약을 원해요"

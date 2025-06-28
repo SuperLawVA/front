@@ -10,11 +10,14 @@ import CalendarIcon from "@/components/icons/Calendar";
 import PaymentIcon from "@/components/icons/Payment";
 import AssetIcon from "@/components/icons/Asset";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 function StartPage() {
   const [activeIndex, setActiveIndex] = useState<number>(0);
 
   const tabs = ["계약 요약", "계약서 정보", "계약 조건", "특약"];
+
+  const Router = useRouter();
 
   const tabContents = [
     <div
@@ -275,7 +278,12 @@ function StartPage() {
         >
           원본 보기
         </SubmitButton>
-        <div className="w-full h-[4.5rem] gap-2 flex justify-center items-center text-white text-[1.6rem] font-semibold bg-gradient-to-br from-[#6000FF] via-[#8a00ff] to-[#E100FF] rounded-[50px] mb-12">
+        <div 
+          className="w-full h-[4.5rem] gap-2 flex justify-center items-center text-white text-[1.6rem] font-semibold bg-gradient-to-br from-[#6000FF] via-[#8a00ff] to-[#E100FF] rounded-[50px] mb-12"
+          onClick={() => Router.push("/chatbot")}
+          role="button"
+          tabIndex={0}  
+        >
           <Image
             width={9999}
             height={9999}

@@ -1,8 +1,8 @@
 // page.tsx
 "use client";
 
+import { useSwipeable } from "react-swipeable";
 import CameraIcon from "@/components/icons/Camera";
-import CheckedIcon from "@/components/icons/Checked";
 import MagicThreeStarIcon from "@/components/icons/MagicThreeStar";
 import PictureIcon from "@/components/icons/Picture";
 import Modal from "@/components/Modal";
@@ -13,12 +13,32 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import CameraPage from "./Camera";
 import UploadPage from "./UploadImages";
+import GreenLogoIcon from "@/components/icons/GreenLogo";
 
 function StartPage() {
   const router = useRouter();
   const [modalOpen, setModalOpen] = useState(false);
   const [isCenter, setIsCenter] = useState(false);
   const [step, setStep] = useState<number>(0);
+
+  const handleBarSwipe = useSwipeable({
+    onSwipedDown: () => {
+      // step별로 동작 분기!
+      if (step === 11 || step === 12) {
+        // 업로드/카메라에서 아래로 스와이프 → 뒤로가기(첫 화면으로)
+        setStep(0);
+        setIsCenter(false);
+      } else if (step === 0) {
+        // 첫화면에서 스와이프 → 모달 닫기
+        setModalOpen(false);
+      } else if (step === 2) {
+        // 완료 화면에선 모달 닫기 or 홈 이동 등 자유롭게
+        setModalOpen(false);
+      }
+    },
+    preventScrollOnSwipe: true,
+    trackMouse: true,
+  });
 
   return (
     <>
@@ -30,7 +50,7 @@ function StartPage() {
           background="#faf5ff"
           fontSize={1.2}
           fontWeight={700}
-          icon={<MagicThreeStarIcon />}
+          icon={<MagicThreeStarIcon width={16} height={20}/>}
         >
           <span className="text-good">AI로 계약서 관리하기</span>
         </StyledDiv>
@@ -85,10 +105,11 @@ function StartPage() {
           }
         }}
       >
-        <div className="mx-auto mt-6 mb-4 w-20 h-1.5 rounded-full bg-gray-300" />
+        <div {...handleBarSwipe} 
+              className="mx-auto mt-6 w-20 h-1.5 rounded-full bg-gray-300" />
 
         {step === 0 && (
-          <div className="my-16 flex flex-col gap-12">
+          <div className="my-16 flex flex-col gap-8">
             <div className="text-[2rem] font-bold text-center">
               어떤 방식으로 업로드하시겠어요?
             </div>
@@ -202,12 +223,12 @@ function StartPage() {
           </div>
         )} */}
         {step === 2 && (
-          <div className="w-full p-16 flex flex-col gap-12">
+          <div className="w-full p-16 flex flex-col gap-8">
             <div className="text-[2rem] font-bold text-center">
               계약서 업로드가 완료되었습니다!
             </div>
             <div className="flex justify-center items-center">
-              <CheckedIcon width={5} height={5} color="#32d74b" />
+              <GreenLogoIcon width={8} height={8} color="#32d74b" />
             </div>
             <div className="flex w-full gap-8 justify-between">
               <SubmitButton

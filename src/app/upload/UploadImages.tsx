@@ -219,30 +219,30 @@ export default function UploadPage({ setPageOpen }: UploadPageProps) {
       <h1 className="text-[1.7rem] font-bold mb-4 text-center">이미지 업로드</h1>
       {/* 수정해보았습니다 */}
       {/* 파일 선택 버튼 */}
-      <button
-        type="button"
-        onClick={() => fileInputRef.current?.click()}
-        className="mb-2 !text-[1.2rem]"
-      >
-        파일 선택
-      </button>
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          className="!text-[1.2rem] ml-2"
+        >
+          파일 선택
+        </button>
 
-      {/* 숨겨진 input */}
-      <input
-        type="file"
-        accept="image/*"
-        multiple
-        ref={fileInputRef}
-        style={{ display: "none" }}
-        onChange={handleFileChange}
-      />
+        {/* 숨겨진 input */}
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          ref={fileInputRef}
+          style={{ display: "none" }}
+          onChange={handleFileChange}
+        />
 
-      {/* 선택된 파일 없음 메시지 */}
-      {imageFiles.length === 0 && (
-        <p className="text-[1.1rem] text-gray-500 mb-4">
-          선택된 파일 없음
-        </p>
-      )}
+        {/* 선택된 파일 없음 메시지 */}
+        {imageFiles.length === 0 && (
+          <p className="text-[1.1rem] text-gray-500 absolute ml-2">
+            선택된 파일 없음
+          </p>
+        )}
       <p className="text-[1.1rem] ml-[17rem] text-gray-500 mb-4">
         (최대 {MAX_FILES}개 파일, 각 5MB 이하, 현재 {imageFiles.length}개)
       </p>
