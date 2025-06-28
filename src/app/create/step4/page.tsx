@@ -5,24 +5,77 @@ import { useEffect, useState } from "react";
 import BackHeader from "@/components/BackHeader";
 import ArrowLeftIcon from "@/components/icons/ArrowLeft";
 import ArrowRightIcon from "@/components/icons/ArrowRight";
-import StyledDiv from "@/components/StyledDiv";
-import WarningIcon from "@/components/icons/Warning";
 import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
-import MagnifyingGlassIcon from "@/components/icons/MagnifyingGlass";
 import BulbIcon from "@/components/icons/Bulb";
-import ExclamationIcon from "@/components/icons/Exclamation";
-import ArrowDownIcon from "@/components/icons/ArrowDownIcon";
 import DivBox from "@/components/DivBox";
 import { useCreateStore } from "@/store/useStore";
+import QuestionMarkIcon from "@/components/icons/QuestionMark";
+import Image from "next/image";
+import DocumentIcon from "@/components/icons/Document";
 
 function ContractCreateNewPage() {
   return (
     <>
-      <div className="h-20 w-full flex flex-col justify-center items-center" />
+      <div className="h-20 mt-15 w-full flex flex-col justify-center items-center" />
       <BackHeader to="/">임대차 계약서 작성</BackHeader>
       <main className="flex flex-col items-center mt-[3rem] gap-12 h-[calc(100%-11rem)]">
-        <div className="w-svw h-svh text-9xl wrap-break-word">
-          제출 완료 및 생성 대기 페이지로 변경
+        <div className="px-8 py-12 w-full flex-1 bg-white rounded-t-[40px] backdrop-opacity-70 flex flex-col gap-12 items-center">
+          <div className="w-full flex flex-col gap-4 items-start">
+            <span className="px-8 flex gap-4 items-center text-[1.8rem] text-[#0f0f0f] font-semibold">
+              <MagicTwoStarIcon width={1.6} height={1.6} color="#6000FF" />
+              생성된 특약
+            </span>
+            <DivBox
+              className="flex items-center px-7 py-6"
+              style={{
+                backgroundColor: "rgb(242, 238, 251)",
+                border: "1px solid #6000FF",
+              }}
+            >
+              안전임차인은 벽면에 못을 사용하여 생활용품을 설치할 수 있으며,
+              퇴거 시 직경 5mm 이하 못구멍에 대한 원상복구비는 청구하지 않음
+            </DivBox>
+          </div>
+          <div className="w-full flex flex-col gap-4 items-start">
+            <span className="px-8 flex gap-4 items-center text-[1.8rem] text-[#0f0f0f] font-semibold">
+              <QuestionMarkIcon color="#6000FF" />
+              이유
+            </span>
+            <DivBox className="flex items-center px-7 py-6">
+              전세사기 예방을 위해 임대인의 재정상태와 주택 권리관계를 투명하게
+              공개받아 안전한 거래 보장
+            </DivBox>
+          </div>
+          <div className="w-full flex flex-col gap-4 items-start">
+            <span className="px-8 flex gap-4 items-center text-[1.8rem] text-[#0f0f0f] font-semibold">
+              <BulbIcon color="#6000FF" />
+              협상 방안
+            </span>
+            <DivBox className="flex items-center px-7 py-6">
+              안전임차인은 벽면에 못을 사용하여 생활용품을 설치할 수 있으며,
+              민간임대주택에 관한 특별법 제48조에 따른 설명의무를 근거로 상세한
+              정보 공개 요구
+            </DivBox>
+          </div>
+          <div className="flex gap-10 w-full">
+            <button className="flex-1 flex flex-col items-center gap-4 py-6 rounded-[20px] border border-[#E5E5EA]">
+              <Image src="/scales.svg" width={30} height={24} alt="" />
+              <span className="text-[1.5rem] font-semibold">관련 법령</span>
+            </button>
+            <button className="flex-1 flex flex-col items-center gap-4 py-6 rounded-[20px] border border-[#E5E5EA]">
+              <Image src="/openBook.svg" width={30} height={24} alt="" />
+              <span className="text-[1.5rem] font-semibold">유사 판례</span>
+            </button>
+          </div>
+          <button className="flex-1 flex items-center justify-center px-20 py-5 rounded-[20px] text-[#6000ff] !text-[1.8rem] border border-[#6000ff]">
+            <DocumentIcon />
+            &nbsp; 완성된 계약서 보기
+          </button>
+        </div>
+        <div className="text-center">
+          <div className="items-center text-center">
+            {liArray && liArray[activeIndex]}
+          </div>
         </div>
       </main>
     </>

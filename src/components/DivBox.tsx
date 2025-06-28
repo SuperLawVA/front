@@ -1,15 +1,15 @@
-import { ReactNode } from "react";
+import { ReactNode, HTMLAttributes } from "react";
 
 type DivBoxProps = {
   textColor?: string;
-  className?: string;
   children: ReactNode;
-};
+} & HTMLAttributes<HTMLDivElement>;
 
 export default function DivBox({
   textColor = "rgba(0, 0, 0, 0.7)",
   className = "",
   children,
+  style = {},
 }: DivBoxProps) {
   return (
     <div
@@ -20,6 +20,7 @@ export default function DivBox({
         borderRadius: "20px",
         fontSize: "1.2rem",
         color: textColor,
+        ...style,
       }}
     >
       {children}

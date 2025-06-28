@@ -1,4 +1,4 @@
-// ✅ src/store/useAuthStore.ts
+// ✅ src/store/useStore.ts
 
 import { createStore } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";

@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // 2️⃣ 로그인 없이 접근 가능한 공개 경로 리스트
-  const publicPaths = ["/start", "/login", "/register"];
+  const publicPaths = ["/start", "/login", "/register", "/find"];
 
   // 3️⃣ 쿠키에서 토큰 읽기 (쿠키 이름: token)
   // console.log(request.cookies.toString());

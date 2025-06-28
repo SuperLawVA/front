@@ -6,6 +6,7 @@ import StyledInput from "@/components/StyledInput";
 import { useEffect, useState } from "react";
 import BackHeader from "@/components/BackHeader";
 import axios from "axios";
+import Image from "next/image";
 
 function RegisterPage() {
   const router = useRouter();
@@ -26,6 +27,9 @@ function RegisterPage() {
     false,
     false,
   ]);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
   const handleVerifyRequest = async () => {
     setWaitVerify(true);
@@ -173,13 +177,35 @@ function RegisterPage() {
                 ? ""
                 : " border -m-px border-[#ff0000]"
             }`}
-            type="password"
+            type={showPassword ? "text" : "password"}
             width="34rem"
             fontSize={1.6}
             placeholder="대소문자, 숫자, 특수문자 포함 8-14글자 입력"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
           />
+          <button
+            type="button"
+            onClick={() => setShowPassword((v) => !v)}
+            className="absolute right-12 top-[25.5rem] z-10"
+            tabIndex={-1}
+          >
+            {showPassword ? (
+              <Image
+                src="/eye.svg"
+                alt="show password"
+                width={20}
+                height={20}
+              />
+            ) : (
+              <Image
+                src="/close-eye.svg"
+                alt="hide password"
+                width={20}
+                height={20}
+              />
+            )}   
+          </button>
           <StyledInput
             className={`flex flex-col justify-start${
               passwordConfirm.length === 0 ||
@@ -188,13 +214,35 @@ function RegisterPage() {
                 ? ""
                 : " border -m-px border-[#ff0000]"
             }`}
-            type="password"
+            type={showPasswordConfirm ? "text" : "password"}
             width="34rem"
             fontSize={1.6}
             placeholder="비밀번호 확인"
             onChange={(e) => setPasswordConfirm(e.target.value)}
             value={passwordConfirm}
           />
+          <button
+            type="button"
+            onClick={() => setShowPasswordConfirm((v) => !v)}
+            className="absolute right-12 top-[30.5rem] z-10"
+            tabIndex={-1}
+          >
+            {showPasswordConfirm ? (
+              <Image
+                src="/eye.svg"
+                alt="show password"
+                width={20}
+                height={20}
+              />
+            ) : (
+              <Image
+                src="/close-eye.svg"
+                alt="hide password"
+                width={20}
+                height={20}
+              />
+            )}   
+          </button>
           <StyledInput
             type="text"
             width="34rem"

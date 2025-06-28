@@ -5,7 +5,6 @@ import SubmitButton from "@/components/SubmitButton";
 import { useEffect, useRef, useState } from "react";
 import BackHeader from "@/components/BackHeader";
 import Modal from "@/components/Modal";
-import StyledDiv from "@/components/StyledDiv";
 import CheckedIcon from "@/components/icons/Checked";
 import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 import CrossIcon from "@/components/icons/Cross";
@@ -103,19 +102,29 @@ function ContractCreateNewPage() {
     }
   }, [modalOpen, userQuery]);
 
+  useEffect(() => {
+    if (basicTermModal) {
+      setOpened([]); // 모달 열릴 때마다 초기화
+    }
+  }, [basicTermModal]);
+
   return (
     <>
-      <div className="h-20 w-full flex flex-col justify-center items-center" />
+      <div className="h-20 mt-15 w-full flex flex-col justify-center items-center" />
       <BackHeader>임대차 계약서 작성</BackHeader>
       <main className="flex flex-col items-center mt-[3rem] gap-12 h-[calc(100%-11rem)]">
         <div className="text-center">
           <div className="flex justify-center items-center">
-            <span className="w-full text-[2.4rem] font-bold">
+            <span className="w-full text-[2.4rem] font-medium">
               말로만 한 약속은 없던 일이 돼요.
               <br />
-              <span className="text-[rgba(96,0,255,0.7)]">특약</span>
+              <span className="text-[rgba(96,0,255,0.7)] font-semibold text-[2.5rem]">
+                특약
+              </span>
               으로 확실하게&nbsp;
-              <span className="text-[rgba(225,0,255,0.7)]">보장</span>
+              <span className="text-[rgba(225,0,255,0.7)] font-semibold text-[2.5rem]">
+                보장
+              </span>
               받으세요.
             </span>
           </div>
@@ -125,14 +134,16 @@ function ContractCreateNewPage() {
         </div>
         <form
           onSubmit={handleGenerate}
-          className="h-full flex flex-col items-center w-full gap-4 text-[1.6rem] font-bold "
+          className="h-full flex flex-col items-center w-full gap-4 text-[1.6rem] font-semibold"
         >
           4. 특약 사항
-          <div className="px-10 py-12 w-full flex-1 bg-white rounded-t-[50px] backdrop-opacity-70 flex flex-col gap-12 items-center text-[1.8rem] font-semibold">
+          <div className=" px-10 py-12 w-full flex-1 bg-white rounded-t-[40px] backdrop-opacity-70 flex flex-col gap-12 items-center text-[1.8rem] font-semibold">
             <div className="w-full flex flex-col justify-center items-center gap-4">
               당신의 계약은 안전해야 하니까
-              <StyledDiv
+              <SubmitButton
+                type="button"
                 width="100%"
+                height={6}
                 background="white"
                 borderColor="#f3f4f6"
                 fontSize={1.4}
@@ -140,12 +151,13 @@ function ContractCreateNewPage() {
                 fontColor="black"
                 gap={0.5}
                 className="flex flex-col justify-center py-6 px-12 h-24"
+                onClick={() => setBasicTermModal(true)}
               >
                 기본 특약
                 <span className="text-[1rem] font-normal opacity-60">
                   기본적으로 계약서에 들어가는 특약입니다.
                 </span>
-              </StyledDiv>
+              </SubmitButton>
             </div>
             <ul className="w-full flex flex-col justify-center items-center gap-4">
               당신의 니즈를 잊지 않도록
@@ -174,7 +186,7 @@ function ContractCreateNewPage() {
               <SubmitButton
                 type="button"
                 width="100%"
-                height={5}
+                height={6}
                 background="white"
                 borderColor="#5046E5"
                 fontSize={1.4}
@@ -197,13 +209,14 @@ function ContractCreateNewPage() {
                 ""
               )}
             </ul>
+            <div className="flex-1" />
             <SubmitButton
-              width="100%"
+              width={30}
               height={5.5}
-              fontSize={1.8}
+              fontSize={1.7}
               fontWeight={500}
               disabled={userQuery.length === 0}
-              className="flex justify-center items-center mb-12 mt-auto"
+              className="flex w-full justify-center items-center mb-8 mt-auto"
               icon={<MagicTwoStarIcon color="white" />}
               // onClick={() => router.push("step4")}
             >
@@ -212,6 +225,57 @@ function ContractCreateNewPage() {
           </div>
         </form>
       </main>
+      <Modal
+        isOpen={basicTermModal}
+        setIsOpen={setBasicTermModal}
+        clickOutsideClose={true}
+      >
+        <div className="mx-auto mt-6 mb-4 w-20 h-1.5 rounded-full bg-gray-300" />
+        <div className="flex flex-col items-center py-2 px-10 w-full">
+          <span className="text-[2rem] font-medium text-center mb-8">
+            기본 특약 사항
+          </span>
+          <div className="w-full max-h-[55rem] overflow-y-auto">
+            <ul className="w-full flex flex-col gap-4">
+              {basicTerms.map((term, idx) => (
+                <li
+                  key={term.id}
+                  className="bg-white rounded-[20px] border border-[#ededed] mb-2 transition-all"
+                >
+                  <button
+                    type="button"
+                    className="flex justify-between items-center w-full px-5 py-5 !text-[1.2rem] font-medium focus:outline-none"
+                    onClick={() =>
+                      setOpened((prev) =>
+                        prev.includes(idx)
+                          ? prev.filter((i) => i !== idx)
+                          : [...prev, idx]
+                      )
+                    }
+                  >
+                    <span className="text-left text-[#444]">{term.title}</span>
+                    <Image
+                      src="/add.svg"
+                      alt="펼치기"
+                      width={24}
+                      height={24}
+                      className={`w-6 h-6 transition-transform duration-200 ${
+                        opened.includes(idx) ? "rotate-90" : ""
+                      }`}
+                    />
+                  </button>
+                  {/* 펼쳐졌을 때만 내용 표시 */}
+                  {opened.includes(idx) && (
+                    <div className="px-6 py-6 bg-[#fafafd] rounded-b-[20px] text-[1.2rem] text-gray-700 border-t border-[#ededed] animate-fadein">
+                      {term.content}
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Modal>
       <Modal
         isOpen={modalOpen}
         setIsOpen={setModalOpen}

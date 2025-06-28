@@ -37,22 +37,36 @@ function ContractCreateNewPage() {
     }
   }, [router]);
 
+  const { dates, payment } = useCreateStore.getState();
+
+  function formatDate(date: Date | string | null | undefined) {
+    if (!date || date === "") return null;
+    const d = new Date(date as string);
+    if (isNaN(d.getTime())) return null;
+    return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
+  }
+
+  function formatNumber(val: number | string | null | undefined) {
+    if (!val || val === "") return null;
+    return Number(val).toLocaleString() + "원";
+  }
+
   const [disable, setDisable] = useState(true);
 
   return (
     <>
-      <div className="h-20 w-full flex flex-col justify-center items-center" />
+      <div className="h-20 mt-15 w-full flex flex-col justify-center items-center" />
       <BackHeader>임대차 계약서 작성</BackHeader>
-      <main className="flex flex-col items-center mt-[3rem] gap-12 h-auto">
+      <main className="flex flex-col items-center mt-[2rem] gap-12 h-auto">
         <StyledDiv
-          width="calc(100% - 2.5rem)"
+          width="calc(100% - 4rem)"
           height={4.5}
           background="#fefce8"
           borderColor="#fef9c3"
-          className="flex items-center px-8 mx-96"
+          className="flex items-center px-4 mx-90"
           icon={
             <div className="w-12 h-12 bg-yellow rounded-full flex justify-center items-center">
-              <WarningIcon />
+              <WarningIcon color="#FFE32E" />
             </div>
           }
         >
@@ -63,7 +77,7 @@ function ContractCreateNewPage() {
             </span>
           </div>
         </StyledDiv>
-        <div className="flex flex-col justify-center items-center w-full gap-4 text-[1.6rem] font-bold ">
+        <div className="flex flex-col justify-center items-center w-full gap-4 text-[1.6rem] font-semibold ">
           3. 계약 조항
           <ul className="px-10 py-12 w-full bg-white rounded-[50px] flex flex-col gap-6 justify-center text-[1.2rem] font-medium">
             {articles.map((v, i) => {

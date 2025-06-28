@@ -58,7 +58,7 @@ body {
   height: 100%;
   /* font-family: var(--font-pretendard), sans-serif, Arial, Helvetica; */
   font-family: var(--font-pretendard);
-  background-color: #f7f9fb;
+  background-color: rgb(245, 244, 248);
 }
 
 img,

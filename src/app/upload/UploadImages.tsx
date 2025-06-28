@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSwipeable } from "react-swipeable";
 import imageCompression from "browser-image-compression";
 import axios from "axios";
@@ -62,6 +62,8 @@ export default function UploadPage({ setPageOpen }: UploadPageProps) {
   const [imageFiles, setImageFiles] = useState<ImageFile[]>([]);
   // ✅ 현재 보고 있는 이미지 index (스와이프용)
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // ✅ 스와이프 핸들러 (좌우로 넘기기)
   const handlers = useSwipeable({
@@ -214,17 +216,34 @@ export default function UploadPage({ setPageOpen }: UploadPageProps) {
 
   return (
     <main className="p-8 w-svw h-full">
-      <h1 className="text-2xl font-bold mb-4">이미지 업로드</h1>
+      <h1 className="text-[1.7rem] font-bold mb-4 text-center">이미지 업로드</h1>
+      {/* 수정해보았습니다 */}
+      {/* 파일 선택 버튼 */}
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          className="!text-[1.2rem] ml-2"
+        >
+          파일 선택
+        </button>
 
-      {/* ✅ 파일 선택 */}
-      <input
-        type="file"
-        accept="image/*"
-        multiple
-        onChange={handleFileChange}
-        className="mb-2"
-      />
-      <p className="text-sm text-gray-500 mb-4">
+        {/* 숨겨진 input */}
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          ref={fileInputRef}
+          style={{ display: "none" }}
+          onChange={handleFileChange}
+        />
+
+        {/* 선택된 파일 없음 메시지 */}
+        {imageFiles.length === 0 && (
+          <p className="text-[1.1rem] text-gray-500 absolute ml-2">
+            선택된 파일 없음
+          </p>
+        )}
+      <p className="text-[1.1rem] ml-[17rem] text-gray-500 mb-4">
         (최대 {MAX_FILES}개 파일, 각 5MB 이하, 현재 {imageFiles.length}개)
       </p>
 
@@ -271,7 +290,10 @@ export default function UploadPage({ setPageOpen }: UploadPageProps) {
       <button
         onClick={handleSubmit}
         disabled={imageFiles.length === 0}
-        className="w-full py-3 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 transition-colors"
+        className="w-full py-4 px-4 bg-blue-500 
+                text-white !text-[1.2rem] !font-medium 
+                rounded-[12px] hover:bg-blue-600 
+                disabled:opacity-50 transition-colors"
       >
         업로드 ({imageFiles.length}개 파일)
       </button>

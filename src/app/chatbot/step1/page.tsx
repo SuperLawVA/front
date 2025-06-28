@@ -2,6 +2,7 @@
 
 import { useRef, useState, FormEvent } from "react";
 import Image from "next/image";
+import { useEffect } from "react";
 
 type AnswerFormat = {
   summary: string;
@@ -68,10 +69,22 @@ function ChatbotPage() {
     sendMessage(q);
   }
 
+  const endRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
+
   return (
     <div className="flex flex-col h-screen bg-[#F2F1F6]">
       {/* 헤더 */}
-      <header className="flex items-center px-8 pt-6 gap-4 mt-10">
+      <header
+        className="
+        fixed top-0 left-0 w-full z-20
+        flex items-center gap-4 px-8 pt-2
+        h-[80px] mt-20
+        "
+      >
         <Image src="/menu1.svg" alt="메뉴" width={45} height={45} />
         <div className="flex-1 h-16 bg-white rounded-[20px] flex items-center px-6 text-[1.6rem] font-semibold">
           새 채팅
@@ -88,7 +101,7 @@ function ChatbotPage() {
         />
       </div>
       {/* 메시지 */}
-      <main className="flex-1 overflow-y-auto px-4 pt-6 space-y-6">
+      <main className="flex-1 overflow-y-auto px-4 pt-[13rem] space-y-6">
         {messages.map((m, i) =>
           m.role === "assistant" && typeof m.text !== "string" ? (
             <div key={i} className="flex items-start justify-start gap-1 mt-6">
@@ -102,11 +115,11 @@ function ChatbotPage() {
               {/* 카드 답변 */}
               <div className="bg-violet-100/70 p-8 mt-12 ml-[-1.3rem] rounded-tr-[30px] rounded-br-[30px] rounded-bl-[30px] rounded-tl-none space-y-3 text-[1.1rem]">
                 <div>
-                  <span className="font-bold text-[1.15rem]">🙇‍♂️ 상황 정리</span>
+                  <span className="font-bold text-[1.3rem]">🙇‍♂️ 상황 정리</span>
                   <div>{(m.text as AnswerFormat).summary}</div>
                 </div>
                 <div>
-                  <span className="font-bold text-[1.09rem]">💡 도움 방법</span>
+                  <span className="font-bold text-[1.3rem]">💡 도움 방법</span>
                   <div className="mt-2">
                     <div className="mb-2">
                       <span className="font-semibold">법률 해결방안:</span>
@@ -143,21 +156,33 @@ function ChatbotPage() {
           ) : (
             <div key={i} className="flex items-start justify-end">
               <div className="relative max-w-[80%]">
-                <div className="whitespace-pre-line bg-white text-black px-8 py-3 text-[1.3rem] mt-8 mr-2 rounded-tl-[30px] rounded-bl-[30px] rounded-br-[30px] rounded-tr-none">
+                <div className="whitespace-pre-line bg-white text-black px-8 py-3 text-[1.3rem] mt-10 mr-6 rounded-tl-[30px] rounded-bl-[30px] rounded-br-[30px] rounded-tr-none">
                   {m.text as string}
                 </div>
-                <span className="absolute -top-2 -right-2 w-[2rem] h-[2rem] bg-violet-400 rounded-full" />
+                <span className="absolute -top-0.5 right-2 w-[2rem] h-[2rem] bg-violet-400 rounded-full" />
               </div>
             </div>
           )
         )}
-
         {loading && (
-          <div className="mr-auto bg-violet-200/30 rounded-[40px] px-5 py-4 text-[0.9rem] animate-pulse">
-            답변 생성 중...
+          <div className="flex items-start justify-start gap-1">
+            <Image
+              src="/chatchat.svg"
+              alt="bot"
+              width={24}
+              height={24}
+              className="ml-2 flex-shrink-0"
+            />
+            <div
+              className="-ml-5 max-w-[80%] whitespace-pre-line bg-violet-200/30 text-black px-3 py-3 text-[1.3rem] mt-18 rounded-tr-[30px] rounded-br-[30px] rounded-bl-[30px] rounded-tl-none animate-pulse"
+              style={{ width: "fit-content", minWidth: "10rem" }} // minWidth로 짧을 때도 모양 예쁘게
+            >
+              답변 생성 중...
+            </div>
           </div>
         )}
         <div className="h-36" />
+        <div ref={endRef} />
       </main>
 
       {/* 추천질문 + 입력창 */}
