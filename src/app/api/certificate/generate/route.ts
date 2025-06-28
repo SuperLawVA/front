@@ -1,15 +1,19 @@
-// app/api/analysis/generate/route.ts
+// app/api/certificate/generate/route.ts
 import backendApi from "@/lib/axios.server";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const { contractId } = await req.json();
+    const { contractId, userQuery } = await req.json();
     // const userId = (await cookies()).get("userId");
 
-    const res = await backendApi.post("/certificate/generate", contractId, {
-      headers: { "Content-Type": "application/json" },
-    });
+    const res = await backendApi.post(
+      "/certificate/generate",
+      { contractId, userQuery },
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
     console.log("server res!!!!!!!!!!!!!!");
     console.log(res);
 
