@@ -1,15 +1,18 @@
-import { ReactNode } from "react";
+// import { style } from "framer-motion/client";
+import { ReactNode, CSSProperties } from "react";
 
 type DivBoxProps = {
   textColor?: string;
   className?: string;
   children: ReactNode;
+  style?: CSSProperties;
 };
 
 export default function DivBox({
   textColor = "rgba(0, 0, 0, 0.7)",
   className = "",
   children,
+  style = {},
 }: DivBoxProps) {
   return (
     <div
@@ -20,6 +23,7 @@ export default function DivBox({
         borderRadius: "20px",
         fontSize: "1.2rem",
         color: textColor,
+        ...style,
       }}
     >
       {children}

@@ -6,7 +6,7 @@ export default function SubmitButton({
   width = "100%",
   height = 5.5,
   fontColor = "#ffffff",
-  fontWeight = 700,
+  fontWeight = 600,
   fontSize = 2.2,
   gap = 0.8,
   background = "#6000ff",

@@ -259,7 +259,7 @@ function ContractCreateNewPage() {
 
   return (
     <>
-      <div className="h-20 w-full flex flex-col justify-center items-center" />
+      <div className="h-20 mt-15 w-full flex flex-col justify-center items-center" />
       <BackHeader>임대차 계약서 작성</BackHeader>
       <main className="flex flex-col items-center mt-[3rem] gap-12 mx-10 h-auto">
         <form
@@ -268,8 +268,8 @@ function ContractCreateNewPage() {
           className="flex flex-col w-full gap-12"
         >
           <div className="flex flex-col gap-4">
-            <span className="text-[1.6rem] font-bold pl-8">1. 부동산 표시</span>
-            <div className="flex flex-col gap-8 w-full rounded-[30px] p-12 bg-white font-bold text-[1.6rem]">
+            <span className="text-[1.6rem] font-semibold text-center">1. 부동산 표시</span>
+            <div className="flex flex-col gap-8 w-[100%] rounded-[30px] p-10 bg-white font-semibold text-[1.6rem]">
               <div
                 className="flex flex-col gap-2"
                 onClick={() => {
@@ -358,8 +358,8 @@ function ContractCreateNewPage() {
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            <span className="text-[1.6rem] font-bold pl-8">2. 계약 내용</span>
-            <div className="flex flex-col gap-12 w-full rounded-[30px] p-12 bg-white font-bold text-[1.6rem]">
+            <span className="text-[1.6rem] font-semibold text-center">2. 계약 내용</span>
+            <div className="flex flex-col gap-8 w-[100%] rounded-[30px] p-10 bg-white font-semibold text-[1.6rem]">
               <div
                 className="flex flex-col gap-2"
                 onClick={() => {
@@ -456,7 +456,7 @@ function ContractCreateNewPage() {
           <div className="flex flex-col gap-4 mb-12 items-center text-[1.2rem] text-[#6000ff] font-medium">
             <SubmitButton
               width={30}
-              height={5}
+              height={5.5}
               fontSize={1.8}
               fontWeight={500}
               disabled={!isValidAll}

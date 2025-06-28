@@ -23,22 +23,36 @@ function ContractCreateNewPage() {
     }
   }, [router]);
 
+  const { dates, payment } = useCreateStore.getState();
+
+  function formatDate(date: Date | string | null | undefined) {
+  if (!date || date === "") return null;
+  const d = new Date(date as string);
+  if (isNaN(d.getTime())) return null;
+  return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
+}
+
+function formatNumber(val: number | string | null | undefined) {
+  if (!val || val === "") return null;
+  return Number(val).toLocaleString() + "원";
+}
+
   const [disable, setDisable] = useState(true);
 
   return (
     <>
-      <div className="h-20 w-full flex flex-col justify-center items-center" />
+      <div className="h-20 mt-15 w-full flex flex-col justify-center items-center" />
       <BackHeader>임대차 계약서 작성</BackHeader>
-      <main className="flex flex-col items-center mt-[3rem] gap-12 h-auto">
+      <main className="flex flex-col items-center mt-[2rem] gap-12 h-auto">
         <StyledDiv
-          width="calc(100% - 2.5rem)"
+          width="calc(100% - 4rem)"
           height={4.5}
           background="#fefce8"
           borderColor="#fef9c3"
-          className="flex items-center px-8 mx-96"
+          className="flex items-center px-4 mx-90"
           icon={
             <div className="w-12 h-12 bg-yellow rounded-full flex justify-center items-center">
-              <WarningIcon />
+              <WarningIcon color="#FFE32E"/>
             </div>
           }
         >
@@ -49,9 +63,9 @@ function ContractCreateNewPage() {
             </span>
           </div>
         </StyledDiv>
-        <div className="flex flex-col justify-center items-center w-full gap-4 text-[1.6rem] font-bold ">
+        <div className="flex flex-col justify-center items-center w-full gap-4 text-[1.6rem] font-semibold ">
           3. 계약 조항
-          <div className="px-10 py-12 w-full bg-white rounded-[50px] flex flex-col gap-6 justify-center text-[1.2rem] font-medium">
+          <div className="px-13 py-12 w-full bg-white rounded-[40px] flex flex-col gap-6 justify-center text-[1.2rem] font-medium">
             <div>
               제1조 (목적)
               <div className="font-normal">
@@ -63,10 +77,10 @@ function ContractCreateNewPage() {
               제2조 (존속기간)
               <div className="font-normal">
                 임대인은 위 부동산을 임대차 목적대로 사용 수익할 수 있는 상태로
-                하여 <span className="text-main">2025년 10월 31일</span>까지
+                하여 <span className="text-main">{formatDate(dates?.contractDate) ?? "계약일 입력"}</span>까지
                 임차인에게 인도하며, 임대차기간은 인도일로부터&nbsp;
-                <span className="text-main">24</span>
-                개월인 <span className="text-main">2027년 10월 31일</span>
+                <span className="text-main">{payment?.leasePeriod ?? "기간 입력"}</span>
+                개월인 <span className="text-main">{formatDate(dates?.endDate) ?? "만료일 입력"}</span>
                 까지로 한다.
               </div>
             </div>
@@ -128,7 +142,7 @@ function ContractCreateNewPage() {
               <div className="font-normal">
                 개업공인중개사는 중개대상물 확인.설명서를 작성하고
                 업무보증관계증서(공제증서 등) 사본을 첨부하여{" "}
-                <span className="text-main">2025년 04월 20일</span>
+                <span className="text-main">{formatDate(dates?.contractDate) ?? "날짜 미입력"}</span>
                 거래당사자 쌍방에게 교부한다.
               </div>
             </div>

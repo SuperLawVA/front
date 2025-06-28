@@ -23,6 +23,9 @@ function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [activeBtn, setActiveBtn] = useState<"id" | "pw" | "register" | null>(null);
+
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const rememberEmail = localStorage.getItem("remember");
@@ -33,6 +36,8 @@ function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    
 
     try {
       const res = await axios.post("/api/login", { email, password });
@@ -61,6 +66,13 @@ function LoginPage() {
         alert("로그인 요청 중 알 수 없는 오류가 발생했습니다.");
       }
     }
+  };
+
+  const handleClickMove = (type: "id" | "pw" | "register", url: string) => {
+    setActiveBtn(type);
+    setTimeout(() => {
+      router.push(url);
+    }, 300); // 0.3초 뒤 이동
   };
 
   return (
@@ -97,13 +109,35 @@ function LoginPage() {
           <div className="flex flex-col gap-4 text-[1.8rem]">
             <span className="font-medium">비밀번호</span>
             <StyledInput
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="대소문자, 숫자, 특수문자 포함하여 8글자 이상"
               // pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$"
               // title="비밀번호는 8자 이상이며, 영문 대문자, 소문자, 숫자, 특수문자를 모두 포함해야 합니다."
               // required
               onChange={(e) => setPassword(e.target.value)}
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword((v) => !v)}
+              className="absolute right-14 top-[41rem] z-10"
+              tabIndex={-1}
+            >
+              {showPassword ? (
+                <Image
+                  src="/eye.svg"
+                  alt="show password"
+                  width={20}
+                  height={20}
+                />
+              ) : (
+                  <Image
+                    src="/close-eye.svg"
+                    alt="hide password"
+                    width={20}
+                    height={20}
+                  />
+                )}   
+            </button>
           </div>
           <div className="flex items-center gap-10">
             <div className="flex gap-4">
@@ -153,8 +187,31 @@ function LoginPage() {
             로그인
           </SubmitButton>
           <div className="flex justify-center gap-4 text-l font-medium">
-            <span>아이디 찾기</span>|<span>비밀번호 찾기</span>|
-            <button type="button" onClick={() => router.push("register")}>
+            <button 
+              type="button"
+              className={`transition-colors duration-200 ${
+              activeBtn === "id" ? "text-[#6000FF]" : ""
+            }`} 
+              onClick={() => handleClickMove("id", "/find")}
+            >
+              아이디 찾기
+            </button>|
+            <button 
+              type="button"
+              className={`transition-colors duration-200 ${
+              activeBtn === "pw" ? "text-[#6000FF]" : ""
+            }`} 
+              onClick={() => handleClickMove("pw", "/find")}
+            >
+              비밀번호 찾기
+            </button>|
+            <button 
+              type="button"
+              className={`transition-colors duration-200 ${
+              activeBtn === "register" ? "text-[#6000FF]" : ""
+            }`} 
+              onClick={() => handleClickMove("register", "/register")}
+            >
               회원가입
             </button>
           </div>

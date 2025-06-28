@@ -19,7 +19,7 @@ function StartPage() {
           background="#EFFDF4"
           fontSize={1.2}
           fontWeight={700}
-          icon={<MagicThreeStarIcon width={2} height={2} color="#22C55D" />}
+          icon={<MagicThreeStarIcon width={20} height={20} color="#22C55D" />}
         >
           <span className="text-green-500">AI로 법률 상담하기</span>
         </SubmitButton>

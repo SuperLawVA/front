@@ -164,8 +164,14 @@ function MainPage() {
             <div className="flex w-full justify-around">
               <QuickButton
                 bgc="#32d74b"
-                onClick={() => router.push("create")}
-                icon={<DocumentIcon color="white" />}
+                icon={
+                  <div className="ml-1">
+                    <DocumentIcon
+                      color="white"
+                      onClick={() => router.push("create")}
+                    />
+                  </div>
+                }
                 title="계약서 작성"
                 description="안전한 계약을 원해요"
               />

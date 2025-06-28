@@ -14,7 +14,7 @@ export default function BackHeader({
   children,
 }: BackLinkProps) {
   return (
-    <header className="grid items-center place-items-center relative w-full">
+    <header className="grid items-center relative w-full">
       <ArrowLeftIcon
         width={width}
         height={height}
@@ -23,7 +23,7 @@ export default function BackHeader({
         className={className}
       />
       {children && (
-        <span className="col-start-1 row-start-1 leading-[2.9rem] font-semibold text-[2.4rem]">
+        <span className="col-start-1 row-start-1 leading-[2.9rem] ml-22 font-semibold text-[1.7rem]">
           {children}
         </span>
       )}
