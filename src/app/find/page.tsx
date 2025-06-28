@@ -199,7 +199,7 @@ function LoginPage() {
           <input
             type="text"
             placeholder="아이디 입력"
-            className="w-full max-w-md px-4 py-3 border rounded-full text-[1.05rem] bg-[#fafafa] focus:outline-none"
+            className="w-full max-w-md px-4 py-3 border text-[1.05rem] bg-[#fafafa] focus:outline-none"
           />
           {/* 비밀번호 찾기 버튼 */}
           <button
