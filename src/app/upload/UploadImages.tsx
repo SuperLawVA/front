@@ -186,7 +186,7 @@ export default function UploadPage({ setPageOpen }: UploadPageProps) {
     });
 
     try {
-      const res = await axios.post("/api/upload/images", formData, {
+      const res = await axios.post("api/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

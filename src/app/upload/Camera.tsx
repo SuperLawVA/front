@@ -48,49 +48,56 @@ export default function CameraPage({ goBack, goNext }: UploadPageProps) {
     });
   }
 
+  const getCameraDeviceId = async (facingMode: "user" | "environment") => {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    const videoDevices = devices.filter((d) => d.kind === "videoinput");
+    console.log("devices.toString()");
+    console.log(videoDevices);
+    console.log("devices.toString()");
+
+    if (facingMode === "user") {
+      return videoDevices.find((device) =>
+        device.label.toLowerCase().includes("front")
+      )?.deviceId;
+    }
+
+    // 환경 카메라: "back", "rear", "wide", 등 포함
+    return (
+      videoDevices.find((device) => device.label.toLowerCase().includes("back"))
+        ?.deviceId ||
+      videoDevices.find((device) => device.label.toLowerCase().includes("wide"))
+        ?.deviceId ||
+      videoDevices.find((device) => device.label.toLowerCase().includes("rear"))
+        ?.deviceId
+    );
+  };
+
   /**
    * 카메라 시작 함수
    */
   const startCamera = async () => {
     try {
-      // 연결된 디바이스 목록 가져오기
-      const devices = await navigator.mediaDevices.enumerateDevices();
-      const videoInputs = devices.filter((d) => d.kind === "videoinput");
+      const deviceId = await getCameraDeviceId(facingMode);
 
-      let constraints: MediaStreamConstraints;
+      const constraints: MediaStreamConstraints = {
+        video: deviceId ? { deviceId: { exact: deviceId } } : { facingMode },
+        audio: false,
+      };
 
-      // 카메라가 1개면 facingMode 무시
-      if (videoInputs.length <= 1) {
-        constraints = { video: true, audio: false };
-      } else {
-        constraints = {
-          video: { facingMode: { exact: facingMode } },
-          audio: false,
-        };
-      }
-
-      // getUserMedia에 timeout 적용
       const stream = await promiseWithTimeout(
         navigator.mediaDevices.getUserMedia(constraints),
         5000
       );
 
-      // 스트림 저장
       streamRef.current = stream;
 
-      // 비디오에 스트림 연결
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
     } catch (err) {
       console.error("Camera access error:", err);
-
-      // ✅ 동일 에러 반복 방지용: 현재 facingMode와 반대로 전환
-      // (즉시 alert 띄우기 전에 우선 상태 변경)
       setFacingMode("user");
-      // setFacingMode((prev) => (prev === "user" ? "environment" : "user"));
 
-      // 사용자에게 안내
       alert(
         "카메라 접근 중 오류가 발생했습니다.\n노트북이라면 카메라가 하나만 연결되어 있을 수 있습니다."
       );
@@ -156,7 +163,7 @@ export default function CameraPage({ goBack, goNext }: UploadPageProps) {
     });
 
     try {
-      const res = await axios.post("/api/upload/images", formData, {
+      const res = await axios.post("api/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       if (res.status === 200) {
