@@ -109,7 +109,7 @@ export const useCreateStore = createStore<CreateState>()(
 // 내용증명서 작성
 interface CertificateState {
   ContractId: string | null;
-  userQuery: string[];
+  userQuery: string;
 }
 
 export const useCertificateStore = createStore<CertificateState>()(
@@ -118,7 +118,7 @@ export const useCertificateStore = createStore<CertificateState>()(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (set) => ({
       ContractId: null,
-      userQuery: [],
+      userQuery: "",
     }),
     {
       name: "certificateStore",

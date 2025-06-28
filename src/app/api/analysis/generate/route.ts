@@ -1,5 +1,4 @@
-// app/api/analysis/route.ts
-// import { cookies } from "next/headers";
+// app/api/analysis/generate/route.ts
 import backendApi from "@/lib/axios.server";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -8,7 +7,7 @@ export async function POST(req: NextRequest) {
     const { contractId } = await req.json();
     // const userId = (await cookies()).get("userId");
 
-    const res = await backendApi.post("/analysis", contractId, {
+    const res = await backendApi.post("/analysis/generate", contractId, {
       headers: { "Content-Type": "application/json" },
     });
     console.log("server res!!!!!!!!!!!!!!");

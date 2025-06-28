@@ -67,7 +67,7 @@ function AnalysisPage() {
   // 분석 요청 정보
   const analysisRequest = async (contractId: string) => {
     try {
-      const response = await clientApi.post("/analysis/request", {
+      const response = await clientApi.post("/analysis/generate", {
         contractId,
       });
       console.log("analysis response");
@@ -92,7 +92,7 @@ function AnalysisPage() {
           fontColor="#0A84FF"
           fontWeight={700}
           borderColor="none"
-          className="px-10 flex justify-center items-center "
+          className="px-10 flex justify-center items-center"
           icon={<MagicTwoStarIcon width={1.4} height={1.4} color="#0A84FF" />}
         >
           AI로 계약서 분석하기

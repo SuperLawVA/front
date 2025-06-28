@@ -10,7 +10,7 @@ import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 import InfoIcon from "@/components/icons/Info";
 import { useRouter } from "next/navigation";
 import { useCertificateStore } from "@/store/useStore";
-import axios from "axios";
+import clientApi from "@/lib/axios.client";
 
 function StartPage() {
   const router = useRouter();
@@ -24,13 +24,17 @@ function StartPage() {
 
   const canSubmit = purpose.trim().length > 0 && story.trim().length > 0;
 
+  // 분석 요청 정보
   const certificateRequest = async (contractId: string) => {
     try {
-      // const response = await axios.post("/api/certificate", {
-      await axios.post("/api/certificate", {
+      const response = await clientApi.post("/certificate/generate", {
         contractId,
         userQuery: purpose + "\n" + story,
       });
+      console.log("certificate response");
+      console.log(response);
+
+      // router.push("certificate/[certificateId]");
     } catch (error) {
       console.error("Failed to fetch contracts:", error);
       return undefined;
@@ -40,7 +44,7 @@ function StartPage() {
     if (!canSubmit) return;
     const { ContractId } = useCertificateStore.getState();
     certificateRequest(ContractId as string);
-    router.push("step2");
+    // router.push("step2");
   };
 
   return (
@@ -58,9 +62,9 @@ function StartPage() {
               to-[#E100FF] 
               bg-clip-text text-transparent"
             >
-              법·판례&nbsp;
+              법·판례
             </span>
-            기반으로
+            &nbsp;기반으로
           </div>
           <div className="font-bold text-[2.2rem]">
             당신의 내용증명서를 설득력있게
@@ -132,7 +136,7 @@ function StartPage() {
                 width={30}
                 height={5.5}
                 fontSize={1.8}
-                className={`mt-3 flex items-center justify-center gap-x-2 whitespace-nowrap ${
+                className={`mt-3 flex items-center justify-center ${
                   !canSubmit ? "opacity-40 cursor-not-allowed" : ""
                 }`}
                 disabled={!canSubmit}

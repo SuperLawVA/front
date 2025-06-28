@@ -12,25 +12,33 @@ import AssetIcon from "@/components/icons/Asset";
 import Image from "next/image";
 import clientApi from "@/lib/axios.client";
 import Contract from "@/app/types/Contract";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 export function StartPage(props: { params: Promise<{ contractId: string }> }) {
+  const router = useRouter();
   const { contractId } = use(props.params);
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [contract, setContract] = useState<Contract | null>(null);
   const tabs = ["계약 요약", "계약서 정보", "계약 조건", "특약"];
 
   const getUserData = async () => {
-    const response = await clientApi.post("/contract", { contractId });
-    console.log("response");
-    // console.log(response.data);
-    // console.log(response.data.contract);
-    setContract(response.data.contract);
+    try {
+      const response = await clientApi.post("/contract", { contractId });
+      setContract(response.data.contract);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.status === 401) {
+          alert("잘못된 접근입니다!");
+          router.replace("/"); // 이전 페이지로 돌아감
+          return;
+        }
+      }
+    }
   };
   useEffect(() => {
     getUserData();
-    console.log("contract");
-    console.log(contract);
-  }, []);
+  }, [router]);
 
   const tabContents = [
     <div
