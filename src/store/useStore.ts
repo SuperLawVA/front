@@ -16,7 +16,7 @@ interface UserState {
         contractDate: string;
         modifiedDate: string;
       }[];
-  recentChat: { _id: string; title: string }[];
+  chats: { _id: string; sessionId: string; chatTitle: string }[];
 
   // // setters
   // setUser: (payload: Omit<UserState, "setUser" | "resetUser">) => void;
@@ -40,7 +40,7 @@ export const useAuthStore = createStore<UserState>()(
       userName: null,
       notification: [],
       contractArray: [],
-      recentChat: [],
+      chats: [],
       // setUser: (payload) => set(() => ({ ...payload })),
       // setUser: ({ userName, notification, contract, recentChat }) =>
       //   set(() => ({ userName, notification, contract, recentChat })),

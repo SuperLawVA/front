@@ -10,9 +10,10 @@ export interface Contract {
   modifiedDate?: string;
 }
 
-export interface RecentChat {
+export interface Chat {
   _id: string;
-  title: string;
+  sessionId: string;
+  chatTitle: string;
 }
 
 export interface AnalysisTarget {
