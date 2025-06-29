@@ -4,7 +4,7 @@
 import SubmitButton from "@/components/SubmitButton";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import MagicThreeStarIcon from "@/components/icons/MagicThreeStar";
+import MagicIcon from "@/components/icons/Magic";
 
 function StartPage() {
   const router = useRouter();
@@ -19,7 +19,7 @@ function StartPage() {
           background="#EFFDF4"
           fontSize={1.2}
           fontWeight={700}
-          icon={<MagicThreeStarIcon width={20} height={20} color="#22C55D" />}
+          icon={<MagicIcon width={20} height={20} color="#22C55D #22C55D" />}
         >
           <span className="text-green-500">AI로 법률 상담하기</span>
         </SubmitButton>
