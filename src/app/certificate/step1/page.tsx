@@ -40,6 +40,7 @@ function StartPage() {
       return undefined;
     }
   };
+
   const handleClick = () => {
     if (!canSubmit) return;
     const { ContractId } = useCertificateStore.getState();

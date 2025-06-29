@@ -14,7 +14,6 @@ import axios from "axios";
 export async function POST(req: NextRequest) {
   // params.contractId 로 접근 가능
   try {
-    // Spring Boot의 로그인 API 호출
     const { contractId } = await req.json();
     const response = await backendApi.post(
       "/contract",
