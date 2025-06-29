@@ -17,7 +17,7 @@ function StartPage() {
 
   const tabs = ["계약 요약", "계약서 정보", "계약 조건", "특약"];
 
-  const Router = useRouter();
+  const router = useRouter();
 
   const tabContents = [
     <div
@@ -131,7 +131,7 @@ function StartPage() {
             </span>
           </div>
           <div className="flex flex-col gap-2">
-            잔금
+            중도금
             <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
               200만 원원
             </span>
@@ -278,11 +278,11 @@ function StartPage() {
         >
           원본 보기
         </SubmitButton>
-        <div 
+        <div
           className="w-full h-[4.5rem] gap-2 flex justify-center items-center text-white text-[1.6rem] font-semibold bg-gradient-to-br from-[#6000FF] via-[#8a00ff] to-[#E100FF] rounded-[50px] mb-12"
-          onClick={() => Router.push("/chatbot")}
+          onClick={() => router.push("/chatbot")}
           role="button"
-          tabIndex={0}  
+          tabIndex={0}
         >
           <Image
             width={9999}

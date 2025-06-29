@@ -1,12 +1,9 @@
-// import { style } from "framer-motion/client";
-import { ReactNode, CSSProperties } from "react";
+import { ReactNode, HTMLAttributes } from "react";
 
 type DivBoxProps = {
   textColor?: string;
-  className?: string;
   children: ReactNode;
-  style?: CSSProperties;
-};
+} & HTMLAttributes<HTMLDivElement>;
 
 export default function DivBox({
   textColor = "rgba(0, 0, 0, 0.7)",

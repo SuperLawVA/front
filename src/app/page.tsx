@@ -14,8 +14,8 @@ import { Contract, RecentChat } from "./types/Main";
 import ChatIcon from "@/components/icons/Chat";
 import ArrowRightIcon from "@/components/icons/ArrowRight";
 import { useAuthStore } from "@/store/useStore";
-import axios from "axios";
 import Image from "next/image";
+import clientApi from "@/lib/axios.client";
 
 interface QuickButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -63,16 +63,27 @@ function MainPage() {
 
   // 임시 로그아웃
   const handleLogout = async () => {
-    await axios.post("/api/logout");
+    await clientApi.get("/logout");
     useAuthStore.persist.clearStorage();
     sessionStorage.clear();
     sessionStorage.setItem("start", "true");
     router.replace("/login"); // 로그아웃 후 로그인 페이지로 이동
   };
   const getUserData = async () => {
-    const response = await axios.post("/api/user");
+    const response = await clientApi.post(
+      "/user",
+      {},
+      {
+        headers: {
+          "Content-Type": "application/json", // JSON 데이터 전송
+        },
+      }
+    );
 
     if (response) {
+      console.log("response.data");
+      console.log(response.data);
+
       // const { userName, notification, contractArray, recentChat } =
       const { userName, contractArray, recentChat } = response.data;
       useAuthStore.setState({ ...response.data });
@@ -84,17 +95,16 @@ function MainPage() {
   };
 
   useEffect(() => {
-    // const { userName, notification, contractArray, recentChat } =
-    const { userName, contractArray, recentChat } = useAuthStore.getState();
-
-    if (userName) {
-      setUserName(userName);
-      // setNotification(notification);
-      setContractArray(contractArray);
-      setRecentChat(recentChat);
-    } else {
-      getUserData();
-    }
+    getUserData();
+    // const { userName, contractArray, recentChat } = useAuthStore.getState();
+    // if (userName) {
+    //   setUserName(userName);
+    //   // setNotification(notification);
+    //   setContractArray(contractArray);
+    //   setRecentChat(recentChat);
+    // } else {
+    //   getUserData();
+    // }
   }, []);
 
   const router = useRouter();
@@ -131,7 +141,7 @@ function MainPage() {
       </header>
       <main className="w-full flex flex-col items-center h-auto">
         <div className="self-start mx-16 my-20 text-[2rem] font-bold">
-          {userName} 님의 고민
+          {userName}&nbsp;님의 고민
           <br />
           {"'"}
           <span className="text-main">로바</span>
@@ -193,7 +203,7 @@ function MainPage() {
           </div>
           <div className="self-start w-full font-semibold text-[1.8rem] px-8 flex flex-col gap-4">
             내 계약서
-            <div className="flex flex-col justify-center items-center gap-4">
+            <ul className="flex flex-col justify-center items-center gap-4">
               {contractArray?.length === 0 ? (
                 <>
                   <div
@@ -208,45 +218,64 @@ function MainPage() {
                   </span>
                 </>
               ) : (
-                <ul
-                  onClick={() => router.push("contract")}
-                  className="flex items-center gap-4 py-4 px-8 w-full border-[1.5px] border-[#c6c6c8] rounded-[20px] text-[1.2rem] font-medium"
-                >
-                  <QuickButton
-                    bgc="rgba(96, 0, 255, 0.5)"
-                    icon={<DocumentIcon />}
-                  />
-                  {contractArray.map((contract) => {
-                    return (
-                      <li
-                        key={contract._id}
-                        className="flex justify-between w-full"
-                      >
+                contractArray.map((contract) => {
+                  return (
+                    <li
+                      key={contract._id}
+                      onClick={() => {
+                        router.push(`/contract/${contract._id}`);
+                      }}
+                      className="flex items-center gap-4 py-4 px-8 w-full border-[1.5px] border-[#c6c6c8] rounded-[20px] text-[1.2rem] font-medium"
+                    >
+                      <QuickButton
+                        bgc="rgba(96, 0, 255, 0.5)"
+                        icon={<DocumentIcon />}
+                      />
+                      <div className="flex justify-between w-full">
                         <div className="flex flex-col gap-[0.2rem] text-[#737373] text-[0.8rem] font-medium">
                           <span className="text-[1.2rem] text-black">
-                            {contract.title}
+                            {contract.contractTitle}
                           </span>
                           <span className="text-[1rem]">
-                            {contract.address}
+                            {contract.address ?? "미기재"}
                           </span>
-                          <span>{contract.createdAt} 등록</span>
+                          <span>
+                            {(contract.createdDate as string).split("T")[0]}{" "}
+                            등록
+                          </span>
                         </div>
                         <SubmitButton
                           width={4}
                           height={2}
                           fontSize={0.8}
                           fontWeight={500}
-                          fontColor="#3c82f6"
+                          fontColor={contract.generated ? "#3c82f6" : "#eff6ff"}
                           borderRadius={"50px"}
-                          background="#eff6ff"
-                          borderColor="#3c82f6"
+                          background={
+                            contract.generated ? "#eff6ff" : "#3c82f6"
+                          }
+                          borderColor={
+                            contract.generated ? "#3c82f6" : "#eff6ff"
+                          }
                         >
-                          {contract.state}
+                          {contract.generated ? "생성됨" : "OCR"}
                         </SubmitButton>
-                      </li>
-                    );
-                  })}
-                </ul>
+                        {/* <SubmitButton
+                           width={4}
+                           height={2}
+                           fontSize={0.8}
+                           fontWeight={500}
+                           fontColor="#3c82f6"
+                           borderRadius={"50px"}
+                           background="#eff6ff"
+                           borderColor="#3c82f6"
+                         >
+                           {contract.state}
+                         </SubmitButton> */}
+                      </div>
+                    </li>
+                  );
+                })
               )}
               <SubmitButton
                 width={10}
@@ -261,7 +290,7 @@ function MainPage() {
               >
                 추가하기
               </SubmitButton>
-            </div>
+            </ul>
           </div>
           <div className="self-start w-full font-semibold text-[1.8rem] px-8 flex flex-col gap-4">
             최근 상담 내용

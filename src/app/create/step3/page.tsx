@@ -8,9 +8,10 @@ import Modal from "@/components/Modal";
 import CheckedIcon from "@/components/icons/Checked";
 import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 import CrossIcon from "@/components/icons/Cross";
-import axios from "axios";
-import Image from "next/image";
 import { useCreateStore } from "@/store/useStore";
+import clientApi from "@/lib/axios.client";
+import LoadingPage from "./Loading";
+import Image from "next/image";
 
 function ContractCreateNewPage() {
   const router = useRouter();
@@ -19,67 +20,8 @@ function ContractCreateNewPage() {
   const [userQuery, setUserQuery] = useState<string[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
-
-  const basicTerms = [
-  {
-    id: 1,
-    title: "특약 1 (중개수수료 분담)",
-    content: "임대인과 임차인은 중개수수료를 50%씩 부담한다.",
-  },
-  {
-    id: 2,
-    title: "특약 2 (임대료 인상 제한)",
-    content: "임대인의 동의 없이 임대료를 일방적으로 인상할 수 없으며, 계약 갱신 시 임대료 인상률은 5% 이내로 제한한다.",
-  },
-  {
-    id: 3,
-    title: "특약 3 (보증금 반환)",
-    content: "보증금은 임차인 퇴거 후 원상복구 확인 후 7일 이내에 은행이자를 가산하여 반환한다.",
-  },
-  {
-    id: 4,
-    title: "특약 4 (시설 수리비 부담)",
-    content: "에어컨, 보일러, 온수기 등 기본 시설의 고장 및 수리비는 임대인이 부담한다.",
-  },
-  {
-    id: 5,
-    title: "특약 5 (입주 전 정비)",
-    content: "입주 전 도배, 장판 교체 및 기본 청소는 임대인이 부담한다.",
-  },
-  {
-    id: 6,
-    title: "특약 6 (관리비 부담)",
-    content: "관리비 중 공용전기료, 엘리베이터 유지비, 경비비는 별도 부담하며, 수도, 전기, 가스 요금은 임차인이 직접 납부한다.",
-  },
-  {
-    id: 7,
-    title: "특약 7 (계약 해지 통지)",
-    content: "중도 해지 시 상대방에게 2개월 전 서면으로 통지한다.",
-  },
-  {
-    id: 8,
-    title: "특약 8 (원상복구 의무)",
-    content: "임차인의 고의 또는 과실로 인한 손상을 제외하고는 자연적 손모는 원상복구 의무를 면제한다.",
-  },
-  {
-    id: 9,
-    title: "특약 9 (화재보험 가입)",
-    content: "화재보험 가입 및 보험료는 임대인이 부담한다.",
-  },
-  {
-    id: 10,
-    title: "특약 10 (행정절차 협조)",
-    content: "전입신고 및 확정일자 취득에 필요한 서류 제공 등 임대인이 적극 협조한다.",
-  },
-  {
-    id: 11,
-    title: "특약 11 (법령 준수)",
-    content: "본 계약서에 명시되지 않은 사항은 주택임대차보호법 등 관련 법령에 따른다.",
-  },      
-];
-  const [basicTermModal, setBasicTermModal] = useState(false);
-  // const [basicTerms, setBasicTerms] = useState<Term[]>([]);
-  const [opened, setOpened] = useState<number[]>([]);
+  const [isloading, setIsloading] = useState(false);
+  const [contractTitle, setContractTitle] = useState("");
 
   const contractData = useCreateStore.getState();
   useEffect(() => {
@@ -88,7 +30,9 @@ function ContractCreateNewPage() {
     } else if (!contractData.articleAgree) {
       router.replace("step2");
     }
-    const stored = contractData.userQuery;
+    // const stored = contractData.userQuery;
+    const { contractTitle, userQuery: stored } = contractData;
+    setContractTitle(contractTitle as string);
     if (stored && userQuery.length === 0) {
       try {
         setUserQuery(stored);
@@ -101,17 +45,55 @@ function ContractCreateNewPage() {
   const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!contractData) return;
-    useCreateStore.setState({ userQuery });
+    useCreateStore.setState({ userQuery, basicAgreements });
 
     try {
-      // const response = await axios.post("/api/create/generate", {
-      await axios.post("/api/create/generate", {
-        contractData,
-      });
-      // sessionStorage.removeItem("createStore");
-      router.push("/create/step4");
+      const { userQuery, contractType, property, payment, dates } =
+        useCreateStore.getState();
+
+      // 안전하게 null 체크 후 변수에 할당
+      const propertyAddress = property?.address ?? null;
+      const deposit = payment?.deposit ?? null;
+      const monthlyRent = payment?.monthlyRent ?? null;
+      const contractPeriodStart = dates?.contractDate ?? null;
+      const contractPeriodEnd = dates?.contractDate ?? null;
+      setUserQuery([]);
+
+      alert("제출되었습니다. 잠시 기다려 주세요.");
+      setModalOpen(true);
+      setIsloading(true);
+
+      const response = await clientApi.post(
+        "/create/generate",
+        {
+          contractData: useCreateStore.getState(),
+          aggrementRequest: {
+            contractType,
+            propertyAddress,
+            deposit,
+            monthlyRent,
+            contractPeriodStart,
+            contractPeriodEnd,
+            userQuery,
+          },
+        },
+        {
+          headers: {
+            "Content-Type": "application/json", // JSON 데이터 전송
+          },
+        }
+      );
+      if (response && response.status === 200) {
+        setIsloading(false);
+        router.push("/contract/" + response.data.id);
+      } else {
+        alert("응답이 실패했습니다. 다시 시도해 주세요.");
+      }
     } catch (error) {
       console.error("Generate error:", error);
+    } finally {
+      setModalOpen(false);
+      setIsloading(false);
     }
   };
 
@@ -125,25 +107,88 @@ function ContractCreateNewPage() {
     }
   }, [modalOpen, userQuery]);
 
-  useEffect(() => {
-  if (basicTermModal) {
-    setOpened([]); // 모달 열릴 때마다 초기화
-  }
-  }, [basicTermModal]);
-  
+  const basicAgreements = [
+    {
+      reason: "특약 1 (중개수수료 분담)",
+      suggested_revision: "임대인과 임차인은 중개수수료를 50%씩 부담한다.",
+    },
+    {
+      reason: "특약 2 (임대료 인상 제한)",
+      suggested_revision:
+        "임대인의 동의 없이 임대료를 일방적으로 인상할 수 없으며, 계약 갱신 시 임대료 인상률은 5% 이내로 제한한다.",
+    },
+    {
+      reason: "특약 3 (보증금 반환)",
+      suggested_revision:
+        "보증금은 임차인 퇴거 후 원상복구 확인 후 7일 이내에 은행이자를 가산하여 반환한다.",
+    },
+    {
+      reason: "특약 4 (시설 수리비 부담)",
+      suggested_revision:
+        "에어컨, 보일러, 온수기 등 기본 시설의 고장 및 수리비는 임대인이 부담한다.",
+    },
+    {
+      reason: "특약 5 (입주 전 정비)",
+      suggested_revision:
+        "입주 전 도배, 장판 교체 및 기본 청소는 임대인이 부담한다.",
+    },
+    {
+      reason: "특약 6 (관리비 부담)",
+      suggested_revision:
+        "관리비 중 공용전기료, 엘리베이터 유지비, 경비비는 별도 부담하며, 수도, 전기, 가스 요금은 임차인이 직접 납부한다.",
+    },
+    {
+      reason: "특약 7 (계약 해지 통지)",
+      suggested_revision: "중도 해지 시 상대방에게 2개월 전 서면으로 통지한다.",
+    },
+    {
+      reason: "특약 8 (원상복구 의무)",
+      suggested_revision:
+        "임차인의 고의 또는 과실로 인한 손상을 제외하고는 자연적 손모는 원상복구 의무를 면제한다.",
+    },
+    {
+      reason: "특약 9 (화재보험 가입)",
+      suggested_revision: "화재보험 가입 및 보험료는 임대인이 부담한다.",
+    },
+    {
+      reason: "특약 10 (행정절차 협조)",
+      suggested_revision:
+        "전입신고 및 확정일자 취득에 필요한 서류 제공 등 임대인이 적극 협조한다.",
+    },
+    {
+      reason: "특약 11 (법령 준수)",
+      suggested_revision:
+        "본 계약서에 명시되지 않은 사항은 주택임대차보호법 등 관련 법령에 따른다.",
+    },
+  ];
+
+  const [basicAgreementModal, setBasicAgreementModal] = useState(false);
+  // const [basicAgreement, setBasicAgreements] = useState<Term[]>([]);
+  const [opened, setOpened] = useState<number[]>([]);
+
+  // useEffect(() => {
+  //   if (basicAgreementModal) {
+  //     setOpened([]); // 모달 열릴 때마다 초기화
+  //   }
+  // }, [basicAgreementModal]);
+
   return (
     <>
       <div className="h-20 mt-15 w-full flex flex-col justify-center items-center" />
-      <BackHeader>임대차 계약서 작성</BackHeader>
+      {contractTitle && <BackHeader>{contractTitle + " 작성"}</BackHeader>}
       <main className="flex flex-col items-center mt-[3rem] gap-12 h-[calc(100%-11rem)]">
         <div className="text-center">
           <div className="flex justify-center items-center">
             <span className="w-full text-[2.4rem] font-medium">
               말로만 한 약속은 없던 일이 돼요.
               <br />
-              <span className="text-[rgba(96,0,255,0.7)] font-semibold text-[2.5rem]">특약</span>
+              <span className="text-[rgba(96,0,255,0.7)] font-semibold text-[2.5rem]">
+                특약
+              </span>
               으로 확실하게&nbsp;
-              <span className="text-[rgba(225,0,255,0.7)] font-semibold text-[2.5rem]">보장</span>
+              <span className="text-[rgba(225,0,255,0.7)] font-semibold text-[2.5rem]">
+                보장
+              </span>
               받으세요.
             </span>
           </div>
@@ -170,7 +215,7 @@ function ContractCreateNewPage() {
                 fontColor="black"
                 gap={0.5}
                 className="flex flex-col justify-center py-6 px-12 h-24"
-                onClick={() => setBasicTermModal(true)}
+                onClick={() => setBasicAgreementModal(true)}
               >
                 기본 특약
                 <span className="text-[1rem] font-normal opacity-60">
@@ -237,7 +282,6 @@ function ContractCreateNewPage() {
               disabled={userQuery.length === 0}
               className="flex w-full justify-center items-center mb-8 mt-auto"
               icon={<MagicTwoStarIcon color="white" />}
-              // onClick={() => router.push("step4")}
             >
               생성하기
             </SubmitButton>
@@ -245,43 +289,48 @@ function ContractCreateNewPage() {
         </form>
       </main>
       <Modal
-        isOpen={basicTermModal}
-        setIsOpen={setBasicTermModal}
+        isOpen={basicAgreementModal}
+        setIsOpen={setBasicAgreementModal}
         clickOutsideClose={true}
       >
         <div className="mx-auto mt-6 mb-4 w-20 h-1.5 rounded-full bg-gray-300" />
         <div className="flex flex-col items-center py-2 px-10 w-full">
-            <span className="text-[2rem] font-medium text-center mb-8">
-              기본 특약 사항
-            </span>
-            <div className="w-full max-h-[55rem] overflow-y-auto">
+          <span className="text-[2rem] font-medium text-center mb-8">
+            기본 특약 사항
+          </span>
+          <div className="w-full max-h-[55rem] overflow-y-auto">
             <ul className="w-full flex flex-col gap-4">
-              {basicTerms.map((term, idx) => (
+              {basicAgreements.map((term, idx) => (
                 <li
-                  key={term.id}
+                  key={idx}
                   className="bg-white rounded-[20px] border border-[#ededed] mb-2 transition-all"
                 >
                   <button
                     type="button"
                     className="flex justify-between items-center w-full px-5 py-5 !text-[1.2rem] font-medium focus:outline-none"
-                    onClick={() => setOpened((prev) =>
-                    prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
-                  )
+                    onClick={() =>
+                      setOpened((prev) =>
+                        prev.includes(idx)
+                          ? prev.filter((i) => i !== idx)
+                          : [...prev, idx]
+                      )
                     }
                   >
-                    <span className="text-left text-[#444]">{term.title}</span>
+                    <span className="text-left text-[#444]">{term.reason}</span>
                     <Image
                       src="/add.svg"
                       alt="펼치기"
                       width={24}
                       height={24}
-                      className={`w-6 h-6 transition-transform duration-200 ${opened.includes(idx) ? "rotate-90" : ""}`}
+                      className={`w-6 h-6 transition-transform duration-200 ${
+                        opened.includes(idx) ? "rotate-90" : ""
+                      }`}
                     />
                   </button>
                   {/* 펼쳐졌을 때만 내용 표시 */}
                   {opened.includes(idx) && (
                     <div className="px-6 py-6 bg-[#fafafd] rounded-b-[20px] text-[1.2rem] text-gray-700 border-t border-[#ededed] animate-fadein">
-                      {term.content}
+                      {term.suggested_revision}
                     </div>
                   )}
                 </li>
@@ -294,94 +343,106 @@ function ContractCreateNewPage() {
         isOpen={modalOpen}
         setIsOpen={setModalOpen}
         clickOutsideClose={true}
+        isCenter={isloading}
         upperChildren={
-          <ul
-            className={`absolute bottom-[29rem] w-full flex flex-col justify-center items-center gap-4`}
-          >
-            {userQuery.length
-              ? userQuery.map((value, index) => (
-                  <li
-                    key={index}
-                    className="w-[calc(100%-5rem)] h-20 px-12 flex justify-between items-center text-[1.4rem] text-[#3a3a40] font-medium border border-[#d7d7d7] rounded-[50px] bg-white"
-                  >
-                    <div className="flex gap-4">
-                      <span className="w-[1.6rem] h-[1.6rem] flex justify-center items-center bg-main text-white rounded-[50px] text-[1rem]">
-                        {index + 1}
-                      </span>
-                      {value}
-                    </div>
-                    <div
-                      onClick={() =>
-                        setUserQuery(userQuery.filter((v, i) => i != index))
-                      }
+          !isloading && (
+            <ul
+              className={`absolute bottom-[29rem] w-full flex flex-col justify-center items-center gap-4`}
+            >
+              {userQuery.length
+                ? userQuery.map((value, index) => (
+                    <li
+                      key={index}
+                      className="w-[calc(100%-5rem)] h-20 px-12 flex justify-between items-center text-[1.4rem] text-[#3a3a40] font-medium border border-[#d7d7d7] rounded-[50px] bg-white"
                     >
-                      <CrossIcon />
-                    </div>
-                  </li>
-                ))
-              : ""}
-          </ul>
+                      <div className="flex gap-4">
+                        <span className="w-[1.6rem] h-[1.6rem] flex justify-center items-center bg-main text-white rounded-[50px] text-[1rem]">
+                          {index + 1}
+                        </span>
+                        {value}
+                      </div>
+                      <div
+                        onClick={() =>
+                          setUserQuery(userQuery.filter((v, i) => i != index))
+                        }
+                      >
+                        <CrossIcon />
+                      </div>
+                    </li>
+                  ))
+                : ""}
+            </ul>
+          )
         }
       >
-        <div className="mx-auto mt-6 mb-4 w-20 h-1.5 rounded-full bg-gray-300" />
-        <div className="mt-10 mb-4 px-8 w-full flex flex-col gap-4">
-          <div className="flex flex-col items-center gap-4 mb-8">
-            <span className="text-[2rem] font-bold text-center">
-              당신의 요구사항을 입력하세요
-            </span>
-            <span className="text-main text-[1.2rem] font-semibold">
-              특약 추가하기
-            </span>
+        {!isloading ? (
+          <>
+            <div className="mt-16 mb-4 px-8 w-full flex flex-col gap-4">
+              <div className="flex flex-col items-center gap-4 mb-8">
+                <span className="text-[2rem] font-bold text-center">
+                  당신의 요구사항을 입력하세요
+                </span>
+                <span className="text-main text-[1.2rem] font-semibold">
+                  특약 추가하기
+                </span>
+              </div>
+              <div className="w-full h-20 bg-white border border-[#d7d7d7] rounded-[50px]">
+                <input
+                  type="text"
+                  name=""
+                  id=""
+                  ref={inputRef}
+                  placeholder="ex) 고양이 키우고 싶어오, 주차 공간이 필요해요"
+                  onChange={(e) => setInputValue(e.target.value)}
+                  value={inputValue}
+                  className="w-full h-full px-12 text-[1.2rem] font-medium placeholder:text-subText"
+                />
+              </div>
+              <button
+                className={`flex items-center justify-center gap-4 text-[1.4rem] font-medium${
+                  userQuery.length === 0
+                    ? " text-[rgba(128,128,128,0.55)] cursor-not-allowed pointer-events-none"
+                    : " text-main"
+                }`}
+                onClick={() => setModalOpen(false)}
+              >
+                <CheckedIcon
+                  width={1.6}
+                  height={1.6}
+                  color={
+                    userQuery.length === 0
+                      ? "rgba(128,128,128,0.55)"
+                      : "#6000ff"
+                  }
+                />
+                완료
+              </button>
+            </div>
+            <SubmitButton
+              className="justify-self-end"
+              type="button"
+              width="100%"
+              height={6}
+              fontSize={1.8}
+              fontWeight={500}
+              disabled={inputValue === ""}
+              borderRadius="none"
+              onClick={() => {
+                setUserQuery([...userQuery, inputValue]);
+                setInputValue("");
+              }}
+            >
+              + 추가하기
+            </SubmitButton>
+          </>
+        ) : (
+          <div className="flex justify-center items-center w-[100%] h-full p-8 rounded-[40px] bg-white text-[2rem] text-center">
+            {/* 로딩 중입니다. 잠시 기다려주시기 바랍니다. */}
+            <LoadingPage />
           </div>
-          <div className="w-full h-20 bg-white border border-[#d7d7d7] rounded-[50px]">
-            <input
-              type="text"
-              name=""
-              id=""
-              ref={inputRef}
-              placeholder="ex) 고양이 키우고 싶어오, 주차 공간이 필요해요"
-              onChange={(e) => setInputValue(e.target.value)}
-              value={inputValue}
-              className="w-full h-full px-12 !text-[1.2rem] font-medium placeholder:text-subText"
-            />
-          </div>
-          <button
-            className={`flex items-center justify-center gap-4 text-[1.4rem] font-medium${
-              userQuery.length === 0
-                ? " text-[rgba(128,128,128,0.55)] cursor-not-allowed pointer-events-none"
-                : " text-main"
-            }`}
-            onClick={() => setModalOpen(false)}
-          >
-            <CheckedIcon
-              width={1.6}
-              height={1.6}
-              color={
-                userQuery.length === 0 ? "rgba(128,128,128,0.55)" : "#6000ff"
-              }
-            />
-            완료
-          </button>
-        </div>
-        <SubmitButton
-          className="justify-self-end"
-          type="button"
-          width="100%"
-          height={6}
-          fontSize={1.8}
-          fontWeight={500}
-          disabled={inputValue === ""}
-          borderRadius="none"
-          onClick={() => {
-            setUserQuery([...userQuery, inputValue]);
-            setInputValue("");
-          }}
-        >
-          + 추가하기
-        </SubmitButton>
+        )}
       </Modal>
     </>
   );
 }
-
 export default ContractCreateNewPage;

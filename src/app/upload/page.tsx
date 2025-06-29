@@ -50,7 +50,7 @@ function StartPage() {
           background="#faf5ff"
           fontSize={1.2}
           fontWeight={700}
-          icon={<MagicThreeStarIcon width={16} height={20}/>}
+          icon={<MagicThreeStarIcon width={1.6} height={2} />}
         >
           <span className="text-good">AI로 계약서 관리하기</span>
         </StyledDiv>
@@ -105,8 +105,10 @@ function StartPage() {
           }
         }}
       >
-        <div {...handleBarSwipe} 
-              className="mx-auto mt-6 w-20 h-1.5 rounded-full bg-gray-300" />
+        <div
+          {...handleBarSwipe}
+          className="mx-auto mt-6 w-20 h-1.5 rounded-full bg-gray-300"
+        />
 
         {step === 0 && (
           <div className="my-16 flex flex-col gap-8">

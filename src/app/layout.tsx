@@ -41,7 +41,7 @@ export default function RootLayout({
         // className={`${pretendard.variable} ${geistSans.variable} ${geistMono.variable} antialiased w-full`}
         className="subpixel-antialiased w-full"
       >
-        <UserActionLoggerClient />
+        {/* <UserActionLoggerClient /> */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full">
           {children}
           <Analytics />

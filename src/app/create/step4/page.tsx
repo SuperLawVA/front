@@ -14,76 +14,6 @@ import Image from "next/image";
 import DocumentIcon from "@/components/icons/Document";
 
 function ContractCreateNewPage() {
-  const router = useRouter();
-  // const [inputValue, setInputValue] = useState<string>("");
-  const [userQuery, setUserQuery] = useState<string[]>();
-  // const [userQuery, setUserQuery] = useState<string[]>([
-  //   "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
-  //   "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
-  //   "벽에 선반 달고 싶어요",
-  //   "집에서 담배 피고 싶어요",
-  //   "집에서 친구랑 동거하고 싶어요",
-  //   "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
-  // ]);
-
-  const [activeIndex, setActiveIndex] = useState<number>(0);
-  useEffect(() => {
-    //   if (!sessionStorage.getItem("contractData")) {
-    //     router.replace("/create");
-    //   } else if (!sessionStorage.getItem("articleAgree")) {
-    //     router.replace("step2");
-    //   } else if (!sessionStorage.getItem("userQuery")) {
-    //     router.replace("step3");
-    //   }
-    //   sessionStorage.removeItem("createStore");
-    const contractData = useCreateStore.getState();
-    setUserQuery(contractData.userQuery);
-  }, [router]);
-
-  const liArray = userQuery?.map((value, index) => (
-    <li
-      key={index}
-      className="w-full h-20 px-10 py-6  flex items-center text-[1.4rem] text-[#3a3a40] font-medium border border-[#d7d7d7] rounded-[50px] bg-white"
-    >
-      <div className="w-8 flex justify-center items-center flex-shrink-0">
-        {activeIndex === 0 ? (
-          <ArrowLeftIcon
-            color="white"
-            className="cursor-not-allowed pointer-events-none"
-          />
-        ) : (
-          <ArrowLeftIcon
-            width={1.5}
-            height={1.5}
-            onClick={() => setActiveIndex(activeIndex - 1)}
-            className="z-10 cursor-pointer"
-          />
-        )}
-      </div>
-      <div className="flex items-center gap-4 px-4 flex-grow overflow-hidden">
-        <span className="w-[1.6rem] h-[1.6rem] flex justify-center items-center bg-main text-white rounded-[50px] text-[1rem] flex-shrink-0">
-          {index + 1}
-        </span>
-        <span className="truncate">{value}</span>
-      </div>
-      <div className="w-8 flex justify-center items-center flex-shrink-0">
-        {activeIndex === userQuery.length - 1 ? (
-          <ArrowRightIcon
-            color="white"
-            className="cursor-not-allowed pointer-events-none"
-          />
-        ) : (
-          <ArrowRightIcon
-            width={1.5}
-            height={1.5}
-            onClick={() => setActiveIndex(activeIndex + 1)}
-            className="z-10 cursor-pointer"
-          />
-        )}
-      </div>
-    </li>
-  ));
-
   return (
     <>
       <div className="h-20 mt-15 w-full flex flex-col justify-center items-center" />
@@ -96,11 +26,12 @@ function ContractCreateNewPage() {
               생성된 특약
             </span>
             <DivBox
-             className="flex items-center px-7 py-6"
-             style={{ backgroundColor: "rgb(242, 238, 251)",
-                      border: "1px solid #6000FF",
-                }}
-              >
+              className="flex items-center px-7 py-6"
+              style={{
+                backgroundColor: "rgb(242, 238, 251)",
+                border: "1px solid #6000FF",
+              }}
+            >
               안전임차인은 벽면에 못을 사용하여 생활용품을 설치할 수 있으며,
               퇴거 시 직경 5mm 이하 못구멍에 대한 원상복구비는 청구하지 않음
             </DivBox>
@@ -111,8 +42,8 @@ function ContractCreateNewPage() {
               이유
             </span>
             <DivBox className="flex items-center px-7 py-6">
-              전세사기 예방을 위해 임대인의 재정상태와 주택 권리관계를 
-              투명하게 공개받아 안전한 거래 보장
+              전세사기 예방을 위해 임대인의 재정상태와 주택 권리관계를 투명하게
+              공개받아 안전한 거래 보장
             </DivBox>
           </div>
           <div className="w-full flex flex-col gap-4 items-start">
@@ -122,30 +53,26 @@ function ContractCreateNewPage() {
             </span>
             <DivBox className="flex items-center px-7 py-6">
               안전임차인은 벽면에 못을 사용하여 생활용품을 설치할 수 있으며,
-              민간임대주택에 관한 특별법 제48조에 따른 설명의무를 근거로
-              상세한 정보 공개 요구
-            </DivBox>            
+              민간임대주택에 관한 특별법 제48조에 따른 설명의무를 근거로 상세한
+              정보 공개 요구
+            </DivBox>
           </div>
           <div className="flex gap-10 w-full">
             <button className="flex-1 flex flex-col items-center gap-4 py-6 rounded-[20px] border border-[#E5E5EA]">
               <Image src="/scales.svg" width={30} height={24} alt="" />
-              <span className="text-[1.5rem] font-semibold">
-                관련 법령
-              </span>
+              <span className="text-[1.5rem] font-semibold">관련 법령</span>
             </button>
             <button className="flex-1 flex flex-col items-center gap-4 py-6 rounded-[20px] border border-[#E5E5EA]">
               <Image src="/openBook.svg" width={30} height={24} alt="" />
-              <span className="text-[1.5rem] font-semibold">
-                유사 판례
-              </span>
+              <span className="text-[1.5rem] font-semibold">유사 판례</span>
             </button>
           </div>
           <button className="flex-1 flex items-center justify-center px-20 py-5 rounded-[20px] text-[#6000ff] !text-[1.8rem] border border-[#6000ff]">
-            <DocumentIcon />&nbsp;                
-              완성된 계약서 보기
+            <DocumentIcon />
+            &nbsp; 완성된 계약서 보기
           </button>
-        </div>      
-        <div className="text-center">    
+        </div>
+        <div className="text-center">
           <div className="items-center text-center">
             {liArray && liArray[activeIndex]}
           </div>

@@ -4,7 +4,6 @@ import { useRef, useState, FormEvent } from "react";
 import Image from "next/image";
 import { useEffect } from "react";
 
-
 type AnswerFormat = {
   summary: string;
   law: string;
@@ -73,14 +72,14 @@ function ChatbotPage() {
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-  endRef.current?.scrollIntoView({ behavior: "smooth" });
-}, [messages, loading]);
-
+    endRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
 
   return (
     <div className="flex flex-col h-screen bg-[#F2F1F6]">
       {/* 헤더 */}
-      <header className="
+      <header
+        className="
         fixed top-0 left-0 w-full z-20
         flex items-center gap-4 px-8 pt-2
         h-[80px] mt-20
@@ -102,7 +101,7 @@ function ChatbotPage() {
         />
       </div>
       {/* 메시지 */}
-      <main className="flex-1 overflow-y-auto px-4 pt-[130px] space-y-6">
+      <main className="flex-1 overflow-y-auto px-4 pt-[13rem] space-y-6">
         {messages.map((m, i) =>
           m.role === "assistant" && typeof m.text !== "string" ? (
             <div key={i} className="flex items-start justify-start gap-1 mt-6">
@@ -150,18 +149,14 @@ function ChatbotPage() {
                 height={24}
                 className="ml-2 mt-6 flex-shrink-0"
               />
-              <div
-                className="-ml-5 max-w-[80%] whitespace-pre-line bg-violet-200/30 text-black px-8 py-3 text-[1.3rem] mt-18 rounded-tr-[30px] rounded-br-[30px] rounded-bl-[30px] rounded-tl-none"
-              >
+              <div className="-ml-5 max-w-[80%] whitespace-pre-line bg-violet-200/30 text-black px-8 py-3 text-[1.3rem] mt-18 rounded-tr-[30px] rounded-br-[30px] rounded-bl-[30px] rounded-tl-none">
                 {m.text as string}
               </div>
             </div>
           ) : (
             <div key={i} className="flex items-start justify-end">
               <div className="relative max-w-[80%]">
-                <div
-                  className="whitespace-pre-line bg-white text-black px-8 py-3 text-[1.3rem] mt-10 mr-6 rounded-tl-[30px] rounded-bl-[30px] rounded-br-[30px] rounded-tr-none"
-                >
+                <div className="whitespace-pre-line bg-white text-black px-8 py-3 text-[1.3rem] mt-10 mr-6 rounded-tl-[30px] rounded-bl-[30px] rounded-br-[30px] rounded-tr-none">
                   {m.text as string}
                 </div>
                 <span className="absolute -top-0.5 right-2 w-[2rem] h-[2rem] bg-violet-400 rounded-full" />
