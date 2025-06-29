@@ -5,13 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    // Spring Boot의 로그인 API 호출
     const { analysisId } = await req.json();
-    const response = await backendApi.post(
-      "/analysis",
-      { analysisId }
-      // { headers: { "Content-Type": "application/json" } }
-    );
+    const response = await backendApi.post("/analysis", { analysisId });
     const analysis = response.data;
 
     // 4️⃣ 응답 성공 처리

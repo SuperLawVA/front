@@ -5,8 +5,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const { contractId, userQuery } = await req.json();
-    // const userId = (await cookies()).get("userId");
-
     const res = await backendApi.post(
       "/certificate/generate",
       { contractId, userQuery },
@@ -14,10 +12,6 @@ export async function POST(req: NextRequest) {
         headers: { "Content-Type": "application/json" },
       }
     );
-    console.log("server res!!!!!!!!!!!!!!");
-    console.log(res);
-
-    // return NextResponse.json({ success: true, contracts }, { status: 200 });
     return NextResponse.json({ success: true, contractId }, { status: 200 });
   } catch (error) {
     console.error("API Error:", error);

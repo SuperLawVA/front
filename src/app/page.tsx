@@ -70,22 +70,9 @@ function MainPage() {
     router.replace("/login"); // 로그아웃 후 로그인 페이지로 이동
   };
   const getUserData = async () => {
-    const response = await clientApi.post(
-      "/user",
-      {}
-      // {
-      //   headers: {
-      //     "Content-Type": "application/json", // JSON 데이터 전송
-      //   },
-      // }
-    );
+    const response = await clientApi.post("/user", {});
 
     if (response) {
-      console.log("response");
-      console.log(response);
-      console.log("response.data");
-      console.log(response.data);
-
       const { userName, contractArray, chats } = response.data;
       console.log("chats");
       console.log(chats);
@@ -100,15 +87,6 @@ function MainPage() {
 
   useEffect(() => {
     getUserData();
-    // const { userName, contractArray, chats } = useAuthStore.getState();
-    // if (userName) {
-    //   setUserName(userName);
-    //   // setNotification(notification);
-    //   setContractArray(contractArray);
-    //   setChats(chats);
-    // } else {
-    //   getUserData();
-    // }
   }, []);
 
   const router = useRouter();
