@@ -11,6 +11,7 @@ import CrossIcon from "@/components/icons/Cross";
 import { useCreateStore } from "@/store/useStore";
 import clientApi from "@/lib/axios.client";
 import LoadingPage from "./Loading";
+import Image from "next/image";
 
 function ContractCreateNewPage() {
   const router = useRouter();
@@ -20,6 +21,7 @@ function ContractCreateNewPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isloading, setIsloading] = useState(false);
+  const [contractTitle, setContractTitle] = useState("");
 
   const contractData = useCreateStore.getState();
   useEffect(() => {
@@ -28,7 +30,9 @@ function ContractCreateNewPage() {
     } else if (!contractData.articleAgree) {
       router.replace("step2");
     }
-    const stored = contractData.userQuery;
+    // const stored = contractData.userQuery;
+    const { contractTitle, userQuery: stored } = contractData;
+    setContractTitle(contractTitle as string);
     if (stored && userQuery.length === 0) {
       try {
         setUserQuery(stored);
@@ -41,7 +45,7 @@ function ContractCreateNewPage() {
   const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!contractData) return;
-    useCreateStore.setState({ userQuery });
+    useCreateStore.setState({ userQuery, basicAgreements });
 
     try {
       const { userQuery, contractType, property, payment, dates } =
@@ -58,6 +62,7 @@ function ContractCreateNewPage() {
       alert("제출되었습니다. 잠시 기다려 주세요.");
       setModalOpen(true);
       setIsloading(true);
+
       const response = await clientApi.post(
         "/create/generate",
         {
@@ -102,16 +107,75 @@ function ContractCreateNewPage() {
     }
   }, [modalOpen, userQuery]);
 
-  useEffect(() => {
-    if (basicTermModal) {
-      setOpened([]); // 모달 열릴 때마다 초기화
-    }
-  }, [basicTermModal]);
+  const basicAgreements = [
+    {
+      reason: "특약 1 (중개수수료 분담)",
+      suggested_revision: "임대인과 임차인은 중개수수료를 50%씩 부담한다.",
+    },
+    {
+      reason: "특약 2 (임대료 인상 제한)",
+      suggested_revision:
+        "임대인의 동의 없이 임대료를 일방적으로 인상할 수 없으며, 계약 갱신 시 임대료 인상률은 5% 이내로 제한한다.",
+    },
+    {
+      reason: "특약 3 (보증금 반환)",
+      suggested_revision:
+        "보증금은 임차인 퇴거 후 원상복구 확인 후 7일 이내에 은행이자를 가산하여 반환한다.",
+    },
+    {
+      reason: "특약 4 (시설 수리비 부담)",
+      suggested_revision:
+        "에어컨, 보일러, 온수기 등 기본 시설의 고장 및 수리비는 임대인이 부담한다.",
+    },
+    {
+      reason: "특약 5 (입주 전 정비)",
+      suggested_revision:
+        "입주 전 도배, 장판 교체 및 기본 청소는 임대인이 부담한다.",
+    },
+    {
+      reason: "특약 6 (관리비 부담)",
+      suggested_revision:
+        "관리비 중 공용전기료, 엘리베이터 유지비, 경비비는 별도 부담하며, 수도, 전기, 가스 요금은 임차인이 직접 납부한다.",
+    },
+    {
+      reason: "특약 7 (계약 해지 통지)",
+      suggested_revision: "중도 해지 시 상대방에게 2개월 전 서면으로 통지한다.",
+    },
+    {
+      reason: "특약 8 (원상복구 의무)",
+      suggested_revision:
+        "임차인의 고의 또는 과실로 인한 손상을 제외하고는 자연적 손모는 원상복구 의무를 면제한다.",
+    },
+    {
+      reason: "특약 9 (화재보험 가입)",
+      suggested_revision: "화재보험 가입 및 보험료는 임대인이 부담한다.",
+    },
+    {
+      reason: "특약 10 (행정절차 협조)",
+      suggested_revision:
+        "전입신고 및 확정일자 취득에 필요한 서류 제공 등 임대인이 적극 협조한다.",
+    },
+    {
+      reason: "특약 11 (법령 준수)",
+      suggested_revision:
+        "본 계약서에 명시되지 않은 사항은 주택임대차보호법 등 관련 법령에 따른다.",
+    },
+  ];
+
+  const [basicAgreementModal, setBasicAgreementModal] = useState(false);
+  // const [basicAgreement, setBasicAgreements] = useState<Term[]>([]);
+  const [opened, setOpened] = useState<number[]>([]);
+
+  // useEffect(() => {
+  //   if (basicAgreementModal) {
+  //     setOpened([]); // 모달 열릴 때마다 초기화
+  //   }
+  // }, [basicAgreementModal]);
 
   return (
     <>
       <div className="h-20 mt-15 w-full flex flex-col justify-center items-center" />
-      <BackHeader>임대차 계약서 작성</BackHeader>
+      {contractTitle && <BackHeader>{contractTitle + " 작성"}</BackHeader>}
       <main className="flex flex-col items-center mt-[3rem] gap-12 h-[calc(100%-11rem)]">
         <div className="text-center">
           <div className="flex justify-center items-center">
@@ -151,7 +215,7 @@ function ContractCreateNewPage() {
                 fontColor="black"
                 gap={0.5}
                 className="flex flex-col justify-center py-6 px-12 h-24"
-                onClick={() => setBasicTermModal(true)}
+                onClick={() => setBasicAgreementModal(true)}
               >
                 기본 특약
                 <span className="text-[1rem] font-normal opacity-60">
@@ -218,7 +282,6 @@ function ContractCreateNewPage() {
               disabled={userQuery.length === 0}
               className="flex w-full justify-center items-center mb-8 mt-auto"
               icon={<MagicTwoStarIcon color="white" />}
-              // onClick={() => router.push("step4")}
             >
               생성하기
             </SubmitButton>
@@ -226,8 +289,8 @@ function ContractCreateNewPage() {
         </form>
       </main>
       <Modal
-        isOpen={basicTermModal}
-        setIsOpen={setBasicTermModal}
+        isOpen={basicAgreementModal}
+        setIsOpen={setBasicAgreementModal}
         clickOutsideClose={true}
       >
         <div className="mx-auto mt-6 mb-4 w-20 h-1.5 rounded-full bg-gray-300" />
@@ -237,9 +300,9 @@ function ContractCreateNewPage() {
           </span>
           <div className="w-full max-h-[55rem] overflow-y-auto">
             <ul className="w-full flex flex-col gap-4">
-              {basicTerms.map((term, idx) => (
+              {basicAgreements.map((term, idx) => (
                 <li
-                  key={term.id}
+                  key={idx}
                   className="bg-white rounded-[20px] border border-[#ededed] mb-2 transition-all"
                 >
                   <button
@@ -253,7 +316,7 @@ function ContractCreateNewPage() {
                       )
                     }
                   >
-                    <span className="text-left text-[#444]">{term.title}</span>
+                    <span className="text-left text-[#444]">{term.reason}</span>
                     <Image
                       src="/add.svg"
                       alt="펼치기"
@@ -267,7 +330,7 @@ function ContractCreateNewPage() {
                   {/* 펼쳐졌을 때만 내용 표시 */}
                   {opened.includes(idx) && (
                     <div className="px-6 py-6 bg-[#fafafd] rounded-b-[20px] text-[1.2rem] text-gray-700 border-t border-[#ededed] animate-fadein">
-                      {term.content}
+                      {term.suggested_revision}
                     </div>
                   )}
                 </li>
@@ -382,5 +445,4 @@ function ContractCreateNewPage() {
     </>
   );
 }
-
 export default ContractCreateNewPage;

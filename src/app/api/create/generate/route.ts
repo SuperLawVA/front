@@ -8,18 +8,18 @@ export async function POST(req: NextRequest) {
     // 요청 바디에서 데이터 받기
     const { contractData, aggrementRequest } = await req.json();
 
-    // 다른 API로 POST 요청 보내기
-    const jwt = (await cookies()).get("jwt")?.value;
+    // // 다른 API로 POST 요청 보내기
+    // const jwt = (await cookies()).get("jwt")?.value;
 
     const response = await backendApi.post(
       "/contract/generate",
-      { contractData, aggrementRequest },
-      {
-        headers: {
-          Authorization: `Bearer ${jwt}`, // 예시로 Authorization 헤더 추가
-          "Content-Type": "application/json", // JSON 데이터 전송
-        },
-      }
+      { contractData, aggrementRequest }
+      // {
+      //   headers: {
+      //     Authorization: `Bearer ${jwt}`, // 예시로 Authorization 헤더 추가
+      //     "Content-Type": "application/json", // JSON 데이터 전송
+      //   },
+      // }
     );
 
     // 다른 API의 응답을 클라이언트로 전달

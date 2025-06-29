@@ -17,6 +17,7 @@ function ContractCreateNewPage() {
   );
   const [modalOpen, setModalOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [contractTitle, setContractTitle] = useState<string | null>("");
   const [address, setAddress] = useState<string>("");
   const [detailAddress, setDetailAddress] = useState<string>("");
   const [buildingArea, setBuildingArea] = useState<number | "">("");
@@ -31,13 +32,14 @@ function ContractCreateNewPage() {
   const [contractDate, setContractDate] = useState<Date | "">("");
 
   useEffect(() => {
-    const { contractType, dates, property, payment } =
+    const { contractType, dates, property, payment, contractTitle } =
       useCreateStore.getState();
     if (!contractType) {
       router.replace("/create");
     } else {
       try {
         // 안전하게 값 세팅 (optional chaining 사용)
+        setContractTitle(contractTitle);
         setContractType(contractType);
         setAddress(property?.address ?? "");
         setDetailAddress(property?.detailAddress ?? "");
@@ -260,7 +262,7 @@ function ContractCreateNewPage() {
   return (
     <>
       <div className="h-20 mt-15 w-full flex flex-col justify-center items-center" />
-      <BackHeader>임대차 계약서 작성</BackHeader>
+      {contractTitle && <BackHeader>{contractTitle + " 작성"}</BackHeader>}
       <main className="flex flex-col items-center mt-[3rem] gap-12 mx-10 h-auto">
         <form
           key="1"
@@ -268,7 +270,9 @@ function ContractCreateNewPage() {
           className="flex flex-col w-full gap-12"
         >
           <div className="flex flex-col gap-4">
-            <span className="text-[1.6rem] font-semibold text-center">1. 부동산 표시</span>
+            <span className="text-[1.6rem] font-semibold text-center">
+              1. 부동산 표시
+            </span>
             <div className="flex flex-col gap-8 w-[100%] rounded-[30px] p-10 bg-white font-semibold text-[1.6rem]">
               <div
                 className="flex flex-col gap-2"
@@ -358,7 +362,9 @@ function ContractCreateNewPage() {
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            <span className="text-[1.6rem] font-semibold text-center">2. 계약 내용</span>
+            <span className="text-[1.6rem] font-semibold text-center">
+              2. 계약 내용
+            </span>
             <div className="flex flex-col gap-8 w-[100%] rounded-[30px] p-10 bg-white font-semibold text-[1.6rem]">
               <div
                 className="flex flex-col gap-2"

@@ -234,7 +234,7 @@ function MainPage() {
                       <div className="flex justify-between w-full">
                         <div className="flex flex-col gap-[0.2rem] text-[#737373] text-[0.8rem] font-medium">
                           <span className="text-[1.2rem] text-black">
-                            {contract.contractType}&nbsp;임대차 계약서
+                            {contract.contractTitle}
                           </span>
                           <span className="text-[1rem]">
                             {contract.address ?? "미기재"}

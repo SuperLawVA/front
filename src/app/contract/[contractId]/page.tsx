@@ -208,33 +208,50 @@ export function StartPage(props: { params: Promise<{ contractId: string }> }) {
       </ul>
     </div>,
     <div key="3" className="flex flex-col w-full gap-12">
-      <div className="flex flex-col gap-4">
-        {/* <span className="text-[1.6rem] font-bold pl-8">1. 기본 특약</span> */}
-        <span className="text-[1.6rem] font-bold pl-8">특약 사항</span>
-        <ol className="list-decimal list-inside flex flex-col gap-4 w-full rounded-[30px] p-8 bg-white font-medium text-[1.2rem]">
-          {contract?.agreements.map((v, i) => {
-            return <li key={i}>{v.reason}</li>;
-          })}
-        </ol>
-      </div>
-      {/* <div className="flex flex-col gap-4">
-        <span className="text-[1.6rem] font-bold pl-8">2. 합의한 내용</span>
-        <ol className="list-decimal list-inside flex flex-col gap-4 w-full rounded-[30px] p-8 bg-white font-medium text-[1.2rem]">
-          <li>집에서 흡연은 가능하다</li>
-          <li>주차공간은 1대를 기본 보장한다.</li>
-          <li>집주인과 분쟁이 발생할 시 스파링으로 결정한다.</li>
-          <li>집을 카페로 만들어도 된다.</li>
-          <li>집가고 싶다.</li>
-          <li>집에 사람을 초대하면 좋겠다</li>
-        </ol>
-      </div> */}
+      {contract?.generated ? (
+        <>
+          <div className="flex flex-col gap-4">
+            {/* <span className="text-[1.6rem] font-bold pl-8">1. 기본 특약</span> */}
+            <span className="text-[1.6rem] font-bold pl-8">기본 특약 사항</span>
+            <ol className="list-decimal list-inside flex flex-col gap-4 w-full rounded-[30px] p-8 bg-white font-medium text-[1.2rem]">
+              {contract?.basicAgreements.map((v, i) => {
+                return <li key={i}>{v.suggested_revision}</li>;
+              })}
+            </ol>
+          </div>
+          <div className="flex flex-col gap-4">
+            {/* <span className="text-[1.6rem] font-bold pl-8">1. 기본 특약</span> */}
+            <span className="text-[1.6rem] font-bold pl-8">
+              생성된 특약 사항
+            </span>
+            <ol className="list-decimal list-inside flex flex-col gap-4 w-full rounded-[30px] p-8 bg-white font-medium text-[1.2rem]">
+              {contract?.agreements.map((v, i) => {
+                return <li key={i}>{v.suggested_revision}</li>;
+              })}
+            </ol>
+          </div>
+        </>
+      ) : (
+        <div className="flex flex-col gap-4">
+          {/* <span className="text-[1.6rem] font-bold pl-8">1. 기본 특약</span> */}
+          <span className="text-[1.6rem] font-bold pl-8">특약 사항</span>
+          <ol className="list-decimal list-inside flex flex-col gap-4 w-full rounded-[30px] p-8 bg-white font-medium text-[1.2rem]">
+            {contract?.agreements.map((v, i) => {
+              return <li key={i}>{v.suggested_revision}</li>;
+            })}
+          </ol>
+        </div>
+      )}
     </div>,
   ];
 
   return (
     <>
       <div className="h-20 w-full flex flex-col justify-center items-center" />
-      <BackHeader to="/">월세 임대차 계약서</BackHeader>
+      {contract?.contractTitle && (
+        <BackHeader to="/">{contract.contractTitle}</BackHeader>
+      )}
+
       <main className="flex flex-col items-center mt-[3rem] gap-12 mx-10  h-auto">
         <ul className="flex justify-around items-center w-full h-16 font-medium text-subText text-[1.2rem] bg-white border border-[#cdcdcd] rounded-[50px]">
           {tabs.map((tab, index) => (

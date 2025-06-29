@@ -13,15 +13,18 @@ function ContractCreateNewPage() {
   // const searchParams = useSearchParams();
   // const contractTypeQuery = searchParams.get("rent");
   const [articles, setArticles] = useState<string[]>([]);
+  const [contractTitle, setContractTitle] = useState("");
 
   const router = useRouter();
   useEffect(() => {
-    const { contractType, articleAgree } = useCreateStore.getState();
+    const { contractType, articleAgree, contractTitle } =
+      useCreateStore.getState();
     if (!contractType) {
       router.replace("/create");
     } else if (!articleAgree) {
       router.replace("step2");
     }
+    setContractTitle(contractTitle as string);
     if (contractType === "전세" || contractType === "월세") {
       setArticles([
         "제1조 (목적)\n위 부동산의 임대차에 한하여 임대인과 임차인은 합의에 의하여 임차보증금 및 차임을 아래와 같이 지불하기로 한다.",
@@ -56,7 +59,7 @@ function ContractCreateNewPage() {
   return (
     <>
       <div className="h-20 mt-15 w-full flex flex-col justify-center items-center" />
-      <BackHeader>임대차 계약서 작성</BackHeader>
+      {contractTitle && <BackHeader>{contractTitle + " 작성"}</BackHeader>}
       <main className="flex flex-col items-center mt-[2rem] gap-12 h-auto">
         <StyledDiv
           width="calc(100% - 4rem)"

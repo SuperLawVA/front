@@ -1,6 +1,6 @@
 export interface Contract {
   _id?: string;
-  title?: string;
+  contractTitle?: string;
   state?: string;
   address?: string;
   createdAt?: string;

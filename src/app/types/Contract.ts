@@ -6,6 +6,7 @@ export default interface Contract {
   createdDate: string;
   modifiedDate: string;
   contractType: string;
+  contractTitle: string;
   generationTime: number;
   __v: number;
   userQuery: string[];
@@ -50,12 +51,13 @@ export default interface Contract {
   };
   articles: any[]; // articles의 상세 타입이 필요하면 추가 정의
   agreements: Agreement[];
+  basicAgreements: BasicAgreements[];
 }
 
-export interface Agreement {
+export interface BasicAgreements {
   reason: string;
   suggested_revision: string;
+}
+export interface Agreement extends BasicAgreements {
   negotiation_points: string;
-  _id: string;
-  id: string;
 }
