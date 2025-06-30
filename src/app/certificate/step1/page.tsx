@@ -31,10 +31,11 @@ function StartPage() {
         contractId,
         userQuery: purpose + "\n" + story,
       });
-      console.log("certificate response");
-      console.log(response);
+      // console.log("certificate response");
+      // console.log(response);
+      // router.push("step2");
 
-      // router.push("certificate/[certificateId]");
+      router.push("result/" + response.data._id);
     } catch (error) {
       console.error("Failed to fetch contracts:", error);
       return undefined;
@@ -45,7 +46,6 @@ function StartPage() {
     if (!canSubmit) return;
     const { ContractId } = useCertificateStore.getState();
     certificateRequest(ContractId as string);
-    // router.push("step2");
   };
 
   return (

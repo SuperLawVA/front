@@ -85,7 +85,7 @@ interface CreateState {
   } | null;
   userQuery: string[];
   articles: string[];
-  basicAgreements: { reason: string; suggested_revision: string }[];
+  basicAgreements: { reason: string; suggestedRevision: string }[];
 }
 
 export const useCreateStore = createStore<CreateState>()(

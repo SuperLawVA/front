@@ -8,7 +8,7 @@ export default interface Contract {
   contractType: string;
   contractTitle: string;
   generationTime: number;
-  __v: number;
+  _v: number;
   userQuery: string[];
   contractMetadata: {
     model: string;
@@ -56,8 +56,8 @@ export default interface Contract {
 
 export interface BasicAgreements {
   reason: string;
-  suggested_revision: string;
+  suggestedRevision: string;
 }
 export interface Agreement extends BasicAgreements {
-  negotiation_points: string;
+  negotiationPoints: string;
 }

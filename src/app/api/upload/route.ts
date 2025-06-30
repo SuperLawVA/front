@@ -1,6 +1,3 @@
-import fs from "fs";
-import path from "path";
-import FormData from "form-data";
 import { NextRequest, NextResponse } from "next/server";
 import backendApi from "@/lib/axios.server";
 
