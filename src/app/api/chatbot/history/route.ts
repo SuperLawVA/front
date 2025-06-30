@@ -1,7 +1,6 @@
 // app/api/login/route.ts
 import { NextRequest, NextResponse } from "next/server";
 // import axios from "axios";
-import { cookies } from "next/headers";
 import backendApi from "@/lib/axios.server";
 import axios from "axios";
 
@@ -14,22 +13,24 @@ import axios from "axios";
 export async function POST(req: NextRequest) {
   // params.contractId 로 접근 가능
   try {
-    const { contractId } = await req.json();
-    const response = await backendApi.post(
-      "/contract",
-      { contractId },
-      { headers: { "Content-Type": "application/json" } }
-    );
-    const contract = response.data;
+    // Spring Boot의 로그인 API 호출
+    const { mongoSessionId } = await req.json();
+
+    const response = await backendApi.post("/chatbot/history", {
+      mongoSessionId,
+    });
+    // const answer = response.data;
+
+    console.log("response.data");
+    console.log(response.data);
 
     // 4️⃣ 응답 성공 처리
-    return NextResponse.json({ contract });
+    return NextResponse.json(response.data);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const status = error.response?.status || 500;
       const message =
         error.response?.data?.message || error.message || "failed";
-
       return NextResponse.json({ message }, { status });
     }
   }

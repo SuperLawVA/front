@@ -10,7 +10,7 @@ import AnalysisIcon from "@/components/icons/Analysis";
 import InfoIcon from "@/components/icons/Info";
 import UploadIcon from "@/components/icons/Upload";
 import MagnifyingGlassIcon from "@/components/icons/MagnifyingGlass";
-import { Contract, RecentChat } from "./types/Main";
+import { Contract, Chat } from "./types/Main";
 import ChatIcon from "@/components/icons/Chat";
 import ArrowRightIcon from "@/components/icons/ArrowRight";
 import { useAuthStore } from "@/store/useStore";
@@ -59,7 +59,7 @@ function MainPage() {
   const [userName, setUserName] = useState<string | null>(null);
   // const [notification, setNotification] = useState<number[]>([]);
   const [contractArray, setContractArray] = useState<Contract[]>([]);
-  const [recentChat, setRecentChat] = useState<RecentChat[]>([]);
+  const [chats, setChats] = useState<Chat[]>([]);
 
   // 임시 로그아웃
   const handleLogout = async () => {
@@ -70,41 +70,23 @@ function MainPage() {
     router.replace("/login"); // 로그아웃 후 로그인 페이지로 이동
   };
   const getUserData = async () => {
-    const response = await clientApi.post(
-      "/user",
-      {},
-      {
-        headers: {
-          "Content-Type": "application/json", // JSON 데이터 전송
-        },
-      }
-    );
+    const response = await clientApi.post("/user", {});
 
     if (response) {
-      console.log("response.data");
-      console.log(response.data);
+      const { userName, contractArray, chats } = response.data;
+      console.log("chats");
+      console.log(chats);
 
-      // const { userName, notification, contractArray, recentChat } =
-      const { userName, contractArray, recentChat } = response.data;
       useAuthStore.setState({ ...response.data });
       setUserName(userName);
       // setNotification(notification);
       setContractArray(contractArray);
-      setRecentChat(recentChat);
+      setChats(chats);
     }
   };
 
   useEffect(() => {
     getUserData();
-    // const { userName, contractArray, recentChat } = useAuthStore.getState();
-    // if (userName) {
-    //   setUserName(userName);
-    //   // setNotification(notification);
-    //   setContractArray(contractArray);
-    //   setRecentChat(recentChat);
-    // } else {
-    //   getUserData();
-    // }
   }, []);
 
   const router = useRouter();
@@ -160,6 +142,7 @@ function MainPage() {
               value={search}
             />
             <SubmitButton
+              type="button"
               width={7}
               height="3rem"
               fontSize={1.2}
@@ -295,14 +278,15 @@ function MainPage() {
           <div className="self-start w-full font-semibold text-[1.8rem] px-8 flex flex-col gap-4">
             최근 상담 내용
             <ul className="flex flex-col justify-center items-center gap-4">
-              {recentChat.map(({ _id, title }) => (
+              {chats.map(({ _id, chatTitle }) => (
                 <li
                   key={_id}
                   className="flex py-4 justify-between items-center w-full border-[1.5px] border-[#c6c6c8] rounded-[20px] px-[1.5rem]"
+                  onClick={() => router.push("/chatbot/" + _id)}
                 >
                   <span className="flex items-center gap-4 text-[1.2rem] font-medium">
                     <ChatIcon color="#6000FF" />
-                    {title}
+                    {chatTitle}
                   </span>
                   <ArrowRightIcon className="flex justify-self-end" />
                 </li>

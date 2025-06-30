@@ -181,10 +181,10 @@ export function AnalysisResultPage(props: {
         result,
         content,
         reason,
-        suggested_revision,
-        negotiation_points,
-        legal_basis,
-        case_basis,
+        suggestedRevision,
+        negotiationPoints,
+        legalBasis,
+        caseBasis,
       },
       index
     ) => {
@@ -232,7 +232,7 @@ export function AnalysisResultPage(props: {
                     제안
                   </div>
                   <span className="my-6 text-wrap pr-4">
-                    {suggested_revision}
+                    {suggestedRevision}
                   </span>
                 </div>
               </div>
@@ -249,7 +249,7 @@ export function AnalysisResultPage(props: {
                   협상 전략 및 법적 영향
                 </div>
                 <DivBox className="w-full py-6 px-4 text-wrap">
-                  {negotiation_points}
+                  {negotiationPoints}
                 </DivBox>
               </div>
               <div className="w-full flex flex-col gap-4">
@@ -261,7 +261,7 @@ export function AnalysisResultPage(props: {
                   <ArrowDownIcon className="mr-[2.1rem]" />
                 </div>
                 <DivBox className="w-full py-6 px-4 flex justify-between items-center text-wrap">
-                  {legal_basis?.law}
+                  {legalBasis?.law}
                   <ArrowDownIcon className="mr-4" />
                 </DivBox>
               </div>
@@ -273,7 +273,7 @@ export function AnalysisResultPage(props: {
                   </div>
                   <ArrowDownIcon className="mr-[2.1rem]" />
                 </div>
-                {case_basis?.map(({ case: caseName }, index) => (
+                {caseBasis?.map(({ case: caseName }, index) => (
                   <DivBox
                     key={index}
                     className="w-full py-6 px-4 flex justify-between items-center text-wrap"
@@ -296,10 +296,10 @@ export function AnalysisResultPage(props: {
         result,
         content,
         reason,
-        suggested_revision,
-        negotiation_points,
-        legal_basis,
-        case_basis,
+        suggestedRevision,
+        negotiationPoints,
+        legalBasis,
+        caseBasis,
       },
       index
     ) => {
@@ -342,7 +342,7 @@ export function AnalysisResultPage(props: {
                     제안
                   </div>
                   <span className="my-6 text-wrap pr-4">
-                    {suggested_revision}
+                    {suggestedRevision}
                   </span>
                 </div>
               </div>
@@ -359,7 +359,7 @@ export function AnalysisResultPage(props: {
                   협상 전략 및 법적 영향
                 </div>
                 <DivBox className="w-full py-6 px-4 text-wrap">
-                  {negotiation_points}
+                  {negotiationPoints}
                 </DivBox>
               </div>
               <div className="w-full flex flex-col gap-4">
@@ -371,7 +371,7 @@ export function AnalysisResultPage(props: {
                   <ArrowDownIcon className="mr-[2.1rem]" />
                 </div>
                 <DivBox className="w-full py-6 px-4 flex justify-between items-center text-wrap">
-                  {legal_basis?.law}
+                  {legalBasis?.law}
                   <ArrowDownIcon className="mr-4" />
                 </DivBox>
               </div>
@@ -383,12 +383,12 @@ export function AnalysisResultPage(props: {
                   </div>
                   <ArrowDownIcon className="mr-[2.1rem]" />
                 </div>
-                {case_basis.map(({ case: case_name }, index) => (
+                {caseBasis.map(({ case: caseName }, index) => (
                   <DivBox
                     key={index}
                     className="w-full py-6 px-4 flex justify-between items-center text-wrap"
                   >
-                    {case_name}
+                    {caseName}
                     <ArrowDownIcon className="mr-4" />
                   </DivBox>
                 ))}

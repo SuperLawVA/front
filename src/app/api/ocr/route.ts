@@ -5,11 +5,12 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
+    console.log("test run!!!!!!!!!");
+
     // 👉login과 합칠 예정
     // 예: await db.insertUser({ email, passwordHash, name });
     // build용 변수 사용
-    const user = await backendApi.get("/user");
-    const sessions = await backendApi.get("/chatbot");
+    const user = await backendApi.get("/test");
 
     // return NextResponse.json(contracts.data, { status: 200 });
     // try {
@@ -19,17 +20,14 @@ export async function POST(req: NextRequest) {
     //   });
 
     //   const { contract } = res.data; // Spring Boot가 반환한 JWT
-    console.log(sessions.data);
 
-    return NextResponse.json(
-      {
-        userName: user.data.userName,
-        // notification: [0, 1, 2],
-        contractArray: user.data.contracts,
-        chats: sessions.data.sessions,
-      },
-      { status: 200 }
-    );
+    // 여기서는 임시 Mock
+    console.log("user");
+    console.log(user);
+    console.log("user.data");
+    console.log(user.data);
+
+    return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
     console.log(error);
     if (axios.isAxiosError(error)) {

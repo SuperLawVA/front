@@ -70,10 +70,8 @@ function AnalysisPage() {
       const response = await clientApi.post("/analysis/generate", {
         contractId,
       });
-      console.log("analysis response");
-      console.log(response);
 
-      // router.push("analysis/result");
+      router.push("analysis/" + response.data._id);
     } catch (error) {
       console.error("Failed to fetch contracts:", error);
       return undefined;
