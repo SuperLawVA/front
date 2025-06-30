@@ -25,7 +25,7 @@ function AnalysisPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [select, setSelect] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isloading, setIsloading] = useState(false);
+  const [isloading, setIsLoading] = useState(false);
 
   function formatISOToDateTime(isoString: string): string {
     const date = new Date(isoString);
@@ -71,14 +71,13 @@ function AnalysisPage() {
     try {
       alert("제출되었습니다. 잠시 기다려 주세요.");
       setModalOpen(true);
-      setIsloading(true);
+      setIsLoading(true);
       const response = await clientApi.post("/analysis/generate", {
         contractId,
       });
 
       if (response && response.status === 200) {
         router.push("analysis/" + response.data._id);
-        setIsloading(false);
       } else {
         alert("응답이 실패했습니다. 다시 시도해 주세요.");
       }
@@ -87,7 +86,7 @@ function AnalysisPage() {
       return undefined;
     } finally {
       setModalOpen(false);
-      setIsloading(false);
+      setIsLoading(false);
     }
   };
 
@@ -160,7 +159,7 @@ function AnalysisPage() {
             >
               <DocumentIcon color="#6000ff" />
               <span className="text-[1.6rem] font-medium">
-                {contract.contractType}&nbsp;임대차 계약서
+                {contract.contractTitle}
               </span>
             </div>
             <ul className="w-full px-8 flex flex-col gap-12 items-center text-[#2b2b2b] text-[1.6rem] font-bold">
@@ -199,7 +198,6 @@ function AnalysisPage() {
                 fontWeight={500}
                 onClick={() => {
                   analysisRequest(contract._id);
-                  router.push("step1")
                 }}
               >
                 네, 맞아요
@@ -216,7 +214,7 @@ function AnalysisPage() {
               {contractArray?.map((contract, index) => (
                 <SubmitButton
                   key={index}
-                  className="flex flex-col justify-center items-start py-2 px-10"
+                  className="flex  justify-around items-center py-2 px-10"
                   gap={0}
                   height={"auto"}
                   background="#eeeeee"
@@ -228,6 +226,10 @@ function AnalysisPage() {
                     setSelect(false);
                   }}
                 >
+                  <span className="font-bold">
+                    제목:&nbsp;
+                    <span className="">{contract?.contractTitle}</span>
+                  </span>
                   <span className="font-bold">
                     계약 유형:&nbsp;
                     <span className="">{contract?.contractType}</span>
@@ -265,12 +267,12 @@ function AnalysisPage() {
             </div>
           </div>
         )}
-        {isloading && (
-          <div className="z-50 flex justify-center items-center w-[100%] h-full p-8 rounded-[40px] bg-white text-[2rem] text-center">
-            <LoadingPage />
-          </div>
-        )}
       </Modal>
+      {isloading && (
+        <div className="fixed top-0 left-0 z-50 flex justify-center items-center w-full h-full bg-white">
+          <LoadingPage />
+        </div>
+      )}
     </>
   );
 }

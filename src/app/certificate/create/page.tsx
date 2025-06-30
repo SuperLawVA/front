@@ -2,7 +2,7 @@
 "use client";
 
 import SubmitButton from "@/components/SubmitButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "@/components/Modal";
 import BackHeader from "@/components/BackHeader";
 import AnalyzeIcon from "@/components/icons/Analysis";
@@ -22,7 +22,7 @@ function StartPage() {
 
   const [purposeOpen, setPurposeOpen] = useState(false);
   const [storyOpen, setStoryOpen] = useState(false);
-  const [isloading, setIsloading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const canSubmit = purpose.trim().length > 0 && story.trim().length > 0;
 
@@ -30,7 +30,7 @@ function StartPage() {
   const certificateRequest = async (contractId: string) => {
     try {
       alert("제출되었습니다. 잠시 기다려 주세요.");
-      setIsloading(true);
+      setIsLoading(true);
       const response = await clientApi.post("/certificate/generate", {
         contractId,
         userQuery: purpose + "\n" + story,
@@ -38,7 +38,7 @@ function StartPage() {
 
       if (response && response.status === 200) {
         router.push("result/" + response.data._id);
-        setIsloading(false);
+        setIsLoading(false);
       } else {
         alert("응답이 실패했습니다. 다시 시도해 주세요.");
       }
@@ -46,7 +46,7 @@ function StartPage() {
       console.error("Generate error:", error);
       return undefined;
     } finally {
-      setIsloading(false);
+      setIsLoading(false);
     }
   };
 
@@ -58,8 +58,8 @@ function StartPage() {
 
   return (
     <>
-      {isloading && (
-        <div className="z-50 flex justify-center items-center w-[100%] h-full p-8 rounded-[40px] bg-white text-[2rem] text-center">
+      {isLoading && (
+        <div className="fixed top-0 left-0 z-50 flex justify-center items-center w-full h-full bg-white">
           <LoadingPage />
         </div>
       )}

@@ -85,32 +85,6 @@ function ContractCreateNewPage() {
       contractDate,
     ]
   );
-  // const tabsSetFunction = useMemo(
-  //   () => [
-  //     setAddress,
-  //     setDetailAddress,
-  //     setBuildingArea,
-  //     setBuildingConstructure,
-  //     setBuildingType,
-  //     setDeposit,
-  //     setDownPayment,
-  //     setIntermediatePayment,
-  //     setMonthlyRent,
-  //     setContractDate,
-  //   ],
-  //   [
-  //     setAddress,
-  //     setDetailAddress,
-  //     setBuildingArea,
-  //     setBuildingConstructure,
-  //     setBuildingType,
-  //     setDeposit,
-  //     setDownPayment,
-  //     setIntermediatePayment,
-  //     setMonthlyRent,
-  //     setContractDate,
-  //   ]
-  // );
 
   const isValidAll = useMemo(() => {
     return tabsVariable.every((v, idx) => {

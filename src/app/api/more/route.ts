@@ -8,8 +8,8 @@ export async function POST(req: NextRequest) {
     // 👉login과 합칠 예정
     // 예: await db.insertUser({ email, passwordHash, name });
     // build용 변수 사용
-    const user = await backendApi.get("/user");
-    const sessions = await backendApi.get("/chatbot");
+    const user = await backendApi.get("/more");
+    // const sessions = await backendApi.get("/chatbot");
 
     // return NextResponse.json(contracts.data, { status: 200 });
     // try {
@@ -19,13 +19,39 @@ export async function POST(req: NextRequest) {
     //   });
 
     //   const { contract } = res.data; // Spring Boot가 반환한 JWT
+    // 1. contracts 배열을 Map으로 변환 (id → title)
+    const contractMap = new Map(
+      user.data.contracts.map((c: { _id: string; contractTitle: string }) => [
+        c._id,
+        c.contractTitle,
+      ])
+    );
+
+    // 2. analysises에 title 추가
+    // const analysisesWithTitle = user.data.analysises.map(
+    //   (a: { _id: string; contractId: string }) => ({
+    //     ...a,
+    //     contractTitle: contractMap.get(a.contractId) || "삭제된 계약서",
+    //   })
+    // );
+    const analysisesWithTitle = user.data.analysises.map(
+      (a: { _id: string; contractId: string }) => {
+        console.log(contractMap.get(a.contractId));
+
+        return {
+          ...a,
+          contractTitle: contractMap.get(a.contractId) || "삭제된 계약서",
+        };
+      }
+    );
 
     return NextResponse.json(
       {
         userName: user.data.userName,
-        // notification: [0, 1, 2],
+        email: user.data.email,
         contractArray: user.data.contracts,
-        chats: sessions.data.sessions,
+        analysisArray: analysisesWithTitle,
+        certificateArray: user.data.certificates,
       },
       { status: 200 }
     );

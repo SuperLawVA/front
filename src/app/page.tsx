@@ -202,21 +202,18 @@ function MainPage() {
                   </span>
                 </>
               ) : (
-                contractArray &&
-                contractArray.map(
-                  ({
-                    _id,
-                    generated,
-                    contractTitle,
-                    property,
-                    createdDate,
-                  }) => {
-                    return (
+                <>
+                  {contractArray.map(
+                    ({
+                      _id,
+                      generated,
+                      contractTitle,
+                      property,
+                      createdDate,
+                    }) => (
                       <li
                         key={_id}
-                        onClick={() => {
-                          router.push(`/contract/${_id}`);
-                        }}
+                        onClick={() => router.push(`/contract/${_id}`)}
                         className="flex items-center gap-4 py-4 px-8 w-full border-[1.5px] border-[#c6c6c8] rounded-[20px] text-[1.2rem] font-medium"
                       >
                         <QuickButton
@@ -249,37 +246,26 @@ function MainPage() {
                           >
                             {generated ? "생성됨" : "OCR"}
                           </SubmitButton>
-                          {/* <SubmitButton
-                           width={4}
-                           height={2}
-                           fontSize={0.8}
-                           fontWeight={500}
-                           fontColor="#3c82f6"
-                           borderRadius={"50px"}
-                           background="#eff6ff"
-                           borderColor="#3c82f6"
-                         >
-                           {contract.state}
-                         </SubmitButton> */}
                         </div>
                       </li>
-                    );
-                  }
-                )
+                    )
+                  )}
+                  {/* 🔽 map 이후 SubmitButton 추가 */}
+                  <SubmitButton
+                    width={10}
+                    height={3}
+                    fontSize={1}
+                    fontWeight={500}
+                    fontColor="#6000FF"
+                    borderRadius={"50px"}
+                    background="#ffffff"
+                    borderColor="#6000FF"
+                    onClick={() => router.push("upload")}
+                  >
+                    추가하기
+                  </SubmitButton>
+                </>
               )}
-              <SubmitButton
-                width={10}
-                height={3}
-                fontSize={1}
-                fontWeight={500}
-                fontColor="#6000FF"
-                borderRadius={"50px"}
-                background="#ffffff"
-                borderColor="#6000FF"
-                onClick={() => router.push("upload")}
-              >
-                추가하기
-              </SubmitButton>
             </ul>
           </div>
           <div className="self-start w-full font-semibold text-[1.8rem] px-8 flex flex-col gap-4">
@@ -316,7 +302,7 @@ function MainPage() {
         </div>
         {/* <div className="h-36 w-full bg-white" /> */}
       </main>
-      <BottomNav></BottomNav>
+      <BottomNav />
     </>
   );
 }

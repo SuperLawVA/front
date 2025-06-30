@@ -20,6 +20,7 @@ export interface AnalysisTarget {
   _id: string;
   address?: string;
   generated?: boolean;
+  contractTitle?: string;
   modifiedDate?: string;
   contractType?: string;
   contractDate?: string;

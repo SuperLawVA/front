@@ -50,7 +50,6 @@ function UploadPage() {
   useEffect(() => {
     if (isLoading) setModalOpen(false);
   }, [isLoading]);
-
   return (
     <>
       <main className="flex flex-col items-center h-full bg-white">
@@ -215,9 +214,8 @@ function UploadPage() {
         )}
       </Modal>
       {isLoading && (
-        <div className="fixed inset-0 bg-white bg-opacity-50 flex justify-center items-center z-50">
+        <div className="fixed top-0 left-0 z-50 flex justify-center items-center w-full h-full bg-white">
           <LoadingPage />
-          {/* <div className="w-20 h-20 border-4 border-white border-t-transparent rounded-full animate-spin"></div> */}
         </div>
       )}
     </>

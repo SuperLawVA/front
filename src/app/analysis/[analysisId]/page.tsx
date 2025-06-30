@@ -260,11 +260,11 @@ function AnalysisResultPage(props: {
                     <ScalesIcon />
                     참고한 법령
                   </div>
-                  <ArrowDownIcon className="mr-[2.1rem]" />
+                  <ArrowDownIcon className="mr-[2.1rem] pointer-events-none" />
                 </div>
                 <DivBox className="w-full py-6 px-4 flex justify-between items-center text-wrap">
                   {legalBasis?.law}
-                  <ArrowDownIcon className="mr-4" />
+                  <ArrowDownIcon className="mr-4 pointer-events-none" />
                 </DivBox>
               </div>
               <div className="w-full flex flex-col gap-4">
@@ -273,7 +273,7 @@ function AnalysisResultPage(props: {
                     <BookIcon />
                     참고한 판례
                   </div>
-                  <ArrowDownIcon className="mr-[2.1rem]" />
+                  <ArrowDownIcon className="mr-[2.1rem] pointer-events-none" />
                 </div>
                 {caseBasis?.map(({ case: caseName }, index) => (
                   <DivBox
@@ -281,7 +281,7 @@ function AnalysisResultPage(props: {
                     className="w-full py-6 px-4 flex justify-between items-center text-wrap"
                   >
                     {caseName}
-                    <ArrowDownIcon className="mr-4" />
+                    <ArrowDownIcon className="mr-4 pointer-events-none" />
                   </DivBox>
                 ))}
               </div>
@@ -372,11 +372,11 @@ function AnalysisResultPage(props: {
                     <ScalesIcon />
                     참고한 법령
                   </div>
-                  <ArrowDownIcon className="mr-[2.1rem]" />
+                  <ArrowDownIcon className="mr-[2.1rem] pointer-events-none" />
                 </div>
                 <DivBox className="w-full py-6 px-4 flex justify-between items-center text-wrap">
                   {legalBasis?.law}
-                  <ArrowDownIcon className="mr-4" />
+                  <ArrowDownIcon className="mr-4 pointer-events-none" />
                 </DivBox>
               </div>
               <div className="w-full flex flex-col gap-4">
@@ -385,7 +385,7 @@ function AnalysisResultPage(props: {
                     <BookIcon />
                     참고한 판례
                   </div>
-                  <ArrowDownIcon className="mr-[2.1rem]" />
+                  <ArrowDownIcon className="mr-[2.1rem] pointer-events-none" />
                 </div>
                 {caseBasis.map(({ case: caseName }, index) => (
                   <DivBox
@@ -393,7 +393,7 @@ function AnalysisResultPage(props: {
                     className="w-full py-6 px-4 flex justify-between items-center text-wrap"
                   >
                     {caseName}
-                    <ArrowDownIcon className="mr-4" />
+                    <ArrowDownIcon className="mr-4 pointer-events-none" />
                   </DivBox>
                 ))}
               </div>
