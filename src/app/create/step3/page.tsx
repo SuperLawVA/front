@@ -273,6 +273,12 @@ function ContractCreateNewPage() {
                 ""
               )}
             </ul>
+            <div className="flex fixed bottom-50 text-[1.3rem] font-nomal text-[#6000ff]">
+             <button type="button"
+                onClick={() => router.push("result")}>
+              기본 특약으로만 진행하시려면 저를 눌러주세요!
+             </button>
+            </div>
             <div className="flex-1" />
             <SubmitButton
               width={30}
