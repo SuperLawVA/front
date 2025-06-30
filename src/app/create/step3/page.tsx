@@ -20,7 +20,7 @@ function ContractCreateNewPage() {
   const [userQuery, setUserQuery] = useState<string[]>([]);
   const [modalOpen, setModalOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const [isloading, setIsloading] = useState(false);
+  const [isLoading, setisLoading] = useState(false);
   const [contractTitle, setContractTitle] = useState("");
 
   const contractData = useCreateStore.getState();
@@ -61,31 +61,23 @@ function ContractCreateNewPage() {
 
       alert("제출되었습니다. 잠시 기다려 주세요.");
       setModalOpen(true);
-      setIsloading(true);
+      setisLoading(true);
 
-      const response = await clientApi.post(
-        "/create/generate",
-        {
-          contractData: useCreateStore.getState(),
-          aggrementRequest: {
-            contractType,
-            propertyAddress,
-            deposit,
-            monthlyRent,
-            contractPeriodStart,
-            contractPeriodEnd,
-            userQuery,
-          },
+      const response = await clientApi.post("/create/generate", {
+        contractData: useCreateStore.getState(),
+        aggrementRequest: {
+          contractType,
+          propertyAddress,
+          deposit,
+          monthlyRent,
+          contractPeriodStart,
+          contractPeriodEnd,
+          userQuery,
         },
-        {
-          headers: {
-            "Content-Type": "application/json", // JSON 데이터 전송
-          },
-        }
-      );
+      });
       if (response && response.status === 200) {
-        setIsloading(false);
         router.push("/contract/" + response.data.id);
+        setisLoading(false);
       } else {
         alert("응답이 실패했습니다. 다시 시도해 주세요.");
       }
@@ -93,7 +85,7 @@ function ContractCreateNewPage() {
       console.error("Generate error:", error);
     } finally {
       setModalOpen(false);
-      setIsloading(false);
+      setisLoading(false);
     }
   };
 
@@ -144,7 +136,7 @@ function ContractCreateNewPage() {
     {
       reason: "특약 8 (원상복구 의무)",
       suggestedRevision:
-        "임차인의 고의 또는 과실로 인한 손상을 제외하고는 자연적 손모는 원상복구 의무를 면제한다.",
+        "임차인의 고의 또는 과실로 인한 손상을 제외한 자연적 손상은 원상복구 의무를 면제한다.",
     },
     {
       reason: "특약 9 (화재보험 가입)",
@@ -273,12 +265,6 @@ function ContractCreateNewPage() {
                 ""
               )}
             </ul>
-            <div className="flex fixed bottom-50 text-[1.3rem] font-nomal text-[#6000ff]">
-             <button type="button"
-                onClick={() => router.push("result")}>
-              기본 특약으로만 진행하시려면 저를 눌러주세요!
-             </button>
-            </div>
             <div className="flex-1" />
             <SubmitButton
               width={30}
@@ -349,9 +335,9 @@ function ContractCreateNewPage() {
         isOpen={modalOpen}
         setIsOpen={setModalOpen}
         clickOutsideClose={true}
-        isCenter={isloading}
+        isCenter={isLoading}
         upperChildren={
-          !isloading && (
+          !isLoading && (
             <ul
               className={`absolute bottom-[29rem] w-full flex flex-col justify-center items-center gap-4`}
             >
@@ -381,7 +367,7 @@ function ContractCreateNewPage() {
           )
         }
       >
-        {!isloading ? (
+        {!isLoading ? (
           <>
             <div className="mt-16 mb-4 px-8 w-full flex flex-col gap-4">
               <div className="flex flex-col items-center gap-4 mb-8">
@@ -442,8 +428,7 @@ function ContractCreateNewPage() {
             </SubmitButton>
           </>
         ) : (
-          <div className="flex justify-center items-center w-[100%] h-full p-8 rounded-[40px] bg-white text-[2rem] text-center">
-            {/* 로딩 중입니다. 잠시 기다려주시기 바랍니다. */}
+          <div className="fixed top-0 left-0 z-50 flex justify-center items-center w-full h-full bg-white">
             <LoadingPage />
           </div>
         )}

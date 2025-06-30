@@ -13,9 +13,8 @@
 }
 
 @theme {
-  --color-main: #5046e5;
-  --color-mainL: #eef2ff;
   --color-main: #6000ff;
+  --color-mainL: #eef2ff;
   --color-subText: #9ca3af;
   --color-bgc: #f7f9fb;
   --color-bgc2: #faf5ff;
@@ -70,12 +69,12 @@ svg {
   max-width: 100%;
 }
 
-input,
+/* input,
 button,
 textarea,
 select {
   font: inherit;
-}
+} */
 
 input:focus,
 textarea:focus,

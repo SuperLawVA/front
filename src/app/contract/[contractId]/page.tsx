@@ -27,7 +27,7 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
 
   const [openSend, setOpenSend] = useState(false);
   const [sendStep, setSendStep] = useState<1 | 2>(1);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleRef = useRef(null);
@@ -52,87 +52,96 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
     getUserData();
   }, [router]);
 
-function onDragStart(e) {
-  startY.current = e.touches ? e.touches[0].clientY : e.clientY;
-  setDragY(0);
-  window.addEventListener('pointermove', onDragMove);
-  window.addEventListener('pointerup', onDragEnd);
-}
-function onDragMove(e) {
-  const currentY = e.touches ? e.touches[0].clientY : e.clientY;
-  setDragY(currentY - startY.current);
-}
-function onDragEnd() {
-  window.removeEventListener('pointermove', onDragMove);
-  window.removeEventListener('pointerup', onDragEnd);
-  if (dragY > 80) setOpenSend(false); // 80px 내리면 닫힘
-  setDragY(0);
-}
+  function onDragStart(e: React.TouchEvent | React.MouseEvent) {
+    startY.current = (e as unknown as TouchEvent).touches
+      ? (e as unknown as TouchEvent).touches[0].clientY
+      : (e as unknown as MouseEvent).clientY;
+    setDragY(0);
+    window.addEventListener("pointermove", onDragMove);
+    window.addEventListener("pointerup", onDragEnd);
+  }
+
+  function onDragMove(e: TouchEvent | MouseEvent) {
+    const currentY = (e as TouchEvent).touches
+      ? (e as TouchEvent).touches[0].clientY
+      : (e as MouseEvent).clientY;
+    setDragY(currentY - startY.current);
+  }
+
+  function onDragEnd(e: TouchEvent | MouseEvent) {
+    window.removeEventListener("pointermove", onDragMove);
+    window.removeEventListener("pointerup", onDragEnd);
+    if (dragY > 80) setOpenSend(false);
+    setDragY(0);
+  }
   const tabContents = [
-    <div
-      key="0"
-      className="flex flex-col gap-10 w-full rounded-[30px] p-12 bg-white font-semibold text-[1.6rem]"
-    >
-      <div className="flex flex-col gap-2">
-        <span className="flex gap-2 items-center">
-          <ClockIcon width={1.5} height={1.5} />
-          계약 기간
-        </span>
-        <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-          {contract?.createdDate.split("T")[0] ?? "미기재"}
-          {" - "}
-          {contract?.createdDate.split("T")[0] ?? "미기재"}
-        </span>
-      </div>
-      <div className="flex flex-col gap-2">
-        <span className="flex gap-2 items-center">
-          <AssetIcon width={1.5} height={1.5} />
-          보증금
-        </span>
-        <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-          {contract?.payment.deposit ?? 0}
-        </span>
-      </div>
-      <div className="flex flex-col gap-2">
-        <span className="flex gap-2 items-center">
-          <PaymentIcon width={1.5} height={1.5} />
-          월세
-        </span>
-        <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-          {contract?.payment.monthlyRent ?? 0}
-        </span>
-      </div>
-      <div className="flex flex-col gap-2">
-        <span className="flex gap-2 items-center">
-          <CalendarIcon width={1.5} height={1.5} />
-          납부일
-        </span>
-        <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-          {contract?.payment.monthlyRentDate ?? "미기재"}
-        </span>
-      </div>
-      <div className="flex flex-col gap-2">
-        <span className="flex gap-2 items-center">
-          <MapIcon width={1.5} height={1.5} />
-          주소
-        </span>
-        <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-          {contract?.property.address ?? "미기재"}
-        </span>
-      </div>
-      <div className="flex flex-col gap-2">
-        <span className="flex gap-2 items-center">
-          <InfoIcon width={1.5} height={1.5} color="#6000FF" />
-          상세 주소
-        </span>
-        <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-          {contract?.property.detailAddress ?? "미기재"}
-        </span>
+    <div key="0" className="w-full h-full flex flex-col gap-4">
+      <span className="flex text-[#6000ff] text-[1.1rem] font-semibold justify-end mr-8">
+        <PencilIcon width={1.4} height={1.4} />
+        수정하기
+      </span>
+      <div className="flex flex-col gap-10 w-full rounded-[30px] p-12 bg-white font-semibold text-[1.6rem]">
+        <div className="flex flex-col gap-2">
+          <span className="flex gap-2 items-center">
+            <ClockIcon width={1.5} height={1.5} />
+            계약 일자
+          </span>
+          <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
+            {contract?.createdDate.split("T")[0] ?? "미기재"}
+          </span>
+        </div>
+        <div className="flex flex-col gap-2">
+          <span className="flex gap-2 items-center">
+            <AssetIcon width={1.5} height={1.5} />
+            보증금
+          </span>
+          <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
+            {contract?.payment.deposit ?? 0}
+          </span>
+        </div>
+        <div className="flex flex-col gap-2">
+          <span className="flex gap-2 items-center">
+            <PaymentIcon width={1.5} height={1.5} />
+            월세
+          </span>
+          <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
+            {contract?.payment.monthlyRent ?? 0}
+          </span>
+        </div>
+        <div className="flex flex-col gap-2">
+          <span className="flex gap-2 items-center">
+            <CalendarIcon width={1.5} height={1.5} />
+            납부일
+          </span>
+          <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
+            {contract?.payment.monthlyRentDate ?? "미기재"}
+          </span>
+        </div>
+        <div className="flex flex-col gap-2">
+          <span className="flex gap-2 items-center">
+            <MapIcon width={1.5} height={1.5} />
+            주소
+          </span>
+          <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
+            {contract?.property.address ?? "미기재"}
+          </span>
+        </div>
+        <div className="flex flex-col gap-2">
+          <span className="flex gap-2 items-center">
+            <InfoIcon width={1.5} height={1.5} color="#6000FF" />
+            상세 주소
+          </span>
+          <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
+            {contract?.property.detailAddress ?? "미기재"}
+          </span>
+        </div>
       </div>
     </div>,
     <div key="1" className="flex flex-col w-full gap-12">
       <div className="flex flex-col gap-4">
-        <span className="text-[1.6rem] font-semibold text-center">1. 부동산 표시</span>
+        <span className="text-[1.6rem] font-semibold text-center">
+          1. 부동산 표시
+        </span>
         <span className="flex text-[#6000ff] text-[1.1rem] font-semibold justify-end mr-8">
           <PencilIcon width={1.4} height={1.4} />
           수정하기
@@ -141,9 +150,10 @@ function onDragEnd() {
           <div className="flex flex-col gap-2">
             주소
             <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {contract?.property.address.length === 0
-                ? "미기재"
-                : contract?.property.address}
+              {typeof contract?.property.address === "string" &&
+              contract?.property.address.length !== 0
+                ? contract?.property.address
+                : "미기재"}
             </span>
           </div>
           <div className="flex flex-col gap-2">
@@ -173,7 +183,9 @@ function onDragEnd() {
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <span className="text-[1.6rem] font-semibold text-center">2. 계약 내용</span>
+        <span className="text-[1.6rem] font-semibold text-center">
+          2. 계약 내용
+        </span>
         <span className="flex text-[#6000ff] text-[1.1rem] font-semibold justify-end mr-8">
           <PencilIcon width={1.4} height={1.4} />
           수정하기
@@ -204,17 +216,23 @@ function onDragEnd() {
             </span>
           </div>
           <div className="flex flex-col gap-2">
-            계약일자
+            계약 기간
             <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {contract?.createdDate.split("T")[0] ?? "미기재"}
+              {contract?.dates.startDate
+                ? contract?.dates.startDate.split("T")[0]
+                : "미기재"}
               {" - "}
-              {contract?.createdDate.split("T")[0] ?? "미기재"}
+              {contract?.dates.endDate
+                ? contract?.dates.endDate.split("T")[0]
+                : "미기재"}
             </span>
           </div>
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        <span className="text-[1.6rem] font-semibold text-center">3. 집주인 정보</span>
+        <span className="text-[1.6rem] font-semibold text-center">
+          3. 집주인 정보
+        </span>
         <span className="flex text-[#6000ff] text-[1.1rem] font-semibold justify-end mr-8">
           <PencilIcon width={1.4} height={1.4} />
           수정하기
@@ -236,8 +254,10 @@ function onDragEnd() {
           </div>
         </div>
       </div>
-            <div className="flex flex-col gap-4">
-        <span className="text-[1.6rem] font-semibold text-center">4. 부동산 사무실 정보</span>
+      <div className="flex flex-col gap-4">
+        <span className="text-[1.6rem] font-semibold text-center">
+          4. 부동산 사무실 정보
+        </span>
         <span className="flex text-[#6000ff] text-[1.1rem] font-semibold justify-end mr-8">
           <PencilIcon width={1.4} height={1.4} />
           수정하기
@@ -342,15 +362,17 @@ function onDragEnd() {
           ))}
         </ul>
         {tabContents[activeIndex]}
-        <button className="flex-1 mb-30 flex items-center justify-center px-15 py-5.5 rounded-[20px] text-[#6000ff] !text-[1.4rem] border border-[#6000ff] bg-white"
-                onClick={() => {
-                  setEmail("")
-                  setOpenSend(true);
-                  setSendStep(1);
-                }}
+        <button
+          className="flex-1 mb-30 flex items-center justify-center px-15 py-5.5 rounded-[20px] text-[#6000ff] !text-[1.4rem] border border-[#6000ff] bg-white"
+          onClick={() => {
+            setEmail("");
+            setOpenSend(true);
+            setSendStep(1);
+          }}
         >
           <DocumentIcon />
-          &nbsp; 계약서 초안 이메일로 전송하기
+          {`  계약서 ${contract?.generated ? "초안 " : ""}이메일로 전송하기`}
+          {/* &nbsp; 계약서 초안 이메일로 전송하기 */}
         </button>
       </main>
       <Modal
@@ -359,14 +381,21 @@ function onDragEnd() {
         clickOutsideClose
         isCenter={false}
       >
-        
-        <div className="bg-white w-[90vw] max-w-md rounded-t-[40px] mx-auto"
-             style={{ transform: `translateY(${dragY}px)`, transition: dragY === 0 ? 'transform 0.18s cubic-bezier(.4,2,.6,1)' : '' }}>
-              <div className="mx-auto mt-3 mb-4 w-16 h-1.5 rounded-full bg-gray-300 cursor-pointer active:bg-gray-400"
-                   ref={handleRef}
-                   onPointerDown={onDragStart}
-                   onTouchStart={onDragStart} />
-            {/* STEP 1: 이메일 입력 */}
+        <div
+          className="bg-white w-[90vw] max-w-md rounded-t-[40px] mx-auto"
+          style={{
+            transform: `translateY(${dragY}px)`,
+            transition:
+              dragY === 0 ? "transform 0.18s cubic-bezier(.4,2,.6,1)" : "",
+          }}
+        >
+          <div
+            className="mx-auto mt-3 mb-4 w-16 h-1.5 rounded-full bg-gray-300 cursor-pointer active:bg-gray-400"
+            ref={handleRef}
+            onPointerDown={onDragStart}
+            onTouchStart={onDragStart}
+          />
+          {/* STEP 1: 이메일 입력 */}
           {sendStep === 1 && (
             <>
               <h3 className="px-6 text-center text-[1.9rem] font-bold mt-8">
@@ -376,16 +405,17 @@ function onDragEnd() {
                 계약서 초안을 전송해 드릴게요
               </p>
               <div className="mt-10">
-                <StyledInput 
+                <StyledInput
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="이메일 주소를 입력 해주세요"
-                  underLine={false} 
+                  underLine={false}
                   className="
                     border border-gray-300
                     w-full h-20 rounded-[40px] px-4
                     text-[1.3rem] pt-5.5 pl-10
-                    "/>
+                    "
+                />
               </div>
               <div className="px-15 mt-6 mb-15">
                 <button
@@ -416,7 +446,7 @@ function onDragEnd() {
                   className="w-[160px] h-[50px] border border-gray-600 rounded-[40px] -ml-4"
                   onClick={() => {
                     setSendStep(1);
-                    setEmail('');
+                    setEmail("");
                   }}
                 >
                   다시 전송하기
@@ -425,7 +455,7 @@ function onDragEnd() {
                   className="w-[160px] h-[50px] border-none bg-[#6000FF] rounded-[40px] text-white"
                   onClick={() => {
                     setOpenSend(false);
-                    router.push("/")
+                    router.push("/");
                   }}
                 >
                   홈 화면으로

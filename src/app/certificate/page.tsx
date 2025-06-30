@@ -175,7 +175,7 @@ function CertificatePage() {
                 fontWeight={500}
                 onClick={() => {
                   useCertificateStore.setState({ ContractId: contract._id });
-                  router.push("certificate/step1");
+                  router.push("certificate/create");
                 }}
               >
                 네, 맞아요

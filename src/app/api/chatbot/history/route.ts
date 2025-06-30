@@ -19,10 +19,6 @@ export async function POST(req: NextRequest) {
     const response = await backendApi.post("/chatbot/history", {
       mongoSessionId,
     });
-    // const answer = response.data;
-
-    console.log("response.data");
-    console.log(response.data);
 
     // 4️⃣ 응답 성공 처리
     return NextResponse.json(response.data);

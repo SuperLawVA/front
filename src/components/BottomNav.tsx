@@ -46,11 +46,11 @@ const BottomNav: React.FC<BottomNavProps> = ({
       className="sticky bottom-0 w-full h-28"
       style={{ backgroundColor: mainBackGroundColor }}
     >
-      <div className="h-full border-t border-[#c6c6c8] pt-4 z-10 rounded-t-[50px]">
+      <div className="h-full bg-white border-t border-[#c6c6c8] pt-4 z-10 rounded-t-[50px]">
         <div className="flex justify-around items-center h-full">
           <NavBtn to="/" icon={HomeIcon} label="홈" />
           <NavBtn to="/chatbot" icon={ChatIcon} label="채팅" />
-          <NavBtn to="/more" icon={EllipsisIcon} label="내 정보" />
+          <NavBtn to="/more" icon={EllipsisIcon} label="더보기" />
         </div>
       </div>
     </nav>
