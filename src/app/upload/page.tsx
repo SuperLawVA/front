@@ -12,14 +12,16 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CameraPage from "./Camera";
-import UploadPage from "./UploadImages";
+import UploadImagePage from "./UploadImages";
 import GreenLogoIcon from "@/components/icons/GreenLogo";
+import LoadingPage from "./Loading";
 
-function StartPage() {
+function UploadPage() {
   const router = useRouter();
   const [modalOpen, setModalOpen] = useState(false);
   const [isCenter, setIsCenter] = useState(false);
   const [step, setStep] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleBarSwipe = useSwipeable({
     onSwipedDown: () => {
@@ -45,6 +47,9 @@ function StartPage() {
       router.push("/");
     }
   }, [modalOpen]);
+  useEffect(() => {
+    if (isLoading) setModalOpen(false);
+  }, [isLoading]);
 
   return (
     <>
@@ -115,7 +120,6 @@ function StartPage() {
           {...handleBarSwipe}
           className="mx-auto mt-6 w-20 h-1.5 rounded-full bg-gray-300"
         />
-
         {step === 0 && (
           <div className="my-16 flex flex-col gap-8">
             <div className="text-[2rem] font-bold text-center">
@@ -147,10 +151,11 @@ function StartPage() {
           </div>
         )}
         {step === 11 && (
-          <UploadPage
+          <UploadImagePage
             setPageOpen={() => {
               setStep(2);
             }}
+            setIsLoading={setIsLoading}
           />
         )}
         {step === 12 && (
@@ -165,6 +170,7 @@ function StartPage() {
               setModalOpen(true);
               setIsCenter(false);
             }}
+            setIsLoading={setIsLoading}
           />
         )}
         {step === 2 && (
@@ -208,8 +214,14 @@ function StartPage() {
           </div>
         )}
       </Modal>
+      {isLoading && (
+        <div className="fixed inset-0 bg-white bg-opacity-50 flex justify-center items-center z-50">
+          <LoadingPage />
+          {/* <div className="w-20 h-20 border-4 border-white border-t-transparent rounded-full animate-spin"></div> */}
+        </div>
+      )}
     </>
   );
 }
 
-export default StartPage;
+export default UploadPage;
