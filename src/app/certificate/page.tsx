@@ -76,7 +76,7 @@ function CertificatePage() {
           fontColor="#fb2c36"
           fontWeight={700}
           // borderColor="none"
-          className="px-10 flex justify-center items-center "
+          className="px-8 flex justify-center items-center "
           icon={<InfoIcon width={1.4} height={1.4} color="red" />}
         >
           AI로 내용증명서 생성하기

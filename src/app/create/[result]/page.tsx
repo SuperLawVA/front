@@ -5,75 +5,59 @@ import { useEffect, useState } from "react";
 import BackHeader from "@/components/BackHeader";
 import ArrowLeftIcon from "@/components/icons/ArrowLeft";
 import ArrowRightIcon from "@/components/icons/ArrowRight";
-import StyledDiv from "@/components/StyledDiv";
-import WarningIcon from "@/components/icons/Warning";
 import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
-import MagnifyingGlassIcon from "@/components/icons/MagnifyingGlass";
 import BulbIcon from "@/components/icons/Bulb";
-import ExclamationIcon from "@/components/icons/Exclamation";
-import ArrowDownIcon from "@/components/icons/ArrowDownIcon";
 import DivBox from "@/components/DivBox";
 import { useCreateStore } from "@/store/useStore";
-// import clientApi from "@/lib/axios.client";
+import QuestionMarkIcon from "@/components/icons/QuestionMark";
+import Image from "next/image";
+import DocumentIcon from "@/components/icons/Document";
+import Modal from "@/components/Modal";
 
 function ContractCreateNewPage() {
   const router = useRouter();
-  // const [inputValue, setInputValue] = useState<string>("");
   const [userQuery, setUserQuery] = useState<string[]>();
-  // const [userQuery, setUserQuery] = useState<string[]>([
-  //   "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
-  //   "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
-  //   "벽에 선반 달고 싶어요",
-  //   "집에서 담배 피고 싶어요",
-  //   "집에서 친구랑 동거하고 싶어요",
-  //   "집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요집에서 친구랑 동거하고 싶어요",
-  // ]);
-
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-
-  //   try {
-  //     const res = await clientApi.get("/create/generate");
-  //     console.log("[GET CONTRACTS SUCCESS RESPONSE]", res);
-  //     if (res.data.success) {
-  //       const { userName, notification, contractArray, recentChat } = res.data;
-  //       useAuthStore.setState({
-  //         userName,
-  //         notification,
-  //         contractArray,
-  //         recentChat,
-  //       });
-  //       router.push("/");
-  //     } else {
-  //       alert(res.data.message || "로그인 실패 (응답: success: false)");
-  //     }
-  //   } catch (error) {
-  //     console.error("[LOGIN ERROR]", error);
-
-  //     // ✅ Axios error라면 response에 서버 메시지 있음
-  //     if (axios.isAxiosError(error) && error.response) {
-  //       console.log("[AXIOS ERROR RESPONSE]", error);
-  //       alert(error.response.data?.message || "로그인 실패 (서버 응답 있음)");
-  //     } else {
-  //       // 네트워크 등 기타
-  //       alert("로그인 요청 중 알 수 없는 오류가 발생했습니다.");
-  //     }
-  //   }
-  // };
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
   useEffect(() => {
-    //   if (!sessionStorage.getItem("contractData")) {
-    //     router.replace("/create");
-    //   } else if (!sessionStorage.getItem("articleAgree")) {
-    //     router.replace("step2");
-    //   } else if (!sessionStorage.getItem("userQuery")) {
-    //     router.replace("step3");
-    //   }
-    //   sessionStorage.removeItem("createStore");
     const contractData = useCreateStore.getState();
     setUserQuery(contractData.userQuery);
   }, [router]);
+
+  const [lawModalOpen, setLawModalOpen] = useState(false);  // "관련 법률" 모달
+  const [openedLaw, setOpenedLaw] = useState<number[]>([]);
+
+
+  const laws = [
+
+  { title: "소득세법 시행령 제122조 제 1항"},
+  { title: "조세특례제한법 시행령 제 96조 제 2항"},
+  { title: "소득세법 시행령 제 122조 제 1항"},
+  { title: "조세특례제한법 시행령 제 96조 제 2항"},
+  { title: "소득세법 시행령 제 122조 제 1항"},
+  { title: "조세특례제한법 시행령 제 96조 제 2항"},
+  { title: "소득세법 시행령 제 122조 제 1항"},
+  { title: "조세특례제한법 시행령 제 96조 제 2항"},
+  { title: "소득세법 시행령 제 122조 제 1항"},
+  { title: "조세특례제한법 시행령 제 96조 제 2항"},
+  { title: "소득세법 시행령 제 122조 제 1항"},
+  { title: "조세특례제한법 시행령 제 96조 제 2항"},
+  { title: "소득세법 시행령 제 122조 제 1항"},
+  { title: "조세특례제한법 시행령 제 96조 제 2항"},
+  
+];
+
+  const toggleLaw = (idx: number) => {
+    setOpenedLaw((prev) =>
+      prev.includes(idx)
+        ? prev.filter((i) => i !== idx)
+        : [...prev, idx]
+    );
+  };
+
+  useEffect(() => {
+    if (lawModalOpen) setOpenedLaw([]);
+  }, [lawModalOpen]);
 
   const liArray = userQuery?.map((value, index) => (
     <li
@@ -118,114 +102,122 @@ function ContractCreateNewPage() {
       </div>
     </li>
   ));
+  
 
   return (
     <>
-      <div className="h-20 w-full flex flex-col justify-center items-center" />
+      <div className="h-20 mt-15 w-full flex flex-col justify-center items-center" />
       <BackHeader to="/">임대차 계약서 작성</BackHeader>
-      <main className="flex flex-col items-center mt-[3rem] gap-12 h-[calc(100%-11rem)]">
-        <div className="px-8 py-12 w-full flex-1 bg-white rounded-t-[50px] backdrop-opacity-70 flex flex-col gap-12 items-center">
-          <div className="w-full flex flex-col gap-4 items-start">
-            <span className="px-8 flex gap-4 items-center text-[1.8rem] text-[#0f0f0f] font-semibold">
-              <MagnifyingGlassIcon />
-              실현 가능성
-            </span>
-            <div className="flex gap-4 w-full">
-              <div className="px-4 py-6 min-w-28 flex flex-col items-center justify-center bg-white border border-[#f3f4f6] rounded-[20px] text-[1rem] font-semibold text-[#32d74b]">
-                <span className="w-[1.6rem] h-[1.6rem] bg-[#32d74b] rounded-full" />
-                가능성 높음
-              </div>
-              <DivBox className="flex-grow flex items-center px-10 py-6">
-                생활 필수품 설치로 대부분 임대인이 수용, 법적으로 안전
-              </DivBox>
-            </div>
-          </div>
+      <main className="flex flex-col items-center mt-[2.5rem] gap-12 h-[calc(100%-11rem)]">
+        <div className="px-8 py-12 w-full flex-1 bg-white rounded-t-[40px] backdrop-opacity-70 flex flex-col gap-12 items-center">
           <div className="w-full flex flex-col gap-4 items-start">
             <span className="px-8 flex gap-4 items-center text-[1.8rem] text-[#0f0f0f] font-semibold">
               <MagicTwoStarIcon width={1.6} height={1.6} color="#6000FF" />
               생성된 특약
             </span>
-            <DivBox className="flex items-center px-10 py-6">
+            <DivBox
+             className="flex items-center px-7 py-6"
+             style={{ backgroundColor: "rgb(242, 238, 251)",
+                      border: "1px solid #6000FF",
+                }}
+              >
               안전임차인은 벽면에 못을 사용하여 생활용품을 설치할 수 있으며,
               퇴거 시 직경 5mm 이하 못구멍에 대한 원상복구비는 청구하지 않음
             </DivBox>
           </div>
           <div className="w-full flex flex-col gap-4 items-start">
             <span className="px-8 flex gap-4 items-center text-[1.8rem] text-[#0f0f0f] font-semibold">
+              <QuestionMarkIcon color="#6000FF" />
+              이유
+            </span>
+            <DivBox className="flex items-center px-7 py-6">
+              전세사기 예방을 위해 임대인의 재정상태와 주택 권리관계를 
+              투명하게 공개받아 안전한 거래 보장
+            </DivBox>
+          </div>
+          <div className="w-full flex flex-col gap-4 items-start">
+            <span className="px-8 flex gap-4 items-center text-[1.8rem] text-[#0f0f0f] font-semibold">
               <BulbIcon color="#6000FF" />
-              생성된 특약
+              협상 방안
             </span>
-            <DivBox className="flex items-center gap-2 px-10 py-6 w-full">
-              <span className="font-semibold">협상 포인트:</span>
-              {`"생활하려면 최소한 시계나 액자는 걸어야죠"`}
-            </DivBox>
-            <DivBox className="flex items-center gap-2 px-10 py-6 w-full">
-              <span className="font-semibold">주의사항:</span>
-              못구멍 크기를 구체적으로 명시해야 분쟁 방지
-            </DivBox>
-            <DivBox className="flex items-center gap-2 px-10 py-6 w-full">
-              <span className="font-semibold">실무 팁:</span>
-              계약 전 벽면 상태 사진 촬영 필수
-            </DivBox>
+            <DivBox className="flex items-center px-7 py-6">
+              안전임차인은 벽면에 못을 사용하여 생활용품을 설치할 수 있으며,
+              민간임대주택에 관한 특별법 제48조에 따른 설명의무를 근거로
+              상세한 정보 공개 요구
+            </DivBox>            
           </div>
-          <div className="w-full flex flex-col gap-4 items-start">
-            <span className="px-8 flex gap-4 items-center text-[1.8rem] text-[#0f0f0f] font-semibold">
-              <ExclamationIcon color="#6000FF" />
-              참고한 법령
-            </span>
-            <DivBox className="flex justify-between items-center gap-2 px-10 py-6 w-full">
-              소득세법 시행령 제122조 제1항
-              <ArrowDownIcon />
-            </DivBox>
-            <DivBox className="flex justify-between items-center gap-2 px-10 py-6 w-full">
-              조세특례제한법 시행령 제 96조 제 2항
-              <ArrowDownIcon />
-            </DivBox>
-          </div>
-          <div className="w-full flex flex-col gap-4 items-start">
-            <span className="px-8 flex gap-4 items-center text-[1.8rem] text-[#0f0f0f] font-semibold">
-              <ExclamationIcon color="#6000FF" />
-              참고한 판례
-            </span>
-            <DivBox className="flex justify-between items-center gap-2 px-10 py-6 w-full">
-              서울중앙법 2029가합18
-              <ArrowDownIcon />
-            </DivBox>
-            <DivBox className="flex justify-between items-center gap-2 px-10 py-6 w-full">
-              부산지법 181가합18
-              <ArrowDownIcon />
-            </DivBox>
-            <DivBox className="flex justify-between items-center gap-2 px-10 py-6 w-full">
-              와우 친구들 집 가고 싶다
-              <ArrowDownIcon />
-            </DivBox>
-          </div>
-          <StyledDiv
-            width="100%"
-            height={4.5}
-            background="#fefce8"
-            borderColor="#fef9c3"
-            className="flex items-center px-8 mx-96"
-            icon={
-              <div className="w-12 h-12 bg-yellow rounded-full flex justify-center items-center">
-                <WarningIcon />
-              </div>
-            }
-          >
-            <div className="flex flex-col justify-center text-[1.2rem] font-semibold text-black">
-              경고
-              <span className="text-[1rem] font-medium text-[#9ca3af]">
-                계약서 작성 전에 계약 상대방과 상의하시길 바랍니다.
+          <div className="flex gap-10 w-full">
+            <button className="flex-1 flex flex-col items-center gap-4 py-6 rounded-[20px] border border-[#E5E5EA]"
+            onClick={() => setLawModalOpen(true)}
+            type="button"
+            >
+              <Image src="/scales.svg" width={30} height={24} alt="" />
+              <span className="text-[1.5rem] font-semibold">
+                관련 법률
               </span>
-            </div>
-          </StyledDiv>
-        </div>
-        <DivBox className="mb-6 w-full flex flex-col gap-12">
-          <div className="flex w-full justify-between items-center">
+            </button>
+            <button className="flex-1 flex flex-col items-center gap-4 py-6 rounded-[20px] border border-[#E5E5EA]">
+              <Image src="/openBook.svg" width={30} height={24} alt="" />
+              <span className="text-[1.5rem] font-semibold">
+                유사 판례
+              </span>
+            </button>
+          </div>
+          <button className="flex items-center justify-center px-20 py-5 rounded-[20px] text-[#6000ff] !text-[1.8rem] border border-[#6000ff]">
+            <DocumentIcon />&nbsp;                
+              완성된 계약서 보기
+          </button>
+          <div className="flex items-center w-full mt-6">    
+            <div className="w-[40rem]">
             {liArray && liArray[activeIndex]}
           </div>
-        </DivBox>
+        </div>
+        </div>      
       </main>
+    <Modal
+        isOpen={lawModalOpen}
+        setIsOpen={setLawModalOpen}
+        clickOutsideClose={true}
+    >
+        <div className="mx-auto mt-6 mb-4 w-20 h-1.5 rounded-full bg-gray-300" />
+        <div className="flex flex-col items-center py-2 px-10 w-full">
+          <span className="text-[2rem] font-medium text-center mb-8">
+            관련 법률
+          </span>
+          <div className="w-full max-h-[47rem] overflow-y-auto">
+          <ul className="w-full flex flex-col gap-4">
+            {laws.map((law, idx) => (
+              <li
+                key={idx}
+                className="bg-white rounded-[20px] border border-[#ededed] transition-all"
+              >
+                <button
+                  type="button"
+                  className="flex justify-between items-center w-full px-6 py-5 !text-[1.4rem] font-medium focus:outline-none"
+                  onClick={() => toggleLaw(idx)}
+                >
+                  <span className="text-left text-[#222]">{law.title}</span>
+                  <Image
+                    src="/add.svg"
+                    alt="펼치기"
+                    width={24}
+                    height={24}
+                    className={`w-6 h-6 transition-transform duration-200 ${openedLaw.includes(idx) ? "rotate-90" : ""}`}
+                  />
+                </button>
+                  {/* 펼쳐졌을 때만 내용 표시 */}
+                  {openedLaw.includes(idx) && (
+                    <div className="px-6 py-4 bg-[#fafafd] rounded-b-[20px] text-[1.2rem] text-gray-700 border-t border-[#ededed] animate-fadein">
+                      {/* 여기에 law.content 혹은 상세 내용 */}
+                      상세 법률 내용이 여기에 나와요!
+                    </div>
+                  )}
+              </li>
+            ))}
+          </ul>
+          </div>
+        </div>
+    </Modal>
     </>
   );
 }

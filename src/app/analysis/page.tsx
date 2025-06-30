@@ -90,7 +90,7 @@ function AnalysisPage() {
           fontColor="#0A84FF"
           fontWeight={700}
           borderColor="none"
-          className="px-10 flex justify-center items-center"
+          className="px-8 flex justify-center items-center"
           icon={<MagicTwoStarIcon width={1.4} height={1.4} color="#0A84FF" />}
         >
           AI로 계약서 분석하기
@@ -101,11 +101,11 @@ function AnalysisPage() {
           분쟁을 미리 예방하세요
         </div>
         <Image
-          width={99999}
-          height={99999}
-          src="/analysisStart.png"
+          width={200}
+          height={99}
+          src="/analysisStart.svg"
           alt="Main Icon"
-          className="w-[26.5rem] h-[26.5rem] mt-16"
+          className="w-[26.5rem] h-[26.5rem] mt-16 ml-8"
         />
         <div className="mt-16 text-center text-[1.2rem] font-medium">
           법령 10만 건, 판례 9만 건 기반 AI가
@@ -186,6 +186,7 @@ function AnalysisPage() {
                 fontWeight={500}
                 onClick={() => {
                   analysisRequest(contract._id);
+                  router.push("step1")
                 }}
               >
                 네, 맞아요

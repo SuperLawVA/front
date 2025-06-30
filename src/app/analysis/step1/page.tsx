@@ -17,7 +17,7 @@ function LoadingPage() {
     return () => clearInterval(id);
   }, []);
 
-  const goNext = () => router.push("[certificateld]");
+  const goNext = () => router.push("[analysisld]");
 
   return (
     <main className="min-h-screen flex flex-col items-center px-6 text-center">
@@ -25,19 +25,19 @@ function LoadingPage() {
         {progress < 100 ? (
           <>
             <h1 className="mt-70 text-[2rem] font-bold mb-2">
-              AI가 내용증명서를 생성 중 입니다
+              AI가 계약서를 분석 중 입니다
             </h1>
             <p className="text-[1.4rem] font-medium">
-              문서 내용을 토대로 완벽한 내용증명서를 만들어 드릴게요!
+              계약서가 안전한지 AI가 꼼꼼히 검토해 드릴게요!
             </p>
           </>
         ) : (
           <>
             <h1 className="mt-70 text-[2rem] font-bold mb-2">
-              내용증명서 생성 완료!
+              분석 완료!
             </h1>
             <p className="text-[1.4rem] font-medium">
-              내용증명서가 어떻게 완성되었는지 보러 가실까요?
+              계약서가 안전한지 보러 가실까요?
             </p>
           </>
         )}

@@ -213,9 +213,58 @@ function onDragEnd() {
           </div>
         </div>
       </div>
+      <div className="flex flex-col gap-4">
+        <span className="text-[1.6rem] font-semibold text-center">3. 집주인 정보</span>
+        <span className="flex text-[#6000ff] text-[1.1rem] font-semibold justify-end mr-8">
+          <PencilIcon width={1.4} height={1.4} />
+          수정하기
+        </span>
+        <div className="flex flex-col gap-12 w-full rounded-[30px] p-12 bg-white font-semibold text-[1.6rem]">
+          <div className="flex flex-col gap-2">
+            성명
+            <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
+              {contract?.property.address.length === 0
+                ? "미기재"
+                : contract?.property.address}
+            </span>
+          </div>
+          <div className="flex flex-col gap-2">
+            전화번호
+            <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
+              {contract?.property.detailAddress ?? "미기재"}
+            </span>
+          </div>
+        </div>
+      </div>
+            <div className="flex flex-col gap-4">
+        <span className="text-[1.6rem] font-semibold text-center">4. 부동산 사무실 정보</span>
+        <span className="flex text-[#6000ff] text-[1.1rem] font-semibold justify-end mr-8">
+          <PencilIcon width={1.4} height={1.4} />
+          수정하기
+        </span>
+        <div className="flex flex-col gap-12 w-full rounded-[30px] p-12 bg-white font-semibold text-[1.6rem]">
+          <div className="flex flex-col gap-2">
+            사무실 이름
+            <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
+              {contract?.property.address.length === 0
+                ? "미기재"
+                : contract?.property.address}
+            </span>
+          </div>
+          <div className="flex flex-col gap-2">
+            전화번호
+            <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
+              {contract?.property.detailAddress ?? "미기재"}
+            </span>
+          </div>
+        </div>
+      </div>
     </div>,
     <div key="2" className="flex flex-col w-full gap-4">
-      <span className="text-[1.6rem] font-bold pl-8">계약 조항</span>
+      <span className="flex text-[#6000ff] text-[1.1rem] font-semibold justify-end mr-8">
+        <PencilIcon width={1.4} height={1.4} />
+        수정하기
+      </span>
       <ul className="flex flex-col gap-2 w-full rounded-[30px] p-12 bg-white font-bold text-[1.2rem]">
         {contract?.articles.map((v, i) => {
           return (
@@ -256,7 +305,10 @@ function onDragEnd() {
       ) : (
         <div className="flex flex-col gap-4">
           {/* <span className="text-[1.6rem] font-bold pl-8">1. 기본 특약</span> */}
-          <span className="text-[1.6rem] font-bold pl-8">특약 사항</span>
+          <span className="flex text-[#6000ff] text-[1.1rem] font-semibold justify-end mr-8">
+            <PencilIcon width={1.4} height={1.4} />
+            수정하기
+          </span>
           <ol className="list-decimal list-inside flex flex-col gap-4 w-full rounded-[30px] p-8 bg-white font-medium text-[1.2rem]">
             {contract?.agreements.map((v, i) => {
               return <li key={i}>{v.suggestedRevision}</li>;
@@ -307,15 +359,16 @@ function onDragEnd() {
         clickOutsideClose
         isCenter={false}
       >
+        
         <div className="bg-white w-[90vw] max-w-md rounded-t-[40px] mx-auto"
              style={{ transform: `translateY(${dragY}px)`, transition: dragY === 0 ? 'transform 0.18s cubic-bezier(.4,2,.6,1)' : '' }}>
-            {/* STEP 1: 이메일 입력 */}
-          {sendStep === 1 && (
-            <>
               <div className="mx-auto mt-3 mb-4 w-16 h-1.5 rounded-full bg-gray-300 cursor-pointer active:bg-gray-400"
                    ref={handleRef}
                    onPointerDown={onDragStart}
                    onTouchStart={onDragStart} />
+            {/* STEP 1: 이메일 입력 */}
+          {sendStep === 1 && (
+            <>
               <h3 className="px-6 text-center text-[1.9rem] font-bold mt-8">
                 전송할 이메일 주소를 입력해주세요
               </h3>
@@ -348,7 +401,6 @@ function onDragEnd() {
           {/* STEP 2: 전송 완료 안내 */}
           {sendStep === 2 && (
             <>
-              <div className="mx-auto mt-3 w-16 h-1.5 rounded-full bg-gray-300" />
               <div className="flex items-center px-6 py-5 justify-center">
                 <div className="flex items-center gap-2">
                   <h3 className="text-[1.9rem] font-bold mt-8">
@@ -376,7 +428,7 @@ function onDragEnd() {
                     router.push("/")
                   }}
                 >
-                  홈으로
+                  홈 화면으로
                 </button>
               </div>
             </>
