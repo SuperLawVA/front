@@ -1,6 +1,5 @@
 "use client";
 
-import SubmitButton from "@/components/SubmitButton";
 import { useState } from "react";
 import BackHeader from "@/components/BackHeader";
 import ClockIcon from "@/components/icons/Clock";
@@ -11,6 +10,7 @@ import PaymentIcon from "@/components/icons/Payment";
 import AssetIcon from "@/components/icons/Asset";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import SubmitButton from "@/components/SubmitButton";
 
 function StartPage() {
   const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -266,18 +266,18 @@ function StartPage() {
           ))}
         </ul>
         {tabContents[activeIndex]}
-        <SubmitButton
-          width={10}
-          height={3}
-          fontSize={1}
-          fontWeight={500}
-          fontColor="#6000FF"
-          borderRadius={"50px"}
-          background="#ffffff"
-          borderColor="#6000FF"
-        >
-          원본 보기
-        </SubmitButton>
+                <SubmitButton
+                  width={10}
+                  height={3}
+                  fontSize={1}
+                  fontWeight={500}
+                  fontColor="#6000FF"
+                  borderRadius={"50px"}
+                  background="#ffffff"
+                  borderColor="#6000FF"
+                >
+                  원본 보기
+                </SubmitButton>
         <div
           className="w-full h-[4.5rem] gap-2 flex justify-center items-center text-white text-[1.6rem] font-semibold bg-gradient-to-br from-[#6000FF] via-[#8a00ff] to-[#E100FF] rounded-[50px] mb-12"
           onClick={() => router.push("/chatbot")}

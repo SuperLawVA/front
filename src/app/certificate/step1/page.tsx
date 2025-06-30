@@ -31,9 +31,9 @@ function StartPage() {
         contractId,
         userQuery: purpose + "\n" + story,
       });
-      // console.log("certificate response");
-      // console.log(response);
-      // router.push("step2");
+      router.push("step2")
+      console.log("certificate response");
+      console.log(response);
 
       router.push("result/" + response.data._id);
     } catch (error) {

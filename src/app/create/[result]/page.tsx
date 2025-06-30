@@ -14,6 +14,7 @@ import ExclamationIcon from "@/components/icons/Exclamation";
 import ArrowDownIcon from "@/components/icons/ArrowDownIcon";
 import DivBox from "@/components/DivBox";
 import { useCreateStore } from "@/store/useStore";
+// import clientApi from "@/lib/axios.client";
 
 function ContractCreateNewPage() {
   const router = useRouter();
