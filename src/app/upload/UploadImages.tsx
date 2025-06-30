@@ -7,6 +7,7 @@ import clientApi from "@/lib/axios.client";
 
 interface UploadPageProps {
   setPageOpen: () => void;
+  setIsLoading: (loading: boolean) => void; // ✅ 추가
 }
 
 // ✅ 최대 파일 크기 (5MB)
@@ -59,8 +60,10 @@ async function compressImage(file: File): Promise<File> {
   }
 }
 
-export default function UploadPage({ setPageOpen }: UploadPageProps) {
-  const [isLoading, setIsLoading] = useState(false);
+export default function UploadPage({
+  setPageOpen,
+  setIsLoading,
+}: UploadPageProps) {
   // ✅ 업로드된 이미지 배열 (압축된 파일 + 미리보기 URL)
   const [imageFiles, setImageFiles] = useState<ImageFile[]>([]);
   // ✅ 현재 보고 있는 이미지 index (스와이프용)
@@ -202,7 +205,6 @@ export default function UploadPage({ setPageOpen }: UploadPageProps) {
         setPageOpen();
         alert("업로드 성공");
         setCurrentImageIndex(0);
-        setIsLoading(false);
       } else {
         alert("업로드 실패");
       }

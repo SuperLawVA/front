@@ -1,17 +1,19 @@
 "use client";
 
 import clientApi from "@/lib/axios.client";
-import axios from "axios";
 import React, { useRef, useEffect, useState } from "react";
-import LoadingPage from "./Loading";
 
 interface UploadPageProps {
   goBack: () => void; // 부모에서 상태 관리용 함수
   goNext: () => void; // 부모에서 상태 관리용 함수
+  setIsLoading: (loading: boolean) => void; // ✅ 추가
 }
-
-export default function CameraPage({ goBack, goNext }: UploadPageProps) {
-  const [isLoading, setIsLoading] = useState(false);
+const MAX_IMAGE = 1;
+export default function CameraPage({
+  goBack,
+  goNext,
+  setIsLoading,
+}: UploadPageProps) {
   // 비디오 요소 참조
   const videoRef = useRef<HTMLVideoElement>(null);
   // 캔버스 요소 참조
@@ -136,7 +138,7 @@ export default function CameraPage({ goBack, goNext }: UploadPageProps) {
         // 최신 이미지 맨 앞에 추가, 최대 5장 유지
         setCapturedImages((prev) => {
           const updated = [imageData, ...prev];
-          return updated.slice(0, 5);
+          return updated.slice(0, MAX_IMAGE);
         });
       }
     }
@@ -166,7 +168,6 @@ export default function CameraPage({ goBack, goNext }: UploadPageProps) {
         alert("업로드 성공!");
         setCapturedImages([]);
         goNext(); // 다음 단계로 이동
-        setIsLoading(false);
       } else {
         alert("업로드 실패");
       }
@@ -207,7 +208,6 @@ export default function CameraPage({ goBack, goNext }: UploadPageProps) {
 
   return (
     <>
-      {isLoading && <LoadingPage />}
       <div className="relative w-full h-full">
         {/* 캔버스 (숨김, 촬영용) */}
         <canvas ref={canvasRef} style={{ display: "none" }} />
@@ -253,10 +253,12 @@ export default function CameraPage({ goBack, goNext }: UploadPageProps) {
             <button
               onClick={takePhoto}
               className={`px-6 py-3 bg-white/70 text-black rounded-full pointer-events-${
-                capturedImages.length === 5 ? "none" : "auto"
+                capturedImages.length === MAX_IMAGE ? "none" : "auto"
               }`}
             >
-              {capturedImages.length === 5 ? "최대 5장" : "📸 사진 촬영"}
+              {capturedImages.length === MAX_IMAGE
+                ? `최대 ${MAX_IMAGE}장`
+                : "📸 사진 촬영"}
             </button>
 
             {/* 제출 버튼 */}
@@ -264,10 +266,12 @@ export default function CameraPage({ goBack, goNext }: UploadPageProps) {
             <button
               onClick={handleSubmit}
               className={`px-6 py-3 bg-white/70 text-black rounded-full pointer-events-${
-                capturedImages.length === 5 ? "none" : "auto"
+                capturedImages.length === 0 ? "none" : "auto"
               }`}
             >
-              {capturedImages.length === 5 ? "최대 5장" : "📸 사진 제출"}
+              {capturedImages.length === 0
+                ? `최대 ${MAX_IMAGE}}장`
+                : "📸 사진 제출"}
             </button>
           </div>
 

@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ProgressRing from "@/components/ProgressRing2";
-import SubmitButton from "@/components/SubmitButton";
-import Image from "next/image";
+// import SubmitButton from "@/components/SubmitButton";
+// import Image from "next/image";
 
 function LoadingPage() {
   const router = useRouter();
@@ -40,7 +40,7 @@ function LoadingPage() {
   return (
     <main
       className="min-h-screen min-w-screen flex flex-col items-center px-6 text-center z-50
-    fixed left-1/2 -translate-x-1/2"
+    fixed left-1/2 -translate-x-1/2 bg-white"
     >
       <div>
         {progress <= 100 ? (
@@ -74,10 +74,10 @@ function LoadingPage() {
           doneLabel="완료"
         />
       </div>
-      <div className="fixed bottom-1 mb-20 w-[90%] left-1/2 -translate-x-1/2">
+      {/* <div className="fixed bottom-1 mb-20 w-[90%] left-1/2 -translate-x-1/2">
         {progress < 100 ? (
           <div className="font-bold h-20 bg-[#fefce8] rounded-[20px] pl-5 pt-3 gap-2 text-sm flex items-start">
-            {/* <Image
+            <Image
               src="/warning.png"
               alt="warningIcon"
               width={27}
@@ -90,7 +90,7 @@ function LoadingPage() {
                 본 결과는 법령·사례 기반 학습된 AI로, 잘못된 답변을 낼 수도
                 있습니다.
               </span>
-            </div> */}
+            </div>
           </div>
         ) : (
           <SubmitButton
@@ -103,7 +103,7 @@ function LoadingPage() {
             결과보기
           </SubmitButton>
         )}
-      </div>
+      </div> */}
     </main>
   );
 }

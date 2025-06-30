@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import backendApi from "@/lib/axios.server";
+import axios from "axios";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -19,8 +20,31 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json(response.data._id, {
       status: response.status,
     });
-  } catch (err) {
-    console.error("❌ 업로드 실패", err);
+  } catch (error) {
+    console.log("error");
+
+    if (axios.isAxiosError(error)) {
+      console.error("Axios Error Message:", error.message);
+      console.error("Axios Error Code:", error.code);
+      console.error("Axios Error Config:", error.config);
+      if (error.response) {
+        console.error("Axios Error Response Status:", error.response.status);
+        console.error("Axios Error Response Data:", error.response.data);
+        console.error("Axios Error Response Headers:", error.response.headers);
+        return NextResponse.json(
+          { message: error.response.data },
+          { status: error.response.status }
+        );
+      } else if (error.request) {
+        console.error("Axios Error Request:", error.request);
+      } else {
+        console.error("Axios General Error:", error.message);
+      }
+    } else {
+      console.error("Non-Axios Error:", error);
+    }
+
+    console.error("❌ 업로드 실패", error);
     return NextResponse.json({ message: "업로드 실패" }, { status: 500 });
   }
 };
