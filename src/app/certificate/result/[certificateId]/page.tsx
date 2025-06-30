@@ -50,14 +50,10 @@ export interface Certificate {
   }[];
 }
 
-<<<<<<< HEAD:src/app/certificate/step3/page.tsx
-function CertificateResult() {
-=======
 function CertificatePage(props: {
   params: Promise<{ certificateId: string }>;
 }) {
   const { certificateId } = use(props.params);
->>>>>>> a377e36ce2919429708f89b66e5288b7527e455a:src/app/certificate/result/[certificateId]/page.tsx
   const [openOriginal, setOpenOriginal] = useState(false);
   const [certificate, setCertificate] = useState<Certificate>();
   const [openSend, setOpenSend] = useState(false);
@@ -488,8 +484,4 @@ function CertificatePage(props: {
   );
 }
 
-<<<<<<< HEAD:src/app/certificate/step3/page.tsx
-export default CertificateResult;
-=======
 export default CertificatePage;
->>>>>>> a377e36ce2919429708f89b66e5288b7527e455a:src/app/certificate/result/[certificateId]/page.tsx
