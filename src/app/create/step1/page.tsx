@@ -478,7 +478,8 @@ function ContractCreateNewPage() {
         setIsOpen={setModalOpen}
         clickOutsideClose={true}
       >
-        <div className="mt-20 mb-6 px-8 w-full flex flex-col gap-12">
+        <div className="mx-auto mt-6 w-20 h-1.5 rounded-full bg-gray-300" />
+        <div className="mt-15 mb-6 px-8 w-full flex flex-col gap-12">
           <div className="flex justify-between items-center">
             {activeIndex % 5 === 0 ? (
               <ArrowLeftIcon

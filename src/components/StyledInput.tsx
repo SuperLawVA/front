@@ -9,6 +9,7 @@ export default function StyledInput({
   type = "text",
   lineHeight = 2,
   className,
+  underLine = true,
   ...rest
 }: StyledInputProps) {
   return (
@@ -25,12 +26,14 @@ export default function StyledInput({
         }}
         {...rest}
       />
+      {
+        underLine &&
       <div
         className="mt-[0.6rem] border-[0.09rem] border-gray-400"
         style={{
           width: typeof width === "number" ? `${width}rem` : width,
         }}
-      />
+      />}
     </div>
   );
 }
