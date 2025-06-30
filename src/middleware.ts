@@ -11,7 +11,7 @@ export function middleware(request: NextRequest) {
   const publicPaths = ["/start", "/login", "/register", "/find"];
 
   // 3️⃣ 쿠키에서 토큰 읽기 (쿠키 이름: token)
-  console.log(request.cookies.toString());
+  // console.log(request.cookies.toString());
 
   const token = request.cookies.get("jwt")?.value;
 

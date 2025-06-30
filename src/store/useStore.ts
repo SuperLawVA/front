@@ -13,7 +13,8 @@ interface UserState {
         title: string;
         state: string;
         address: string;
-        createdAt: string;
+        contractDate: string;
+        modifiedDate: string;
       }[];
   recentChat: { _id: string; title: string }[];
 
@@ -62,6 +63,7 @@ export const useAuthStore = createStore<UserState>()(
 // 계약서 작성
 interface CreateState {
   articleAgree: string | null;
+  contractTitle: string | null;
   contractType: "월세" | "전세" | null;
   dates: {
     contractDate: Date | "" | null;
@@ -82,6 +84,8 @@ interface CreateState {
     monthlyRent: number | null | "";
   } | null;
   userQuery: string[];
+  articles: string[];
+  basicAgreements: { reason: string; suggested_revision: string }[];
 }
 
 export const useCreateStore = createStore<CreateState>()(
@@ -90,11 +94,14 @@ export const useCreateStore = createStore<CreateState>()(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (set) => ({
       articleAgree: null,
+      contractTitle: null,
       contractType: null,
       dates: null,
       property: null,
       payment: null,
       userQuery: [],
+      articles: [],
+      basicAgreements: [],
     }),
     {
       name: "createStore",
@@ -106,7 +113,7 @@ export const useCreateStore = createStore<CreateState>()(
 // 내용증명서 작성
 interface CertificateState {
   ContractId: string | null;
-  userQuery: string[];
+  userQuery: string;
 }
 
 export const useCertificateStore = createStore<CertificateState>()(
@@ -115,7 +122,7 @@ export const useCertificateStore = createStore<CertificateState>()(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (set) => ({
       ContractId: null,
-      userQuery: [],
+      userQuery: "",
     }),
     {
       name: "certificateStore",

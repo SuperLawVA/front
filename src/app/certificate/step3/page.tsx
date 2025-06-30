@@ -50,7 +50,7 @@ export interface Certificate {
   }[];
 }
 
-export default function CertificateResult() {
+function CertificateResult() {
   const [openOriginal, setOpenOriginal] = useState(false);
   const [certificate, setCertificate] = useState<Certificate>();
   const [openSend, setOpenSend] = useState(false);
@@ -473,3 +473,5 @@ export default function CertificateResult() {
     </>
   );
 }
+
+export default CertificateResult;

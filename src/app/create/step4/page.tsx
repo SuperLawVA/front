@@ -13,7 +13,6 @@ import QuestionMarkIcon from "@/components/icons/QuestionMark";
 import Image from "next/image";
 import DocumentIcon from "@/components/icons/Document";
 import Modal from "@/components/Modal";
-import ScalesIcon from "@/components/icons/Scales";
 
 function ContractCreateNewPage() {
   const router = useRouter();
@@ -46,14 +45,6 @@ function ContractCreateNewPage() {
   const [openedLaw, setOpenedLaw] = useState<number[]>([]);
 
 
-  const toggleLaw = (idx: number) => {
-  setOpenedLaw(prev =>
-    prev.includes(idx)
-      ? prev.filter(i => i !== idx) // 이미 열려있으면 닫기
-      : [...prev, idx] // 닫혀있으면 열기
-  );
-};
-
   const laws = [
 
   { title: "소득세법 시행령 제122조 제 1항"},
@@ -72,6 +63,18 @@ function ContractCreateNewPage() {
   { title: "조세특례제한법 시행령 제 96조 제 2항"},
   
 ];
+
+  const toggleLaw = (idx: number) => {
+    setOpenedLaw((prev) =>
+      prev.includes(idx)
+        ? prev.filter((i) => i !== idx)
+        : [...prev, idx]
+    );
+  };
+
+  useEffect(() => {
+    if (lawModalOpen) setOpenedLaw([]);
+  }, [lawModalOpen]);
 
   const liArray = userQuery?.map((value, index) => (
     <li
@@ -116,10 +119,7 @@ function ContractCreateNewPage() {
       </div>
     </li>
   ));
-
-  useEffect(() => {
-  if (lawModalOpen) setOpenedLaw([]);
-}, [lawModalOpen]);
+  
 
   return (
     <>
@@ -180,7 +180,7 @@ function ContractCreateNewPage() {
               </span>
             </button>
           </div>
-          <button className="flex-1 flex items-center justify-center px-20 py-5 rounded-[20px] text-[#6000ff] !text-[1.8rem] border border-[#6000ff]">
+          <button className="flex items-center justify-center px-20 py-5 rounded-[20px] text-[#6000ff] !text-[1.8rem] border border-[#6000ff]">
             <DocumentIcon />&nbsp;                
               완성된 계약서 보기
           </button>
@@ -198,8 +198,7 @@ function ContractCreateNewPage() {
     >
         <div className="mx-auto mt-6 mb-4 w-20 h-1.5 rounded-full bg-gray-300" />
         <div className="flex flex-col items-center py-2 px-10 w-full">
-          <span className="px-8 flex gap-2 items-center text-[2rem] font-medium text-center mb-8">
-            <ScalesIcon width={2} height={2} color="#6000FF" />
+          <span className="text-[2rem] font-medium text-center mb-8">
             관련 법률
           </span>
           <div className="w-full max-h-[47rem] overflow-y-auto">

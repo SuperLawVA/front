@@ -1,338 +1,62 @@
 "use client";
 
-// import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { use, useEffect, useRef, useState } from "react";
 import BackHeader from "@/components/BackHeader";
 import InfoIcon from "@/components/icons/Info";
 import ArrowLeftIcon from "@/components/icons/ArrowLeft";
 import ArrowRightIcon from "@/components/icons/ArrowRight";
 import DivBox from "@/components/DivBox";
 import MagnifyingGlassIcon from "@/components/icons/MagnifyingGlass";
-import Article, { Agreement } from "@/app/types/Article";
 import DocumentIcon from "@/components/icons/Document";
 import Modal from "@/components/Modal";
 import QuestionMarkIcon from "@/components/icons/QuestionMark";
 import BookIcon from "@/components/icons/Book";
 import ScalesIcon from "@/components/icons/Scales";
 import ArrowDownIcon from "@/components/icons/ArrowDownIcon";
+import clientApi from "@/lib/axios.client";
+import axios from "axios";
+import Article, { Agreement } from "@/app/types/Article";
 
-function AnalysisResultPage() {
-  // const router = useRouter();
+export function AnalysisResultPage(props: {
+  params: Promise<{ analysisId: string }>;
+}) {
+  const router = useRouter();
   const [modalOpen, setModalOpen] = useState(false);
   const [activeTitle, setActiveTitle] = useState(false);
-  // const [articles, setArticles] = useState<string[]>([]);
   const [articleDetailArrayIndex, setArticleDetailArrayIndex] =
     useState<number>(0);
   const [agreementDetailArrayIndex, setAgreementDetailArrayIndex] =
     useState<number>(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  // const [articles, setArticles] = useState<Article[]>([])
-  const [articles, setArticles] = useState<Article[]>([
-    {
-      result: true,
-      title: "제 6조: 채무불이행과 손해배상",
-      content:
-        "세입자가 계약을 어기면 보증금을 돌려주지 않고, 추가로 월세 2개월치를 배상금으로 낸다",
-      suggestedRevision:
-        "계약 위반으로 실제 손해가 생겼을 시 보증금에서 차감하고, 나머지는 돌려준다",
-      reason:
-        "증금도 안 돌려주고 월세 2개월치까지 더 내라는 건 너무 과해요. 실제 피해보다 훨씬 큰 돈을 요구하는 거예요.",
-      negotiationPoints: "손해 범위를 구체화하여 분쟁 요소를 방지해요.",
-      legalBasis: {
-        lawId: 123,
-        law: "소득세법 시행령 제122조 제 1항",
-      },
-      caseBasis: [
-        {
-          caseId: 1,
-          case: "서울중앙법 2029가합18",
-        },
-        {
-          caseId: 2,
-          case: "부산지법 1818가합18",
-        },
-      ],
-    },
-  ]);
-  // const [agreements, setAgreements] = useState<Agreement[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [agreements, setAgreements] = useState<Agreement[]>([]);
+  const { analysisId } = use(props.params);
 
-  const [agreements, setAgreements] = useState<Agreement[]>([
-    {
-      result: true,
-      content: "임차인은 정당한 사유 없이 계약을 해지할 수 없다",
-      suggestedRevision: "정당한 사유가 있다면 계약 해지가 가능하다",
-      reason: "계약 해지가 불가하면 세입자 권리가 심각하게 제한돼요.",
-      negotiationPoints: "손해 범위를 구체화하여 분쟁 요소를 방지해요.",
-      legalBasis: {
-        lawId: 123,
-        law: "주택임대차보호법 제6조",
-      },
-      caseBasis: [
-        {
-          caseId: 1,
-          case: "서울고법 2028나7890",
-        },
-      ],
-    },
-  ]);
+  const getUserData = async () => {
+    try {
+      const response = await clientApi.post("/analysis", { analysisId });
+      setArticles(response.data.articles as Article[]);
+      setAgreements(response.data.agreements as Agreement[]);
+      // setAgreements(
+      //   Array.isArray(response.data.agreements) ? response.data.agreements : []
+      // );
+
+      // setContract(response.data.contract);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.status === 401) {
+          alert("잘못된 접근입니다!");
+          router.replace("/"); // 이전 페이지로 돌아감
+          return;
+        }
+      }
+    }
+  };
+
   useEffect(() => {
-    setArticles([
-      {
-        result: true,
-        title: "제 6조: 채무불이행과 손해배상",
-        content:
-          "세입자가 계약을 어기면 보증금을 돌려주지 않고, 추가로 월세 2개월치를 배상금으로 낸다",
-        suggestedRevision:
-          "계약 위반으로 실제 손해가 생겼을 시 보증금에서 차감하고, 나머지는 돌려준다",
-        reason:
-          "증금도 안 돌려주고 월세 2개월치까지 더 내라는 건 너무 과해요. 실제 피해보다 훨씬 큰 돈을 요구하는 거예요.",
-        negotiationPoints: "손해 범위를 구체화하여 분쟁 요소를 방지해요.",
-        legalBasis: {
-          lawId: 123,
-          law: "소득세법 시행령 제122조 제 1항",
-        },
-        caseBasis: [
-          {
-            caseId: 1,
-            case: "서울중앙법 2029가합18",
-          },
-          {
-            caseId: 2,
-            case: "부산지법 1818가합18",
-          },
-        ],
-      },
-      {
-        result: false,
-        title: "제 7조: 계약 해지 사유",
-        content: "임차인은 정당한 사유 없이 계약을 해지할 수 없다",
-        suggestedRevision: "정당한 사유가 있다면 계약 해지가 가능하다",
-        reason: "계약 해지가 불가하면 세입자 권리가 심각하게 제한돼요.",
-        negotiationPoints: "손해 범위를 구체화하여 분쟁 요소를 방지해요.",
-        legalBasis: {
-          lawId: 123,
-          law: "주택임대차보호법 제6조",
-        },
-        caseBasis: [
-          {
-            caseId: 1,
-            case: "서울고법 2028나7890",
-          },
-        ],
-      },
-      {
-        result: false,
-        title: "제 6조: 채무불이행과 손해배상",
-        content:
-          "세입자가 계약을 어기면 보증금을 돌려주지 않고, 추가로 월세 2개월치를 배상금으로 낸다",
-        suggestedRevision:
-          "계약 위반으로 실제 손해가 생겼을 시 보증금에서 차감하고, 나머지는 돌려준다",
-        reason:
-          "증금도 안 돌려주고 월세 2개월치까지 더 내라는 건 너무 과해요. 실제 피해보다 훨씬 큰 돈을 요구하는 거예요.",
-        negotiationPoints: "손해 범위를 구체화하여 분쟁 요소를 방지해요.",
-        legalBasis: {
-          lawId: 123,
-          law: "소득세법 시행령 제122조 제 1항",
-        },
-        caseBasis: [
-          {
-            caseId: 1,
-            case: "서울중앙법 2029가합18",
-          },
-          {
-            caseId: 2,
-            case: "부산지법 1818가합18",
-          },
-        ],
-      },
-      {
-        result: true,
-        title: "제 7조: 계약 해지 사유",
-        content: "임차인은 정당한 사유 없이 계약을 해지할 수 없다",
-        suggestedRevision: "정당한 사유가 있다면 계약 해지가 가능하다",
-        reason: "계약 해지가 불가하면 세입자 권리가 심각하게 제한돼요.",
-        negotiationPoints: "손해 범위를 구체화하여 분쟁 요소를 방지해요.",
-        legalBasis: {
-          lawId: 123,
-          law: "주택임대차보호법 제6조",
-        },
-        caseBasis: [
-          {
-            caseId: 1,
-            case: "서울고법 2028나7890",
-          },
-        ],
-      },
-      {
-        result: false,
-        title: "제 6조: 채무불이행과 손해배상",
-        content:
-          "세입자가 계약을 어기면 보증금을 돌려주지 않고, 추가로 월세 2개월치를 배상금으로 낸다",
-        suggestedRevision:
-          "계약 위반으로 실제 손해가 생겼을 시 보증금에서 차감하고, 나머지는 돌려준다",
-        reason:
-          "증금도 안 돌려주고 월세 2개월치까지 더 내라는 건 너무 과해요. 실제 피해보다 훨씬 큰 돈을 요구하는 거예요.",
-        negotiationPoints: "손해 범위를 구체화하여 분쟁 요소를 방지해요.",
-        legalBasis: {
-          lawId: 123,
-          law: "소득세법 시행령 제122조 제 1항",
-        },
-        caseBasis: [
-          {
-            caseId: 1,
-            case: "서울중앙법 2029가합18",
-          },
-          {
-            caseId: 2,
-            case: "부산지법 1818가합18",
-          },
-        ],
-      },
-      {
-        result: true,
-        title: "제 7조: 계약 해지 사유",
-        content: "임차인은 정당한 사유 없이 계약을 해지할 수 없다",
-        suggestedRevision: "정당한 사유가 있다면 계약 해지가 가능하다",
-        reason: "계약 해지가 불가하면 세입자 권리가 심각하게 제한돼요.",
-        negotiationPoints: "손해 범위를 구체화하여 분쟁 요소를 방지해요.",
-        legalBasis: {
-          lawId: 123,
-          law: "주택임대차보호법 제6조",
-        },
-        caseBasis: [
-          {
-            caseId: 1,
-            case: "서울고법 2028나7890",
-          },
-        ],
-      },
-    ]);
-    setAgreements([
-      {
-        result: true,
-        content: "임차인은 정당한 사유 없이 계약을 해지할 수 없다",
-        suggestedRevision: "정당한 사유가 있다면 계약 해지가 가능하다",
-        reason: "계약 해지가 불가하면 세입자 권리가 심각하게 제한돼요.",
-        negotiationPoints: "손해 범위를 구체화하여 분쟁 요소를 방지해요.",
-        legalBasis: {
-          lawId: 123,
-          law: "주택임대차보호법 제6조",
-        },
-        caseBasis: [
-          {
-            caseId: 1,
-            case: "서울고법 2028나7890",
-          },
-        ],
-      },
-      {
-        result: true,
-        content:
-          "세입자가 계약을 어기면 보증금을 돌려주지 않고, 추가로 월세 2개월치를 배상금으로 낸다",
-        suggestedRevision:
-          "계약 위반으로 실제 손해가 생겼을 시 보증금에서 차감하고, 나머지는 돌려준다",
-        reason:
-          "증금도 안 돌려주고 월세 2개월치까지 더 내라는 건 너무 과해요. 실제 피해보다 훨씬 큰 돈을 요구하는 거예요.",
-        negotiationPoints: "손해 범위를 구체화하여 분쟁 요소를 방지해요.",
-        legalBasis: {
-          lawId: 123,
-          law: "소득세법 시행령 제122조 제 1항",
-        },
-        caseBasis: [
-          {
-            caseId: 1,
-            case: "서울중앙법 2029가합18",
-          },
-          {
-            caseId: 2,
-            case: "부산지법 1818가합18",
-          },
-        ],
-      },
-      {
-        result: false,
-        content: "임차인은 정당한 사유 없이 계약을 해지할 수 없다",
-        suggestedRevision: "정당한 사유가 있다면 계약 해지가 가능하다",
-        reason: "계약 해지가 불가하면 세입자 권리가 심각하게 제한돼요.",
-        negotiationPoints: "손해 범위를 구체화하여 분쟁 요소를 방지해요.",
-        legalBasis: {
-          lawId: 123,
-          law: "주택임대차보호법 제6조",
-        },
-        caseBasis: [
-          {
-            caseId: 1,
-            case: "서울고법 2028나7890",
-          },
-        ],
-      },
-      {
-        result: false,
-        content:
-          "세입자가 계약을 어기면 보증금을 돌려주지 않고, 추가로 월세 2개월치를 배상금으로 낸다",
-        suggestedRevision:
-          "계약 위반으로 실제 손해가 생겼을 시 보증금에서 차감하고, 나머지는 돌려준다",
-        reason:
-          "증금도 안 돌려주고 월세 2개월치까지 더 내라는 건 너무 과해요. 실제 피해보다 훨씬 큰 돈을 요구하는 거예요.",
-        negotiationPoints: "손해 범위를 구체화하여 분쟁 요소를 방지해요.",
-        legalBasis: {
-          lawId: 123,
-          law: "소득세법 시행령 제122조 제 1항",
-        },
-        caseBasis: [
-          {
-            caseId: 1,
-            case: "서울중앙법 2029가합18",
-          },
-          {
-            caseId: 2,
-            case: "부산지법 1818가합18",
-          },
-        ],
-      },
-      {
-        result: true,
-        content: "임차인은 정당한 사유 없이 계약을 해지할 수 없다",
-        suggestedRevision: "정당한 사유가 있다면 계약 해지가 가능하다",
-        reason: "계약 해지가 불가하면 세입자 권리가 심각하게 제한돼요.",
-        negotiationPoints: "손해 범위를 구체화하여 분쟁 요소를 방지해요.",
-        legalBasis: {
-          lawId: 123,
-          law: "주택임대차보호법 제6조",
-        },
-        caseBasis: [
-          {
-            caseId: 1,
-            case: "서울고법 2028나7890",
-          },
-        ],
-      },
-      {
-        result: false,
-        content:
-          "세입자가 계약을 어기면 보증금을 돌려주지 않고, 추가로 월세 2개월치를 배상금으로 낸다",
-        suggestedRevision:
-          "계약 위반으로 실제 손해가 생겼을 시 보증금에서 차감하고, 나머지는 돌려준다",
-        reason:
-          "증금도 안 돌려주고 월세 2개월치까지 더 내라는 건 너무 과해요. 실제 피해보다 훨씬 큰 돈을 요구하는 거예요.",
-        negotiationPoints: "손해 범위를 구체화하여 분쟁 요소를 방지해요.",
-        legalBasis: {
-          lawId: 123,
-          law: "소득세법 시행령 제122조 제 1항",
-        },
-        caseBasis: [
-          {
-            caseId: 1,
-            case: "서울중앙법 2029가합18",
-          },
-          {
-            caseId: 2,
-            case: "부산지법 1818가합18",
-          },
-        ],
-      },
-    ]);
-  }, []);
+    getUserData();
+  }, [router]);
 
   const titleArray = ["계약 조항 분석 결과", "특약 사항 분석 결과"].map(
     (value, index) => (
@@ -380,7 +104,7 @@ function AnalysisResultPage() {
     )
   );
 
-  const articleArray = articles?.map(({ title, result }, index) => {
+  const articleArray = articles?.map(({ result, content }, index) => {
     return (
       <li
         key={index}
@@ -403,7 +127,7 @@ function AnalysisResultPage() {
               result ? "32D74B" : "FF9500"
             }]`}
           />
-          {title}
+          {content.split("\n")[0]}
         </span>
 
         {!result && <DocumentIcon width={1.6} height={1.6} color="black" />}
@@ -454,14 +178,13 @@ function AnalysisResultPage() {
   const articleDetailArray = articles?.map(
     (
       {
-        title,
         result,
         content,
         reason,
-        suggestedRevision,
-        negotiationPoints,
-        legalBasis,
-        caseBasis,
+        suggested_revision,
+        negotiation_points,
+        legal_basis,
+        case_basis,
       },
       index
     ) => {
@@ -476,7 +199,7 @@ function AnalysisResultPage() {
               : index === articleFalseArray.at(-1)
               ? "ml-2 mr-[6.5rem]"
               : "mx-2"
-          } rounded-[40px] snap-center align-top bg-white overflow-y-auto max-h-full
+          } rounded-[40px] snap-center align-top bg-white overflow-y-auto max-h-[80svh]
         `}
         >
           <div className="flex flex-col justify-center items-center px-8">
@@ -492,22 +215,24 @@ function AnalysisResultPage() {
               <div className="w-full flex flex-col justify-center items-center gap-4">
                 <div className="w-full text-[1.6rem] text-start">
                   <span className="font-semibold">
-                    {title.split("조")[0] + "조"}
+                    {content.split("\n")[0].split("조")[0] + "조"}
                   </span>
-                  {title.split("조")[1].trim()}
+                  {content.split("\n")[0].split("조")[1].trim()}
                 </div>
                 <div className="w-full flex gap-4 text-[1.2rem] text-black/70 border border-[#F3F4F6] rounded-[20px]">
                   <span className="px-10 flex items-center border border-[#F3F4F6] rounded-[20px] text-[1.2rem] font-semibold">
                     원본
                   </span>
-                  <span className="my-6 text-wrap pr-4">{content}</span>
+                  <span className="my-6 text-wrap pr-4">
+                    {content.split("\n")[1]}
+                  </span>
                 </div>
                 <div className="w-full flex gap-4 bg-main/5 text-[1.2rem] border border-main rounded-[20px]">
                   <div className="px-10 flex items-center bg-main/10 border border-main rounded-[20px] text-main text-[1.2rem] font-semibold">
                     제안
                   </div>
                   <span className="my-6 text-wrap pr-4">
-                    {suggestedRevision}
+                    {suggested_revision}
                   </span>
                 </div>
               </div>
@@ -524,7 +249,7 @@ function AnalysisResultPage() {
                   협상 전략 및 법적 영향
                 </div>
                 <DivBox className="w-full py-6 px-4 text-wrap">
-                  {negotiationPoints}
+                  {negotiation_points}
                 </DivBox>
               </div>
               <div className="w-full flex flex-col gap-4">
@@ -536,7 +261,7 @@ function AnalysisResultPage() {
                   <ArrowDownIcon className="mr-[2.1rem]" />
                 </div>
                 <DivBox className="w-full py-6 px-4 flex justify-between items-center text-wrap">
-                  {legalBasis.law}
+                  {legal_basis?.law}
                   <ArrowDownIcon className="mr-4" />
                 </DivBox>
               </div>
@@ -548,7 +273,7 @@ function AnalysisResultPage() {
                   </div>
                   <ArrowDownIcon className="mr-[2.1rem]" />
                 </div>
-                {caseBasis.map(({ case: caseName }, index) => (
+                {case_basis?.map(({ case: caseName }, index) => (
                   <DivBox
                     key={index}
                     className="w-full py-6 px-4 flex justify-between items-center text-wrap"
@@ -571,10 +296,10 @@ function AnalysisResultPage() {
         result,
         content,
         reason,
-        suggestedRevision,
-        negotiationPoints,
-        legalBasis,
-        caseBasis,
+        suggested_revision,
+        negotiation_points,
+        legal_basis,
+        case_basis,
       },
       index
     ) => {
@@ -583,13 +308,13 @@ function AnalysisResultPage() {
       ) : (
         <div
           key={index}
-          className={`inline-block w-[90%] h-full py-8 mx-2${
+          className={`inline-block w-[90%] h-[80%] py-8 mx-2${
             index === agreementFalseArray[0]
               ? " ml-[6.5rem]"
               : index === agreementFalseArray.at(-1)
               ? " mr-[6.5rem]"
               : ""
-          } rounded-[40px] snap-center align-top bg-white overflow-y-auto max-h-full`}
+          } rounded-[40px] snap-center align-top bg-white overflow-y-auto max-h-[80svh]`}
         >
           <div className="flex flex-col justify-center items-center px-8">
             <div className="w-full flex items-center text-[1.4rem] font-medium text-[#FF9500]">
@@ -617,7 +342,7 @@ function AnalysisResultPage() {
                     제안
                   </div>
                   <span className="my-6 text-wrap pr-4">
-                    {suggestedRevision}
+                    {suggested_revision}
                   </span>
                 </div>
               </div>
@@ -634,7 +359,7 @@ function AnalysisResultPage() {
                   협상 전략 및 법적 영향
                 </div>
                 <DivBox className="w-full py-6 px-4 text-wrap">
-                  {negotiationPoints}
+                  {negotiation_points}
                 </DivBox>
               </div>
               <div className="w-full flex flex-col gap-4">
@@ -646,7 +371,7 @@ function AnalysisResultPage() {
                   <ArrowDownIcon className="mr-[2.1rem]" />
                 </div>
                 <DivBox className="w-full py-6 px-4 flex justify-between items-center text-wrap">
-                  {legalBasis.law}
+                  {legal_basis?.law}
                   <ArrowDownIcon className="mr-4" />
                 </DivBox>
               </div>
@@ -658,12 +383,12 @@ function AnalysisResultPage() {
                   </div>
                   <ArrowDownIcon className="mr-[2.1rem]" />
                 </div>
-                {caseBasis.map(({ case: caseName }, index) => (
+                {case_basis.map(({ case: case_name }, index) => (
                   <DivBox
                     key={index}
                     className="w-full py-6 px-4 flex justify-between items-center text-wrap"
                   >
-                    {caseName}
+                    {case_name}
                     <ArrowDownIcon className="mr-4" />
                   </DivBox>
                 ))}
