@@ -109,9 +109,10 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
           <div className="flex flex-col gap-2">
             주소
             <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {contract?.property.address.length === 0
-                ? "미기재"
-                : contract?.property.address}
+              {typeof contract?.property.address === "string" &&
+              contract?.property.address.length !== 0
+                ? contract?.property.address
+                : "미기재"}
             </span>
           </div>
           <div className="flex flex-col gap-2">
