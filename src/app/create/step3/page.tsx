@@ -63,29 +63,21 @@ function ContractCreateNewPage() {
       setModalOpen(true);
       setIsloading(true);
 
-      const response = await clientApi.post(
-        "/create/generate",
-        {
-          contractData: useCreateStore.getState(),
-          aggrementRequest: {
-            contractType,
-            propertyAddress,
-            deposit,
-            monthlyRent,
-            contractPeriodStart,
-            contractPeriodEnd,
-            userQuery,
-          },
+      const response = await clientApi.post("/create/generate", {
+        contractData: useCreateStore.getState(),
+        aggrementRequest: {
+          contractType,
+          propertyAddress,
+          deposit,
+          monthlyRent,
+          contractPeriodStart,
+          contractPeriodEnd,
+          userQuery,
         },
-        {
-          headers: {
-            "Content-Type": "application/json", // JSON 데이터 전송
-          },
-        }
-      );
+      });
       if (response && response.status === 200) {
-        setIsloading(false);
         router.push("/contract/" + response.data.id);
+        setIsloading(false);
       } else {
         alert("응답이 실패했습니다. 다시 시도해 주세요.");
       }
@@ -437,7 +429,6 @@ function ContractCreateNewPage() {
           </>
         ) : (
           <div className="flex justify-center items-center w-[100%] h-full p-8 rounded-[40px] bg-white text-[2rem] text-center">
-            {/* 로딩 중입니다. 잠시 기다려주시기 바랍니다. */}
             <LoadingPage />
           </div>
         )}

@@ -23,9 +23,6 @@ export async function POST(req: NextRequest) {
     );
     const answer = response.data;
 
-    console.log("answer");
-    console.log(answer);
-
     // 4️⃣ 응답 성공 처리
     return NextResponse.json(answer);
   } catch (error) {

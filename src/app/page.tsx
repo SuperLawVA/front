@@ -86,6 +86,7 @@ function MainPage() {
   };
 
   useEffect(() => {
+    sessionStorage.clear();
     getUserData();
   }, []);
 
@@ -201,49 +202,54 @@ function MainPage() {
                   </span>
                 </>
               ) : (
-                contractArray.map((contract) => {
-                  return (
-                    <li
-                      key={contract._id}
-                      onClick={() => {
-                        router.push(`/contract/${contract._id}`);
-                      }}
-                      className="flex items-center gap-4 py-4 px-8 w-full border-[1.5px] border-[#c6c6c8] rounded-[20px] text-[1.2rem] font-medium"
-                    >
-                      <QuickButton
-                        bgc="rgba(96, 0, 255, 0.5)"
-                        icon={<DocumentIcon />}
-                      />
-                      <div className="flex justify-between w-full">
-                        <div className="flex flex-col gap-[0.2rem] text-[#737373] text-[0.8rem] font-medium">
-                          <span className="text-[1.2rem] text-black">
-                            {contract.contractTitle}
-                          </span>
-                          <span className="text-[1rem]">
-                            {contract.address ?? "미기재"}
-                          </span>
-                          <span>
-                            {(contract.createdDate as string).split("T")[0]}{" "}
-                            등록
-                          </span>
-                        </div>
-                        <SubmitButton
-                          width={4}
-                          height={2}
-                          fontSize={0.8}
-                          fontWeight={500}
-                          fontColor={contract.generated ? "#3c82f6" : "#eff6ff"}
-                          borderRadius={"50px"}
-                          background={
-                            contract.generated ? "#eff6ff" : "#3c82f6"
-                          }
-                          borderColor={
-                            contract.generated ? "#3c82f6" : "#eff6ff"
-                          }
-                        >
-                          {contract.generated ? "생성됨" : "OCR"}
-                        </SubmitButton>
-                        {/* <SubmitButton
+                contractArray &&
+                contractArray.map(
+                  ({
+                    _id,
+                    generated,
+                    contractTitle,
+                    property,
+                    createdDate,
+                  }) => {
+                    return (
+                      <li
+                        key={_id}
+                        onClick={() => {
+                          router.push(`/contract/${_id}`);
+                        }}
+                        className="flex items-center gap-4 py-4 px-8 w-full border-[1.5px] border-[#c6c6c8] rounded-[20px] text-[1.2rem] font-medium"
+                      >
+                        <QuickButton
+                          bgc="rgba(96, 0, 255, 0.5)"
+                          icon={<DocumentIcon />}
+                        />
+                        <div className="flex justify-between w-full">
+                          <div className="flex flex-col gap-[0.2rem] text-[#737373] text-[0.8rem] font-medium">
+                            <span className="text-[1.2rem] text-black">
+                              {contractTitle}
+                            </span>
+                            <span className="text-[1rem]">
+                              {property.address.length === 0
+                                ? "주소 미기재"
+                                : property.address}
+                            </span>
+                            <span>
+                              {(createdDate as string).split("T")[0]} 등록
+                            </span>
+                          </div>
+                          <SubmitButton
+                            width={4}
+                            height={2}
+                            fontSize={0.8}
+                            fontWeight={500}
+                            fontColor={generated ? "#3c82f6" : "#eff6ff"}
+                            borderRadius={"50px"}
+                            background={generated ? "#eff6ff" : "#3c82f6"}
+                            borderColor={generated ? "#3c82f6" : "#eff6ff"}
+                          >
+                            {generated ? "생성됨" : "OCR"}
+                          </SubmitButton>
+                          {/* <SubmitButton
                            width={4}
                            height={2}
                            fontSize={0.8}
@@ -255,10 +261,11 @@ function MainPage() {
                          >
                            {contract.state}
                          </SubmitButton> */}
-                      </div>
-                    </li>
-                  );
-                })
+                        </div>
+                      </li>
+                    );
+                  }
+                )
               )}
               <SubmitButton
                 width={10}
@@ -278,19 +285,20 @@ function MainPage() {
           <div className="self-start w-full font-semibold text-[1.8rem] px-8 flex flex-col gap-4">
             최근 상담 내용
             <ul className="flex flex-col justify-center items-center gap-4">
-              {chats.map(({ _id, chatTitle }) => (
-                <li
-                  key={_id}
-                  className="flex py-4 justify-between items-center w-full border-[1.5px] border-[#c6c6c8] rounded-[20px] px-[1.5rem]"
-                  onClick={() => router.push("/chatbot/" + _id)}
-                >
-                  <span className="flex items-center gap-4 text-[1.2rem] font-medium">
-                    <ChatIcon color="#6000FF" />
-                    {chatTitle}
-                  </span>
-                  <ArrowRightIcon className="flex justify-self-end" />
-                </li>
-              ))}
+              {chats &&
+                chats.map(({ _id, chatTitle }) => (
+                  <li
+                    key={_id}
+                    className="flex py-4 justify-between items-center w-full border-[1.5px] border-[#c6c6c8] rounded-[20px] px-[1.5rem]"
+                    onClick={() => router.push("/chatbot/" + _id)}
+                  >
+                    <span className="flex items-center gap-4 text-[1.2rem] font-medium">
+                      <ChatIcon color="#6000FF" />
+                      {chatTitle}
+                    </span>
+                    <ArrowRightIcon className="flex justify-self-end pointer-events-none" />
+                  </li>
+                ))}
               <SubmitButton
                 width={10}
                 height={3}

@@ -12,6 +12,7 @@ import { AnalysisTarget } from "../types/Main";
 import Image from "next/image";
 import { useAuthStore } from "@/store/useStore";
 import clientApi from "@/lib/axios.client";
+import LoadingPage from "./Loading";
 
 function AnalysisPage() {
   const router = useRouter();
@@ -24,6 +25,7 @@ function AnalysisPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [select, setSelect] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isloading, setIsloading] = useState(false);
 
   function formatISOToDateTime(isoString: string): string {
     const date = new Date(isoString);
@@ -67,14 +69,25 @@ function AnalysisPage() {
   // 분석 요청 정보
   const analysisRequest = async (contractId: string) => {
     try {
+      alert("제출되었습니다. 잠시 기다려 주세요.");
+      setModalOpen(true);
+      setIsloading(true);
       const response = await clientApi.post("/analysis/generate", {
         contractId,
       });
 
-      router.push("analysis/" + response.data._id);
+      if (response && response.status === 200) {
+        router.push("analysis/" + response.data._id);
+        setIsloading(false);
+      } else {
+        alert("응답이 실패했습니다. 다시 시도해 주세요.");
+      }
     } catch (error) {
-      console.error("Failed to fetch contracts:", error);
+      console.error("Generate error:", error);
       return undefined;
+    } finally {
+      setModalOpen(false);
+      setIsloading(false);
     }
   };
 
@@ -249,6 +262,11 @@ function AnalysisPage() {
                 계약서 업로드로 이동
               </SubmitButton>
             </div>
+          </div>
+        )}
+        {isloading && (
+          <div className="z-50 flex justify-center items-center w-[100%] h-full p-8 rounded-[40px] bg-white text-[2rem] text-center">
+            <LoadingPage />
           </div>
         )}
       </Modal>

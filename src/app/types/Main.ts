@@ -2,7 +2,7 @@ export interface Contract {
   _id?: string;
   contractTitle?: string;
   state?: string;
-  address?: string;
+  property: { address: string };
   createdAt?: string;
   generated?: boolean;
   contractType?: string;

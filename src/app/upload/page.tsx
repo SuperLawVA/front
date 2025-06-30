@@ -184,7 +184,10 @@ function StartPage() {
                 fontColor="#1e1e1e"
                 background="white"
                 borderColor="#5c5c5c"
-                onClick={() => router.push("/")}
+                onClick={() => {
+                  sessionStorage.removeItem("contractId");
+                  router.push("/");
+                }}
               >
                 홈 화면으로
               </SubmitButton>
@@ -193,7 +196,11 @@ function StartPage() {
                 height={5}
                 fontSize={1.6}
                 fontWeight={500}
-                onClick={() => router.push("contract")}
+                onClick={() => {
+                  const contractId = sessionStorage.getItem("contractId");
+                  sessionStorage.removeItem("contractId");
+                  router.push("/contract/" + contractId);
+                }}
               >
                 계약서 확인
               </SubmitButton>

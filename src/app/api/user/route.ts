@@ -20,7 +20,6 @@ export async function POST(req: NextRequest) {
     //   });
 
     //   const { contract } = res.data; // Spring Boot가 반환한 JWT
-    console.log(sessions.data);
 
     return NextResponse.json(
       {

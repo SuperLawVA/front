@@ -194,7 +194,9 @@ function AnalysisResultPage(props: {
         <div
           key={index}
           className={`inline-block w-[90%] h-full py-8 ${
-            index === articleFalseArray[0]
+            articleFalseArray.length === 1
+              ? "mx-[3.5rem]"
+              : index === articleFalseArray[0]
               ? "ml-[6.5rem] mr-2"
               : index === articleFalseArray.at(-1)
               ? "ml-2 mr-[6.5rem]"
@@ -308,12 +310,14 @@ function AnalysisResultPage(props: {
       ) : (
         <div
           key={index}
-          className={`inline-block w-[90%] h-[80%] py-8 mx-2${
-            index === agreementFalseArray[0]
-              ? " ml-[6.5rem]"
+          className={`inline-block w-[90%] h-[80%] py-8 ${
+            agreementFalseArray.length === 1
+              ? "mx-[3.5rem]"
+              : index === agreementFalseArray[0]
+              ? " ml-[6.5rem] mr-2"
               : index === agreementFalseArray.at(-1)
-              ? " mr-[6.5rem]"
-              : ""
+              ? "ml-2 mr-[6.5rem]"
+              : "mx-2"
           } rounded-[40px] snap-center align-top bg-white overflow-y-auto max-h-[80svh]`}
         >
           <div className="flex flex-col justify-center items-center px-8">
