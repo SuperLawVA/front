@@ -8,7 +8,7 @@ export default interface Contract {
   contractType: string;
   contractTitle: string;
   generationTime: number;
-  __v: number;
+  _v: number;
   userQuery: string[];
   contractMetadata: {
     model: string;
@@ -49,15 +49,15 @@ export default interface Contract {
     monthlyRentDate: string;
     paymentPlan: string;
   };
-  articles: any[]; // articles의 상세 타입이 필요하면 추가 정의
+  articles: string[]; // articles의 상세 타입이 필요하면 추가 정의
   agreements: Agreement[];
   basicAgreements: BasicAgreements[];
 }
 
 export interface BasicAgreements {
   reason: string;
-  suggested_revision: string;
+  suggestedRevision: string;
 }
 export interface Agreement extends BasicAgreements {
-  negotiation_points: string;
+  negotiationPoints: string;
 }

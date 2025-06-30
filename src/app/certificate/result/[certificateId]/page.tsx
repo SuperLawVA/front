@@ -2,7 +2,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton";
 import BackHeader from "@/components/BackHeader";
@@ -11,11 +11,11 @@ import AnalysisIcon from "@/components/icons/Analysis";
 import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 import Modal from "@/components/Modal";
 import ScalesIcon from "@/components/icons/Scales";
-import axios from "axios";
+import clientApi from "@/lib/axios.client";
 
 export interface Certificate {
   _id: string; // 고유 ID (문자열)
-  userId: number; // 사용자 ID
+  userId: string; // 사용자 ID
   contractId: string; // 연관 계약 ID
   createdDate: string; // ISO 문자열
   title: string; // 제목
@@ -50,33 +50,39 @@ export interface Certificate {
   }[];
 }
 
+<<<<<<< HEAD:src/app/certificate/step3/page.tsx
 function CertificateResult() {
+=======
+function CertificatePage(props: {
+  params: Promise<{ certificateId: string }>;
+}) {
+  const { certificateId } = use(props.params);
+>>>>>>> a377e36ce2919429708f89b66e5288b7527e455a:src/app/certificate/result/[certificateId]/page.tsx
   const [openOriginal, setOpenOriginal] = useState(false);
   const [certificate, setCertificate] = useState<Certificate>();
   const [openSend, setOpenSend] = useState(false);
-  const [sendStep, setSendStep] = useState<1 | 2>(1); 
-  const [email, setEmail] = useState('');
+  const [sendStep, setSendStep] = useState<1 | 2>(1);
+  const [email, setEmail] = useState("");
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const router = useRouter();
-  
-  
+
   useEffect(() => {
-    const getCertificate = async (
-      contractId: string,
-      certificateId: string
-    ) => {
-      const response = await axios.post("/api/certificate/result", {
-        contractId,
+    const getCertificate = async () => {
+      const response = await clientApi.post("/certificate", {
         certificateId,
       });
+      console.log("response");
+      console.log(response);
+      console.log("response.data");
+      console.log(response.data);
 
       if (response.data) {
         setCertificate(response.data);
       }
     };
 
-    getCertificate("101", "123");
+    getCertificate();
   }, []);
 
   return (
@@ -292,7 +298,7 @@ function CertificateResult() {
           ))}
         </ul>
       </Modal>
-       <Modal
+      <Modal
         isOpen={openSend}
         setIsOpen={setOpenSend}
         clickOutsideClose
@@ -326,14 +332,14 @@ function CertificateResult() {
 
               {/* 다음 버튼 */}
               <div className="px-6 mt-6 ml-4 mb-15 ">
-                  <SubmitButton
-                    width={30}
-                    height={5}
-                    disabled={!emailValid}
-                    onClick={() => setSendStep(2)}
-                  >
-                    다음
-                  </SubmitButton>
+                <SubmitButton
+                  width={30}
+                  height={5}
+                  disabled={!emailValid}
+                  onClick={() => setSendStep(2)}
+                >
+                  다음
+                </SubmitButton>
               </div>
             </>
           )}
@@ -344,7 +350,9 @@ function CertificateResult() {
               {/* 헤더 */}
               <div className="flex items-center px-6 py-5 justify-center">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-[1.9rem] font-bold mt-8">내용증명서 발송이 완료되었습니다</h3>
+                  <h3 className="text-[1.9rem] font-bold mt-8">
+                    내용증명서 발송이 완료되었습니다
+                  </h3>
                 </div>
               </div>
               <div className="flex items-center justify-center">
@@ -360,19 +368,21 @@ function CertificateResult() {
 
               {/* 버튼 */}
               <div className="grid grid-cols-2 gap-8 px-6 pb-8 text-[1.6rem]">
-                <button className="
+                <button
+                  className="
                     w-[160px] h-[50px] border border-gray-600
                     rounded-[40px] -ml-4"
                   onClick={() => setOpenSend(false)}
                 >
                   다시 전송하기
                 </button>
-                <button className="
+                <button
+                  className="
                     w-[160px] h-[50px] border-none bg-[#6000FF]
-                    rounded-[40px] text-white"               
-                    onClick={() => {
-                      router.push("/")
-                    }}
+                    rounded-[40px] text-white"
+                  onClick={() => {
+                    router.push("/");
+                  }}
                 >
                   홈 화면으로
                 </button>
@@ -381,7 +391,7 @@ function CertificateResult() {
           )}
         </div>
       </Modal>
-       <Modal
+      <Modal
         isOpen={openSend}
         setIsOpen={setOpenSend}
         clickOutsideClose
@@ -415,14 +425,14 @@ function CertificateResult() {
 
               {/* 다음 버튼 */}
               <div className="px-6 mt-6 ml-4 mb-15 ">
-                  <SubmitButton
-                    width={30}
-                    height={5}
-                    disabled={!emailValid}
-                    onClick={() => setSendStep(2)}
-                  >
-                    다음
-                  </SubmitButton>
+                <SubmitButton
+                  width={30}
+                  height={5}
+                  disabled={!emailValid}
+                  onClick={() => setSendStep(2)}
+                >
+                  다음
+                </SubmitButton>
               </div>
             </>
           )}
@@ -433,7 +443,9 @@ function CertificateResult() {
               {/* 헤더 */}
               <div className="flex items-center px-6 py-5 justify-center">
                 <div className="flex items-center gap-2">
-                  <h3 className="text-[1.9rem] font-bold mt-8">내용증명서 발송이 완료되었습니다</h3>
+                  <h3 className="text-[1.9rem] font-bold mt-8">
+                    내용증명서 발송이 완료되었습니다
+                  </h3>
                 </div>
               </div>
               <div className="flex items-center justify-center">
@@ -449,19 +461,21 @@ function CertificateResult() {
 
               {/* 버튼 */}
               <div className="grid grid-cols-2 gap-8 px-6 pb-8 text-[1.6rem]">
-                <button className="
+                <button
+                  className="
                     w-[160px] h-[50px] border border-gray-600
                     rounded-[40px] -ml-4"
                   onClick={() => setOpenSend(false)}
                 >
                   다시 전송하기
                 </button>
-                <button className="
+                <button
+                  className="
                     w-[160px] h-[50px] border-none bg-[#6000FF]
-                    rounded-[40px] text-white"               
-                    onClick={() => {
-                      router.push("/")
-                    }}
+                    rounded-[40px] text-white"
+                  onClick={() => {
+                    router.push("/");
+                  }}
                 >
                   홈 화면으로
                 </button>
@@ -474,4 +488,8 @@ function CertificateResult() {
   );
 }
 
+<<<<<<< HEAD:src/app/certificate/step3/page.tsx
 export default CertificateResult;
+=======
+export default CertificatePage;
+>>>>>>> a377e36ce2919429708f89b66e5288b7527e455a:src/app/certificate/result/[certificateId]/page.tsx

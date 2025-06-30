@@ -108,9 +108,7 @@ function onDragEnd() {
           납부일
         </span>
         <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-          {contract?.payment.monthlyRentDate.length === 0
-            ? "미기재"
-            : contract?.payment.monthlyRentDate}
+          {contract?.payment.monthlyRentDate ?? "미기재"}
         </span>
       </div>
       <div className="flex flex-col gap-2">
@@ -119,9 +117,7 @@ function onDragEnd() {
           주소
         </span>
         <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-          {contract?.property.address.length === 0
-            ? "미기재"
-            : contract?.property.address}
+          {contract?.property.address ?? "미기재"}
         </span>
       </div>
       <div className="flex flex-col gap-2">
@@ -130,9 +126,7 @@ function onDragEnd() {
           상세 주소
         </span>
         <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-          {contract?.property.detailAddress.length === 0
-            ? "미기재"
-            : contract?.property.detailAddress}
+          {contract?.property.detailAddress ?? "미기재"}
         </span>
       </div>
     </div>,
@@ -155,33 +149,25 @@ function onDragEnd() {
           <div className="flex flex-col gap-2">
             상세 주소
             <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {contract?.property.detailAddress.length === 0
-                ? "미기재"
-                : contract?.property.detailAddress}
+              {contract?.property.detailAddress ?? "미기재"}
             </span>
           </div>
           <div className="flex flex-col gap-2">
             면적
             <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {contract?.property.building.buildingArea.length === 0
-                ? "미기재"
-                : contract?.property.building.buildingArea}
+              {contract?.property.building.buildingArea ?? "미기재"}
             </span>
           </div>
           <div className="flex flex-col gap-2">
             구조
             <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {contract?.property.building.buildingConstructure.length === 0
-                ? "미기재"
-                : contract?.property.building.buildingConstructure}
+              {contract?.property.building.buildingConstructure ?? "미기재"}
             </span>
           </div>
           <div className="flex flex-col gap-2">
             용도
             <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {contract?.property.building.buildingConstructure.length === 0
-                ? "미기재"
-                : contract?.property.building.buildingConstructure}
+              {contract?.property.building.buildingConstructure ?? "미기재"}
             </span>
           </div>
         </div>
@@ -251,7 +237,7 @@ function onDragEnd() {
             <span className="text-[1.6rem] font-bold pl-8">기본 특약 사항</span>
             <ol className="list-decimal list-inside flex flex-col gap-4 w-full rounded-[30px] p-8 bg-white font-medium text-[1.2rem]">
               {contract?.basicAgreements.map((v, i) => {
-                return <li key={i}>{v.suggested_revision}</li>;
+                return <li key={i}>{v.suggestedRevision}</li>;
               })}
             </ol>
           </div>
@@ -262,7 +248,7 @@ function onDragEnd() {
             </span>
             <ol className="list-decimal list-inside flex flex-col gap-4 w-full rounded-[30px] p-8 bg-white font-medium text-[1.2rem]">
               {contract?.agreements.map((v, i) => {
-                return <li key={i}>{v.suggested_revision}</li>;
+                return <li key={i}>{v.suggestedRevision}</li>;
               })}
             </ol>
           </div>
@@ -273,7 +259,7 @@ function onDragEnd() {
           <span className="text-[1.6rem] font-bold pl-8">특약 사항</span>
           <ol className="list-decimal list-inside flex flex-col gap-4 w-full rounded-[30px] p-8 bg-white font-medium text-[1.2rem]">
             {contract?.agreements.map((v, i) => {
-              return <li key={i}>{v.suggested_revision}</li>;
+              return <li key={i}>{v.suggestedRevision}</li>;
             })}
           </ol>
         </div>

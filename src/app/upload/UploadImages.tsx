@@ -3,16 +3,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSwipeable } from "react-swipeable";
 import imageCompression from "browser-image-compression";
-import axios from "axios";
+import clientApi from "@/lib/axios.client";
 
 interface UploadPageProps {
   setPageOpen: () => void;
 }
 
 // ✅ 최대 파일 크기 (5MB)
-const MAX_FILE_SIZE = 5 * 1024 * 1024;
+// const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const MAX_FILE_SIZE = 10 * 1024 * 1024;
 // ✅ 업로드 허용 최대 개수
-const MAX_FILES = 5;
+// const MAX_FILES = 5;
+const MAX_FILES = 1;
 
 // ✅ 이미지 파일 타입 정의: 실제 File + 미리보기 URL
 interface ImageFile {
@@ -90,13 +92,15 @@ export default function UploadPage({ setPageOpen }: UploadPageProps) {
     for (const file of selectedFiles) {
       // 새로 추가한 것만으로 MAX_FILES 다 차면 멈춤
       if (newValidImages.length === MAX_FILES) {
-        alert("최대 5개 이미지까지 업로드 가능합니다.");
+        // alert("최대 5개 이미지까지 업로드 가능합니다.");
+        alert("최대 1개 이미지까지 업로드 가능합니다.");
         break;
       }
 
       // 크기 검사
       if (file.size > MAX_FILE_SIZE) {
-        alert(`${file.name}은 5MB 초과`);
+        // alert(`${file.name}은 5MB 초과`);
+        alert(`${file.name}은 10MB 초과`);
         continue;
       }
 
@@ -186,11 +190,7 @@ export default function UploadPage({ setPageOpen }: UploadPageProps) {
     });
 
     try {
-      const res = await axios.post("api/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const res = await clientApi.post("/upload", formData);
 
       if (res.status === 200) {
         imageFiles.forEach((img) => URL.revokeObjectURL(img.previewUrl));
@@ -216,33 +216,35 @@ export default function UploadPage({ setPageOpen }: UploadPageProps) {
 
   return (
     <main className="p-8 w-svw h-full">
-      <h1 className="text-[1.7rem] font-bold mb-4 text-center">이미지 업로드</h1>
+      <h1 className="text-[1.7rem] font-bold mb-4 text-center">
+        이미지 업로드
+      </h1>
       {/* 수정해보았습니다 */}
       {/* 파일 선택 버튼 */}
-        <button
-          type="button"
-          onClick={() => fileInputRef.current?.click()}
-          className="!text-[1.2rem] ml-2"
-        >
-          파일 선택
-        </button>
+      <button
+        type="button"
+        onClick={() => fileInputRef.current?.click()}
+        className="!text-[1.2rem] ml-2"
+      >
+        파일 선택
+      </button>
 
-        {/* 숨겨진 input */}
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-          ref={fileInputRef}
-          style={{ display: "none" }}
-          onChange={handleFileChange}
-        />
+      {/* 숨겨진 input */}
+      <input
+        type="file"
+        accept="image/*"
+        multiple
+        ref={fileInputRef}
+        style={{ display: "none" }}
+        onChange={handleFileChange}
+      />
 
-        {/* 선택된 파일 없음 메시지 */}
-        {imageFiles.length === 0 && (
-          <p className="text-[1.1rem] text-gray-500 absolute ml-2">
-            선택된 파일 없음
-          </p>
-        )}
+      {/* 선택된 파일 없음 메시지 */}
+      {imageFiles.length === 0 && (
+        <p className="text-[1.1rem] text-gray-500 absolute ml-2">
+          선택된 파일 없음
+        </p>
+      )}
       <p className="text-[1.1rem] ml-[17rem] text-gray-500 mb-4">
         (최대 {MAX_FILES}개 파일, 각 5MB 이하, 현재 {imageFiles.length}개)
       </p>

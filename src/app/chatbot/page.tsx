@@ -5,9 +5,24 @@ import SubmitButton from "@/components/SubmitButton";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import MagicIcon from "@/components/icons/Magic";
+import clientApi from "@/lib/axios.client";
 
 function StartPage() {
   const router = useRouter();
+
+  // 분석 요청 정보
+  const createSession = async () => {
+    try {
+      const response = await clientApi.post("/chatbot/start", {});
+      console.log("chatbot response");
+      console.log(response);
+
+      router.push("chatbot/" + response.data._id);
+    } catch (error) {
+      console.error("Failed to fetch contracts:", error);
+      return undefined;
+    }
+  };
 
   return (
     <>
@@ -44,7 +59,8 @@ function StartPage() {
           height={5.5}
           fontSize={1.8}
           className="mt-10 flex items-center justify-center gap-x-2 whitespace-nowarp"
-          onClick={() => router.push("/chatbot/step1")}
+          // onClick={() => router.push("/chatbot/step1")}
+          onClick={createSession}
         >
           생성하기
         </SubmitButton>

@@ -110,54 +110,54 @@ function ContractCreateNewPage() {
   const basicAgreements = [
     {
       reason: "특약 1 (중개수수료 분담)",
-      suggested_revision: "임대인과 임차인은 중개수수료를 50%씩 부담한다.",
+      suggestedRevision: "임대인과 임차인은 중개수수료를 50%씩 부담한다.",
     },
     {
       reason: "특약 2 (임대료 인상 제한)",
-      suggested_revision:
+      suggestedRevision:
         "임대인의 동의 없이 임대료를 일방적으로 인상할 수 없으며, 계약 갱신 시 임대료 인상률은 5% 이내로 제한한다.",
     },
     {
       reason: "특약 3 (보증금 반환)",
-      suggested_revision:
+      suggestedRevision:
         "보증금은 임차인 퇴거 후 원상복구 확인 후 7일 이내에 은행이자를 가산하여 반환한다.",
     },
     {
       reason: "특약 4 (시설 수리비 부담)",
-      suggested_revision:
+      suggestedRevision:
         "에어컨, 보일러, 온수기 등 기본 시설의 고장 및 수리비는 임대인이 부담한다.",
     },
     {
       reason: "특약 5 (입주 전 정비)",
-      suggested_revision:
+      suggestedRevision:
         "입주 전 도배, 장판 교체 및 기본 청소는 임대인이 부담한다.",
     },
     {
       reason: "특약 6 (관리비 부담)",
-      suggested_revision:
+      suggestedRevision:
         "관리비 중 공용전기료, 엘리베이터 유지비, 경비비는 별도 부담하며, 수도, 전기, 가스 요금은 임차인이 직접 납부한다.",
     },
     {
       reason: "특약 7 (계약 해지 통지)",
-      suggested_revision: "중도 해지 시 상대방에게 2개월 전 서면으로 통지한다.",
+      suggestedRevision: "중도 해지 시 상대방에게 2개월 전 서면으로 통지한다.",
     },
     {
       reason: "특약 8 (원상복구 의무)",
-      suggested_revision:
+      suggestedRevision:
         "임차인의 고의 또는 과실로 인한 손상을 제외하고는 자연적 손모는 원상복구 의무를 면제한다.",
     },
     {
       reason: "특약 9 (화재보험 가입)",
-      suggested_revision: "화재보험 가입 및 보험료는 임대인이 부담한다.",
+      suggestedRevision: "화재보험 가입 및 보험료는 임대인이 부담한다.",
     },
     {
       reason: "특약 10 (행정절차 협조)",
-      suggested_revision:
+      suggestedRevision:
         "전입신고 및 확정일자 취득에 필요한 서류 제공 등 임대인이 적극 협조한다.",
     },
     {
       reason: "특약 11 (법령 준수)",
-      suggested_revision:
+      suggestedRevision:
         "본 계약서에 명시되지 않은 사항은 주택임대차보호법 등 관련 법령에 따른다.",
     },
   ];
@@ -330,7 +330,7 @@ function ContractCreateNewPage() {
                   {/* 펼쳐졌을 때만 내용 표시 */}
                   {opened.includes(idx) && (
                     <div className="px-6 py-6 bg-[#fafafd] rounded-b-[20px] text-[1.2rem] text-gray-700 border-t border-[#ededed] animate-fadein">
-                      {term.suggested_revision}
+                      {term.suggestedRevision}
                     </div>
                   )}
                 </li>

@@ -1,8 +1,12 @@
 "use client";
 
-import { useRef, useState, FormEvent } from "react";
+import { useRef, useState, FormEvent, use } from "react";
 import Image from "next/image";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import clientApi from "@/lib/axios.client";
+import axios from "axios";
+import SendArrowIcon from "@/components/icons/SendArrow";
 
 type AnswerFormat = {
   summary: string;
@@ -12,50 +16,80 @@ type AnswerFormat = {
 };
 type Msg = { role: "user" | "assistant"; text: string | AnswerFormat };
 
-function getAssistantAnswer(q: string): AnswerFormat {
-  // 이 부분은 실제로는 AI 모델을 호출하거나, 백엔드 API를 통해 답변을 받아오는 로직이 들어가야 합니다.
-  // build용 Log
-  console.log(q);
-
-  return {
-    summary:
-      "임대차 보증금을 돌려받지 못한 상황으로, 이는 임대차 계약에 따른 보증금 반환 문제로 인해 발생한 것으로 이해하겠습니다.",
-    law: "관련 법률인 '임대차 보증금 반환'에 관한 법률을 확인하여 보증금 반환 절차 및 조건을 파악하고, 이를 토대로 상대방과 협의해 보증금 반환을 요구할 수 있습니다.",
-    caseExample:
-      "판례를 통해 유사한 상황에서 어떻게 보증금 반환이 이루어졌는지 확인하고, 해당 사례를 참고하여 대응 방안을 모색할 수 있습니다.",
-    term: "임대차 보증금이란 임대인이 임차인에게 임대차 계약을 체결할 때 요구하는 금액으로, 임차인이 임대료를 손상시키거나 임대차 계약을 위반할 경우 보상으로 사용하는 금액입니다.",
-  };
-}
-
-function ChatbotPage() {
-  const [messages, setMessages] = useState<Msg[]>([
-    {
-      role: "assistant",
-      text: "안녕하세요! 일상에서 마주치는 법률 고민,\n혼자 해결하기 어려우셨죠?\n\n**부동산 관련 고민**을 실제 판례와 법령을 바탕으로 친절하게 해결해 드릴게요!",
-    },
-  ]);
+function ChatBotPage(props: { params: Promise<{ mongoSessionId: string }> }) {
+  const router = useRouter();
+  const { mongoSessionId } = use(props.params);
+  const [messages, setMessages] = useState<Msg[]>([]);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const endRef = useRef<HTMLDivElement>(null);
 
   async function sendMessage(text: string) {
-    setMessages((m) => [...m, { role: "user", text }]);
     setLoading(true);
+    setMessages((m) => [...m, { role: "user", text }]);
+
+    const { data } = await clientApi.post("/chatbot", {
+      mongoSessionId,
+      message: text,
+    });
+    console.log("data");
+    console.log(data);
 
     // 실제라면 await axios로!
-    const answer = getAssistantAnswer(text);
+    // const answer = getAssistantAnswer(text);
+    if (typeof data !== "string") {
+      alert("오류가 발생했습니다. 다시 시도해주시기 바랍니다.");
+      setLoading(false);
+      return;
+    }
     setTimeout(() => {
-      setMessages((m) => [...m, { role: "assistant", text: answer }]);
+      setMessages((m) => [...m, { role: "assistant", text: data }]);
       setLoading(false);
     }, 600);
   }
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
+    if (loading) return;
     const q = inputRef.current?.value.trim();
     if (!q) return;
     inputRef.current!.value = "";
     sendMessage(q);
   }
+
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, loading]);
+
+  const getHistoryData = async () => {
+    try {
+      const response = await clientApi.post("/chatbot/history", {
+        mongoSessionId,
+      });
+      if (response.data) {
+        setMessages(response.data);
+      } else {
+        setMessages([
+          {
+            role: "assistant",
+            text: "안녕하세요! 일상에서 마주치는 법률 고민,\n혼자 해결하기 어려우셨죠?\n\n**부동산 관련 고민**을 실제 판례와 법령을 바탕으로 친절하게 해결해 드릴게요!",
+          },
+        ]);
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.status === 401) {
+          alert("잘못된 접근입니다!");
+          router.replace("/"); // 이전 페이지로 돌아감
+          return;
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    getHistoryData();
+  }, [router]);
 
   const quick = [
     "임대차 보증금 반환에 관한 법률은 무엇인가요?",
@@ -68,12 +102,6 @@ function ChatbotPage() {
     if (loading) return;
     sendMessage(q);
   }
-
-  const endRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, loading]);
 
   return (
     <div className="flex flex-col h-screen bg-[#F2F1F6]">
@@ -141,7 +169,7 @@ function ChatbotPage() {
               </div>
             </div>
           ) : m.role === "assistant" ? (
-            <div key={i} className="flex items-start justify-start gap-1">
+            <div key={i} className="flex items-start justify-start gap-1 pr-4">
               <Image
                 src="/chatchat.svg"
                 alt="bot"
@@ -149,12 +177,12 @@ function ChatbotPage() {
                 height={24}
                 className="ml-2 mt-6 flex-shrink-0"
               />
-              <div className="-ml-5 max-w-[80%] whitespace-pre-line bg-violet-200/30 text-black px-8 py-3 text-[1.3rem] mt-18 rounded-tr-[30px] rounded-br-[30px] rounded-bl-[30px] rounded-tl-none">
+              <div className="-ml-5 max-w-[50%] whitespace-pre-line bg-violet-200/30 text-black px-8 py-3 text-[1.3rem] mt-18 rounded-tr-[30px] rounded-br-[30px] rounded-bl-[30px] rounded-tl-none">
                 {m.text as string}
               </div>
             </div>
           ) : (
-            <div key={i} className="flex items-start justify-end">
+            <div key={i} className="flex items-start justify-end gap-1 pl-4">
               <div className="relative max-w-[80%]">
                 <div className="whitespace-pre-line bg-white text-black px-8 py-3 text-[1.3rem] mt-10 mr-6 rounded-tl-[30px] rounded-bl-[30px] rounded-br-[30px] rounded-tr-none">
                   {m.text as string}
@@ -209,13 +237,22 @@ function ChatbotPage() {
               ref={inputRef}
               type="text"
               placeholder="부동산 관련 상담을 도와드릴게요"
-              className="w-full bg-white rounded-full py-5 pl-5 pr-14 text-[1rem] placeholder-gray-500 outline-none"
+              className={`w-full bg-white rounded-full py-5 pl-5 pr-14 text-[1rem] placeholder-gray-500 outline-none${
+                loading ? " pointer-events-none" : ""
+              }`}
             />
             <button
               type="submit"
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex justify-center items-center rounded-full bg-violet-600 active:scale-95"
+              className={`absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 bg-[${
+                loading ? "#c9c9c9" : "#6000FF"
+              }] flex justify-center items-center rounded-full active:scale-95`}
             >
-              <Image src="/send.svg" alt="보내기" width={18} height={18} />
+              <SendArrowIcon
+                width={1.8}
+                height={1.8}
+                color={loading ? "#c9c9c9" : "#6000FF"}
+              />
+              {/* <Image src="/send.svg" alt="보내기" width={18} height={18} /> */}
             </button>
           </div>
         </form>
@@ -224,4 +261,4 @@ function ChatbotPage() {
   );
 }
 
-export default ChatbotPage;
+export default ChatBotPage;

@@ -35,17 +35,17 @@ function StartPage() {
       console.log("certificate response");
       console.log(response);
 
-      // router.push("certificate/[certificateId]");
+      router.push("result/" + response.data._id);
     } catch (error) {
       console.error("Failed to fetch contracts:", error);
       return undefined;
     }
   };
+
   const handleClick = () => {
     if (!canSubmit) return;
     const { ContractId } = useCertificateStore.getState();
     certificateRequest(ContractId as string);
-    // router.push("step2");
   };
 
   return (

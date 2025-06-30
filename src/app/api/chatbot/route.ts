@@ -13,22 +13,26 @@ import axios from "axios";
 export async function POST(req: NextRequest) {
   // params.contractId 로 접근 가능
   try {
-    const { contractId } = await req.json();
+    // Spring Boot의 로그인 API 호출
+    const { mongoSessionId, message } = await req.json();
+
     const response = await backendApi.post(
-      "/contract",
-      { contractId },
+      "/chatbot",
+      { mongoSessionId, message },
       { headers: { "Content-Type": "application/json" } }
     );
-    const contract = response.data;
+    const answer = response.data;
+
+    console.log("answer");
+    console.log(answer);
 
     // 4️⃣ 응답 성공 처리
-    return NextResponse.json({ contract });
+    return NextResponse.json(answer);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const status = error.response?.status || 500;
       const message =
         error.response?.data?.message || error.message || "failed";
-
       return NextResponse.json({ message }, { status });
     }
   }

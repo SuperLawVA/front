@@ -40,19 +40,19 @@ function ContractCreateNewPage() {
     }
   }, [router]);
 
-  const { dates, payment } = useCreateStore.getState();
+  // const { dates, payment } = useCreateStore.getState();
 
-  function formatDate(date: Date | string | null | undefined) {
-    if (!date || date === "") return null;
-    const d = new Date(date as string);
-    if (isNaN(d.getTime())) return null;
-    return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
-  }
+  // function formatDate(date: Date | string | null | undefined) {
+  //   if (!date || date === "") return null;
+  //   const d = new Date(date as string);
+  //   if (isNaN(d.getTime())) return null;
+  //   return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
+  // }
 
-  function formatNumber(val: number | string | null | undefined) {
-    if (!val || val === "") return null;
-    return Number(val).toLocaleString() + "원";
-  }
+  // function formatNumber(val: number | string | null | undefined) {
+  //   if (!val || val === "") return null;
+  //   return Number(val).toLocaleString() + "원";
+  // }
 
   const [disable, setDisable] = useState(true);
 

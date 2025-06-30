@@ -10,7 +10,7 @@ import StyledDiv from "@/components/StyledDiv";
 import SubmitButton from "@/components/SubmitButton";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CameraPage from "./Camera";
 import UploadPage from "./UploadImages";
 import GreenLogoIcon from "@/components/icons/GreenLogo";
@@ -39,6 +39,12 @@ function StartPage() {
     preventScrollOnSwipe: true,
     trackMouse: true,
   });
+
+  useEffect(() => {
+    if (!modalOpen && step === 2) {
+      router.push("/");
+    }
+  }, [modalOpen]);
 
   return (
     <>
@@ -116,10 +122,6 @@ function StartPage() {
               어떤 방식으로 업로드하시겠어요?
             </div>
             <ul className="flex flex-col gap-6 px-4 text-[1.8rem] text-[#4e4e4e] font-medium justar">
-              {/* <li className="flex gap-4 items-center">
-                <DocumentIcon color="#6000ff" />
-                <span>파일로 업로드</span>
-              </li> */}
               <li
                 className="flex gap-4 items-center"
                 onClick={(e) => {
@@ -165,65 +167,6 @@ function StartPage() {
             }}
           />
         )}
-        {/* {step === 1 && (
-          <div className="w-full p-16 flex flex-col gap-12">
-            <div className="text-[2rem] font-bold text-center">
-              업로드하는 파일이 맞으신가요?
-            </div>
-            <div className="flex flex-col gap-8 p-8 justify-center items-center w-full border-[1.5px] border-[#c6c6c8] rounded-[20px]">
-              <DocumentIcon color="#6000ff" />
-              <span className="text-[1.6rem] font-medium">
-                부동산임대차 계약서.pdf
-              </span>
-            </div>
-            <div className="flex font-bold px-8">
-              <span className="flex-1 text-[1.6rem] text-[#2b2b2b]">
-                계약 유형
-              </span>
-              <span className="flex-1 text-[1.4rem] text-[#5c5c5c]">
-                부동산(전세) 계약서
-              </span>
-            </div>
-            <div className="flex font-bold px-8">
-              <span className="flex-1 text-[1.6rem] text-[#2b2b2b]">
-                계약 일자
-              </span>
-              <span className="flex-1 text-[1.4rem] text-[#5c5c5c]">
-                2018.08.28.
-              </span>
-            </div>
-            <div className="flex font-bold px-8">
-              <span className="flex-1 text-[1.6rem] text-[#2b2b2b]">
-                건물 유형
-              </span>
-              <span className="flex-1 text-[1.4rem] text-[#5c5c5c]">
-                오피스텔
-              </span>
-            </div>
-            <div className="flex w-full gap-8 justify-between">
-              <SubmitButton
-                width={16}
-                height={5}
-                fontSize={1.6}
-                fontWeight={500}
-                fontColor="#1e1e1e"
-                background="white"
-                borderColor="#5c5c5c"
-              >
-                다시 업로드
-              </SubmitButton>
-              <SubmitButton
-                width={16}
-                height={5}
-                fontSize={1.6}
-                fontWeight={500}
-                onClick={() => setStep(2)}
-              >
-                네, 맞아요
-              </SubmitButton>
-            </div>
-          </div>
-        )} */}
         {step === 2 && (
           <div className="w-full p-16 flex flex-col gap-8">
             <div className="text-[2rem] font-bold text-center">
