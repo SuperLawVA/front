@@ -1,7 +1,7 @@
 // app/api/main/upload.ts
 
 import backendApi from "@/lib/axios.server";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 // 계약서 데이터를 받아서 다른 API로 전달하는 함수
 // export async function POST(req: NextRequest) {
@@ -34,7 +34,8 @@ import { NextRequest, NextResponse } from "next/server";
 //   }
 // }
 
-export async function GET(req: NextRequest) {
+// export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     // 👉login과 합칠 예정
     // 예: await db.insertUser({ email, passwordHash, name });

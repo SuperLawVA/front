@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import backendApi from "@/lib/axios.server";
-import { cookies } from "next/headers";
 
 // 계약서 데이터를 받아서 다른 API로 전달하는 함수
 export async function POST(req: NextRequest) {

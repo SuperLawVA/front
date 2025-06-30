@@ -49,7 +49,7 @@ export default interface Contract {
     monthlyRentDate: string;
     paymentPlan: string;
   };
-  articles: any[]; // articles의 상세 타입이 필요하면 추가 정의
+  articles: string[]; // articles의 상세 타입이 필요하면 추가 정의
   agreements: Agreement[];
   basicAgreements: BasicAgreements[];
 }

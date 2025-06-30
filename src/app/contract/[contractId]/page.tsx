@@ -15,7 +15,7 @@ import Contract from "@/app/types/Contract";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-export function StartPage(props: { params: Promise<{ contractId: string }> }) {
+function StartPage(props: { params: Promise<{ contractId: string }> }) {
   const router = useRouter();
   const { contractId } = use(props.params);
   const [activeIndex, setActiveIndex] = useState<number>(0);

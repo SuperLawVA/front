@@ -18,7 +18,7 @@ import clientApi from "@/lib/axios.client";
 import axios from "axios";
 import Article, { Agreement } from "@/app/types/Article";
 
-export function AnalysisResultPage(props: {
+function AnalysisResultPage(props: {
   params: Promise<{ analysisId: string }>;
 }) {
   const router = useRouter();
