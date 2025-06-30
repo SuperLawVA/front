@@ -1,7 +1,6 @@
 // app/api/login/route.ts
 import { NextRequest, NextResponse } from "next/server";
 // import axios from "axios";
-import { cookies } from "next/headers";
 import backendApi from "@/lib/axios.server";
 import axios from "axios";
 

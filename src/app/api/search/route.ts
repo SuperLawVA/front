@@ -1,6 +1,5 @@
 // app/api/search/route.ts
 import { NextResponse, NextRequest } from "next/server";
-import axios from "axios";
 import backendApi from "@/lib/axios.server";
 import { cookies } from "next/headers";
 

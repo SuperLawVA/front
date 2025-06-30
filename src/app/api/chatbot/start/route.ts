@@ -4,6 +4,8 @@ import backendApi from "@/lib/axios.server";
 // 계약서 데이터를 받아서 다른 API로 전달하는 함수
 export async function POST(req: NextRequest) {
   try {
+    console.log(req);
+
     // 요청 바디에서 데이터 받기
     // // 다른 API로 POST 요청 보내기
     // const jwt = (await cookies()).get("jwt")?.value;

@@ -115,7 +115,7 @@ function CreatePage() {
             <div className="flex flex-col justify-center items-center text-[2rem] font-bold">
               계약서 제목을 정해주세요.
               <span className="text-[1.4rem] font-medium">
-                기재하신 제목의 뒤에 자동으로 "계약서"가 붙습니다.
+                기재하신 제목의 뒤에 자동으로 &quot; 계약서&quot; 가 붙습니다.
               </span>
             </div>
             <StyledInput

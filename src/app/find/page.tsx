@@ -3,11 +3,9 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import axios from "axios";
 import BackHeader from "@/components/BackHeader";
 import StyledInput from "@/components/StyledInput";
 import SubmitButton from "@/components/SubmitButton";
-
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -50,13 +48,12 @@ function LoginPage() {
   const userId = "abcdefg123@naver.com";
   const joinedAt = "2018. 01. 24";
 
-
   return (
     <>
-    <div className="h-20 w-full flex flex-col justify-center items-center" />
-    <BackHeader>아이디 / 비밀번호 찾기</BackHeader>
+      <div className="h-20 w-full flex flex-col justify-center items-center" />
+      <BackHeader>아이디 / 비밀번호 찾기</BackHeader>
 
-    <div className="flex h-12 mt-20 mb-8">
+      <div className="flex h-12 mt-20 mb-8">
         <button
           className={`flex-1 text-center !text-[1.5rem] !font-bold pb-2
             ${tab === "id" ? "text-[#6000ff]" : "text-[#bababa]"}`}
@@ -82,8 +79,8 @@ function LoginPage() {
       </div>
 
       {/* ============= 아이디 찾기: 결과화면 ============= */}
-      {tab === "id" && (
-        showIdResult ? (
+      {tab === "id" &&
+        (showIdResult ? (
           <div className="w-full flex flex-col items-center mt-20">
             <div className="text-center text-[1.09rem] text-[#888] mb-8 mt-8">
               이메일 정보와 일치하는 아이디입니다.
@@ -149,7 +146,7 @@ function LoginPage() {
               <StyledInput
                 type="tel"
                 value={code}
-                onChange={e => setCode(e.target.value)}
+                onChange={(e) => setCode(e.target.value)}
                 placeholder="인증코드 입력"
                 width="25rem"
                 fontSize={1.4}
@@ -189,9 +186,7 @@ function LoginPage() {
               아이디 찾기
             </SubmitButton>
           </div>
-        )
-      )}
-
+        ))}
 
       {tab === "password" && (
         <div className="flex flex-col gap-5 items-center w-full px-4">
@@ -202,9 +197,7 @@ function LoginPage() {
             className="w-full max-w-md px-4 py-3 border text-[1.05rem] bg-[#fafafa] focus:outline-none"
           />
           {/* 비밀번호 찾기 버튼 */}
-          <button
-            className="mt-4 w-full max-w-md bg-[#6000ff] text-white text-[1.12rem] font-bold py-4 rounded-full shadow transition active:scale-95"
-          >
+          <button className="mt-4 w-full max-w-md bg-[#6000ff] text-white text-[1.12rem] font-bold py-4 rounded-full shadow transition active:scale-95">
             비밀번호 찾기
           </button>
         </div>

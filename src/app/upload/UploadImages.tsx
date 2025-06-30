@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSwipeable } from "react-swipeable";
 import imageCompression from "browser-image-compression";
-import axios from "axios";
 import clientApi from "@/lib/axios.client";
 
 interface UploadPageProps {

@@ -16,9 +16,7 @@ type AnswerFormat = {
 };
 type Msg = { role: "user" | "assistant"; text: string | AnswerFormat };
 
-export function ChatBotPage(props: {
-  params: Promise<{ mongoSessionId: string }>;
-}) {
+function ChatBotPage(props: { params: Promise<{ mongoSessionId: string }> }) {
   const router = useRouter();
   const { mongoSessionId } = use(props.params);
   const [messages, setMessages] = useState<Msg[]>([]);
@@ -70,15 +68,14 @@ export function ChatBotPage(props: {
       });
       if (response.data) {
         setMessages(response.data);
-      } else
-        [
-          setMessages([
-            {
-              role: "assistant",
-              text: "안녕하세요! 일상에서 마주치는 법률 고민,\n혼자 해결하기 어려우셨죠?\n\n**부동산 관련 고민**을 실제 판례와 법령을 바탕으로 친절하게 해결해 드릴게요!",
-            },
-          ]),
-        ];
+      } else {
+        setMessages([
+          {
+            role: "assistant",
+            text: "안녕하세요! 일상에서 마주치는 법률 고민,\n혼자 해결하기 어려우셨죠?\n\n**부동산 관련 고민**을 실제 판례와 법령을 바탕으로 친절하게 해결해 드릴게요!",
+          },
+        ]);
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.status === 401) {

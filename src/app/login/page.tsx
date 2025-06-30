@@ -23,7 +23,9 @@ function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [activeBtn, setActiveBtn] = useState<"id" | "pw" | "register" | null>(null);
+  const [activeBtn, setActiveBtn] = useState<"id" | "pw" | "register" | null>(
+    null
+  );
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -37,18 +39,16 @@ function LoginPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    
-
     try {
       const res = await axios.post("/api/login", { email, password });
       console.log("[LOGIN SUCCESS RESPONSE]", res);
       if (res.data.success) {
-        const { userName, notification, contractArray, recentChat } = res.data;
+        const { userName, notification, contractArray, chats } = res.data;
         useAuthStore.setState({
           userName,
           notification,
           contractArray,
-          recentChat,
+          chats,
         });
         router.push("/");
       } else {
@@ -130,13 +130,13 @@ function LoginPage() {
                   height={20}
                 />
               ) : (
-                  <Image
-                    src="/close-eye.svg"
-                    alt="hide password"
-                    width={20}
-                    height={20}
-                  />
-                )}   
+                <Image
+                  src="/close-eye.svg"
+                  alt="hide password"
+                  width={20}
+                  height={20}
+                />
+              )}
             </button>
           </div>
           <div className="flex items-center gap-10">
@@ -187,29 +187,31 @@ function LoginPage() {
             로그인
           </SubmitButton>
           <div className="flex justify-center gap-4 text-l font-medium">
-            <button 
+            <button
               type="button"
               className={`transition-colors duration-200 ${
-              activeBtn === "id" ? "text-[#6000FF]" : ""
-            }`} 
+                activeBtn === "id" ? "text-[#6000FF]" : ""
+              }`}
               onClick={() => handleClickMove("id", "/find")}
             >
               아이디 찾기
-            </button>|
-            <button 
+            </button>
+            |
+            <button
               type="button"
               className={`transition-colors duration-200 ${
-              activeBtn === "pw" ? "text-[#6000FF]" : ""
-            }`} 
+                activeBtn === "pw" ? "text-[#6000FF]" : ""
+              }`}
               onClick={() => handleClickMove("pw", "/find")}
             >
               비밀번호 찾기
-            </button>|
-            <button 
+            </button>
+            |
+            <button
               type="button"
               className={`transition-colors duration-200 ${
-              activeBtn === "register" ? "text-[#6000FF]" : ""
-            }`} 
+                activeBtn === "register" ? "text-[#6000FF]" : ""
+              }`}
               onClick={() => handleClickMove("register", "/register")}
             >
               회원가입

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import { UserActionLoggerClient } from "@/components/UserActionLoggerClient";
 import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({

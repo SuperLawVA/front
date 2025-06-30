@@ -8,6 +8,8 @@ import Image from "next/image";
 
 function LoadingPage() {
   const router = useRouter();
+  console.log(router);
+
   const [progress, setProgress] = useState(0);
   useEffect(() => {
     const TOTAL_DURATION_MS = 30000; // 45초

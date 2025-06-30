@@ -10,6 +10,7 @@ export async function POST(req: NextRequest) {
     // build용 변수 사용
     const user = await backendApi.get("/user");
     const sessions = await backendApi.get("/chatbot");
+    console.log(req);
 
     // return NextResponse.json(contracts.data, { status: 200 });
     // try {
