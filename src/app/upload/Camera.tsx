@@ -131,6 +131,8 @@ export default function CameraPage({
       formData.append("fileNames", `camera_image_${i}.png`);
     });
 
+    console.log(formData);
+
     try {
       const response = await clientApi.post("/upload", formData);
       if (response.status === 200) {
