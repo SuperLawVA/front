@@ -71,10 +71,6 @@ export default function CertificatePage(props: {
     const response = await clientApi.post("/certificate", {
       certificateId,
     });
-    console.log("response");
-    console.log(response);
-    console.log("response.data");
-    console.log(response.data);
 
     if (response.data) {
       setCertificate(response.data);

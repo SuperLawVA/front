@@ -14,8 +14,6 @@ function StartPage() {
   const createSession = async () => {
     try {
       const response = await clientApi.post("/chatbot/start", {});
-      console.log("chatbot response");
-      console.log(response);
 
       router.push("chatbot/" + response.data._id);
     } catch (error) {

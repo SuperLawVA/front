@@ -33,11 +33,8 @@ function ChatBotPage(props: { params: Promise<{ mongoSessionId: string }> }) {
       mongoSessionId,
       message: text,
     });
-    console.log("data");
-    console.log(data);
 
     // 실제라면 await axios로!
-    // const answer = getAssistantAnswer(text);
     if (typeof data !== "string") {
       alert("오류가 발생했습니다. 다시 시도해주시기 바랍니다.");
       setLoading(false);

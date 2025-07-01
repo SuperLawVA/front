@@ -5,7 +5,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const { certificateId } = await req.json();
-    console.log(certificateId);
     const response = await backendApi.post("/certificate", { certificateId });
 
     return NextResponse.json(response.data, { status: response.status });

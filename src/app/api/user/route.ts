@@ -12,19 +12,9 @@ export async function POST(req: NextRequest) {
     const user = await backendApi.get("/user");
     const sessions = await backendApi.get("/chatbot");
 
-    // return NextResponse.json(contracts.data, { status: 200 });
-    // try {
-    //   // Spring Boot의 로그인 API 호출
-    //   const res = await axios.post("http://localhost:8080/api/analysis", userId, {
-    //     headers: { "Content-Type": "application/json" },
-    //   });
-
-    //   const { contract } = res.data; // Spring Boot가 반환한 JWT
-
     return NextResponse.json(
       {
         userName: user.data.userName,
-        // notification: [0, 1, 2],
         contractArray: user.data.contracts,
         chats: sessions.data.sessions,
       },
@@ -36,12 +26,5 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(error);
     }
     return NextResponse.json({ success: false }, { status: 500 });
-
-    // return NextResponse.json(
-    //   { message: (error as Error).message || "get user data failed" }
-    //   // { message: error.response?.data?.message || "get user data failed" },
-    //   // { status: error.response?.status || 500 }
-
-    // );
   }
 }

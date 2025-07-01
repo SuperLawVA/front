@@ -15,8 +15,6 @@ export const POST = async (req: NextRequest) => {
     }
     const response = await backendApi.post("/upload", formData);
 
-    console.log("✅ OCR 응답:", response);
-    console.log(response.data);
     return NextResponse.json(response.data._id, {
       status: response.status,
     });
