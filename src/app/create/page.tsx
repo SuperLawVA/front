@@ -71,11 +71,10 @@ function CreatePage() {
           도와드릴게요!
         </div>
         <Image
-          width={99999}
-          height={99999}
+          width={265}
+          height={265}
           src="/createStart.png"
           alt="Main Icon"
-          className="w-[26.5rem] h-[26.5rem] mt-16"
         />
         <div className="mt-16 text-center text-[1.2rem] font-medium">
           당신의 계약서는 안전해야 하니까.
