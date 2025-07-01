@@ -267,12 +267,12 @@ function AnalysisPage() {
             </div>
           </div>
         )}
+        {isloading && (
+          <div className="fixed top-0 left-0 z-50 flex justify-center items-center w-full h-full bg-white">
+            <LoadingPage />
+          </div>
+        )}
       </Modal>
-      {isloading && (
-        <div className="fixed top-0 left-0 z-50 flex justify-center items-center w-full h-full bg-white">
-          <LoadingPage />
-        </div>
-      )}
     </>
   );
 }
