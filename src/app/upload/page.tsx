@@ -153,6 +153,8 @@ function UploadPage() {
           <UploadImagePage
             setPageOpen={() => {
               setStep(2);
+              setModalOpen(true);
+              setIsCenter(false);
             }}
             setIsLoading={setIsLoading}
           />
@@ -160,9 +162,9 @@ function UploadPage() {
         {step === 12 && (
           <CameraPage
             goBack={() => {
+              setStep(0);
               setModalOpen(true);
               setIsCenter(false);
-              setStep(0);
             }}
             goNext={() => {
               setStep(2);

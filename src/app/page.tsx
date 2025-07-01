@@ -39,7 +39,7 @@ function QuickButton({
   return (
     <div className="flex flex-col items-center text-center">
       <button
-        className="flex justify-center items-center w-20 h-20 rounded-[20px] mb-2"
+        className="flex justify-center items-center w-20 h-20 rounded-[20px] mb-2 cursor-pointer"
         style={{ backgroundColor: bgc }}
         {...rest}
       >
@@ -108,10 +108,7 @@ function MainPage() {
             />
             {/* <span className="font-pretendard font-semibold text-[2rem] leading-[120%] tracking-[-0.04em] bg-gradient-to-r from-[#6000FF] to-[#E100FF] bg-clip-text text-transparent"> */}
             {/* 임시 로그 아웃 구현 */}
-            <span
-              onClick={handleLogout}
-              className="font-pretendard font-semibold text-[2rem] leading-[120%] tracking-[-0.04em] bg-gradient-to-r from-[#6000FF] to-[#E100FF] bg-clip-text text-transparent"
-            >
+            <span className="font-pretendard font-semibold text-[2rem] leading-[120%] tracking-[-0.04em] bg-gradient-to-r from-[#6000FF] to-[#E100FF] bg-clip-text text-transparent">
               Super LawVA
             </span>
           </span>
@@ -149,6 +146,10 @@ function MainPage() {
               fontSize={1.2}
               fontWeight={500}
               borderRadius={50}
+              onClick={() => {
+                if (!search.trim()) return;
+                router.push(`/search/result?q=${encodeURIComponent(search)}`);
+              }}
             >
               검색
             </SubmitButton>
@@ -158,12 +159,10 @@ function MainPage() {
             <div className="flex w-full justify-around">
               <QuickButton
                 bgc="#32d74b"
+                onClick={() => router.push("create")}
                 icon={
                   <div className="ml-1">
-                    <DocumentIcon
-                      color="white"
-                      onClick={() => router.push("create")}
-                    />
+                    <DocumentIcon color="white" />
                   </div>
                 }
                 title="계약서 작성"
