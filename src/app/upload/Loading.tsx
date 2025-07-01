@@ -1,14 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import ProgressRing from "@/components/ProgressRing2";
-// import SubmitButton from "@/components/SubmitButton";
-// import Image from "next/image";
 
 function LoadingPage() {
-  const router = useRouter();
-
   const [progress, setProgress] = useState(0);
   useEffect(() => {
     const TOTAL_DURATION_MS = 15000; // 45초
@@ -27,14 +22,6 @@ function LoadingPage() {
 
     return () => clearInterval(id);
   }, []);
-  // useEffect(() => {
-  //   const id = setInterval(() => {
-  //     setProgress((p) => Math.min(p + 2, 100));
-  //   }, 120);
-  //   return () => clearInterval(id);
-  // }, []);
-
-  // const goNext = () => router.push("step3");
 
   return (
     <main

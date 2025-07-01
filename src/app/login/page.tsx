@@ -2,12 +2,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import KakaoIcon from "@/components/icons/sns/Kakao";
 import StyledInput from "@/components/StyledInput";
 import { useEffect, useState } from "react";
-import GoogleIcon from "@/components/icons/sns/Google";
-import NaverIcon from "@/components/icons/sns/Naver";
-import AppleIcon from "@/components/icons/sns/Apple";
 import SubmitButton from "@/components/SubmitButton";
 import axios from "axios";
 import { useAuthStore } from "@/store/useStore";
@@ -139,7 +135,7 @@ function LoginPage() {
               )}
             </button>
           </div>
-          
+
           {/* <div className="flex items-center gap-10">
             <div className="flex gap-4">
               <input type="checkbox" className="w-6 h-6" />
@@ -168,14 +164,14 @@ function LoginPage() {
               </svg>
             </div> */}
 
-           {/*  <div className="flex gap-4">
+          {/*  <div className="flex gap-4">
               <input type="checkbox" className="w-6 h-6" />
               <label htmlFor="" className="text-[1.2rem]">
                 자동 로그인
               </label>
             </div>
           </div>  */}
-          
+
           <div className="flex justify-end gap-4 text-l mr-8 font-medium">
             <button
               type="button"
