@@ -1,6 +1,7 @@
 // app/main/certificate/result/page.tsx
 "use client";
 
+import ReactMarkdown from "react-markdown";
 import Image from "next/image";
 import React, { use, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -256,7 +257,7 @@ export default function CertificatePage(props: {
 
             {/* 본문 (스크롤 처리) */}
             <div className="px-6 py-4 flex-1 overflow-y-auto whitespace-pre-line text-[1.2rem]">
-              {certificate?.body}
+              <ReactMarkdown>{certificate?.body}</ReactMarkdown>
             </div>
             {/* ─── 경고 박스 ─── */}
             <div

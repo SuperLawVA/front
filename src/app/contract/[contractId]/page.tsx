@@ -13,6 +13,7 @@ import clientApi from "@/lib/axios.client";
 import Contract from "@/app/types/Contract";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { useCreateStore } from "@/store/useStore";
 
 function StartPage(props: { params: Promise<{ contractId: string }> }) {
   const router = useRouter();
@@ -24,6 +25,17 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
     try {
       const response = await clientApi.post("/contract", { contractId });
       setContract(response.data.contract);
+
+      const { contractTitle, legalBasis, agreements, caseBasis } =
+        response.data.contract;
+
+      useCreateStore.setState({
+        contractTitle,
+        legalBasis,
+        agreements,
+        contractId,
+        caseBasis,
+      });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.status === 401) {
@@ -205,8 +217,15 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
             </ol>
           </div>
           <div className="flex flex-col gap-4">
-            <span className="text-[1.6rem] font-bold pl-8">
+            <span className="flex justify-between text-[1.6rem] font-bold pl-8">
               생성된 특약 사항
+              <span
+                onClick={() => router.push("/create/result")}
+                className="flex text-[#6000ff] text-[1.1rem] font-semibold justify-end mr-8"
+              >
+                <PencilIcon width={1.4} height={1.4} />
+                상세 보기
+              </span>
             </span>
             <ol className="list-decimal list-inside flex flex-col gap-4 w-full rounded-[30px] p-8 bg-white font-medium text-[1.2rem]">
               {Array.isArray(contract?.agreements) ? (
@@ -221,10 +240,6 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
         </>
       ) : (
         <div className="flex flex-col gap-4">
-          <span className="flex text-[#6000ff] text-[1.1rem] font-semibold justify-end mr-8">
-            <PencilIcon width={1.4} height={1.4} />
-            수정하기
-          </span>
           <ol className="list-decimal list-inside flex flex-col gap-4 w-full rounded-[30px] p-8 bg-white font-medium text-[1.2rem]">
             {Array.isArray(contract?.agreements) ? (
               contract.agreements.map((v, i) => (
