@@ -170,7 +170,11 @@ export default function CameraPage({
       console.log(response);
 
       if (response.status === 200) {
-        sessionStorage.setItem("contractId", response.data._id);
+        if (response.data._id)
+          sessionStorage.setItem("contractId", response.data._id);
+        else if (typeof response.data === "string")
+          sessionStorage.setItem("contractId", response.data);
+        else throw Error;
         alert("업로드 성공!");
         setCapturedImages([]);
         goNext();

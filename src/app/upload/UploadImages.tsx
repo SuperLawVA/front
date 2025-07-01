@@ -201,8 +201,11 @@ export default function UploadPage({
       if (response.status === 200) {
         imageFiles.forEach((img) => URL.revokeObjectURL(img.previewUrl));
         setImageFiles([]);
-
-        sessionStorage.setItem("contractId", response.data._id);
+        if (response.data._id)
+          sessionStorage.setItem("contractId", response.data._id);
+        else if (typeof response.data === "string")
+          sessionStorage.setItem("contractId", response.data);
+        else throw Error;
         setPageOpen();
         alert("업로드 성공");
         setCurrentImageIndex(0);

@@ -212,8 +212,8 @@ function UploadPage() {
                 fontWeight={500}
                 onClick={() => {
                   const contractId = sessionStorage.getItem("contractId");
-                  sessionStorage.removeItem("contractId");
                   router.push("/contract/" + contractId);
+                  sessionStorage.removeItem("contractId");
                 }}
               >
                 계약서 확인
