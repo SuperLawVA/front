@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import ProgressRing from "@/components/ProgressRing2";
-// import Image from "next/image";
 
 function LoadingPage() {
   const [progress, setProgress] = useState(0);
@@ -23,14 +22,6 @@ function LoadingPage() {
 
     return () => clearInterval(id);
   }, []);
-  // useEffect(() => {
-  //   const id = setInterval(() => {
-  //     setProgress((p) => Math.min(p + 2, 100));
-  //   }, 120);
-  //   return () => clearInterval(id);
-  // }, []);
-
-  // const goNext = () => router.push("step3");
 
   return (
     <main
