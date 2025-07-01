@@ -206,7 +206,8 @@ function MainPage() {
                                 {contractTitle}
                               </span>
                               <span className="text-[1rem]">
-                                {property.address.length === 0
+                                {!(typeof property.address === "string") ||
+                                property.address.length === 0
                                   ? "주소 미기재"
                                   : property.address}
                               </span>
