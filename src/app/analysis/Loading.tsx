@@ -1,15 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import ProgressRing from "@/components/ProgressRing2";
 import SubmitButton from "@/components/SubmitButton";
 import Image from "next/image";
 
 function LoadingPage() {
-  const router = useRouter();
-  console.log(router);
-
   const [progress, setProgress] = useState(0);
   useEffect(() => {
     const TOTAL_DURATION_MS = 90000; // 45초
