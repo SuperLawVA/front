@@ -17,6 +17,8 @@ export default interface Contract {
   };
   dates: {
     contractDate: string;
+    startDate: string;
+    endDate: string;
   };
   property: {
     land: {

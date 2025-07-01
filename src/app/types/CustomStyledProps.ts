@@ -33,5 +33,6 @@ export interface StyledInputProps
   lineHeight?: number | string;
   autoFocus?: boolean;
   InputclassName?: string;
+  underLine?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
