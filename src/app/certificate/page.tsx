@@ -60,6 +60,7 @@ function CertificatePage() {
       ];
       setContractArray(newArray);
       setActiveIndex(0);
+      setContract(contractArray[activeIndex]);
     }
     if (!modalOpen) setSelect(false);
   }, [activeIndex]);
@@ -136,7 +137,7 @@ function CertificatePage() {
             >
               <DocumentIcon color="#6000ff" />
               <span className="text-[1.6rem] font-medium">
-                {contract.contractType}&nbsp;임대차 계약서
+                {contract.contractTitle}
               </span>
             </div>
             <ul className="w-full px-8 flex flex-col gap-12 items-center text-[#2b2b2b] text-[1.6rem] font-bold">
@@ -188,7 +189,7 @@ function CertificatePage() {
             <div className="text-[2rem] font-bold text-center">
               분석할 계약서를 선택해주세요
             </div>
-            <ul className="w-full px-8 flex flex-col gap-12 items-center text-[#2b2b2b] text-[1.6rem] font-bold max-h-[50vh] overflow-y-auto">
+            <ul className="w-full px-8 flex flex-col gap-4 items-center text-[#2b2b2b] text-[1.6rem] font-bold max-h-[50vh] overflow-y-auto">
               {contractArray?.map((contract, index) => (
                 <SubmitButton
                   key={index}
@@ -204,16 +205,10 @@ function CertificatePage() {
                     setSelect(false);
                   }}
                 >
-                  <span className="font-bold">
-                    계약 유형:&nbsp;
-                    <span className="">{contract?.contractType}</span>
-                  </span>
+                  <span className="font-bold">{contract.contractTitle}</span>
                   <span className="text-[1.2rem]">
                     최종 수정 일자:{" "}
                     {formatISOToDateTime(contract?.modifiedDate as string)}
-                  </span>
-                  <span className="text-[1.2rem]">
-                    건물 유형: {contract?.buildingType ?? "미기재"}
                   </span>
                 </SubmitButton>
               ))}

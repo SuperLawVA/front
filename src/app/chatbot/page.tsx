@@ -57,7 +57,6 @@ function StartPage() {
           height={5.5}
           fontSize={1.8}
           className="mt-10 flex items-center justify-center gap-x-2 whitespace-nowarp"
-          // onClick={() => router.push("/chatbot/step1")}
           onClick={createSession}
         >
           생성하기
