@@ -37,7 +37,7 @@ function StartPage() {
       });
 
       if (response && response.status === 200) {
-        router.push("result/" + response.data._id);
+        router.push(response.data._id);
         setIsLoading(false);
       } else {
         alert("응답이 실패했습니다. 다시 시도해 주세요.");

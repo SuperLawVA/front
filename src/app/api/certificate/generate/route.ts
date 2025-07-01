@@ -12,10 +12,6 @@ export async function POST(req: NextRequest) {
         headers: { "Content-Type": "application/json" },
       }
     );
-    console.log("response");
-    console.log(response);
-    console.log("response.data");
-    console.log(response.data);
 
     return NextResponse.json(response.data, { status: response.status });
   } catch (error) {

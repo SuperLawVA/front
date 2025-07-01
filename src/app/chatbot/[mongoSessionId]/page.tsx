@@ -1,5 +1,6 @@
 "use client";
 
+import ReactMarkdown from "react-markdown";
 import { useRef, useState, FormEvent, use } from "react";
 import Image from "next/image";
 import { useEffect } from "react";
@@ -32,11 +33,8 @@ function ChatBotPage(props: { params: Promise<{ mongoSessionId: string }> }) {
       mongoSessionId,
       message: text,
     });
-    console.log("data");
-    console.log(data);
 
     // 실제라면 await axios로!
-    // const answer = getAssistantAnswer(text);
     if (typeof data !== "string") {
       alert("오류가 발생했습니다. 다시 시도해주시기 바랍니다.");
       setLoading(false);
@@ -66,7 +64,7 @@ function ChatBotPage(props: { params: Promise<{ mongoSessionId: string }> }) {
       const response = await clientApi.post("/chatbot/history", {
         mongoSessionId,
       });
-      if (response.data) {
+      if (response.data && response.data.length !== 0) {
         setMessages(response.data);
       } else {
         setMessages([
@@ -177,8 +175,8 @@ function ChatBotPage(props: { params: Promise<{ mongoSessionId: string }> }) {
                 height={24}
                 className="ml-2 mt-6 flex-shrink-0"
               />
-              <div className="-ml-5 max-w-[50%] whitespace-pre-line bg-violet-200/30 text-black px-8 py-3 text-[1.3rem] mt-18 rounded-tr-[30px] rounded-br-[30px] rounded-bl-[30px] rounded-tl-none">
-                {m.text as string}
+              <div className="-ml-5 max-w-[50%] bg-violet-200/30 text-black px-8 py-3 text-[1.3rem] mt-18 rounded-tr-[30px] rounded-br-[30px] rounded-bl-[30px] rounded-tl-none">
+                <ReactMarkdown>{m.text as string}</ReactMarkdown>
               </div>
             </div>
           ) : (

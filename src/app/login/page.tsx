@@ -68,7 +68,7 @@ function LoginPage() {
     }
   };
 
-  const handleClickMove = (type: "id" | "pw" | "register", url: string) => {
+  const handleClickMove = (type: "pw" | "register", url: string) => {
     setActiveBtn(type);
     setTimeout(() => {
       router.push(url);
@@ -139,14 +139,15 @@ function LoginPage() {
               )}
             </button>
           </div>
-          <div className="flex items-center gap-10">
+          
+          {/* <div className="flex items-center gap-10">
             <div className="flex gap-4">
               <input type="checkbox" className="w-6 h-6" />
               <label htmlFor="" className="text-[1.2rem]">
                 아이디 저장
               </label>
             </div>
-            {/* checkbox 커스텀 코드 */}
+            checkbox 커스텀 코드
             {/* <div className="grid items-center justify-center">
               <input
                 type="checkbox"
@@ -167,12 +168,34 @@ function LoginPage() {
               </svg>
             </div> */}
 
-            <div className="flex gap-4">
+           {/*  <div className="flex gap-4">
               <input type="checkbox" className="w-6 h-6" />
               <label htmlFor="" className="text-[1.2rem]">
                 자동 로그인
               </label>
             </div>
+          </div>  */}
+          
+          <div className="flex justify-end gap-4 text-l mr-8 font-medium">
+            <button
+              type="button"
+              className={`transition-colors duration-200 ${
+                activeBtn === "pw" ? "text-[#6000FF]" : ""
+              }`}
+              onClick={() => handleClickMove("pw", "/find")}
+            >
+              비밀번호를 잊어버리셨나요?
+            </button>
+            |
+            <button
+              type="button"
+              className={`transition-colors duration-200 ${
+                activeBtn === "register" ? "text-[#6000FF]" : ""
+              }`}
+              onClick={() => handleClickMove("register", "/register")}
+            >
+              회원가입
+            </button>
           </div>
           <SubmitButton
             disabled={
@@ -186,54 +209,7 @@ function LoginPage() {
           >
             로그인
           </SubmitButton>
-          <div className="flex justify-center gap-4 text-l font-medium">
-            <button
-              type="button"
-              className={`transition-colors duration-200 ${
-                activeBtn === "id" ? "text-[#6000FF]" : ""
-              }`}
-              onClick={() => handleClickMove("id", "/find")}
-            >
-              아이디 찾기
-            </button>
-            |
-            <button
-              type="button"
-              className={`transition-colors duration-200 ${
-                activeBtn === "pw" ? "text-[#6000FF]" : ""
-              }`}
-              onClick={() => handleClickMove("pw", "/find")}
-            >
-              비밀번호 찾기
-            </button>
-            |
-            <button
-              type="button"
-              className={`transition-colors duration-200 ${
-                activeBtn === "register" ? "text-[#6000FF]" : ""
-              }`}
-              onClick={() => handleClickMove("register", "/register")}
-            >
-              회원가입
-            </button>
-          </div>
         </form>
-        <div className="w-full flex flex-col justify-center items-center gap-8">
-          <div className="mt-16 w-full flex justify-between items-center gap-4 text-xl">
-            {/* <hr className="flex-1 border-[#797979]" />
-            <span className="flex-1 text-center">SNS 계정으로 로그인</span>
-            <hr className="flex-1 border-[#797979]" /> */}
-            <hr className="w-full border-[#797979]" />
-            <span className="min-w-44 text-center">SNS 계정으로 로그인</span>
-            <hr className="w-full border-[#797979]" />
-          </div>
-          <div className="flex flex-row gap-12">
-            <KakaoIcon />
-            <GoogleIcon />
-            <NaverIcon />
-            <AppleIcon />
-          </div>
-        </div>
       </main>
     </>
   );

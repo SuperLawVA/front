@@ -27,7 +27,6 @@ export async function POST(req: NextRequest) {
         Authorization: `Bearer ${jwt}`,
       },
     });
-    console.log("444444444444444444444");
 
     return NextResponse.json(res.data);
   } catch (error) {
