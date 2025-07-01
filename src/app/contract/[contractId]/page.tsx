@@ -20,7 +20,6 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [contract, setContract] = useState<Contract | null>(null);
   const tabs = ["계약 요약", "계약서 정보", "계약 조건", "특약"];
-
   const getUserData = async () => {
     try {
       const response = await clientApi.post("/contract", { contractId });
@@ -52,7 +51,9 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
             계약 일자
           </span>
           <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-            {contract?.createdDate.split("T")[0] ?? "미기재"}
+            {!contract?.createdDate
+              ? "미기재"
+              : contract?.createdDate.split("T")[0]}
           </span>
         </div>
         <div className="flex flex-col gap-2">
@@ -61,7 +62,7 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
             보증금
           </span>
           <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-            {contract?.payment.deposit ?? 0}
+            {!contract?.payment.deposit ? 0 : contract?.payment.deposit}
           </span>
         </div>
         <div className="flex flex-col gap-2">
@@ -70,7 +71,7 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
             월세
           </span>
           <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-            {contract?.payment.monthlyRent ?? 0}
+            {!contract?.payment.monthlyRent ? 0 : contract?.payment.monthlyRent}
           </span>
         </div>
         <div className="flex flex-col gap-2">
@@ -79,7 +80,11 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
             납부일
           </span>
           <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-            {contract?.payment.monthlyRentDate ?? "미기재"}
+            {contract?.payment.monthlyRentDate === null
+              ? "미기재"
+              : contract?.payment.monthlyRentDate === undefined
+              ? "미기재"
+              : contract?.payment.monthlyRentDate}
           </span>
         </div>
         <div className="flex flex-col gap-2">
@@ -88,7 +93,11 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
             주소
           </span>
           <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-            {contract?.property.address ?? "미기재"}
+            {contract?.property.address === null
+              ? "미기재"
+              : contract?.property.address === undefined
+              ? "미기재"
+              : contract?.property.address}
           </span>
         </div>
         <div className="flex flex-col gap-2">
@@ -97,7 +106,11 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
             상세 주소
           </span>
           <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-            {contract?.property.detailAddress ?? "미기재"}
+            {contract?.property.detailAddress === null
+              ? "미기재"
+              : contract?.property.detailAddress === undefined
+              ? "미기재"
+              : contract?.property.detailAddress}
           </span>
         </div>
       </div>
@@ -107,153 +120,50 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
         <span className="text-[1.6rem] font-semibold text-center">
           1. 부동산 표시
         </span>
-        {/* <span className="flex text-[#6000ff] text-[1.1rem] font-semibold justify-end mr-8">
-          <PencilIcon width={1.4} height={1.4} />
-          수정하기
-        </span> */}
         <div className="flex flex-col gap-12 w-full rounded-[30px] p-12 bg-white font-semibold text-[1.6rem]">
           <div className="flex flex-col gap-2">
             주소
             <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {typeof contract?.property.address === "string" &&
-              contract?.property.address.length !== 0
-                ? contract?.property.address
+              {contract?.property?.address &&
+              contract.property.address.length > 0
+                ? contract.property.address
                 : "미기재"}
             </span>
           </div>
           <div className="flex flex-col gap-2">
             상세 주소
             <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {typeof contract?.property.address === "string" &&
-              contract?.property.address.length !== 0
-                ? contract?.property.address
+              {contract?.property?.detailAddress &&
+              contract.property.detailAddress.length > 0
+                ? contract.property.detailAddress
                 : "미기재"}
             </span>
           </div>
           <div className="flex flex-col gap-2">
             면적
             <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {typeof contract?.property.building.buildingConstructure ===
-                "number" &&
-              contract?.property.building.buildingConstructure !== 0
-                ? contract?.property.building.buildingConstructure
+              {typeof contract?.property?.building?.buildingArea === "number" &&
+              contract.property.building.buildingArea !== 0
+                ? contract.property.building.buildingArea
                 : "미기재"}
             </span>
           </div>
           <div className="flex flex-col gap-2">
             구조
             <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {typeof contract?.property.building.buildingConstructure ===
-                "string" &&
-              contract?.property.building.buildingConstructure.length !== 0
-                ? contract?.property.building.buildingConstructure
+              {contract?.property?.building?.buildingConstructure &&
+              contract.property.building.buildingConstructure.length > 0
+                ? contract.property.building.buildingConstructure
                 : "미기재"}
             </span>
           </div>
           <div className="flex flex-col gap-2">
             용도
             <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {typeof contract?.property.building.buildingType === "string" &&
-              contract?.property.building.buildingType.length !== 0
-                ? contract?.property.building.buildingType
+              {contract?.property?.building?.buildingType &&
+              contract.property.building.buildingType.length > 0
+                ? contract.property.building.buildingType
                 : "미기재"}
-            </span>
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-col gap-4">
-        <span className="text-[1.6rem] font-semibold text-center">
-          2. 계약 내용
-        </span>
-        {/* <span className="flex text-[#6000ff] text-[1.1rem] font-semibold justify-end mr-8">
-          <PencilIcon width={1.4} height={1.4} />
-          수정하기
-        </span> */}
-        <div className="flex flex-col gap-12 w-full rounded-[30px] p-12 bg-white font-semibold text-[1.6rem]">
-          <div className="flex flex-col gap-2">
-            보증금
-            <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {contract?.payment.deposit ?? "미기재"}
-            </span>
-          </div>
-          <div className="flex flex-col gap-2">
-            계약금
-            <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {contract?.payment.downPayment ?? "미기재"}
-            </span>
-          </div>
-          <div className="flex flex-col gap-2">
-            중도금
-            <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {contract?.payment.intermediatePayment ?? "미기재"}
-            </span>
-          </div>
-          <div className="flex flex-col gap-2">
-            월세
-            <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {contract?.payment.monthlyRent ?? "미기재"}
-            </span>
-          </div>
-          <div className="flex flex-col gap-2">
-            계약 기간
-            <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {contract?.dates.startDate
-                ? contract?.dates.startDate.split("T")[0]
-                : "미기재"}
-              {" - "}
-              {contract?.dates.endDate
-                ? contract?.dates.endDate.split("T")[0]
-                : "미기재"}
-            </span>
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-col gap-4">
-        <span className="text-[1.6rem] font-semibold text-center">
-          3. 집주인 정보
-        </span>
-        {/* <span className="flex text-[#6000ff] text-[1.1rem] font-semibold justify-end mr-8">
-          <PencilIcon width={1.4} height={1.4} />
-          수정하기
-        </span> */}
-        <div className="flex flex-col gap-12 w-full rounded-[30px] p-12 bg-white font-semibold text-[1.6rem]">
-          <div className="flex flex-col gap-2">
-            성명
-            <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {contract?.property.address.length === 0
-                ? "미기재"
-                : contract?.property.address}
-            </span>
-          </div>
-          <div className="flex flex-col gap-2">
-            전화번호
-            <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {contract?.property.detailAddress ?? "미기재"}
-            </span>
-          </div>
-        </div>
-      </div>
-      <div className="flex flex-col gap-4">
-        <span className="text-[1.6rem] font-semibold text-center">
-          4. 부동산 사무실 정보
-        </span>
-        {/* <span className="flex text-[#6000ff] text-[1.1rem] font-semibold justify-end mr-8">
-          <PencilIcon width={1.4} height={1.4} />
-          수정하기
-        </span> */}
-        <div className="flex flex-col gap-12 w-full rounded-[30px] p-12 bg-white font-semibold text-[1.6rem]">
-          <div className="flex flex-col gap-2">
-            사무실 이름
-            <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {contract?.property.address.length === 0
-                ? "미기재"
-                : contract?.property.address}
-            </span>
-          </div>
-          <div className="flex flex-col gap-2">
-            전화번호
-            <span className="text-[#4e4e4e] text-[1.2rem] font-medium">
-              {contract?.property.detailAddress ?? "미기재"}
             </span>
           </div>
         </div>
@@ -265,53 +175,64 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
         수정하기
       </span> */}
       <ul className="flex flex-col gap-2 w-full rounded-[30px] p-12 bg-white font-bold text-[1.2rem]">
-        {contract?.articles.map((v, i) => {
-          return (
+        {Array.isArray(contract?.articles) ? (
+          contract.articles.map((v, i) => (
             <li key={i}>
               {v.split("\n")[0]}
               <br />
               &nbsp;&nbsp;
               <span className="font-normal">{v.split("\n")[1]}</span>
             </li>
-          );
-        })}
+          ))
+        ) : (
+          <li>미기재</li>
+        )}
       </ul>
     </div>,
     <div key="3" className="flex flex-col w-full gap-12">
       {contract?.generated ? (
         <>
           <div className="flex flex-col gap-4">
-            {/* <span className="text-[1.6rem] font-bold pl-8">1. 기본 특약</span> */}
             <span className="text-[1.6rem] font-bold pl-8">기본 특약 사항</span>
             <ol className="list-decimal list-inside flex flex-col gap-4 w-full rounded-[30px] p-8 bg-white font-medium text-[1.2rem]">
-              {contract?.basicAgreements.map((v, i) => {
-                return <li key={i}>{v.suggestedRevision}</li>;
-              })}
+              {Array.isArray(contract?.basicAgreements) ? (
+                contract.basicAgreements.map((v, i) => (
+                  <li key={i}>{v.suggestedRevision}</li>
+                ))
+              ) : (
+                <li>미기재</li>
+              )}
             </ol>
           </div>
           <div className="flex flex-col gap-4">
-            {/* <span className="text-[1.6rem] font-bold pl-8">1. 기본 특약</span> */}
             <span className="text-[1.6rem] font-bold pl-8">
               생성된 특약 사항
             </span>
             <ol className="list-decimal list-inside flex flex-col gap-4 w-full rounded-[30px] p-8 bg-white font-medium text-[1.2rem]">
-              {contract?.agreements.map((v, i) => {
-                return <li key={i}>{v.suggestedRevision}</li>;
-              })}
+              {Array.isArray(contract?.agreements) ? (
+                contract.agreements.map((v, i) => (
+                  <li key={i}>{v.suggestedRevision}</li>
+                ))
+              ) : (
+                <li>미기재</li>
+              )}
             </ol>
           </div>
         </>
       ) : (
         <div className="flex flex-col gap-4">
-          {/* <span className="text-[1.6rem] font-bold pl-8">1. 기본 특약</span> */}
           <span className="flex text-[#6000ff] text-[1.1rem] font-semibold justify-end mr-8">
             <PencilIcon width={1.4} height={1.4} />
             수정하기
           </span>
           <ol className="list-decimal list-inside flex flex-col gap-4 w-full rounded-[30px] p-8 bg-white font-medium text-[1.2rem]">
-            {contract?.agreements.map((v, i) => {
-              return <li key={i}>{v.suggestedRevision}</li>;
-            })}
+            {Array.isArray(contract?.agreements) ? (
+              contract.agreements.map((v, i) => (
+                <li key={i}>{v.suggestedRevision}</li>
+              ))
+            ) : (
+              <li>미기재</li>
+            )}
           </ol>
         </div>
       )}

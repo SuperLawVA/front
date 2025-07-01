@@ -8,6 +8,7 @@ interface UploadPageProps {
   goNext: () => void;
   setIsLoading: (loading: boolean) => void;
 }
+
 const MAX_IMAGE = 1;
 
 export default function CameraPage({
@@ -22,13 +23,6 @@ export default function CameraPage({
   const [capturedImages, setCapturedImages] = useState<string[]>([]);
   const [cameraDevices, setCameraDevices] = useState<MediaDeviceInfo[]>([]);
   const [currentCameraIndex, setCurrentCameraIndex] = useState(0);
-
-  // ✅ 카메라 디바이스 목록 불러오기
-  const loadCameraDevices = async () => {
-    const devices = await navigator.mediaDevices.enumerateDevices();
-    const videos = devices.filter((d) => d.kind === "videoinput");
-    setCameraDevices(videos);
-  };
 
   const promiseWithTimeout = <T,>(
     promise: Promise<T>,
@@ -51,6 +45,21 @@ export default function CameraPage({
     });
   };
 
+  // ✅ 카메라 디바이스 목록 불러오기 (권한 요청 포함)
+  const loadCameraDevices = async () => {
+    try {
+      // 먼저 권한 요청 (label을 얻기 위해 필요)
+      await navigator.mediaDevices.getUserMedia({ video: true });
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      const videos = devices.filter((d) => d.kind === "videoinput");
+      setCameraDevices(videos);
+    } catch (err) {
+      console.error("카메라 목록 불러오기 실패:", err);
+      alert("카메라 권한이 필요합니다.");
+    }
+  };
+
+  // ✅ 카메라 시작 with facingMode fallback
   const startCamera = async () => {
     try {
       if (streamRef.current) {
@@ -58,22 +67,48 @@ export default function CameraPage({
         streamRef.current = null;
       }
 
-      if (cameraDevices.length === 0) {
-        console.log("카메라가 없습니다.");
-        return;
+      let stream: MediaStream | null = null;
+
+      // ✅ 1. 먼저 environment 시도
+      try {
+        stream = await promiseWithTimeout(
+          navigator.mediaDevices.getUserMedia({
+            video: { facingMode: { exact: "environment" } },
+            audio: false,
+          }),
+          5000
+        );
+        console.log("✅ environment 카메라 시작 성공");
+      } catch (envErr) {
+        console.log("envErr");
+        console.log(envErr);
+
+        console.warn("⚠️ environment 카메라 시작 실패, deviceId fallback 시도");
+
+        // ✅ 2. deviceId fallback
+        if (cameraDevices.length > 0) {
+          const selectedDevice = cameraDevices[currentCameraIndex];
+
+          // 예시: 망원 카메라 우선 탐색
+          const telephoto = cameraDevices.find((d) =>
+            d.label.toLowerCase().includes("tele")
+          );
+
+          const fallbackDevice = telephoto || selectedDevice;
+
+          stream = await promiseWithTimeout(
+            navigator.mediaDevices.getUserMedia({
+              video: { deviceId: { exact: fallbackDevice.deviceId } },
+              audio: false,
+            }),
+            5000
+          );
+          console.log(`✅ deviceId(${fallbackDevice.label}) 카메라 시작 성공`);
+        } else {
+          alert("사용 가능한 카메라가 없습니다.");
+          return;
+        }
       }
-
-      const selectedDevice = cameraDevices[currentCameraIndex];
-
-      const constraints: MediaStreamConstraints = {
-        video: { deviceId: { exact: selectedDevice.deviceId } },
-        audio: false,
-      };
-
-      const stream = await promiseWithTimeout(
-        navigator.mediaDevices.getUserMedia(constraints),
-        5000
-      );
 
       streamRef.current = stream;
 
@@ -86,12 +121,10 @@ export default function CameraPage({
     }
   };
 
-  // ✅ 최초 실행: 카메라 목록 로드 + 첫 카메라 실행
   useEffect(() => {
     loadCameraDevices();
   }, []);
 
-  // ✅ currentCameraIndex 변경 시 카메라 실행
   useEffect(() => {
     if (cameraDevices.length > 0) {
       startCamera();
@@ -131,10 +164,11 @@ export default function CameraPage({
       formData.append("fileNames", `camera_image_${i}.png`);
     });
 
-    console.log(formData);
-
     try {
       const response = await clientApi.post("/upload", formData);
+      console.log("response");
+      console.log(response);
+
       if (response.status === 200) {
         sessionStorage.setItem("contractId", response.data._id);
         alert("업로드 성공!");
@@ -161,7 +195,6 @@ export default function CameraPage({
     return new Blob([u8arr], { type: mime });
   };
 
-  // ✅ 카메라 순환 전환
   const toggleCameraFacing = () => {
     if (cameraDevices.length > 1) {
       setCurrentCameraIndex((prev) => (prev + 1) % cameraDevices.length);
