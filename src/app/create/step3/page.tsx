@@ -75,8 +75,15 @@ function ContractCreateNewPage() {
           userQuery,
         },
       });
+
       if (response && response.status === 200) {
-        router.push("/contract/" + response.data.id);
+        useCreateStore.setState({
+          contractId: response.data.id,
+          legalBasis: response.data.legalBasis,
+          caseBasis: response.data.caseBasis,
+          agreements: response.data.agreements,
+        });
+        router.push("result");
         setisLoading(false);
       } else {
         alert("응답이 실패했습니다. 다시 시도해 주세요.");

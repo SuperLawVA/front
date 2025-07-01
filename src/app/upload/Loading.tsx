@@ -8,7 +8,6 @@ import ProgressRing from "@/components/ProgressRing2";
 
 function LoadingPage() {
   const router = useRouter();
-  console.log(router);
 
   const [progress, setProgress] = useState(0);
   useEffect(() => {

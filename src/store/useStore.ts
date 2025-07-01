@@ -62,6 +62,7 @@ export const useAuthStore = createStore<UserState>()(
 
 // 계약서 작성
 interface CreateState {
+  contractId: string | null | "";
   articleAgree: string | null;
   contractTitle: string | null;
   contractType: "월세" | "전세" | null;
@@ -83,9 +84,26 @@ interface CreateState {
     intermediatePayment: number | null | "";
     monthlyRent: number | null | "";
   } | null;
+  legalBasis: {
+    lawId: number;
+    law: string;
+    explanation: string;
+    content: string;
+  }[];
+  caseBasis: {
+    caseId: number;
+    case: string;
+    explanation: string;
+    link: string;
+  }[];
   userQuery: string[];
-  articles: string[];
+  agreements: {
+    reason: string;
+    suggestedRevision: string;
+    negotiationPoints: string;
+  }[];
   basicAgreements: { reason: string; suggestedRevision: string }[];
+  articles: string[];
 }
 
 export const useCreateStore = createStore<CreateState>()(
@@ -93,6 +111,7 @@ export const useCreateStore = createStore<CreateState>()(
     // (set, get) => ({
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (set) => ({
+      contractId: null,
       articleAgree: null,
       contractTitle: null,
       contractType: null,
@@ -100,8 +119,11 @@ export const useCreateStore = createStore<CreateState>()(
       property: null,
       payment: null,
       userQuery: [],
-      articles: [],
+      legalBasis: [],
+      caseBasis: [],
+      agreements: [],
       basicAgreements: [],
+      articles: [],
     }),
     {
       name: "createStore",

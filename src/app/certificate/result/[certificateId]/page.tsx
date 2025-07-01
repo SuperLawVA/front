@@ -12,6 +12,10 @@ import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 import Modal from "@/components/Modal";
 import ScalesIcon from "@/components/icons/Scales";
 import clientApi from "@/lib/axios.client";
+import DocumentIcon from "@/components/icons/Document";
+import GreenLogoIcon from "@/components/icons/GreenLogo";
+import StyledInput from "@/components/StyledInput";
+import { useAuthStore } from "@/store/useStore";
 
 export interface Certificate {
   _id: string; // 고유 ID (문자열)
@@ -83,6 +87,33 @@ export default function CertificatePage(props: {
     getCertificate();
   }, []);
   const containerRef = useRef<HTMLDivElement | null>(null);
+
+  const handleRef = useRef(null);
+  const startY = useRef(0);
+  const [dragY, setDragY] = useState(0);
+
+  function onDragStart(e: React.TouchEvent | React.MouseEvent) {
+    startY.current = (e as unknown as TouchEvent).touches
+      ? (e as unknown as TouchEvent).touches[0].clientY
+      : (e as unknown as MouseEvent).clientY;
+    setDragY(0);
+    window.addEventListener("pointermove", onDragMove);
+    window.addEventListener("pointerup", onDragEnd);
+  }
+
+  function onDragMove(e: TouchEvent | MouseEvent) {
+    const currentY = (e as TouchEvent).touches
+      ? (e as TouchEvent).touches[0].clientY
+      : (e as MouseEvent).clientY;
+    setDragY(currentY - startY.current);
+  }
+
+  function onDragEnd() {
+    window.removeEventListener("pointermove", onDragMove);
+    window.removeEventListener("pointerup", onDragEnd);
+    if (dragY > 80) setOpenSend(false);
+    setDragY(0);
+  }
 
   return (
     <>
@@ -167,7 +198,7 @@ export default function CertificatePage(props: {
               </div>
             </section>
           </div>
-          <div className="w-full px-8">
+          <div className="flex items-center justify-center flex-col gap-8 w-full px-8">
             <SubmitButton
               width="100%"
               height={5.5}
@@ -177,6 +208,17 @@ export default function CertificatePage(props: {
             >
               전문 보기
             </SubmitButton>
+            <button
+              className="w-full flex items-center justify-center px-8 py-6 rounded-[20px] text-[#6000ff] !text-[1.4rem] border border-[#6000ff] bg-white"
+              onClick={() => {
+                setOpenSend(true);
+                setSendStep(1);
+              }}
+            >
+              <DocumentIcon />
+              &nbsp;내용증명서 초안 이메일로 전송하기
+              {/* &nbsp; 계약서 초안 이메일로 전송하기 */}
+            </button>
           </div>
         </main>
       )}
@@ -188,37 +230,43 @@ export default function CertificatePage(props: {
         isCenter={true}
       >
         {/* 슬라이드 #0 : 원본 */}
-        <div ref={containerRef}>
+        <div
+          ref={containerRef}
+          className="overflow-x-auto whitespace-nowrap snap-x snap-mandatory"
+        >
           <div
             className="
-            inline-block w-[85%]
+            inline-block w-[90%]
             h-[80svh] snap-x snap-mandatory bg-white rounded-[40px] shadow
-            align-top ml-8 overflow-y-auto
+            py-8 px-2 mx-7
+            overflow-y-auto
             "
           >
-            <div className="flex items-center justify-between px-6 py-4">
-              <h3 className="w-full text-center text-[1.7rem] font-bold">
+            <div className="relative flex items-center px-6 py-4">
+              <h3 className="absolute left-1/2 -translate-x-1/2 text-[1.7rem] font-bold">
                 내용증명서
               </h3>
-              <Image
-                src="/no.png"
-                alt="닫기"
-                width={24}
-                height={24}
-                onClick={() => setOpenOriginal(false)}
-                className="text-gray-500 hover:text-gray-700"
-                aria-label="닫기"
-              />
+              <div className="ml-auto">
+                <Image
+                  src="/no.png"
+                  alt="닫기"
+                  width={24}
+                  height={24}
+                  onClick={() => setOpenOriginal(false)}
+                  className="text-gray-500 hover:text-gray-700 cursor-pointer"
+                  aria-label="닫기"
+                />
+              </div>
             </div>
+
             {/* 본문 (스크롤 처리) */}
-            <div className="px-6 py-4 mt-6 flex-1 overflow-y-auto whitespace-pre-line text-[0.95rem] leading-relaxed">
+            <div className="px-6 py-4 flex-1 overflow-y-auto whitespace-pre-line text-[1.2rem]">
               {certificate?.body}
             </div>
             {/* ─── 경고 박스 ─── */}
             <div
               className="
             flex p-3
-            mx-6 my-4
             w-[90%]
             bg-[#fefce8]
             rounded-[40px]
@@ -232,29 +280,16 @@ export default function CertificatePage(props: {
                 height={26}
                 className="flex-shrink-0 ml-4"
               />
-              <div className="ml-6">
-                <span className="text-subText font-normal">
-                  이 문서는 법률 상담 또는 분쟁 조정을 위한 사전 통지용
-                  문서이며,
-                  <br />
-                  실제 소송 등 법적 절차에 참고될 수 있습니다.
-                </span>
-              </div>
+              <span className="text-subText font-normal whitespace-break-spaces">
+                이 문서는 법률 상담 또는 분쟁 조정을 위한 사전 통지용 문서이며,
+                실제 소송 등 법적 절차에 참고될 수 있습니다.
+              </span>
             </div>
           </div>
-
           {/* ── 관련 법률 모달 ── */}
-
           {/* 헤더 */}
           {certificate?.legalBasis.length && (
-            <ul
-              className="
-            inline-block 
-            w-[88%] h-full
-            overflow-y-auto
-            bg-white rounded-[40px] 
-            px-6 py-4"
-            >
+            <ul className="inline-flex flex-col w-[90%] max-h-[80svh] bg-white rounded-[40px] shadow py-8 px-2 mx-7 overflow-y-auto align-top">
               <div className="w-full px-12 flex items-center gap-12 justify-between">
                 <ScalesIcon width={2} height={2} color="#6000FF" />
                 <h3 className="text-[1.7rem] font-bold">관련 법률</h3>
@@ -273,7 +308,7 @@ export default function CertificatePage(props: {
                   key={lawId}
                   className="
                 relative flex-1
-                mt-40 rounded-[20px]
+                rounded-[20px]
                 border border-gray-100
                 overflow-y-auto 
                 whitespace-pre-line  
@@ -302,183 +337,95 @@ export default function CertificatePage(props: {
         clickOutsideClose
         isCenter={false}
       >
-        <div className="bg-white w-[90vw] max-w-md rounded-t-[40px] mx-auto">
-          {/* -------------- STEP 1 : 이메일 입력 -------------- */}
+        <div
+          className="bg-white w-[90vw] max-w-md rounded-t-[40px] mx-auto"
+          style={{
+            transform: `translateY(${dragY}px)`,
+            transition:
+              dragY === 0 ? "transform 0.18s cubic-bezier(.4,2,.6,1)" : "",
+          }}
+        >
+          <div
+            className="mx-auto mt-3 mb-4 w-16 h-1.5 rounded-full bg-gray-300 cursor-pointer active:bg-gray-400"
+            ref={handleRef}
+            onPointerDown={onDragStart}
+            onTouchStart={onDragStart}
+          />
+          {/* STEP 1: 이메일 입력 */}
           {sendStep === 1 && (
             <>
-              {/* 드래그 핸들(디자인용) */}
-              <div className="mx-auto mt-3 mb-4 w-16 h-1.5 rounded-full bg-gray-300" />
-
               <h3 className="px-6 text-center text-[1.9rem] font-bold mt-8">
                 전송할 이메일 주소를 입력해주세요
               </h3>
               <p className="text-center text-[1.2rem] text-[#6000FF] font-medium">
-                완성된 내용증명서를 전송해 드릴게요
+                내용증명서 초안을 전송해 드릴게요
               </p>
-              <div className="px-6 mt-10">
-                <input
+              <div className="mt-10">
+                <StyledInput
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="이메일 주소를 입력 해주세요"
+                  underLine={false}
                   className="
-                    border border-gray-300 bg-white pl-10
+                    border border-gray-300
                     w-full h-20 rounded-[40px] px-4
-                    text-[1.3rem] 
-                  "
+                    text-[1.3rem] pt-5.5 pl-10
+                    "
                 />
               </div>
-
-              {/* 다음 버튼 */}
-              <div className="px-6 mt-6 ml-4 mb-15 ">
-                <SubmitButton
-                  width={30}
-                  height={5}
+              <div className="px-15 mt-6 mb-15">
+                <button
+                  className="w-full py-5 rounded-[40px] bg-[#6000FF] text-white !font-semibold !text-[1.5rem] disabled:bg-[rgba(128,128,128,0.55)]"
                   disabled={!emailValid}
                   onClick={() => setSendStep(2)}
                 >
                   다음
-                </SubmitButton>
+                </button>
               </div>
             </>
           )}
-
-          {/* -------------- STEP 2 : 전송 확인 -------------- */}
+          {/* STEP 2: 전송 완료 안내 */}
           {sendStep === 2 && (
-            <>
-              {/* 헤더 */}
-              <div className="flex items-center px-6 py-5 justify-center">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-[1.9rem] font-bold mt-8">
-                    내용증명서 발송이 완료되었습니다
-                  </h3>
-                </div>
+            <div className="w-full p-16 flex flex-col gap-8">
+              <div className="text-[2rem] font-bold text-center">
+                내용증명서 초안이 발송되었습니다
               </div>
-              <div className="flex items-center justify-center">
-                <Image
-                  src="/greenlogo.svg"
-                  alt="닫기"
-                  width={65}
-                  height={65}
-                  className="items-center mt-6 mb-15"
-                  onClick={() => setOpenSend(false)}
-                />
+              <div className="flex justify-center items-center">
+                <GreenLogoIcon width={8} height={8} color="#32d74b" />
               </div>
-
-              {/* 버튼 */}
-              <div className="grid grid-cols-2 gap-8 px-6 pb-8 text-[1.6rem]">
-                <button
-                  className="
-                    w-[160px] h-[50px] border border-gray-600
-                    rounded-[40px] -ml-4"
-                  onClick={() => setOpenSend(false)}
-                >
-                  다시 전송하기
-                </button>
-                <button
-                  className="
-                    w-[160px] h-[50px] border-none bg-[#6000FF]
-                    rounded-[40px] text-white"
-                  onClick={() => {
-                    router.push("/");
-                  }}
-                >
-                  홈 화면으로
-                </button>
-              </div>
-            </>
-          )}
-        </div>
-      </Modal>
-      <Modal
-        isOpen={openSend}
-        setIsOpen={setOpenSend}
-        clickOutsideClose
-        isCenter={false}
-      >
-        <div className="bg-white w-[90vw] max-w-md rounded-t-[40px] mx-auto">
-          {/* -------------- STEP 1 : 이메일 입력 -------------- */}
-          {sendStep === 1 && (
-            <>
-              {/* 드래그 핸들(디자인용) */}
-              <div className="mx-auto mt-3 mb-4 w-16 h-1.5 rounded-full bg-gray-300" />
-
-              <h3 className="px-6 text-center text-[1.9rem] font-bold mt-8">
-                전송할 이메일 주소를 입력해주세요
-              </h3>
-              <p className="text-center text-[1.2rem] text-[#6000FF] font-medium">
-                완성된 내용증명서를 전송해 드릴게요
-              </p>
-              <div className="px-6 mt-10">
-                <input
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="이메일 주소를 입력 해주세요"
-                  className="
-                    border border-gray-300 bg-white pl-10
-                    w-full h-20 rounded-[40px] px-4
-                    text-[1.3rem] 
-                  "
-                />
-              </div>
-
-              {/* 다음 버튼 */}
-              <div className="px-6 mt-6 ml-4 mb-15 ">
+              <div className="flex w-full gap-8 justify-between">
                 <SubmitButton
-                  width={30}
+                  width={16}
                   height={5}
-                  disabled={!emailValid}
-                  onClick={() => setSendStep(2)}
-                >
-                  다음
-                </SubmitButton>
-              </div>
-            </>
-          )}
-
-          {/* -------------- STEP 2 : 전송 확인 -------------- */}
-          {sendStep === 2 && (
-            <>
-              {/* 헤더 */}
-              <div className="flex items-center px-6 py-5 justify-center">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-[1.9rem] font-bold mt-8">
-                    내용증명서 발송이 완료되었습니다
-                  </h3>
-                </div>
-              </div>
-              <div className="flex items-center justify-center">
-                <Image
-                  src="/greenlogo.svg"
-                  alt="닫기"
-                  width={65}
-                  height={65}
-                  className="items-center mt-6 mb-15"
-                  onClick={() => setOpenSend(false)}
-                />
-              </div>
-
-              {/* 버튼 */}
-              <div className="grid grid-cols-2 gap-8 px-6 pb-8 text-[1.6rem]">
-                <button
-                  className="
-                    w-[160px] h-[50px] border border-gray-600
-                    rounded-[40px] -ml-4"
-                  onClick={() => setOpenSend(false)}
-                >
-                  다시 전송하기
-                </button>
-                <button
-                  className="
-                    w-[160px] h-[50px] border-none bg-[#6000FF]
-                    rounded-[40px] text-white"
+                  fontSize={1.6}
+                  fontWeight={500}
+                  fontColor="#1e1e1e"
+                  background="white"
+                  borderColor="#5c5c5c"
                   onClick={() => {
+                    setEmail("");
+                    setOpenSend(false);
+                    setSendStep(1);
                     router.push("/");
                   }}
                 >
                   홈 화면으로
-                </button>
+                </SubmitButton>
+                <SubmitButton
+                  width={16}
+                  height={5}
+                  fontSize={1.6}
+                  fontWeight={500}
+                  onClick={() => {
+                    setEmail("");
+                    setOpenSend(false);
+                    setSendStep(1);
+                  }}
+                >
+                  확인
+                </SubmitButton>
               </div>
-            </>
+            </div>
           )}
         </div>
       </Modal>
