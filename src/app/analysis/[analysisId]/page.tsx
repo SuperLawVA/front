@@ -194,7 +194,9 @@ function AnalysisResultPage(props: {
         <div
           key={index}
           className={`inline-block w-[90%] h-full py-8 ${
-            index === articleFalseArray[0]
+            articleFalseArray.length === 1
+              ? "mx-[3.5rem]"
+              : index === articleFalseArray[0]
               ? "ml-[6.5rem] mr-2"
               : index === articleFalseArray.at(-1)
               ? "ml-2 mr-[6.5rem]"
@@ -258,11 +260,11 @@ function AnalysisResultPage(props: {
                     <ScalesIcon />
                     참고한 법령
                   </div>
-                  <ArrowDownIcon className="mr-[2.1rem]" />
+                  <ArrowDownIcon className="mr-[2.1rem] pointer-events-none" />
                 </div>
                 <DivBox className="w-full py-6 px-4 flex justify-between items-center text-wrap">
                   {legalBasis?.law}
-                  <ArrowDownIcon className="mr-4" />
+                  <ArrowDownIcon className="mr-4 pointer-events-none" />
                 </DivBox>
               </div>
               <div className="w-full flex flex-col gap-4">
@@ -271,7 +273,7 @@ function AnalysisResultPage(props: {
                     <BookIcon />
                     참고한 판례
                   </div>
-                  <ArrowDownIcon className="mr-[2.1rem]" />
+                  <ArrowDownIcon className="mr-[2.1rem] pointer-events-none" />
                 </div>
                 {caseBasis?.map(({ case: caseName }, index) => (
                   <DivBox
@@ -279,7 +281,7 @@ function AnalysisResultPage(props: {
                     className="w-full py-6 px-4 flex justify-between items-center text-wrap"
                   >
                     {caseName}
-                    <ArrowDownIcon className="mr-4" />
+                    <ArrowDownIcon className="mr-4 pointer-events-none" />
                   </DivBox>
                 ))}
               </div>
@@ -308,12 +310,14 @@ function AnalysisResultPage(props: {
       ) : (
         <div
           key={index}
-          className={`inline-block w-[90%] h-[80%] py-8 mx-2${
-            index === agreementFalseArray[0]
-              ? " ml-[6.5rem]"
+          className={`inline-block w-[90%] h-[80%] py-8 ${
+            agreementFalseArray.length === 1
+              ? "mx-[3.5rem]"
+              : index === agreementFalseArray[0]
+              ? " ml-[6.5rem] mr-2"
               : index === agreementFalseArray.at(-1)
-              ? " mr-[6.5rem]"
-              : ""
+              ? "ml-2 mr-[6.5rem]"
+              : "mx-2"
           } rounded-[40px] snap-center align-top bg-white overflow-y-auto max-h-[80svh]`}
         >
           <div className="flex flex-col justify-center items-center px-8">
@@ -368,11 +372,11 @@ function AnalysisResultPage(props: {
                     <ScalesIcon />
                     참고한 법령
                   </div>
-                  <ArrowDownIcon className="mr-[2.1rem]" />
+                  <ArrowDownIcon className="mr-[2.1rem] pointer-events-none" />
                 </div>
                 <DivBox className="w-full py-6 px-4 flex justify-between items-center text-wrap">
                   {legalBasis?.law}
-                  <ArrowDownIcon className="mr-4" />
+                  <ArrowDownIcon className="mr-4 pointer-events-none" />
                 </DivBox>
               </div>
               <div className="w-full flex flex-col gap-4">
@@ -381,7 +385,7 @@ function AnalysisResultPage(props: {
                     <BookIcon />
                     참고한 판례
                   </div>
-                  <ArrowDownIcon className="mr-[2.1rem]" />
+                  <ArrowDownIcon className="mr-[2.1rem] pointer-events-none" />
                 </div>
                 {caseBasis.map(({ case: caseName }, index) => (
                   <DivBox
@@ -389,7 +393,7 @@ function AnalysisResultPage(props: {
                     className="w-full py-6 px-4 flex justify-between items-center text-wrap"
                   >
                     {caseName}
-                    <ArrowDownIcon className="mr-4" />
+                    <ArrowDownIcon className="mr-4 pointer-events-none" />
                   </DivBox>
                 ))}
               </div>

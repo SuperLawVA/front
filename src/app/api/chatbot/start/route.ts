@@ -6,10 +6,6 @@ export async function POST(req: NextRequest) {
   try {
     console.log(req);
 
-    // 요청 바디에서 데이터 받기
-    // // 다른 API로 POST 요청 보내기
-    // const jwt = (await cookies()).get("jwt")?.value;
-
     const response = await backendApi.post("/chatbot/create", {});
 
     // 다른 API의 응답을 클라이언트로 전달

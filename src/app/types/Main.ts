@@ -2,7 +2,7 @@ export interface Contract {
   _id?: string;
   contractTitle?: string;
   state?: string;
-  address?: string;
+  property: { address: string };
   createdAt?: string;
   generated?: boolean;
   contractType?: string;
@@ -20,6 +20,7 @@ export interface AnalysisTarget {
   _id: string;
   address?: string;
   generated?: boolean;
+  contractTitle?: string;
   modifiedDate?: string;
   contractType?: string;
   contractDate?: string;

@@ -7,10 +7,6 @@ export async function POST(req: NextRequest) {
     const { certificateId } = await req.json();
     console.log(certificateId);
     const response = await backendApi.post("/certificate", { certificateId });
-    console.log("res");
-    console.log(response);
-    console.log("res.data");
-    console.log(response.data);
 
     return NextResponse.json(response.data, { status: response.status });
   } catch (error) {

@@ -1,14 +1,19 @@
 "use client";
 
-import axios from "axios";
+import clientApi from "@/lib/axios.client";
 import React, { useRef, useEffect, useState } from "react";
 
 interface UploadPageProps {
   goBack: () => void; // 부모에서 상태 관리용 함수
   goNext: () => void; // 부모에서 상태 관리용 함수
+  setIsLoading: (loading: boolean) => void; // ✅ 추가
 }
-
-export default function CameraPage({ goBack, goNext }: UploadPageProps) {
+const MAX_IMAGE = 1;
+export default function CameraPage({
+  goBack,
+  goNext,
+  setIsLoading,
+}: UploadPageProps) {
   // 비디오 요소 참조
   const videoRef = useRef<HTMLVideoElement>(null);
   // 캔버스 요소 참조
@@ -133,7 +138,7 @@ export default function CameraPage({ goBack, goNext }: UploadPageProps) {
         // 최신 이미지 맨 앞에 추가, 최대 5장 유지
         setCapturedImages((prev) => {
           const updated = [imageData, ...prev];
-          return updated.slice(0, 5);
+          return updated.slice(0, MAX_IMAGE);
         });
       }
     }
@@ -147,19 +152,19 @@ export default function CameraPage({ goBack, goNext }: UploadPageProps) {
       alert("제출할 이미지가 없습니다.");
       return;
     }
-
+    setIsLoading(true);
     const formData = new FormData();
     capturedImages.forEach((base64, i) => {
       // base64 -> Blob
       const blob = dataURLtoBlob(base64);
       formData.append("files", blob, `camera_image_${i}.png`);
+      formData.append("fileNames", `camera_image_${i}.png`);
     });
 
     try {
-      const res = await axios.post("/api/upload/images", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      if (res.status === 200) {
+      const response = await clientApi.post("/upload", formData);
+      if (response.status === 200) {
+        sessionStorage.setItem("contractId", response.data._id);
         alert("업로드 성공!");
         setCapturedImages([]);
         goNext(); // 다음 단계로 이동
@@ -169,6 +174,8 @@ export default function CameraPage({ goBack, goNext }: UploadPageProps) {
     } catch (err) {
       console.error(err);
       alert("업로드 중 오류 발생");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -200,77 +207,83 @@ export default function CameraPage({ goBack, goNext }: UploadPageProps) {
   };
 
   return (
-    <div className="relative w-full h-full">
-      {/* 캔버스 (숨김, 촬영용) */}
-      <canvas ref={canvasRef} style={{ display: "none" }} />
+    <>
+      <div className="relative w-full h-full">
+        {/* 캔버스 (숨김, 촬영용) */}
+        <canvas ref={canvasRef} style={{ display: "none" }} />
 
-      {/* 카메라 비디오 & 버튼들 */}
-      <div className="fixed inset-0 z-50 bg-black flex items-center justify-center">
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          className="w-full h-full object-contain"
-        />
+        {/* 카메라 비디오 & 버튼들 */}
+        <div className="fixed inset-0 z-50 bg-black flex items-center justify-center">
+          <video
+            ref={videoRef}
+            autoPlay
+            playsInline
+            className="w-full h-full object-contain"
+          />
 
-        {/* 촬영한 이미지 오버레이 */}
-        <div className="absolute inset-0 p-4 flex flex-wrap items-start justify-start gap-2 pointer-events-none">
-          {capturedImages.map((img, idx) => (
-            <div key={idx} className="relative w-24 h-24">
-              <img
-                src={img}
-                alt={`Captured ${idx}`}
-                className="w-full h-full object-cover rounded border"
-              />
-              <button
-                onClick={() => removeImage(idx)}
-                className="absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full px-1 pointer-events-auto"
-              >
-                ✖
-              </button>
-            </div>
-          ))}
+          {/* 촬영한 이미지 오버레이 */}
+          <div className="absolute inset-0 p-4 flex flex-wrap items-start justify-start gap-2 pointer-events-none">
+            {capturedImages.map((img, idx) => (
+              <div key={idx} className="relative w-24 h-24">
+                <img
+                  src={img}
+                  alt={`Captured ${idx}`}
+                  className="w-full h-full object-cover rounded border"
+                />
+                <button
+                  onClick={() => removeImage(idx)}
+                  className="absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full px-1 pointer-events-auto"
+                >
+                  ✖
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <div className="absolute w-svw flex justify-around items-center bottom-10 left-1/2 transform -translate-x-1/2">
+            {/* 전/후면 전환 버튼 */}
+            <button
+              onClick={toggleCameraFacing}
+              className="px-4 py-2 bg-yellow-500 text-black rounded pointer-events-auto"
+            >
+              🔄 전/후면 전환
+            </button>
+
+            {/* 촬영 버튼 */}
+            <button
+              onClick={takePhoto}
+              className={`px-6 py-3 bg-white/70 text-black rounded-full pointer-events-${
+                capturedImages.length === MAX_IMAGE ? "none" : "auto"
+              }`}
+            >
+              {capturedImages.length === MAX_IMAGE
+                ? `최대 ${MAX_IMAGE}장`
+                : "📸 사진 촬영"}
+            </button>
+
+            {/* 제출 버튼 */}
+            {/* TODO: capturedImages.length === 0 면 비활성화 */}
+            <button
+              onClick={handleSubmit}
+              className={`px-6 py-3 bg-white/70 text-black rounded-full pointer-events-${
+                capturedImages.length === 0 ? "none" : "auto"
+              }`}
+            >
+              {capturedImages.length === 0
+                ? `최대 ${MAX_IMAGE}}장`
+                : "📸 사진 제출"}
+            </button>
+          </div>
+
+          {/* 취소 버튼 */}
+          <button
+            onClick={goBack}
+            className="absolute top-5 right-5 px-4 py-2 bg-red-600 text-white rounded pointer-events-auto"
+          >
+            ✖ 뒤로
+          </button>
         </div>
-
-        <div className="absolute w-svw flex justify-around items-center bottom-10 left-1/2 transform -translate-x-1/2">
-          {/* 전/후면 전환 버튼 */}
-          <button
-            onClick={toggleCameraFacing}
-            className="px-4 py-2 bg-yellow-500 text-black rounded pointer-events-auto"
-          >
-            🔄 전/후면 전환
-          </button>
-
-          {/* 촬영 버튼 */}
-          <button
-            onClick={takePhoto}
-            className={`px-6 py-3 bg-white/70 text-black rounded-full pointer-events-${
-              capturedImages.length === 5 ? "none" : "auto"
-            }`}
-          >
-            {capturedImages.length === 5 ? "최대 5장" : "📸 사진 촬영"}
-          </button>
-
-          {/* 제출 버튼 */}
-          {/* TODO: capturedImages.length === 0 면 비활성화 */}
-          <button
-            onClick={handleSubmit}
-            className={`px-6 py-3 bg-white/70 text-black rounded-full pointer-events-${
-              capturedImages.length === 5 ? "none" : "auto"
-            }`}
-          >
-            {capturedImages.length === 5 ? "최대 5장" : "📸 사진 제출"}
-          </button>
-        </div>
-
-        {/* 취소 버튼 */}
-        <button
-          onClick={goBack}
-          className="absolute top-5 right-5 px-4 py-2 bg-red-600 text-white rounded pointer-events-auto"
-        >
-          ✖ 뒤로
-        </button>
       </div>
-    </div>
+    </>
   );
 }

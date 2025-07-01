@@ -11,6 +11,7 @@ import InfoIcon from "@/components/icons/Info";
 import { useRouter } from "next/navigation";
 import { useCertificateStore } from "@/store/useStore";
 import clientApi from "@/lib/axios.client";
+import LoadingPage from "./Loading";
 
 function StartPage() {
   const router = useRouter();
@@ -21,24 +22,31 @@ function StartPage() {
 
   const [purposeOpen, setPurposeOpen] = useState(false);
   const [storyOpen, setStoryOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const canSubmit = purpose.trim().length > 0 && story.trim().length > 0;
 
   // 분석 요청 정보
   const certificateRequest = async (contractId: string) => {
     try {
+      alert("제출되었습니다. 잠시 기다려 주세요.");
+      setIsLoading(true);
       const response = await clientApi.post("/certificate/generate", {
         contractId,
         userQuery: purpose + "\n" + story,
       });
-      router.push("step2")
-      console.log("certificate response");
-      console.log(response);
 
-      router.push("result/" + response.data._id);
+      if (response && response.status === 200) {
+        router.push("result/" + response.data._id);
+        setIsLoading(false);
+      } else {
+        alert("응답이 실패했습니다. 다시 시도해 주세요.");
+      }
     } catch (error) {
-      console.error("Failed to fetch contracts:", error);
+      console.error("Generate error:", error);
       return undefined;
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -50,6 +58,11 @@ function StartPage() {
 
   return (
     <>
+      {isLoading && (
+        <div className="fixed top-0 left-0 z-50 flex justify-center items-center w-full h-full bg-white">
+          <LoadingPage />
+        </div>
+      )}
       <div className="h-20 w-full flex flex-col justify-center items-center" />
       <BackHeader>내용증명서</BackHeader>
       <main className="flex flex-col mt-[3.6rem] w-full">

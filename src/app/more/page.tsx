@@ -1,180 +1,381 @@
 "use client";
 
-import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import BottomNav from "@/components/BottomNav";
 import DocumentIcon from "@/components/icons/Document";
 import InfoIcon from "@/components/icons/Info";
-import AnalyzeIcon from "@/components/icons/Analysis";
+import { useAuthStore } from "@/store/useStore";
+import Image from "next/image";
+import clientApi from "@/lib/axios.client";
+import ProfileIcon from "@/components/icons/Profile";
+import ArrowDownIcon from "@/components/icons/ArrowDownIcon";
+import PencilIcon from "@/components/icons/Pencil";
+import axios from "axios";
+import Modal from "@/components/Modal";
 
-export default function MorePage() {
+type Contract = {
+  _id: string;
+  contractTitle: string;
+};
+
+type Analysis = {
+  _id: string;
+  contractId: string;
+  contractTitle: string;
+};
+
+type Certificate = {
+  _id: string;
+  title: string;
+};
+
+function MorePage() {
+  const router = useRouter();
+  const [userName, setUserName] = useState<string | null>(null);
+  const [email, setEmail] = useState("");
+  // const [notification, setNotification] = useState<number[]>([]);
+  // const [contractArray, setContractArray] = useState<Contract[]>([]);
+  const [activeContract, setActiveContract] = useState(false);
+  const [activeAnalysis, setActiveAnalysis] = useState(false);
+  const [activeCertificate, setActiveCertificate] = useState(false);
+  const [docsArray, setDocsArray] = useState<
+    [Contract[], Analysis[], Certificate[]] | null
+  >(null);
+
+  const handleLogout = async () => {
+    await clientApi.get("/logout");
+    useAuthStore.persist.clearStorage();
+    sessionStorage.clear();
+    sessionStorage.setItem("start", "true");
+    router.replace("/login"); // 로그아웃 후 로그인 페이지로 이동
+  };
+
+  const getUserData = async () => {
+    const response = await clientApi.post("/more", {});
+
+    if (response) {
+      const {
+        userName,
+        email,
+        contractArray,
+        analysisArray,
+        certificateArray,
+      } = response.data;
+
+      setUserName(userName);
+      setEmail(email);
+      // setNotification(notification);
+      setDocsArray([contractArray, analysisArray, certificateArray]);
+    }
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, [router]);
+
+  const deleteContract = async (_id: string) => {
+    try {
+      await clientApi.post("/contract/delete", { _id });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error) {
+          console.log(error);
+        }
+      }
+    }
+  };
+  const deleteAnalysis = async (_id: string) => {
+    try {
+      await clientApi.post("/analysis/delete", { _id });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error) {
+          console.log(error);
+        }
+      }
+    }
+  };
+  const deleteCertificate = async (_id: string) => {
+    try {
+      await clientApi.post("/certificate/delete", { _id });
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error) {
+          console.log(error);
+        }
+      }
+    }
+  };
+
+  const [deleteModal, setDeleteModal] = useState<{
+    isOpen: boolean;
+    type: "contract" | "analysis" | "certificate" | null;
+    id: string | null;
+  }>({
+    isOpen: false,
+    type: null,
+    id: null,
+  });
+
+  const openDeleteModal = (
+    type: "contract" | "analysis" | "certificate",
+    id: string
+  ) => {
+    setDeleteModal({
+      isOpen: true,
+      type,
+      id,
+    });
+  };
+  const closeDeleteModal = () => {
+    setDeleteModal({
+      isOpen: false,
+      type: null,
+      id: null,
+    });
+  };
+  const handleDelete = async () => {
+    if (!deleteModal.type || !deleteModal.id) return;
+
+    try {
+      if (deleteModal.type === "contract") {
+        await deleteContract(deleteModal.id);
+      } else if (deleteModal.type === "analysis") {
+        await deleteAnalysis(deleteModal.id);
+      } else if (deleteModal.type === "certificate") {
+        await deleteCertificate(deleteModal.id);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      closeDeleteModal();
+      getUserData();
+    }
+  };
   return (
-    <div className="w-full relative bg-[#f2f1f6] h-[852px] overflow-hidden text-left text-sm text-black font-pretendard">
-      <div className="absolute top-0 left-0 bg-white/70 border border-[#f3f4f6] w-[393px] h-[852px]" />
-
-      {/* 상단 로고 영역 */}
-      <div className="absolute top-[60px] left-[21px] w-[142px] h-6">
-        <div className="absolute top-[0px] left-[0px] w-[142px] h-6 flex items-center">
-          <Image
-            className="w-6 h-3 object-cover"
-            src="/lovalogo.svg"
-            alt="logo"
-            width={24}
-            height={12}
-          />
-          <div className="ml-2 text-[20px] tracking-[-0.04em] leading-[120%] font-semibold text-transparent !bg-clip-text [background:linear-gradient(90deg,_#6000ff,_#e100ff)] [-webkit-background-clip:text] [-webkit-text-fill-color:transparent] whitespace-nowrap">
-            Super Lawva
-          </div>
+    <>
+      <div className="h-20 w-full flex flex-col justify-center items-center" />
+      <header className="w-full flex justify-center items-center h-24">
+        <div className="w-full flex justify-between items-center p-8 mx-6 gap-4">
+          <span className="flex gap-3">
+            <Image
+              width={9999}
+              height={9999}
+              src="logo.svg"
+              className="w-12"
+              alt=""
+            />
+            <span className="font-pretendard font-semibold text-[2rem] leading-[120%] tracking-[-0.04em] bg-gradient-to-r from-[#6000FF] to-[#E100FF] bg-clip-text text-transparent">
+              Super LawVA
+            </span>
+          </span>
+          <span className="flex gap-[2.4rem] text-main" onClick={handleLogout}>
+            로그아웃
+          </span>
         </div>
-      </div>
-
-      {/* 사용자 정보 영역 */}
-      <div className="absolute top-[132px] left-[107px] w-[114px] h-[45px]">
-        <div className="absolute top-[0px] left-[0px] w-[114px] h-[45px]">
-          <div className="absolute top-[0px] left-[0px] text-[20px] leading-5 font-semibold">
-            홍길동
-          </div>
-          <div className="absolute top-[33px] left-[0px] w-[114px] h-3 text-[12px] text-[#9ca3af]">
-            <div className="absolute top-[0px] left-[0px] leading-[100%] font-medium">
-              sibal_zip@gmail.com
+      </header>
+      <main className="w-full flex flex-col items-center min-h-[calc(100%-18rem)]">
+        <div className="w-full p-8">
+          <div className="w-full py-6 px-8 flex gap-12 items-center bg-white border border-[#c6c6c8] rounded-[20px]">
+            <ProfileIcon width={2.5} height={2.5} color="#9CA3AF" />
+            <div>
+              <div className="text-[2rem] font-semibold">{userName}</div>
+              <div className="text-[1.2rem] text-[#9ca3af] font-medium">
+                {email}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* 프로필 이미지 영역 */}
-      <div className="absolute top-[127px] left-[39px] w-[52px] h-[50px]">
-        <div className="absolute top-[0px] left-[0px] rounded-[43.5px] bg-[#f3f4f6] w-[52px] h-[50px]" />
-        <Image
-          className="absolute w-[48.27%] top-[calc(50%_-_12.75px)] right-[26.25%] left-[25.48%] max-w-full overflow-hidden h-[25.9px]"
-          src="/my.svg"
-          alt="profile"
-          width={25.1}
-          height={25.9}
-        />
-      </div>
-
-      {/* 사용자 정보 박스 */}
-      <div className="absolute top-[117px] left-[21px] rounded-[20px] border border-[#c6c6c8] border-solid w-[337px] h-[70px]" />
-
-      {/* 내 문서함 영역 */}
-      <div className="absolute top-[217px] left-[21px] text-[20px] leading-5 font-semibold">
-        내 문서함
-      </div>
-
-      {/* 문서함 아이템들 */}
-      <div className="absolute top-[267px] left-[21px] w-[337px] h-[46px] text-[12px] text-black/60">
-        <div className="absolute top-[0px] left-[0px] w-[337px] h-[46px]">
-          <div className="absolute top-[0px] left-[0px] rounded-[20px] border border-[#c6c6c8] border-solid w-[337px] h-[46px]" />
-          <div className="absolute top-[16px] left-[12px] w-[14px] h-[14px] flex items-center justify-center">
-            <DocumentIcon color="#32d74b" width={14} height={14} />
-          </div>
-          <div className="absolute top-[16px] left-[31px] tracking-[-0.2px] font-medium">
-            계약서 초안
+        <div className="w-full h-full flex-1 mt-4 px-8 py-10 gap-12 rounded-[20px][50px] bg-white flex flex-col items-center">
+          <div className="text-[2rem] self-start font-semibold">내 문서함</div>
+          <div className="w-full flex flex-col items-center justify-center gap-4">
+            <ul
+              className={`w-full h-full px-8 py-6 gap-4 flex flex-col justify-center border border-[#c6c6c8]${
+                activeContract ? "" : " rounded-[20px]"
+              }`}
+            >
+              <div className="w-full flex items-center justify-between">
+                <div
+                  onClick={() => setActiveContract(!activeContract)}
+                  className="w-full flex items-center gap-4 font-medium text-[1.4rem] text-black/60"
+                >
+                  <DocumentIcon color="#32d74b" width={1.6} height={1.6} />
+                  계약서 초안
+                </div>
+                <ArrowDownIcon
+                  width={1.6}
+                  color="#9CA3AF"
+                  to="#"
+                  className="pointer-events-none"
+                />
+              </div>
+              {activeContract && (
+                <hr className="w-full border border-[#d9d9d9]" />
+              )}
+              {activeContract &&
+                docsArray &&
+                docsArray[0].map(({ _id, contractTitle }) => {
+                  return (
+                    <li key={_id} className="w-full flex flex-col">
+                      <div className="w-full flex justify-between text-[1.2rem] px-4">
+                        <span
+                          onClick={() => router.push("/contract/" + _id)}
+                          className="self-start"
+                        >
+                          {contractTitle}
+                        </span>
+                        <div className="flex gap-8 justify-center">
+                          <span className="text-[#FF9500]">편집</span>
+                          <span
+                            className="text-red-600"
+                            onClick={() => openDeleteModal("contract", _id)}
+                          >
+                            삭제
+                          </span>
+                        </div>
+                      </div>
+                      <hr className="w-full border-[0.5px] border-[#d9d9d9]" />
+                    </li>
+                  );
+                })}
+            </ul>
+            <ul
+              className={`w-full h-full px-8 py-6 gap-4 flex flex-col justify-center border border-[#c6c6c8]${
+                activeAnalysis ? "" : " rounded-[20px]"
+              }`}
+            >
+              <div className="w-full flex items-center justify-between">
+                <div
+                  onClick={() => setActiveAnalysis(!activeAnalysis)}
+                  className="w-full flex items-center gap-4 font-medium text-[1.4rem] text-black/60"
+                >
+                  <PencilIcon color="#0A84FF" width={1.6} height={1.6} />
+                  계약서 분석 결과
+                </div>
+                <ArrowDownIcon
+                  width={1.6}
+                  color="#9CA3AF"
+                  to="#"
+                  className="pointer-events-none"
+                />
+              </div>
+              {activeAnalysis && (
+                <hr className="w-full border border-[#d9d9d9]" />
+              )}
+              {activeAnalysis &&
+                docsArray &&
+                docsArray[1].map(({ _id, contractTitle }) => {
+                  return (
+                    <li key={_id} className="w-full flex flex-col">
+                      <div className="w-full flex justify-between text-[1.2rem] px-4">
+                        <span
+                          onClick={() => router.push("/analysis/" + _id)}
+                          className="self-start"
+                        >
+                          {contractTitle}의 분석 결과
+                        </span>
+                        <div className="flex gap-8 justify-center">
+                          <span className="text-[#FF9500]">편집</span>
+                          <span
+                            className="text-red-600"
+                            onClick={() => openDeleteModal("analysis", _id)}
+                          >
+                            삭제
+                          </span>
+                        </div>
+                      </div>
+                      <hr className="w-full border-[0.5px] border-[#d9d9d9]" />
+                    </li>
+                  );
+                })}
+            </ul>
+            <ul
+              className={`w-full h-full px-8 py-6 gap-4 flex flex-col justify-center border border-[#c6c6c8]${
+                activeCertificate ? "" : " rounded-[20px]"
+              }`}
+            >
+              <div className="w-full flex items-center justify-between">
+                <div
+                  onClick={() => setActiveCertificate(!activeCertificate)}
+                  className="w-full flex items-center gap-4 font-medium text-[1.4rem] text-black/60"
+                >
+                  <InfoIcon color="#FF453A" width={1.6} height={1.6} />
+                  생성된 내용증명서
+                </div>
+                <ArrowDownIcon
+                  width={1.6}
+                  color="#9CA3AF"
+                  to="#"
+                  className="pointer-events-none"
+                />
+              </div>
+              {activeCertificate && (
+                <hr className="w-full border border-[#d9d9d9]" />
+              )}
+              {activeCertificate &&
+                docsArray &&
+                docsArray[2].map(({ _id, title }) => {
+                  return (
+                    <li key={_id} className="w-full flex flex-col">
+                      <div className="w-full flex justify-between text-[1.2rem] px-4">
+                        <span
+                          onClick={() =>
+                            router.push("/certificate/result/" + _id)
+                          }
+                          className="self-start"
+                        >
+                          {title}
+                        </span>
+                        <div className="flex gap-8 justify-center">
+                          <span className="text-[#FF9500]">편집</span>
+                          <span
+                            className="text-red-600"
+                            onClick={() => openDeleteModal("certificate", _id)}
+                          >
+                            삭제
+                          </span>
+                        </div>
+                      </div>
+                      <hr className="w-full border-[0.5px] border-[#d9d9d9]" />
+                    </li>
+                  );
+                })}
+            </ul>
           </div>
         </div>
-        <Image
-          className="absolute w-[3.56%] top-[calc(50%_-_3px)] right-[7.12%] left-[89.32%] max-w-full overflow-hidden h-1.5 object-contain"
-          src="/add.svg"
-          alt="arrow"
-          width={12}
-          height={6}
-        />
-      </div>
-
-      {/* 내용증명서 아이템 */}
-      <div className="absolute top-[324px] left-[21px] w-[337px] h-[46px] text-[12px] text-black/60">
-        <div className="absolute top-[0px] left-[0px] w-[337px] h-[46px]">
-          <div className="absolute top-[0px] left-[0px] rounded-[20px] border border-[#c6c6c8] border-solid w-[337px] h-[46px]" />
-          <div className="absolute top-[16px] left-[12px] w-[14px] h-[14px] flex items-center justify-center">
-            <InfoIcon color="#ff453a" width={14} height={14} />
+      </main>
+      <Modal
+        isOpen={deleteModal.isOpen}
+        setIsOpen={closeDeleteModal}
+        clickOutsideClose={true}
+        isCenter={true}
+      >
+        <div className="w-[90%] mx-[5%] flex flex-col gap-4 items-center justify-center p-12 bg-white rounded-[30px]">
+          <div className="text-[1.8rem]">정말로 삭제하시겠습니까?</div>
+          <div className="text-[1.4rem]">
+            계약서를 삭제하면 연결된 분석 결과도 함께 삭제됩니다.
           </div>
-          <div className="absolute top-[16px] left-[31px] tracking-[-0.2px] font-medium">
-            생성된 내용증명서
-          </div>
-        </div>
-        <Image
-          className="absolute w-[3.56%] top-[calc(50%_-_3px)] right-[7.12%] left-[89.32%] max-w-full overflow-hidden h-1.5 object-contain"
-          src="/add.svg"
-          alt="arrow"
-          width={12}
-          height={6}
-        />
-      </div>
-
-      {/* 분석 결과 아이템 */}
-      <div className="absolute top-[381px] left-[21px] w-[337px] h-[46px] text-[12px] text-black/60">
-        <div className="absolute top-[0px] left-[0px] w-[337px] h-[46px]">
-          <div className="absolute top-[0px] left-[0px] rounded-[20px] border border-[#c6c6c8] border-solid w-[337px] h-[46px]" />
-          <div className="absolute top-[16px] left-[12px] w-[14px] h-[14px] flex items-center justify-center">
-            <AnalyzeIcon color="#0a84ff" width={14} height={14} />
-          </div>
-          <div className="absolute top-[16px] left-[31px] tracking-[-0.2px] font-medium">
-            계약서 분석 결과
+          <div className="flex gap-12 mt-4 text-[1.4rem]">
+            <button
+              onClick={closeDeleteModal}
+              className="px-8 py-4 bg-main rounded-[20px] text-white"
+            >
+              취소
+            </button>
+            <button
+              onClick={handleDelete}
+              className="px-8 py-4 bg-subText text-white rounded-[20px]"
+            >
+              삭제
+            </button>
           </div>
         </div>
-        <Image
-          className="absolute w-[3.56%] top-[calc(50%_-_3px)] right-[7.12%] left-[89.32%] max-w-full overflow-hidden h-1.5 object-contain"
-          src="/add.svg"
-          alt="arrow"
-          width={12}
-          height={6}
-        />
-      </div>
-
-      {/* 자주 묻는 질문 영역 */}
-      <div className="absolute top-[457px] left-[21px] text-[20px] leading-5 font-semibold">
-        자주 묻는 질문
-      </div>
-
-      {/* FAQ 이미지 영역 - 가로 스크롤 */}
-      <div className="absolute top-[506px] left-[19px] w-[393px] overflow-x-auto flex gap-4 pb-4">
-        <div className="flex flex-col gap-2 flex-shrink-0">
-          <div className="relative w-[160px] h-[160px] rounded-[20px] overflow-hidden">
-            <Image
-              src="/more1.png"
-              alt="FAQ 1"
-              width={160}
-              height={160}
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="text-[14px] font-semibold">
-            집주인이 보증금을 안줘요
-          </div>
-          <div className="text-[8px] text-black/50">Q&A</div>
-        </div>
-
-        <div className="flex flex-col gap-2 flex-shrink-0">
-          <div className="relative w-[160px] h-[160px] rounded-[20px] overflow-hidden">
-            <Image
-              src="/more2.png"
-              alt="FAQ 2"
-              width={160}
-              height={160}
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="text-[14px] font-semibold">임대차 계약이 뭔가요?</div>
-          <div className="text-[8px] text-black/50">용어 설명</div>
-        </div>
-
-        <div className="flex flex-col gap-2 flex-shrink-0">
-          <div className="relative w-[160px] h-[160px] rounded-[20px] overflow-hidden">
-            <Image
-              src="/more3.png"
-              alt="FAQ 3"
-              width={160}
-              height={160}
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="text-[14px] font-semibold">계약이 뭔가요?</div>
-          <div className="text-[8px] text-black/50">계약서 분석</div>
-        </div>
-      </div>
-
-      {/* 하단 네비게이션 */}
+      </Modal>
       <BottomNav />
-    </div>
+      {/* <BottomNav mainBackGroundColor="rgb(245, 244, 248)" /> */}
+    </>
   );
 }
+
+export default MorePage;
