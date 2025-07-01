@@ -8,6 +8,7 @@ export async function POST(req: NextRequest) {
     // 👉login과 합칠 예정
     // 예: await db.insertUser({ email, passwordHash, name });
     // build용 변수 사용
+    console.log(req);
     const user = await backendApi.get("/user");
     const sessions = await backendApi.get("/chatbot");
 

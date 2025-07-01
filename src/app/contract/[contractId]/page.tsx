@@ -68,7 +68,7 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
     setDragY(currentY - startY.current);
   }
 
-  function onDragEnd(e: TouchEvent | MouseEvent) {
+  function onDragEnd() {
     window.removeEventListener("pointermove", onDragMove);
     window.removeEventListener("pointerup", onDragEnd);
     if (dragY > 80) setOpenSend(false);

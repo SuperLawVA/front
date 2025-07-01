@@ -1,17 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import SubmitButton from "@/components/SubmitButton";
 import { useEffect, useState } from "react";
-import AlarmIcon from "@/components/icons/Alarm";
 import BottomNav from "@/components/BottomNav";
 import DocumentIcon from "@/components/icons/Document";
-import AnalysisIcon from "@/components/icons/Analysis";
 import InfoIcon from "@/components/icons/Info";
-import UploadIcon from "@/components/icons/Upload";
-import MagnifyingGlassIcon from "@/components/icons/MagnifyingGlass";
-import ChatIcon from "@/components/icons/Chat";
-import ArrowRightIcon from "@/components/icons/ArrowRight";
 import { useAuthStore } from "@/store/useStore";
 import Image from "next/image";
 import clientApi from "@/lib/axios.client";
