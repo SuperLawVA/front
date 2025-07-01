@@ -8,7 +8,7 @@ import DocumentIcon from "@/components/icons/Document";
 import AnalysisIcon from "@/components/icons/Analysis";
 import InfoIcon from "@/components/icons/Info";
 import UploadIcon from "@/components/icons/Upload";
-import MagnifyingGlassIcon from "@/components/icons/MagnifyingGlass";
+// import MagnifyingGlassIcon from "@/components/icons/MagnifyingGlass";
 import { Contract, Chat } from "./types/Main";
 import ChatIcon from "@/components/icons/Chat";
 import ArrowRightIcon from "@/components/icons/ArrowRight";
@@ -78,7 +78,7 @@ function MainPage() {
   }, []);
 
   const router = useRouter();
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
 
   return (
     <>
@@ -108,7 +108,7 @@ function MainPage() {
           {"'"}에서 도와드릴게요!
         </div>
         <div className="w-full px-8 py-10 gap-12 rounded-t-[50px] bg-white flex flex-col items-center">
-          <form className="w-full h-full pl-6 pr-4 flex items-center justify-between gap-4 bg-inputBox rounded-[50px]">
+          {/* <form className="w-full h-full pl-6 pr-4 flex items-center justify-between gap-4 bg-inputBox rounded-[50px]">
             <MagnifyingGlassIcon width={1.6} height={1.6} color="#9ca3af" />
             <input
               type="text"
@@ -133,7 +133,7 @@ function MainPage() {
             >
               검색
             </SubmitButton>
-          </form>
+          </form> */}
           <div className="self-start w-full font-semibold text-[1.8rem] px-8 flex flex-col gap-4">
             빠른 작업
             <div className="flex w-full justify-around">
