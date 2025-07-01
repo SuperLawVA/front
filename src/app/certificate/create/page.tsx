@@ -2,7 +2,7 @@
 "use client";
 
 import SubmitButton from "@/components/SubmitButton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "@/components/Modal";
 import BackHeader from "@/components/BackHeader";
 import AnalyzeIcon from "@/components/icons/Analysis";
