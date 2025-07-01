@@ -9,13 +9,8 @@ export async function GET() {
   try {
     cookieStore.delete("jwt");
     cookieStore.delete("userId");
-    // console.log(response);
     // 5️⃣ 클라이언트로 로그아웃 성공 응답
     return NextResponse.json({ success: true, message: "" }, { status: 200 });
-    // return NextResponse.json(
-    //   { success: true, message },
-    //   { status: response.status }
-    // );
   } catch (error) {
     console.error("[API LOGOUT] Error:", error);
     // 6️⃣ Axios 에러 구체 처리
