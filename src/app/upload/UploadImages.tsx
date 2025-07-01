@@ -196,7 +196,8 @@ export default function UploadPage({
 
     try {
       const response = await clientApi.post("/upload", formData);
-
+      console.log("response");
+      console.log(response);
       if (response.status === 200) {
         imageFiles.forEach((img) => URL.revokeObjectURL(img.previewUrl));
         setImageFiles([]);
