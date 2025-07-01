@@ -1,8 +1,7 @@
 "use client";
 
-import DocumentIcon from "@/components/icons/Document";
 import PencilIcon from "@/components/icons/Pencil";
-import { use, useEffect, useState, useRef } from "react";
+import { use, useEffect, useState } from "react";
 import BackHeader from "@/components/BackHeader";
 import ClockIcon from "@/components/icons/Clock";
 import InfoIcon from "@/components/icons/Info";
@@ -11,12 +10,9 @@ import CalendarIcon from "@/components/icons/Calendar";
 import PaymentIcon from "@/components/icons/Payment";
 import AssetIcon from "@/components/icons/Asset";
 import clientApi from "@/lib/axios.client";
-import Modal from "@/components/Modal";
 import Contract from "@/app/types/Contract";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import StyledInput from "@/components/StyledInput";
-import GreenLogoIcon from "@/components/icons/GreenLogo";
 
 function StartPage(props: { params: Promise<{ contractId: string }> }) {
   const router = useRouter();

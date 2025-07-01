@@ -19,7 +19,8 @@ function SearchResultPage() {
   const queryParam = searchParams.get("q") || "";
 
   const [query, setQuery] = useState(queryParam);
-  const [pageParam, setPageParam] = useState(1);
+  // const [pageParam, setPageParam] = useState(1);
+  const pageParam = 1;
   const [resultValue, setResultValue] = useState<
     { word: string; content: string }[]
   >([]);

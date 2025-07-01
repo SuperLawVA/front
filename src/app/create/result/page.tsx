@@ -111,7 +111,7 @@ function ContractCreateNewPage() {
       </div>
     </li>
   ));
-  contractId;
+
   const contents = agreements.map(
     ({ suggestedRevision, reason, negotiationPoints }, index) => (
       <li

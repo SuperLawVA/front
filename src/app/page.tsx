@@ -60,14 +60,6 @@ function MainPage() {
   const [contractArray, setContractArray] = useState<Contract[]>([]);
   const [chats, setChats] = useState<Chat[]>([]);
 
-  // 임시 로그아웃
-  const handleLogout = async () => {
-    await clientApi.get("/logout");
-    useAuthStore.persist.clearStorage();
-    sessionStorage.clear();
-    sessionStorage.setItem("start", "true");
-    router.replace("/login"); // 로그아웃 후 로그인 페이지로 이동
-  };
   const getUserData = async () => {
     const response = await clientApi.post("/user", {});
 
