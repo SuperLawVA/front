@@ -15,7 +15,6 @@ import clientApi from "@/lib/axios.client";
 import DocumentIcon from "@/components/icons/Document";
 import GreenLogoIcon from "@/components/icons/GreenLogo";
 import StyledInput from "@/components/StyledInput";
-import { useAuthStore } from "@/store/useStore";
 
 export interface Certificate {
   _id: string; // 고유 ID (문자열)
