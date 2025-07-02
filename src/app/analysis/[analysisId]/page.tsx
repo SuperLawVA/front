@@ -33,23 +33,31 @@ function AnalysisResultPage(props: {
   const [agreements, setAgreements] = useState<Agreement[]>([]);
   const { analysisId } = use(props.params);
 
+  // 🔽 caseBasis 토글 배열 state 추가
+  const [openArticleCaseArray, setOpenArticleCaseArray] = useState<boolean[][]>(
+    []
+  );
+  const [openAgreementCaseArray, setOpenAgreementCaseArray] = useState<
+    boolean[][]
+  >([]);
+
   const getUserData = async () => {
     try {
       const response = await clientApi.post("/analysis", { analysisId });
       setArticles(response.data.articles as Article[]);
       setAgreements(response.data.agreements as Agreement[]);
-      // setAgreements(
-      //   Array.isArray(response.data.agreements) ? response.data.agreements : []
-      // );
-
-      // setContract(response.data.contract);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        if (error.status === 401) {
-          alert("잘못된 접근입니다!");
-          router.replace("/"); // 이전 페이지로 돌아감
+        console.log("error");
+        console.log(error);
+
+        if (error.status === 404 || error.status === 401) {
+          alert(error.status + " 잘못된 접근입니다!");
+          router.replace("/");
           return;
         }
+      } else {
+        alert("500 알 수 없는 오류 발생");
       }
     }
   };
@@ -57,6 +65,88 @@ function AnalysisResultPage(props: {
   useEffect(() => {
     getUserData();
   }, [router]);
+
+  // 🔽 articles caseBasis 토글 배열 초기화
+  useEffect(() => {
+    if (articles.length > 0) {
+      setOpenArticleCaseArray(
+        articles.map((article) =>
+          article.caseBasis
+            ? new Array(article.caseBasis.length).fill(false)
+            : []
+        )
+      );
+    }
+  }, [articles]);
+
+  // 🔽 agreements caseBasis 토글 배열 초기화
+  useEffect(() => {
+    if (agreements.length > 0) {
+      setOpenAgreementCaseArray(
+        agreements.map((agreement) =>
+          agreement.caseBasis
+            ? new Array(agreement.caseBasis.length).fill(false)
+            : []
+        )
+      );
+    }
+  }, [agreements]);
+
+  // 🔽 article 판례 토글 함수
+  // const toggleOpenArticleCase = (articleIndex: number, caseIndex: number) => {
+  //   setOpenArticleCaseArray((prev) => {
+  //     const updated = [...prev];
+  //     updated[articleIndex] = [...updated[articleIndex]];
+  //     updated[articleIndex][caseIndex] = !updated[articleIndex][caseIndex];
+  //     return updated;
+  //   });
+  // };
+
+  // 🔽 agreement 판례 토글 함수
+  // const toggleOpenAgreementCase = (
+  //   agreementIndex: number,
+  //   caseIndex: number
+  // ) => {
+  //   setOpenAgreementCaseArray((prev) => {
+  //     const updated = [...prev];
+  //     updated[agreementIndex] = [...updated[agreementIndex]];
+  //     updated[agreementIndex][caseIndex] = !updated[agreementIndex][caseIndex];
+  //     return updated;
+  //   });
+  // };
+
+  const [openCaseArray, setOpenCaseArray] = useState<boolean[][]>([]);
+  console.log(Boolean(openCaseArray));
+
+  useEffect(() => {
+    getUserData();
+  }, [router]);
+  const [openLawArray, setOpenLawArray] = useState<boolean[]>([]);
+  useEffect(() => {
+    if (agreements.length > 0 || articles.length > 0) {
+      setOpenLawArray(
+        new Array(articles.length + agreements.length).fill(false)
+      );
+    }
+  }, [articles, agreements]);
+  const toggleOpenLaw = (index: number) => {
+    setOpenLawArray((prev) => {
+      const updated = [...prev];
+      updated[index] = !updated[index];
+      return updated;
+    });
+  };
+  useEffect(() => {
+    if (articles.length > 0) {
+      setOpenCaseArray(
+        articles.map((article) =>
+          article.caseBasis
+            ? new Array(article.caseBasis.length).fill(false)
+            : []
+        )
+      );
+    }
+  }, [articles]);
 
   const titleArray = ["계약 조항 분석 결과", "특약 사항 분석 결과"].map(
     (value, index) => (
@@ -175,6 +265,37 @@ function AnalysisResultPage(props: {
     []
   );
 
+  const [openCaseArray2, setOpenCaseArray2] = useState<boolean[][]>([]);
+  console.log(Boolean(openCaseArray2));
+  const [openLawArray2, setOpenLawArray2] = useState<boolean[]>([]);
+  useEffect(() => {
+    if (agreements.length > 0 || articles.length > 0) {
+      setOpenLawArray2(
+        new Array(articles.length + agreements.length).fill(false)
+      );
+    }
+  }, [articles, agreements]);
+
+  const toggleOpenLaw2 = (index: number) => {
+    setOpenLawArray2((prev) => {
+      const updated = [...prev];
+      updated[index] = !updated[index];
+      return updated;
+    });
+  };
+
+  useEffect(() => {
+    if (articles.length > 0) {
+      setOpenCaseArray2(
+        articles.map((article) =>
+          article.caseBasis
+            ? new Array(article.caseBasis.length).fill(false)
+            : []
+        )
+      );
+    }
+  }, [articles]);
+
   const articleDetailArray = articles?.map(
     (
       {
@@ -260,12 +381,19 @@ function AnalysisResultPage(props: {
                     <ScalesIcon />
                     참고한 법령
                   </div>
-                  <ArrowDownIcon className="mr-[2.1rem] pointer-events-none" />
                 </div>
                 <DivBox className="w-full py-6 px-4 flex justify-between items-center text-wrap">
                   {legalBasis?.law}
-                  <ArrowDownIcon className="mr-4 pointer-events-none" />
+                  <ArrowDownIcon
+                    onClick={() => toggleOpenLaw(index)}
+                    className="mr-4 cursor-pointer"
+                  />
                 </DivBox>
+                {openLawArray[index] && (
+                  <div className="flex text-wrap px-6 py-4 bg-[#fafafd] rounded-b-[20px] text-[1.2rem] text-gray-700 border-t border-[#ededed]">
+                    {legalBasis?.explanation}
+                  </div>
+                )}
               </div>
               <div className="w-full flex flex-col gap-4">
                 <div className="flex items-center justify-between text-[1.6rem] font-semibold">
@@ -273,17 +401,45 @@ function AnalysisResultPage(props: {
                     <BookIcon />
                     참고한 판례
                   </div>
-                  <ArrowDownIcon className="mr-[2.1rem] pointer-events-none" />
                 </div>
-                {caseBasis?.map(({ case: caseName }, index) => (
-                  <DivBox
-                    key={index}
-                    className="w-full py-6 px-4 flex justify-between items-center text-wrap"
-                  >
-                    {caseName}
-                    <ArrowDownIcon className="mr-4 pointer-events-none" />
-                  </DivBox>
+                {caseBasis.map(({ case: caseName, explanation }, caseIndex) => (
+                  <div key={caseIndex} className="flex flex-col w-full">
+                    <DivBox className="w-full py-6 px-4 flex justify-between items-center text-wrap cursor-pointer">
+                      {caseName}
+                      <ArrowDownIcon
+                        to="#"
+                        onClick={() => {
+                          setOpenAgreementCaseArray((prev) => {
+                            const updated = [...prev];
+
+                            // 해당 index가 없으면 빈 배열 생성
+                            if (!updated[index]) {
+                              updated[index] = new Array(caseBasis.length).fill(
+                                false
+                              );
+                            }
+
+                            // caseIndex에 따라 toggle, 나머지는 false 처리
+                            updated[index] = updated[index].map((v, i) =>
+                              i === caseIndex ? !v : false
+                            );
+
+                            return updated;
+                          });
+                        }}
+                        className="mr-4"
+                      />
+                    </DivBox>
+                    {openAgreementCaseArray[index]?.[caseIndex] && (
+                      <div className="flex text-wrap px-6 py-4 bg-[#fafafd] rounded-b-[20px] text-[1.2rem] text-gray-700 border-t border-[#ededed]">
+                        {explanation}
+                      </div>
+                    )}
+                  </div>
                 ))}
+
+                {/* nav 높이만큼의 하단 여백 div 추가 */}
+                {/* <div className="w-full h-28 bg-[#f8f8f8]" /> */}
               </div>
             </div>
           </div>
@@ -372,12 +528,19 @@ function AnalysisResultPage(props: {
                     <ScalesIcon />
                     참고한 법령
                   </div>
-                  <ArrowDownIcon className="mr-[2.1rem] pointer-events-none" />
                 </div>
                 <DivBox className="w-full py-6 px-4 flex justify-between items-center text-wrap">
                   {legalBasis?.law}
-                  <ArrowDownIcon className="mr-4 pointer-events-none" />
+                  <ArrowDownIcon
+                    onClick={() => toggleOpenLaw2(index)}
+                    className="mr-4 cursor-pointer"
+                  />
                 </DivBox>
+                {openLawArray2[index] && (
+                  <div className="flex text-wrap px-6 py-4 bg-[#fafafd] rounded-b-[20px] text-[1.2rem] text-gray-700 border-t border-[#ededed]">
+                    {legalBasis?.explanation}
+                  </div>
+                )}
               </div>
               <div className="w-full flex flex-col gap-4">
                 <div className="flex items-center justify-between text-[1.6rem] font-semibold">
@@ -385,17 +548,45 @@ function AnalysisResultPage(props: {
                     <BookIcon />
                     참고한 판례
                   </div>
-                  <ArrowDownIcon className="mr-[2.1rem] pointer-events-none" />
                 </div>
-                {caseBasis.map(({ case: caseName }, index) => (
-                  <DivBox
-                    key={index}
-                    className="w-full py-6 px-4 flex justify-between items-center text-wrap"
-                  >
-                    {caseName}
-                    <ArrowDownIcon className="mr-4 pointer-events-none" />
-                  </DivBox>
+                {caseBasis.map(({ case: caseName, explanation }, caseIndex) => (
+                  <div key={caseIndex} className="flex flex-col w-full">
+                    <DivBox className="w-full py-6 px-4 flex justify-between items-center text-wrap cursor-pointer">
+                      {caseName}
+                      <ArrowDownIcon
+                        to="#"
+                        onClick={() => {
+                          setOpenArticleCaseArray((prev) => {
+                            const updated = [...prev];
+
+                            // 해당 index가 없으면 빈 배열 생성
+                            if (!updated[index]) {
+                              updated[index] = new Array(caseBasis.length).fill(
+                                false
+                              );
+                            }
+
+                            // caseIndex에 따라 toggle, 나머지는 false 처리
+                            updated[index] = updated[index].map((v, i) =>
+                              i === caseIndex ? !v : false
+                            );
+
+                            return updated;
+                          });
+                        }}
+                        className="mr-4"
+                      />
+                    </DivBox>
+                    {openArticleCaseArray[index]?.[caseIndex] && (
+                      <div className="flex text-wrap px-6 py-4 bg-[#fafafd] rounded-b-[20px] text-[1.2rem] text-gray-700 border-t border-[#ededed]">
+                        {explanation}
+                      </div>
+                    )}
+                  </div>
                 ))}
+
+                {/* nav 높이만큼의 하단 여백 div 추가 */}
+                {/* <div className="w-full h-28 bg-[#f8f8f8]" /> */}
               </div>
             </div>
           </div>
