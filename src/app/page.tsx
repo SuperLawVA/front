@@ -251,8 +251,8 @@ function MainPage() {
           </div>
           <div className="self-start w-full font-semibold text-[1.8rem] px-8 flex flex-col gap-4">
             최근 상담 내용
-            <ul className="flex flex-col justify-center items-center gap-4">
-              {chats &&
+            <ul className="flex flex-col justify-center items-center gap-4 w-full">
+              {chats && chats.length > 0 ? (
                 chats.map(({ _id, chatTitle }) => (
                   <li
                     key={_id}
@@ -265,19 +265,13 @@ function MainPage() {
                     </span>
                     <ArrowRightIcon className="flex justify-self-end pointer-events-none" />
                   </li>
-                ))}
-              <SubmitButton
-                width={10}
-                height={3}
-                fontSize={1}
-                fontWeight={500}
-                fontColor="#6000FF"
-                borderRadius={"50px"}
-                background="#ffffff"
-                borderColor="#6000FF"
-              >
-                자세히 보기
-              </SubmitButton>
+                ))
+              ) : (
+                <div className="w-full flex flex-col justify-center items-center text-[1.2rem] font-medium">
+                  최근 상담 내용이 없어요
+                  <Image src="/chatEmpty.svg" width={200} height={200} alt="" />
+                </div>
+              )}
             </ul>
           </div>
         </div>
