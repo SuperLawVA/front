@@ -99,7 +99,7 @@ function MainPage() {
           </span>
         </div>
       </header>
-      <main className="w-full flex flex-col items-center h-auto">
+      <main className="w-full flex flex-col items-center min-h-[calc(100%-11rem)]">
         <div className="self-start mx-16 my-20 text-[2rem] font-bold">
           {userName}&nbsp;님의 고민
           <br />
@@ -275,7 +275,7 @@ function MainPage() {
             </ul>
           </div>
         </div>
-        {/* <div className="h-36 w-full bg-white" /> */}
+        <div className="h-36 w-full bg-white" />
       </main>
       <BottomNav />
     </>
