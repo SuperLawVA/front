@@ -187,7 +187,7 @@ function MorePage() {
             </div>
           </div>
         </div>
-        <div className="w-full h-full flex-1 mt-4 px-8 py-10 gap-12 rounded-[20px][50px] bg-white flex flex-col items-center">
+        <div className="w-full min-h-[calc(100svh-24rem)] flex-1 mt-4 px-8 py-10 gap-12 rounded-[20px] bg-white flex flex-col items-center">
           <div className="text-[2rem] self-start font-semibold">내 문서함</div>
           <div className="w-full flex flex-col items-center justify-center gap-4">
             <ul
@@ -226,7 +226,7 @@ function MorePage() {
                           {contractTitle}
                         </span>
                         <div className="flex gap-8 justify-center">
-                          <span className="text-[#FF9500]">편집</span>
+                          {/* <span className="text-[#FF9500]">편집</span> */}
                           <span
                             className="text-red-600"
                             onClick={() => openDeleteModal("contract", _id)}
@@ -276,7 +276,7 @@ function MorePage() {
                           {contractTitle}의 분석 결과
                         </span>
                         <div className="flex gap-8 justify-center">
-                          <span className="text-[#FF9500]">편집</span>
+                          {/* <span className="text-[#FF9500]">편집</span> */}
                           <span
                             className="text-red-600"
                             onClick={() => openDeleteModal("analysis", _id)}
@@ -320,15 +320,13 @@ function MorePage() {
                     <li key={_id} className="w-full flex flex-col">
                       <div className="w-full flex justify-between text-[1.2rem] px-4">
                         <span
-                          onClick={() =>
-                            router.push("/certificate/result/" + _id)
-                          }
+                          onClick={() => router.push("/certificate/" + _id)}
                           className="self-start"
                         >
                           {title}
                         </span>
                         <div className="flex gap-8 justify-center">
-                          <span className="text-[#FF9500]">편집</span>
+                          {/* <span className="text-[#FF9500]">편집</span> */}
                           <span
                             className="text-red-600"
                             onClick={() => openDeleteModal("certificate", _id)}

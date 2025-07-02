@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import MagicIcon from "@/components/icons/Magic";
 import clientApi from "@/lib/axios.client";
+import BottomNav from "@/components/BottomNav";
 
 function StartPage() {
   const router = useRouter();
@@ -68,6 +69,7 @@ function StartPage() {
           ← 다음에 할래요
         </div>
       </main>
+      <BottomNav />
     </>
   );
 }

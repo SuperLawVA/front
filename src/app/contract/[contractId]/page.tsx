@@ -25,6 +25,9 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
     try {
       const response = await clientApi.post("/contract", { contractId });
       setContract(response.data.contract);
+      console.log("계약서");
+      console.log(response.data);
+      console.log(response.data.contract);
 
       const { contractTitle, legalBasis, agreements, caseBasis } =
         response.data.contract;
@@ -44,6 +47,7 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
           return;
         }
       }
+    } finally {
     }
   };
   useEffect(() => {
