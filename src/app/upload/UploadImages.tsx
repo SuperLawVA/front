@@ -181,7 +181,7 @@ export default function UploadPage({
   // ✅ 최종 서버 업로드
   const handleSubmit = async () => {
     if (imageFiles.length === 0) {
-      alert("업로드할 파일이 없습니다");
+      fileInputRef.current?.click();
       return;
     }
 
@@ -229,18 +229,10 @@ export default function UploadPage({
 
   return (
     <main className="p-8 w-svw h-full">
-      <h1 className="text-[1.7rem] font-bold mb-4 text-center">
+      <h1 className="text-[1.7rem] font-bold mb-8 text-center">
         이미지 업로드
       </h1>
       {/* 수정해보았습니다 */}
-      {/* 파일 선택 버튼 */}
-      <button
-        type="button"
-        onClick={() => fileInputRef.current?.click()}
-        className="!text-[1.2rem] ml-2"
-      >
-        파일 선택
-      </button>
 
       {/* 숨겨진 input */}
       <input
@@ -304,11 +296,13 @@ export default function UploadPage({
       {/* ✅ 서버 전송 버튼 */}
       <button
         onClick={handleSubmit}
-        disabled={imageFiles.length === 0}
-        className="w-full py-4 px-4 bg-blue-500 
+        // disabled={imageFiles.length === 0}
+        className={`w-full py-4 px-4 bg-main mb-8
                 text-white !text-[1.2rem] !font-medium 
-                rounded-[12px] hover:bg-blue-600 
-                disabled:opacity-50 transition-colors"
+                rounded-[12px] hover:bg-main
+                ${
+                  imageFiles.length === 0 ? "opacity-50 " : ""
+                }transition-colors`}
       >
         업로드 ({imageFiles.length}개 파일)
       </button>

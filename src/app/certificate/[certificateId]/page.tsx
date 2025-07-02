@@ -200,7 +200,10 @@ export default function CertificatePage(props: {
               height={5.5}
               fontSize={1.8}
               fontWeight={600}
-              onClick={() => setOpenOriginal(true)}
+              onClick={() => {
+                console.log(certificate);
+                setOpenOriginal(true);
+              }}
             >
               전문 보기
             </SubmitButton>
