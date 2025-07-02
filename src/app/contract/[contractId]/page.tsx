@@ -41,13 +41,13 @@ function StartPage(props: { params: Promise<{ contractId: string }> }) {
       });
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        if (error.status === 401) {
-          alert("잘못된 접근입니다!");
-          router.replace("/"); // 이전 페이지로 돌아감
-          return;
+        if (error.status === 404 || 401) {
+          alert(error.status + " 잘못된 접근입니다!");
         }
+      } else {
+        alert("500 알 수 없는 오류 발생");
       }
-    } finally {
+      router.replace("/"); // 이전 페이지로 돌아감
     }
   };
   useEffect(() => {

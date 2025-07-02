@@ -9,13 +9,14 @@ import SubmitButton from "@/components/SubmitButton";
 import BackHeader from "@/components/BackHeader";
 import InfoIcon from "@/components/icons/Info";
 import AnalysisIcon from "@/components/icons/Analysis";
-import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
+// import MagicTwoStarIcon from "@/components/icons/MagicTwoStar";
 import Modal from "@/components/Modal";
 import ScalesIcon from "@/components/icons/Scales";
 import clientApi from "@/lib/axios.client";
 import DocumentIcon from "@/components/icons/Document";
 import GreenLogoIcon from "@/components/icons/GreenLogo";
 import StyledInput from "@/components/StyledInput";
+import axios from "axios";
 
 export interface Certificate {
   _id: string; // 고유 ID (문자열)
@@ -68,15 +69,55 @@ export default function CertificatePage(props: {
   const router = useRouter();
 
   const getCertificate = async () => {
-    const response = await clientApi.post("/certificate", {
-      certificateId,
-    });
-
-    if (response.data) {
+    try {
+      const response = await clientApi.post("/certificate", {
+        certificateId,
+      });
       setCertificate(response.data);
-    } else {
-      alert("존재하지 않는 페이지입니다.");
-      router.replace("/");
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error");
+        console.log(error);
+
+        if (error.status === 404 || error.status === 401) {
+          alert(error.status + " 잘못된 접근입니다!");
+          return;
+        }
+        alert("500 알 수 없는 오류 발생");
+        router.replace("/");
+      }
+    }
+  };
+
+  const [loading, setLoading] = useState(false);
+  console.log(loading);
+
+  const handleSend = async () => {
+    setLoading(true);
+    try {
+      const response = await clientApi.post("/certificate/sendMail", {
+        certificate,
+        receiverEmail: email,
+      });
+      await response.data;
+      if (response.data.status == "ok") {
+        setSendStep(2);
+      } else {
+        throw Error;
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.log("error");
+        console.log(error);
+
+        // if (error.status === 404 || error.status === 401) {
+        //   alert(error.status + " 잘못된 접근입니다!");
+        //   return;
+        // }
+        alert("500 알 수 없는 오류 발생");
+      }
+    } finally {
+      setLoading(false);
     }
   };
   useEffect(() => {
@@ -173,7 +214,7 @@ export default function CertificatePage(props: {
             </section>
 
             {/* AI 추천 */}
-            <section className="mt-10 px-8 space-y-6">
+            {/* <section className="mt-10 px-8 space-y-6">
               <h3 className="flex items-center gap-3 text-[1.5rem] font-semibold">
                 <MagicTwoStarIcon width={1.6} height={1.6} color="#6000FF" />
                 AI 추천
@@ -192,7 +233,7 @@ export default function CertificatePage(props: {
                   </span>
                 </button>
               </div>
-            </section>
+            </section> */}
           </div>
           <div className="flex items-center justify-center flex-col gap-8 w-full px-8">
             <SubmitButton
@@ -376,7 +417,8 @@ export default function CertificatePage(props: {
                 <button
                   className="w-full py-5 rounded-[40px] bg-[#6000FF] text-white !font-semibold !text-[1.5rem] disabled:bg-[rgba(128,128,128,0.55)]"
                   disabled={!emailValid}
-                  onClick={() => setSendStep(2)}
+                  // 여기에 작동 코드
+                  onClick={handleSend}
                 >
                   다음
                 </button>

@@ -38,18 +38,18 @@ function AnalysisResultPage(props: {
       const response = await clientApi.post("/analysis", { analysisId });
       setArticles(response.data.articles as Article[]);
       setAgreements(response.data.agreements as Agreement[]);
-      // setAgreements(
-      //   Array.isArray(response.data.agreements) ? response.data.agreements : []
-      // );
-
-      // setContract(response.data.contract);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        if (error.status === 401) {
-          alert("잘못된 접근입니다!");
-          router.replace("/"); // 이전 페이지로 돌아감
+        console.log("error");
+        console.log(error);
+
+        if (error.status === 404 || error.status === 401) {
+          alert(error.status + " 잘못된 접근입니다!");
+          router.replace("/");
           return;
         }
+      } else {
+        alert("500 알 수 없는 오류 발생");
       }
     }
   };
