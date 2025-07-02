@@ -80,8 +80,9 @@ function LoadingPage() {
             <div>
               <p className="text-[1.2rem] text-start">경고</p>
               <span className="text-subText font-normal">
-                본 결과는 법령·사례 기반 학습된 AI로, 잘못된 답변을 낼 수도
-                있습니다.
+                본 내용은 AI가 법령·판례를 참고해 생성한 답변입니다.
+                <br />
+                정확한 법률 자문은 반드시 전문가와 상담해 주세요.
               </span>
             </div>
           </div>
