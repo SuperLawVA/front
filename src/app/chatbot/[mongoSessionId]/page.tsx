@@ -9,7 +9,7 @@ import clientApi from "@/lib/axios.client";
 import axios from "axios";
 import SendArrowIcon from "@/components/icons/SendArrow";
 import BackHeader from "@/components/BackHeader";
-import CrossIcon from "@/components/icons/Cross";
+// import CrossIcon from "@/components/icons/Cross";
 
 type AnswerFormat = {
   summary: string;
@@ -132,7 +132,7 @@ function ChatBotPage(props: { params: Promise<{ mongoSessionId: string }> }) {
     <div className="flex flex-col h-screen bg-[#F2F1F6]">
       <div className="h-20 w-full flex justify-center items-center pr-12">
         <BackHeader to="/" />
-        <CrossIcon color="#000000" />
+        {/* <CrossIcon color="#000000" /> */}
       </div>
       {/* 배경 로고 */}
       <div className="pointer-events-none absolute inset-0 flex justify-center items-center">
