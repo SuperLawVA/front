@@ -13,7 +13,7 @@ import AnalysisIcon from "@/components/icons/Analysis";
 import Modal from "@/components/Modal";
 import ScalesIcon from "@/components/icons/Scales";
 import clientApi from "@/lib/axios.client";
-import DocumentIcon from "@/components/icons/Document";
+// import DocumentIcon from "@/components/icons/Document";
 import GreenLogoIcon from "@/components/icons/GreenLogo";
 import StyledInput from "@/components/StyledInput";
 import axios from "axios";
@@ -248,7 +248,7 @@ export default function CertificatePage(props: {
             >
               전문 보기
             </SubmitButton>
-            <button
+            {/* <button
               className="w-full flex items-center justify-center px-8 py-6 rounded-[20px] text-[#6000ff] !text-[1.4rem] border border-[#6000ff] bg-white"
               onClick={() => {
                 setOpenSend(true);
@@ -257,8 +257,7 @@ export default function CertificatePage(props: {
             >
               <DocumentIcon />
               &nbsp;내용증명서 초안 이메일로 전송하기
-              {/* &nbsp; 계약서 초안 이메일로 전송하기 */}
-            </button>
+            </button> */}
           </div>
         </main>
       )}
