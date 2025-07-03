@@ -104,7 +104,7 @@ function RegisterPage() {
             },
           }
         );
-        if (response.status === 200) {
+        if (response.status === 201) {
           router.push("login");
         }
       } catch (error) {
@@ -204,7 +204,7 @@ function RegisterPage() {
                 width={20}
                 height={20}
               />
-            )}   
+            )}
           </button>
           <StyledInput
             className={`flex flex-col justify-start${
@@ -241,7 +241,7 @@ function RegisterPage() {
                 width={20}
                 height={20}
               />
-            )}   
+            )}
           </button>
           <StyledInput
             type="text"
