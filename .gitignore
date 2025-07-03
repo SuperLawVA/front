@@ -118,5 +118,6 @@ next-env.d.ts
 
 # custom
 * copy.*
-
+*.ppt*
 logs.json
+^tmp*

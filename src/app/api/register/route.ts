@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
         success: true,
         message: response.data?.message || "회원가입이 완료되었습니다.",
       },
-      { status: 200 }
+      { status: 201 }
     );
   } catch (err) {
     const axiosError = err as AxiosError;
