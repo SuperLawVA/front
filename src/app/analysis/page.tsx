@@ -76,9 +76,12 @@ function AnalysisPage() {
       const response = await clientApi.post("/analysis/generate", {
         contractId,
       });
+      console.log("response");
+      console.log(response);
 
       if (response && response.status === 200) {
         router.push("analysis/" + response.data._id);
+        setModalOpen(false);
       } else {
         alert("응답이 실패했습니다. 다시 시도해 주세요.");
       }
@@ -86,7 +89,6 @@ function AnalysisPage() {
       console.error("Generate error:", error);
       return undefined;
     } finally {
-      setModalOpen(false);
       setIsLoading(false);
     }
   };
