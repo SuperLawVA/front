@@ -15,6 +15,7 @@ import CameraPage from "./Camera";
 import UploadImagePage from "./UploadImages";
 import GreenLogoIcon from "@/components/icons/GreenLogo";
 import LoadingPage from "./Loading";
+import { useAuthStore } from "@/store/useStore";
 
 function UploadPage() {
   const router = useRouter();
@@ -50,6 +51,12 @@ function UploadPage() {
   useEffect(() => {
     if (isLoading) setModalOpen(false);
   }, [isLoading]);
+  const [userName, setUserName] = useState<string>("");
+  useEffect(() => {
+    const { userName } = useAuthStore.getState();
+    setUserName(userName as string);
+  }, []);
+
   return (
     <>
       <main className="flex flex-col items-center h-full bg-white">
@@ -65,7 +72,7 @@ function UploadPage() {
           <span className="text-good">AI로 계약서 관리하기</span>
         </StyledDiv>
         <div className="mt-8 text-center text-[2.6rem]/[3.1rem] font-bold">
-          아무개 님의 문서는
+          {userName}&nbsp;님의 문서는
           <br />
           소중하니까
         </div>
@@ -205,8 +212,8 @@ function UploadPage() {
                 fontWeight={500}
                 onClick={() => {
                   const contractId = sessionStorage.getItem("contractId");
-                  sessionStorage.removeItem("contractId");
                   router.push("/contract/" + contractId);
+                  sessionStorage.removeItem("contractId");
                 }}
               >
                 계약서 확인

@@ -3,13 +3,12 @@
 import { useRouter } from "next/navigation";
 import SubmitButton from "@/components/SubmitButton";
 import { useEffect, useState } from "react";
-import AlarmIcon from "@/components/icons/Alarm";
 import BottomNav from "@/components/BottomNav";
 import DocumentIcon from "@/components/icons/Document";
 import AnalysisIcon from "@/components/icons/Analysis";
 import InfoIcon from "@/components/icons/Info";
 import UploadIcon from "@/components/icons/Upload";
-import MagnifyingGlassIcon from "@/components/icons/MagnifyingGlass";
+// import MagnifyingGlassIcon from "@/components/icons/MagnifyingGlass";
 import { Contract, Chat } from "./types/Main";
 import ChatIcon from "@/components/icons/Chat";
 import ArrowRightIcon from "@/components/icons/ArrowRight";
@@ -61,25 +60,13 @@ function MainPage() {
   const [contractArray, setContractArray] = useState<Contract[]>([]);
   const [chats, setChats] = useState<Chat[]>([]);
 
-  // 임시 로그아웃
-  const handleLogout = async () => {
-    await clientApi.get("/logout");
-    useAuthStore.persist.clearStorage();
-    sessionStorage.clear();
-    sessionStorage.setItem("start", "true");
-    router.replace("/login"); // 로그아웃 후 로그인 페이지로 이동
-  };
   const getUserData = async () => {
     const response = await clientApi.post("/user", {});
 
     if (response) {
       const { userName, contractArray, chats } = response.data;
-      console.log("chats");
-      console.log(chats);
-
       useAuthStore.setState({ ...response.data });
       setUserName(userName);
-      // setNotification(notification);
       setContractArray(contractArray);
       setChats(chats);
     }
@@ -91,7 +78,7 @@ function MainPage() {
   }, []);
 
   const router = useRouter();
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
 
   return (
     <>
@@ -106,20 +93,13 @@ function MainPage() {
               className="w-12"
               alt=""
             />
-            {/* <span className="font-pretendard font-semibold text-[2rem] leading-[120%] tracking-[-0.04em] bg-gradient-to-r from-[#6000FF] to-[#E100FF] bg-clip-text text-transparent"> */}
-            {/* 임시 로그 아웃 구현 */}
             <span className="font-pretendard font-semibold text-[2rem] leading-[120%] tracking-[-0.04em] bg-gradient-to-r from-[#6000FF] to-[#E100FF] bg-clip-text text-transparent">
               Super LawVA
             </span>
           </span>
-          <span className="flex gap-[2.4rem]">
-            <AlarmIcon />
-            {/* {notification.length} */}
-            <span className="w-[2.4rem] h-[2.4rem] rounded-full bg-main"></span>
-          </span>
         </div>
       </header>
-      <main className="w-full flex flex-col items-center h-auto">
+      <main className="w-full flex flex-col items-center min-h-[calc(100%-11rem)]">
         <div className="self-start mx-16 my-20 text-[2rem] font-bold">
           {userName}&nbsp;님의 고민
           <br />
@@ -128,7 +108,7 @@ function MainPage() {
           {"'"}에서 도와드릴게요!
         </div>
         <div className="w-full px-8 py-10 gap-12 rounded-t-[50px] bg-white flex flex-col items-center">
-          <form className="w-full h-full pl-6 pr-4 flex items-center justify-between gap-4 bg-inputBox rounded-[50px]">
+          {/* <form className="w-full h-full pl-6 pr-4 flex items-center justify-between gap-4 bg-inputBox rounded-[50px]">
             <MagnifyingGlassIcon width={1.6} height={1.6} color="#9ca3af" />
             <input
               type="text"
@@ -153,7 +133,7 @@ function MainPage() {
             >
               검색
             </SubmitButton>
-          </form>
+          </form> */}
           <div className="self-start w-full font-semibold text-[1.8rem] px-8 flex flex-col gap-4">
             빠른 작업
             <div className="flex w-full justify-around">
@@ -202,53 +182,55 @@ function MainPage() {
                 </>
               ) : (
                 <>
-                  {contractArray.map(
-                    ({
-                      _id,
-                      generated,
-                      contractTitle,
-                      property,
-                      createdDate,
-                    }) => (
-                      <li
-                        key={_id}
-                        onClick={() => router.push(`/contract/${_id}`)}
-                        className="flex items-center gap-4 py-4 px-8 w-full border-[1.5px] border-[#c6c6c8] rounded-[20px] text-[1.2rem] font-medium"
-                      >
-                        <QuickButton
-                          bgc="rgba(96, 0, 255, 0.5)"
-                          icon={<DocumentIcon />}
-                        />
-                        <div className="flex justify-between w-full">
-                          <div className="flex flex-col gap-[0.2rem] text-[#737373] text-[0.8rem] font-medium">
-                            <span className="text-[1.2rem] text-black">
-                              {contractTitle}
-                            </span>
-                            <span className="text-[1rem]">
-                              {property.address.length === 0
-                                ? "주소 미기재"
-                                : property.address}
-                            </span>
-                            <span>
-                              {(createdDate as string).split("T")[0]} 등록
-                            </span>
+                  {contractArray &&
+                    contractArray.map(
+                      ({
+                        _id,
+                        generated,
+                        contractTitle,
+                        property,
+                        createdDate,
+                      }) => (
+                        <li
+                          key={_id}
+                          onClick={() => router.push(`/contract/${_id}`)}
+                          className="flex items-center gap-4 py-4 px-8 w-full border-[1.5px] border-[#c6c6c8] rounded-[20px] text-[1.2rem] font-medium"
+                        >
+                          <QuickButton
+                            bgc="rgba(96, 0, 255, 0.5)"
+                            icon={<DocumentIcon />}
+                          />
+                          <div className="flex justify-between w-full">
+                            <div className="flex flex-col gap-[0.2rem] text-[#737373] text-[0.8rem] font-medium">
+                              <span className="text-[1.2rem] text-black">
+                                {contractTitle}
+                              </span>
+                              <span className="text-[1rem]">
+                                {!(typeof property.address === "string") ||
+                                property.address.length === 0
+                                  ? "주소 미기재"
+                                  : property.address}
+                              </span>
+                              <span>
+                                {(createdDate as string).split("T")[0]} 등록
+                              </span>
+                            </div>
+                            <SubmitButton
+                              width={4}
+                              height={2}
+                              fontSize={0.8}
+                              fontWeight={500}
+                              fontColor={generated ? "#3c82f6" : "#eff6ff"}
+                              borderRadius={"50px"}
+                              background={generated ? "#eff6ff" : "#3c82f6"}
+                              borderColor={generated ? "#3c82f6" : "#eff6ff"}
+                            >
+                              {generated ? "생성됨" : "OCR"}
+                            </SubmitButton>
                           </div>
-                          <SubmitButton
-                            width={4}
-                            height={2}
-                            fontSize={0.8}
-                            fontWeight={500}
-                            fontColor={generated ? "#3c82f6" : "#eff6ff"}
-                            borderRadius={"50px"}
-                            background={generated ? "#eff6ff" : "#3c82f6"}
-                            borderColor={generated ? "#3c82f6" : "#eff6ff"}
-                          >
-                            {generated ? "생성됨" : "OCR"}
-                          </SubmitButton>
-                        </div>
-                      </li>
-                    )
-                  )}
+                        </li>
+                      )
+                    )}
                   {/* 🔽 map 이후 SubmitButton 추가 */}
                   <SubmitButton
                     width={10}
@@ -269,8 +251,8 @@ function MainPage() {
           </div>
           <div className="self-start w-full font-semibold text-[1.8rem] px-8 flex flex-col gap-4">
             최근 상담 내용
-            <ul className="flex flex-col justify-center items-center gap-4">
-              {chats &&
+            <ul className="flex flex-col justify-center items-center gap-4 w-full">
+              {chats && chats.length > 0 ? (
                 chats.map(({ _id, chatTitle }) => (
                   <li
                     key={_id}
@@ -283,23 +265,17 @@ function MainPage() {
                     </span>
                     <ArrowRightIcon className="flex justify-self-end pointer-events-none" />
                   </li>
-                ))}
-              <SubmitButton
-                width={10}
-                height={3}
-                fontSize={1}
-                fontWeight={500}
-                fontColor="#6000FF"
-                borderRadius={"50px"}
-                background="#ffffff"
-                borderColor="#6000FF"
-              >
-                자세히 보기
-              </SubmitButton>
+                ))
+              ) : (
+                <div className="w-full flex flex-col justify-center items-center text-[1.2rem] font-medium">
+                  최근 상담 내용이 없어요
+                  <Image src="/chatEmpty.svg" width={200} height={200} alt="" />
+                </div>
+              )}
             </ul>
           </div>
         </div>
-        {/* <div className="h-36 w-full bg-white" /> */}
+        <div className="h-36 w-full bg-white" />
       </main>
       <BottomNav />
     </>

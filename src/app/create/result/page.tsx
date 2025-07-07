@@ -46,6 +46,7 @@ function ContractCreateNewPage() {
   useEffect(() => {
     const { contractTitle, legalBasis, agreements, contractId, caseBasis } =
       useCreateStore.getState();
+    if (!contractId) router.replace("/");
     setAgreements(agreements);
     setContractTitle(contractTitle as string);
     setLegaBasis(legalBasis);
@@ -111,7 +112,7 @@ function ContractCreateNewPage() {
       </div>
     </li>
   ));
-  contractId;
+
   const contents = agreements.map(
     ({ suggestedRevision, reason, negotiationPoints }, index) => (
       <li

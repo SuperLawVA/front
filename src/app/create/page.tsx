@@ -7,10 +7,10 @@ import Modal from "@/components/Modal";
 import StyledDiv from "@/components/StyledDiv";
 import StyledInput from "@/components/StyledInput";
 import SubmitButton from "@/components/SubmitButton";
-import { useCreateStore } from "@/store/useStore";
+import { useAuthStore, useCreateStore } from "@/store/useStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSwipeable } from "react-swipeable";
 
 function CreatePage() {
@@ -43,6 +43,11 @@ function CreatePage() {
       router.push("create/step1");
     }, 300);
   };
+  const [userName, setUserName] = useState<string>("");
+  useEffect(() => {
+    const { userName } = useAuthStore.getState();
+    setUserName(userName as string);
+  }, []);
 
   return (
     <>
@@ -61,16 +66,15 @@ function CreatePage() {
           AI로 계약서 관리하기
         </StyledDiv>
         <div className="mt-8 text-center text-[2.6rem]/[3.1rem] font-bold">
-          아무개 님의 계약을
+          {userName}&nbsp;님의 계약을
           <br />
           도와드릴게요!
         </div>
         <Image
-          width={99999}
-          height={99999}
+          width={265}
+          height={265}
           src="/createStart.png"
           alt="Main Icon"
-          className="w-[26.5rem] h-[26.5rem] mt-16"
         />
         <div className="mt-16 text-center text-[1.2rem] font-medium">
           당신의 계약서는 안전해야 하니까.

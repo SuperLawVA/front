@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Super Lawva",
   description: "Law Virtual Assistant",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 const pretendard = localFont({
@@ -36,11 +39,7 @@ export default function RootLayout({
       lang="ko"
       className={`${pretendard.variable} ${geistSans.variable} ${geistMono.variable} antialiased w-full`}
     >
-      <body
-        // className={`${pretendard.variable} ${geistSans.variable} ${geistMono.variable} antialiased w-full`}
-        className="subpixel-antialiased w-full h-min-svh"
-      >
-        {/* <UserActionLoggerClient /> */}
+      <body className="subpixel-antialiased w-full">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full">
           {children}
           <Analytics />

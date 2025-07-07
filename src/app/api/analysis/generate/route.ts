@@ -5,9 +5,16 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
   try {
     const { contractId } = await req.json();
+    console.log("contractId");
+    console.log(contractId);
+
     const response = await backendApi.post("/analysis/generate", contractId, {
       headers: { "Content-Type": "application/json" },
     });
+    console.log("response");
+    console.log(response);
+    console.log("response.data");
+    console.log(response.data);
 
     return NextResponse.json(response.data, { status: response.status });
   } catch (error) {

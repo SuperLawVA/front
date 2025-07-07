@@ -37,7 +37,7 @@ function StartPage() {
       });
 
       if (response && response.status === 200) {
-        router.push("result/" + response.data._id);
+        router.push(response.data._id);
         setIsLoading(false);
       } else {
         alert("응답이 실패했습니다. 다시 시도해 주세요.");
@@ -120,7 +120,7 @@ function StartPage() {
               <div className="relative">
                 <textarea
                   className="w-full h-85 rounded-[20px] border border-[#eeeeee] bg-[#fafafa]
-                    p-6 text-[1rem] resize-none outline-none placeholder:text-gray-400"
+                    p-6 !text-[1.2rem] resize-none outline-none placeholder:text-gray-400"
                   placeholder="ex) 계약 종료일이 다가오는데 집주인이 보증금 반환에 대해 아무런 언급이 없습니다.
                     연락도 잘 되지 않아 불안한 상황입니다."
                   value={story}
@@ -220,7 +220,7 @@ function StartPage() {
           <div className="relative">
             <textarea
               className="w-full h-70 rounded-[20px] border border-[#eeeeee] bg-[#fafafa]
-                  p-6 text-[1rem] resize-none outline-none placeholder:text-gray-400"
+                  p-6 !text-[1.2rem] resize-none outline-none placeholder:text-gray-400"
               placeholder="ex) 계약 종료일이 다가오는데 집주인이 보증금 반환에 대해 아무런 언급이 없습니다.
                   연락도 잘 되지 않아 불안한 상황입니다."
               value={story}

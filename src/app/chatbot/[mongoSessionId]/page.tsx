@@ -8,6 +8,8 @@ import { useRouter } from "next/navigation";
 import clientApi from "@/lib/axios.client";
 import axios from "axios";
 import SendArrowIcon from "@/components/icons/SendArrow";
+import BackHeader from "@/components/BackHeader";
+// import CrossIcon from "@/components/icons/Cross";
 
 type AnswerFormat = {
   summary: string;
@@ -33,18 +35,46 @@ function ChatBotPage(props: { params: Promise<{ mongoSessionId: string }> }) {
       mongoSessionId,
       message: text,
     });
-    console.log("data");
-    console.log(data);
 
     // 실제라면 await axios로!
-    // const answer = getAssistantAnswer(text);
     if (typeof data !== "string") {
       alert("오류가 발생했습니다. 다시 시도해주시기 바랍니다.");
       setLoading(false);
       return;
     }
     setTimeout(() => {
-      setMessages((m) => [...m, { role: "assistant", text: data }]);
+      if (typeof data === "string") {
+        const splitIndex = data.indexOf("질문\n");
+        if (splitIndex !== -1) {
+          const beforeQuestion = data.slice(0, splitIndex).trim();
+          const afterQuestion = data.slice(splitIndex + "질문\n".length);
+
+          const quickArray = afterQuestion
+            .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+            .replace(/!\[([^\]]*)\]\([^)]+\)/g, "$1")
+            .replace(/^#+\s+/gm, "")
+            .replace(/`([^`]+)`/g, "$1")
+            .replace(/(\*\*|__)(.*?)\1/g, "$2")
+            .replace(/(\*|_)(.*?)\1/g, "$2")
+            .replace(/^>\s?/gm, "")
+            .replace(/^\s*[-*+]\s+/gm, "")
+            .replace(/^\s*\d+\.\s+/gm, "")
+            .replace(/[*_~`]/g, "")
+            .trim()
+            .split("\n")
+            .map((s) => s)
+            .filter((s) => s.length > 0);
+
+          setMessages((m) => [
+            ...m.splice(0, m.length - 1),
+            { role: "assistant", text: beforeQuestion },
+          ]);
+          setQuick(quickArray);
+        } else {
+          setMessages((m) => [...m, { role: "assistant", text: data }]);
+          setQuick([]);
+        }
+      }
       setLoading(false);
     }, 600);
   }
@@ -91,13 +121,7 @@ function ChatBotPage(props: { params: Promise<{ mongoSessionId: string }> }) {
   useEffect(() => {
     getHistoryData();
   }, [router]);
-
-  const quick = [
-    "임대차 보증금 반환에 관한 법률은 무엇인가요?",
-    "이와 유사한 사례나 판례를 알고 싶어요",
-    "집주인이 보증금을 안 돌려줘요",
-    "집에 물이 떨어지는데 어떻게 하죠",
-  ];
+  const [quick, setQuick] = useState<string[]>([]);
 
   function onQuick(q: string) {
     if (loading) return;
@@ -106,19 +130,10 @@ function ChatBotPage(props: { params: Promise<{ mongoSessionId: string }> }) {
 
   return (
     <div className="flex flex-col h-screen bg-[#F2F1F6]">
-      {/* 헤더 */}
-      <header
-        className="
-        fixed top-0 left-0 w-full z-20
-        flex items-center gap-4 px-8 pt-2
-        h-[80px] mt-20
-        "
-      >
-        <Image src="/menu1.svg" alt="메뉴" width={45} height={45} />
-        <div className="flex-1 h-16 bg-white rounded-[20px] flex items-center px-6 text-[1.6rem] font-semibold">
-          새 채팅
-        </div>
-      </header>
+      <div className="h-20 w-full flex justify-center items-center pr-12">
+        <BackHeader to="/" />
+        {/* <CrossIcon color="#000000" /> */}
+      </div>
       {/* 배경 로고 */}
       <div className="pointer-events-none absolute inset-0 flex justify-center items-center">
         <Image
@@ -186,7 +201,7 @@ function ChatBotPage(props: { params: Promise<{ mongoSessionId: string }> }) {
             <div key={i} className="flex items-start justify-end gap-1 pl-4">
               <div className="relative max-w-[80%]">
                 <div className="whitespace-pre-line bg-white text-black px-8 py-3 text-[1.3rem] mt-10 mr-6 rounded-tl-[30px] rounded-bl-[30px] rounded-br-[30px] rounded-tr-none">
-                  {m.text as string}
+                  <ReactMarkdown>{m.text as string}</ReactMarkdown>
                 </div>
                 <span className="absolute -top-0.5 right-2 w-[2rem] h-[2rem] bg-violet-400 rounded-full" />
               </div>
@@ -216,29 +231,33 @@ function ChatBotPage(props: { params: Promise<{ mongoSessionId: string }> }) {
 
       {/* 추천질문 + 입력창 */}
       <footer className="sticky bottom-10 w-full bg-[#F2F1F6] pt-4">
-        <section className="px-4 mb-3">
-          <span className="inline-block text-[1.05rem] ml-4 font-medium">
-            추천 질문
-          </span>
-          <div className="mt-2 flex gap-2 overflow-x-auto whitespace-nowrap">
-            {quick.map((q, i) => (
-              <button
-                key={i}
-                onClick={() => onQuick(q)}
-                className="shrink-0 text-sm px-4 py-[6px] rounded-full border border-[#E0E0E0] bg-white hover:bg-gray-50"
-              >
-                {q}
-              </button>
-            ))}
-          </div>
-        </section>
-        <form onSubmit={handleSubmit} className="px-4 pb-6 mt-5">
+        {quick.length === 0 ? (
+          ""
+        ) : (
+          <section className="px-4 mb-3">
+            <span className="inline-block text-[1.05rem] ml-4 font-medium">
+              추천 질문
+            </span>
+            <div className="mt-2 flex gap-2 overflow-x-auto whitespace-nowrap">
+              {quick.map((q, i) => (
+                <button
+                  key={i}
+                  onClick={() => onQuick(q)}
+                  className="shrink-0 !text-[1rem] px-4 py-[6px] rounded-full border border-[#E0E0E0] bg-white hover:bg-gray-50"
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
+        <form onSubmit={handleSubmit} className="px-4 pb-6 mx-4 mt-5">
           <div className="relative flex w-full">
             <input
               ref={inputRef}
               type="text"
               placeholder="부동산 관련 상담을 도와드릴게요"
-              className={`w-full bg-white rounded-full py-5 pl-5 pr-14 text-[1rem] placeholder-gray-500 outline-none${
+              className={`w-full bg-white rounded-full py-5 pl-5 pr-14 !text-[1.2rem] placeholder-gray-500 outline-none${
                 loading ? " pointer-events-none" : ""
               }`}
             />

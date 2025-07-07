@@ -18,19 +18,22 @@ function LoginPage() {
   const [code, setCode] = useState("");
   const [realCode, setRealCode] = useState("654321"); // 테스트용
   const [sent, setSent] = useState(false);
+  console.log(sent);
 
   // 비밀번호 관련
   const [showPassword, setShowPassword] = useState(false);
-  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);  
-  const [password, setPassword] = useState("");      
-  const [passwordCheck, setPasswordCheck] = useState(""); 
-  const [pwChanged, setPwChanged] = useState(false);      
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
+  const [pwChanged, setPwChanged] = useState(false);
 
   function isValidEmail(email: string) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
   function isValidPassword(pw: string) {
-    return /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}[\]:;"'<>,.?/~`]).{8,14}$/.test(pw);
+    return /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-={}[\]:;"'<>,.?/~`]).{8,14}$/.test(
+      pw
+    );
   }
 
   // 단계별 동작
@@ -66,7 +69,8 @@ function LoginPage() {
       <div className="flex flex-col gap-5 w-full mt-[5rem]">
         <div className="flex flex-col items-start ml-[4rem]">
           <div className="text-[2rem] font-semibold">
-            <span className="text-[#6000ff] text-[2.3rem]">비밀번호</span>를 잊으셨나요?
+            <span className="text-[#6000ff] text-[2.3rem]">비밀번호</span>를
+            잊으셨나요?
           </div>
           <span className="mt-3 text-[1.2rem]">
             비밀번호 재설정을 위해 가입한 이메일 주소를 입력해주세요.
@@ -74,19 +78,19 @@ function LoginPage() {
         </div>
 
         {/* 1. 이메일 입력 */}
-          <>
-            <div className="flex w-full items-center justify-center gap-4 relative mt-[5rem]">
-              <StyledInput
-                autoFocus
-                type="email"
-                width="30rem"
-                fontSize={1.4}
-                placeholder="이메일 입력"
-                value={email}
-                disabled={step > 1}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
+        <>
+          <div className="flex w-full items-center justify-center gap-4 relative mt-[5rem]">
+            <StyledInput
+              autoFocus
+              type="email"
+              width="30rem"
+              fontSize={1.4}
+              placeholder="이메일 입력"
+              value={email}
+              disabled={step > 1}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
           {step === 1 && (
             <SubmitButton
               type="button"
@@ -100,7 +104,7 @@ function LoginPage() {
               다음
             </SubmitButton>
           )}
-          </>
+        </>
 
         {/* 2. 인증번호 입력 */}
         {step >= 2 && (
@@ -145,7 +149,7 @@ function LoginPage() {
                 fontSize={1.4}
                 placeholder="새 비밀번호 (8~14자, 영문/숫자/특수문자)"
                 value={password}
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <button
                 type="button"
@@ -154,9 +158,19 @@ function LoginPage() {
                 tabIndex={-1}
               >
                 {showPassword ? (
-                  <Image src="/eye.svg" alt="show password" width={20} height={20} />
+                  <Image
+                    src="/eye.svg"
+                    alt="show password"
+                    width={20}
+                    height={20}
+                  />
                 ) : (
-                  <Image src="/close-eye.svg" alt="hide password" width={20} height={20} />
+                  <Image
+                    src="/close-eye.svg"
+                    alt="hide password"
+                    width={20}
+                    height={20}
+                  />
                 )}
               </button>
             </div>
@@ -167,7 +181,7 @@ function LoginPage() {
                 fontSize={1.4}
                 placeholder="비밀번호 확인"
                 value={passwordCheck}
-                onChange={e => setPasswordCheck(e.target.value)}
+                onChange={(e) => setPasswordCheck(e.target.value)}
               />
               <button
                 type="button"
@@ -176,17 +190,33 @@ function LoginPage() {
                 tabIndex={-1}
               >
                 {showPasswordConfirm ? (
-                  <Image src="/eye.svg" alt="show password" width={20} height={20} />
+                  <Image
+                    src="/eye.svg"
+                    alt="show password"
+                    width={20}
+                    height={20}
+                  />
                 ) : (
-                  <Image src="/close-eye.svg" alt="hide password" width={20} height={20} />
+                  <Image
+                    src="/close-eye.svg"
+                    alt="hide password"
+                    width={20}
+                    height={20}
+                  />
                 )}
               </button>
             </div>
             {/* 안내문구 */}
             {password && passwordCheck && (
-              <div className={`text-[0.97rem] font-medium mt-2 text-center
-                ${password === passwordCheck ? 'text-green-600' : 'text-red-500'}`}>
-                {password === passwordCheck ? "비밀번호가 일치합니다." : "비밀번호가 일치하지 않습니다."}
+              <div
+                className={`text-[0.97rem] font-medium mt-2 text-center
+                ${
+                  password === passwordCheck ? "text-green-600" : "text-red-500"
+                }`}
+              >
+                {password === passwordCheck
+                  ? "비밀번호가 일치합니다."
+                  : "비밀번호가 일치하지 않습니다."}
               </div>
             )}
             {password && !isValidPassword(password) && (

@@ -76,7 +76,7 @@ const Modal = ({
           className={`
             relative z-40 bg-transparent w-full h-${isFull ? "full" : "4/5"}
             overflow-x-auto scroll-none snap-x snap-mandatory
-            whitespace-nowrap
+            whitespace-nowrap${ref ? " overflow-x-scroll cursor-grab" : ""}
           `}
           style={{
             scrollbarWidth: "none",

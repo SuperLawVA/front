@@ -1,12 +1,17 @@
-// app/api/certificate/route.ts
+// app/api/certificate/generate/route.ts
 import backendApi from "@/lib/axios.server";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const { certificateId } = await req.json();
-    const response = await backendApi.post("/certificate", { certificateId });
+    const body = await req.json();
+    console.log("body");
+    console.log(body);
 
+    const response = await backendApi.post("/certificate/sendMail", body);
+
+    console.log("response");
+    console.log(response);
     return NextResponse.json(response.data, { status: response.status });
   } catch (error) {
     console.error("API Error:", error);

@@ -62,6 +62,7 @@ function AnalysisPage() {
       ];
       setContractArray(newArray);
       setActiveIndex(0);
+      setContract(contractArray[activeIndex]);
     }
     if (!modalOpen) setSelect(false);
   }, [activeIndex]);
@@ -75,9 +76,12 @@ function AnalysisPage() {
       const response = await clientApi.post("/analysis/generate", {
         contractId,
       });
+      console.log("response");
+      console.log(response);
 
       if (response && response.status === 200) {
         router.push("analysis/" + response.data._id);
+        setModalOpen(false);
       } else {
         alert("응답이 실패했습니다. 다시 시도해 주세요.");
       }
@@ -85,7 +89,6 @@ function AnalysisPage() {
       console.error("Generate error:", error);
       return undefined;
     } finally {
-      setModalOpen(false);
       setIsLoading(false);
     }
   };
@@ -210,11 +213,11 @@ function AnalysisPage() {
             <div className="text-[2rem] font-bold text-center">
               분석할 계약서를 선택해주세요
             </div>
-            <ul className="w-full px-8 flex flex-col gap-12 items-center text-[#2b2b2b] text-[1.6rem] font-bold max-h-[50vh] overflow-y-auto">
+            <ul className="w-full px-8 flex flex-col gap-4 items-center text-[#2b2b2b] text-[1.6rem] font-bold max-h-[50vh] overflow-y-auto">
               {contractArray?.map((contract, index) => (
                 <SubmitButton
                   key={index}
-                  className="flex  justify-around items-center py-2 px-10"
+                  className="flex flex-col justify-center items-start py-2 px-10"
                   gap={0}
                   height={"auto"}
                   background="#eeeeee"
@@ -226,20 +229,10 @@ function AnalysisPage() {
                     setSelect(false);
                   }}
                 >
-                  <span className="font-bold">
-                    제목:&nbsp;
-                    <span className="">{contract?.contractTitle}</span>
-                  </span>
-                  <span className="font-bold">
-                    계약 유형:&nbsp;
-                    <span className="">{contract?.contractType}</span>
-                  </span>
+                  <span className="font-bold">{contract.contractTitle}</span>
                   <span className="text-[1.2rem]">
                     최종 수정 일자:{" "}
                     {formatISOToDateTime(contract?.modifiedDate as string)}
-                  </span>
-                  <span className="text-[1.2rem]">
-                    건물 유형: {contract?.buildingType ?? "미기재"}
                   </span>
                 </SubmitButton>
               ))}
